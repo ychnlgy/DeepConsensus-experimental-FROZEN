@@ -54,5 +54,6 @@ class DistillationNetwork28or32(Base):
             config.D_150K,
             config.D_350K,
             config.D_450K,
-            config.D_500K
+            config.D_500K,
+            config.D_expt
         ]

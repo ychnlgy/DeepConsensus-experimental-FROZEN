@@ -14,30 +14,41 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count:
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 128, 3, padding=1, stride=1),
+            torch.nn.Conv2d(channels, 64, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
+            torch.nn.BatchNorm2d(64),
             
             # 28 -> 14
+            torch.nn.Conv2d(channels, 32, 3, padding=1, stride=1),
+            torch.nn.AvgPool2d(5, padding=1, stride=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            # 14 -> 14
+            torch.nn.Conv2d(channels, 32, 3, padding=1, stride=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            # 14 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
-                    tailsize = 32,
+                    headsize = 32,
+                    bodysize = 128,
+                    tailsize = 128,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
+                    headsize = 128,
+                    bodysize = 128,
                     tailsize = 16,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 kernel = 3,
-                stride = 2,
+                stride = 1,
                 padding = 1
             ),
             
@@ -48,13 +59,13 @@ class D_expt(Base):
                 interpreter = models.DenseNet(
                     headsize = 16,
                     bodysize = 64,
-                    tailsize = 32,
+                    tailsize = 64,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
+                    headsize = 64,
                     bodysize = 64,
                     tailsize = 16,
                     layers = 2,
