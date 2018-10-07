@@ -48,7 +48,7 @@ class D_expt(Base):
                     bias = True
                 ),
                 kernel = 3,
-                stride = 2,
+                stride = 1,
                 padding = 1
             ),
             
