@@ -11,26 +11,26 @@ RESULTS_DIR = path.join(path.dirname(__file__), "..", "results")
 DATA_DIR = path.join(RESULTS_DIR, "data")
 
 DATASETS = [
+#    (
+#        "circlesqr",
+#        [
+#            "rand",
+#            "c350k-trans",
+#            "c350k-magnify",
+#            "c350k-shrink",
+#            "d350k-trans",
+#            "d350k-magnify",
+#            "d350k-shrink"
+#        ]
+#    ),
     (
-        "circlesqr",
+        "mnist-corrupt-distilled",
         [
-            "rand",
-            "c350k-trans",
-            "c350k-magnify",
-            "c350k-shrink",
-            "d350k-trans",
-            "d350k-magnify",
-            "d350k-shrink"
-        ]
-    ),
-    (
-        "mnist-corrupt",
-        [
-            "rand",
-            "c30k0.05m02r02t",
-            "c30k0.10m05r04t",
-            "c30k0.20m10r08t",
-            "c30k0.30m15r12t"
+            #"rand",
+            #"d30k0.05m02r02t",
+            #"d30k0.10m05r04t",
+            "d30k0.20m10r08t",
+            "d30k0.30m15r12t"
         ]
     ),
 ]
