@@ -89,7 +89,7 @@ class D_expt(Base):
                 ),
                 kernel = 2,
                 stride = 2,
-                padding = 0
+                padding = 1
             ),
             
             # 4 -> 1
