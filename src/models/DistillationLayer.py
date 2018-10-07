@@ -8,14 +8,8 @@ class DistillationLayer(torch.nn.Module):
         super(DistillationLayer, self).__init__()
         self.interpreter = interpreter
         self.summarizer = summarizer
-        
-        if padding > 0:
-            self.pad = torch.nn.ReflectionPad2d(padding=padding)
-        
+        self.pad = torch.nn.ReflectionPad2d(padding=padding)
         self.pool = torch.nn.AvgPool2d(kernel_size=kernel, stride=stride)
-    
-    def pad(self, X):
-        return X
         
     def forward(self, X):
         out = self.pad(X)
