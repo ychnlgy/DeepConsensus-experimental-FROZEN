@@ -11,17 +11,11 @@ class DistillationLayer(torch.nn.Module):
         
         if padding > 0:
             self.pad = torch.nn.ReflectionPad2d(padding=padding)
-        else:
-            self.pad = misc.util.do_nothing
         
         self.pool = torch.nn.AvgPool2d(kernel_size=kernel, stride=stride)
     
-    def create_padding(self, padding):
-        if type(padding) == int:
-            return padding
-        else:
-            x, y = padding
-            return (x, x, y, y)
+    def pad(self, X):
+        return X
         
     def forward(self, X):
         out = self.pad(X)
