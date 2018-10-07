@@ -18,7 +18,7 @@ class D_expt(Base):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(128),
             
-            # 14 -> 7
+            # 28 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 128,
@@ -41,7 +41,7 @@ class D_expt(Base):
                 padding = 2
             ),
             
-            # 7 -> 4
+            # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 32,
@@ -68,6 +68,29 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 16,
+                    bodysize = 32,
+                    tailsize = 32,
+                    layers = 2,
+                    dropout = 0.0,
+                    bias = True
+                ),
+                summarizer = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 32,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.0,
+                    bias = True
+                ),
+                kernel = 3,
+                stride = 2,
+                padding = 1
+            ),
+            
+            # 4 -> 1
+            models.DistillationLayer(
+                interpreter = models.DenseNet(
+                    headsize = 8,
                     bodysize = 32,
                     tailsize = 32,
                     layers = 2,
