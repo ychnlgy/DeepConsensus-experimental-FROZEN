@@ -128,17 +128,21 @@ def _main(dataset, trainbatch, testbatch, cycle, classic, paramid, datalimit=1.0
 @misc.main
 def main(repeat=1, **kwargs):
 
-    repeat = int(repeat)
-    
-    func = lambda silent: _main(silent=silent, **kwargs)
+    try:
+        repeat = int(repeat)
+        
+        func = lambda silent: _main(silent=silent, **kwargs)
 
-    if repeat > 1:
-        out = []
-        bar = tqdm.tqdm(range(repeat), ncols=80)
-        for i in bar:
-            result = func(silent=True)
-            bar.set_description("Score: %.3f" % result)
-            out.append(result)
-        print(out)
-    else:
-        func(silent=False)
+        if repeat > 1:
+            out = []
+            bar = tqdm.tqdm(range(repeat), ncols=80)
+            for i in bar:
+                result = func(silent=True)
+                bar.set_description("Score: %.3f" % result)
+                out.append(result)
+            print(out)
+        else:
+            func(silent=False)
+    
+    except KeyboardInterrupt:
+        pass

@@ -14,6 +14,7 @@ ROOT = os.path.join(DIR, "..", "..", "data")
 def create_trainvalid_split(datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch):
     assert 0 <= datalimit <= 1
     n = int(len(train_dat) * datalimit)
+    print(n)
     indices = numpy.arange(n)
     numpy.random.shuffle(indices)
     p = 0.2
