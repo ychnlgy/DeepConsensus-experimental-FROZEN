@@ -13,34 +13,37 @@ class D_expt(Base):
     def create_net(self, classes, channels):
         return torch.nn.Sequential( # Parameter count:
             
-            # 28 -> 14
-            torch.nn.Conv2d(channels, 64, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2),
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 14 -> 7
-            torch.nn.Conv2d(64, 64, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2),
+            # 28 -> 14
+            torch.nn.Conv2d(64, 32, 3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(32),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(32, 32, 3, padding=1, stride=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 256,
-                    tailsize = 128,
+                    headsize = 32,
+                    bodysize = 128,
+                    tailsize = 64,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 256,
-                    tailsize = 32,
+                    headsize = 64,
+                    bodysize = 128,
+                    tailsize = 16,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 kernel = 3,
@@ -53,11 +56,11 @@ class D_expt(Base):
             # 4 -> 2
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
+                    headsize = 16,
                     bodysize = 128,
                     tailsize = 64,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
@@ -65,7 +68,7 @@ class D_expt(Base):
                     bodysize = 128,
                     tailsize = 16,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 kernel = 3,
@@ -82,7 +85,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 32,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
@@ -90,7 +93,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 8,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = True
                 ),
                 kernel = 3,
@@ -107,7 +110,7 @@ class D_expt(Base):
                 bodysize = 32,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.0,
+                dropout = 0.1,
                 bias = True
             ),
         )
