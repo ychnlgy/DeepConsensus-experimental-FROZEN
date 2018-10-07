@@ -18,101 +18,83 @@ class D_expt(Base):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1, stride=1),
+            torch.nn.Tanh(),
+            torch.nn.BatchNorm2d(64),
+            
             # 28 -> 14
-            torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
-            torch.nn.MaxPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            models.DistillationLayer(
+                interpreter = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 128,
+                    tailsize = 128,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
+                ),
+                summarizer = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 128,
+                    tailsize = 64,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
+                ),
+                kernel = 3,
+                stride = 2,
+                padding = 1
+            ),
+            
+            torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
-            torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
-            torch.nn.MaxPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
-            
-            # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
+                    headsize = 64,
                     bodysize = 128,
-                    tailsize = 64,
+                    tailsize = 128,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 64,
+                    headsize = 128,
                     bodysize = 128,
-                    tailsize = 16,
-                    layers = 2,
-                    dropout = 0.2,
-                    bias = True
-                ),
-                kernel = 3,
-                stride = 2,
-                padding = 1
-            ),
-            
-            torch.nn.BatchNorm2d(16),
-            
-            # 4 -> 2
-            models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 128,
-                    tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2,
-                    bias = True
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 16,
-                    layers = 2,
-                    dropout = 0.2,
-                    bias = True
-                ),
-                kernel = 3,
-                stride = 2,
-                padding = 1
-            ),
-            
-            torch.nn.BatchNorm2d(16),
-            
-            # 2 -> 1
-            models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 64,
                     tailsize = 32,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
-                summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.2,
-                    bias = True
-                ),
                 kernel = 3,
                 stride = 2,
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(8),
+            torch.nn.BatchNorm2d(32),
             
-            models.Reshape(len, 8),
+            # 7 -> 1
+            models.DistillationLayer(
+                interpreter = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
+                ),
+                summarizer = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = classes,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
+                ),
+                kernel = 7,
+                stride = 1,
+                padding = 0
+            )
             
-            models.DenseNet(
-                headsize = 8,
-                bodysize = 32,
-                tailsize = classes,
-                layers = 2,
-                dropout = 0.1,
-                bias = True
-            ),
+            models.Reshape(len, classes)
         )

@@ -27,7 +27,7 @@ DATASETS = [
         "mnist-corrupt-distilled",
         [
             #"rand",
-            #"d30k0.05m02r02t",
+            "d30k0.05m02r02t",
             #"d30k0.10m05r04t",
             "d30k0.20m10r08t",
             "d30k0.30m15r12t"
