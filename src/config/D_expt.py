@@ -14,21 +14,34 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count:
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 64, 3, padding=1, stride=1),
+            torch.nn.Conv2d(channels, 128, 5, padding=2, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 28 -> 14
-            torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
-            
-            torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(128),
             
             # 14 -> 7
+            models.DistillationLayer(
+                interpreter = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 2,
+                    dropout = 0.0,
+                    bias = True
+                ),
+                summarizer = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 32,
+                    layers = 2,
+                    dropout = 0.0,
+                    bias = True
+                ),
+                kernel = 5,
+                stride = 2,
+                padding = 2
+            ),
+            
+            # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 32,
@@ -40,7 +53,7 @@ class D_expt(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 32,
+                    bodysize = 64,
                     tailsize = 16,
                     layers = 2,
                     dropout = 0.0,
@@ -63,29 +76,6 @@ class D_expt(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 32,
-                    bodysize = 16,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.0,
-                    bias = True
-                ),
-                kernel = 5,
-                stride = 2,
-                padding = 2
-            ),
-            
-            # 7 -> 4
-            models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 8,
-                    bodysize = 16,
-                    tailsize = 16,
-                    layers = 2,
-                    dropout = 0.0,
-                    bias = True
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 16,
                     bodysize = 32,
                     tailsize = classes,
                     layers = 2,
