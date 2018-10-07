@@ -20,7 +20,7 @@ class D_expt(Base):
             
             # 28 -> 14
             torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
-            torch.nn.MaxPool2d(3, padding=1, stride=2),
+            torch.nn.MaxPool2d(2, padding=0, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
@@ -57,7 +57,7 @@ class D_expt(Base):
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 16,
+                    headsize = 32,
                     bodysize = 64,
                     tailsize = 32,
                     layers = 2,
