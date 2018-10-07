@@ -87,7 +87,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                kernel = 2,
+                kernel = 3,
                 stride = 2,
                 padding = 1
             ),
