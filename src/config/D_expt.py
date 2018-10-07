@@ -14,41 +14,41 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count:
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 128, 3, padding=1, stride=1),
+            torch.nn.Conv2d(channels, 128, 5, padding=1, stride=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(128),
             
+#            # 28 -> 14
+#            torch.nn.Conv2d(128, 64, 3, padding=1, stride=1),
+#            torch.nn.AvgPool2d(2, padding=0, stride=2),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(64),
+#            
+#            # 14 -> 14
+#            torch.nn.Conv2d(64, 64, 3, padding=1, stride=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(64),
+            
             # 28 -> 14
-            torch.nn.Conv2d(128, 64, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2, padding=0, stride=2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 14 -> 14
-            torch.nn.Conv2d(64, 64, 3, padding=1, stride=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 14 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 256,
-                    tailsize = 128,
+                    headsize = 128,
+                    bodysize = 512,
+                    tailsize = 256,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 256,
+                    headsize = 256,
+                    bodysize = 512,
                     tailsize = 64,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
                 kernel = 3,
-                stride = 1,
+                stride = 2,
                 padding = 1
             ),
             
