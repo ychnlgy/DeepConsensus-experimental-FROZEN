@@ -30,21 +30,21 @@ class D_expt(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
-                    tailsize = 32,
+                    bodysize = 32,
+                    tailsize = 8,
                     layers = 2,
                     dropout = 0.0,
                     bias = True
                 ),
-                kernel = 5,
+                kernel = 3,
                 stride = 2,
-                padding = 2
+                padding = 1
             ),
             
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
+                    headsize = 8,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 2,
@@ -53,7 +53,7 @@ class D_expt(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 32,
                     tailsize = 16,
                     layers = 2,
                     dropout = 0.0,
@@ -68,16 +68,16 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 16,
-                    bodysize = 32,
-                    tailsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 2,
                     dropout = 0.0,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
-                    tailsize = 8,
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 32,
                     layers = 2,
                     dropout = 0.0,
                     bias = True
@@ -90,15 +90,15 @@ class D_expt(Base):
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 8,
-                    bodysize = 32,
-                    tailsize = 32,
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 2,
                     dropout = 0.0,
                     bias = True
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
+                    headsize = 64,
                     bodysize = 32,
                     tailsize = classes,
                     layers = 2,
