@@ -14,15 +14,15 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count:
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 64, 3, padding=1, stride=1),
+            torch.nn.Conv2d(channels, 128, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(128),
             
-            # 28 -> 14
-            torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2, padding=0, stride=2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+#            # 28 -> 14
+#            torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
+#            torch.nn.AvgPool2d(2, padding=0, stride=2),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(32),
             
 #            # 14 -> 14
 #            torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
@@ -57,7 +57,7 @@ class D_expt(Base):
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
+                    headsize = 128,
                     bodysize = 64,
                     tailsize = 32,
                     layers = 2,
