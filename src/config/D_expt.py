@@ -52,6 +52,8 @@ class D_expt(Base):
                 padding = 1
             ),
             
+            torch.nn.BatchNorm2d(8),
+            
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
@@ -75,6 +77,8 @@ class D_expt(Base):
                 padding = 1
             ),
             
+            torch.nn.BatchNorm2d(16),
+            
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
@@ -97,6 +101,8 @@ class D_expt(Base):
                 stride = 2,
                 padding = 1
             ),
+            
+            torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
             models.DistillationLayer(
