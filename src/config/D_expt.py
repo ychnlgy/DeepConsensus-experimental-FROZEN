@@ -18,13 +18,15 @@ class D_expt(Base):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 28 -> 28
+            # 28 -> 14
             torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
-            # 28 -> 28
+            # 14 -> 7
             torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
