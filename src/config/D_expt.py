@@ -87,9 +87,9 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                kernel = 3,
+                kernel = 2,
                 stride = 2,
-                padding = 1
+                padding = 0
             ),
             
             # 4 -> 1
@@ -110,7 +110,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                kernel = 4,
+                kernel = 3,
                 stride = 1,
                 padding = 0
             ),
