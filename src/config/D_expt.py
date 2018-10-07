@@ -94,7 +94,7 @@ class D_expt(Base):
                 kernel = 7,
                 stride = 1,
                 padding = 0
-            )
+            ),
             
             models.Reshape(len, classes)
         )
