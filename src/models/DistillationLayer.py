@@ -8,7 +8,7 @@ class DistillationLayer(torch.nn.Module):
         super(DistillationLayer, self).__init__()
         self.interpreter = interpreter
         self.summarizer = summarizer
-        self.pool = torch.nn.Conv2d(channels, channels, kernel_size=kernel, stride=stride, padding=padding)
+        self.pool = torch.nn.Conv2d(channels, channels, kernel_size=kernel, stride=stride, padding=padding, groups=channels)
         
     def forward(self, X):
         permutation = (2, 3, 0, 1)
