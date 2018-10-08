@@ -35,7 +35,7 @@ class D_expt(Base):
                     headsize = 128,
                     bodysize = 256,
                     tailsize = 256,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -60,7 +60,7 @@ class D_expt(Base):
                     headsize = 64,
                     bodysize = 128,
                     tailsize = 128,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -85,7 +85,7 @@ class D_expt(Base):
                     headsize = 32,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
