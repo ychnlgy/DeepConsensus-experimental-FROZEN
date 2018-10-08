@@ -11,7 +11,7 @@ class D_expt(Base):
         return "expt"
 
     def create_net(self, classes, channels):
-        return torch.nn.Sequential( # Parameter count:
+        return torch.nn.Sequential( # Parameter count: 248874
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
@@ -20,7 +20,7 @@ class D_expt(Base):
             
             # 28 -> 14
             torch.nn.Conv2d(256, 64, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
