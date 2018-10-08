@@ -77,7 +77,7 @@ class D_expt(Base):
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
             models.DistillationLayer(
