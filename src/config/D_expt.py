@@ -17,11 +17,9 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count: 6474
             
             # 28 -> 28
-            cnn = torch.nn.Sequential(
-                torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
-                torch.nn.LeakyReLU(),
-                torch.nn.BatchNorm2d(initial_channels),
-            ),
+            torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(initial_channels),
             
             # 28 -> 14
             models.DistillationLayer(
