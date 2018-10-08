@@ -29,7 +29,7 @@ class D_350K(Base):
                 interpreter = models.DenseNet(
                     headsize = 512,
                     bodysize = 256,
-                    tailsize = 128,
+                    tailsize = 64,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
@@ -42,7 +42,7 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 128,
+                channels = 64,
                 kernel = 3,
                 stride = 2,
                 padding = 1
@@ -68,7 +68,7 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 128,
+                channels = 32,
                 kernel = 3,
                 stride = 2,
                 padding = 1
@@ -94,7 +94,7 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 64,
+                channels = 16,
                 kernel = 3,
                 stride = 2,
                 padding = 1
