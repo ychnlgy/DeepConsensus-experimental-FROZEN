@@ -11,72 +11,107 @@ class D_expt(Base):
         return "expt"
 
     def create_net(self, classes, channels):
+    
+        initial_channels = 128 * 3
+    
         return torch.nn.Sequential( # Parameter count: 6474
             
             # 28 -> 28
-            models.DistillationLayer(
-                cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(channels, 256, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256),
-                ),
-                lin = torch.nn.Sequential(
-                    torch.nn.Linear(256, 256),
-                    torch.nn.Dropout(p=0.2),
-                    torch.nn.LeakyReLU(),
-                )
+            cnn = torch.nn.Sequential(
+                torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(initial_channels),
             ),
             
             # 28 -> 14
             models.DistillationLayer(
-                cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256),
+                interpreter = models.DenseNet(
+                    headsize = initial_channels,
+                    bodysize = 128,
+                    tailsize = 64,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
                 ),
-                lin = torch.nn.Sequential(
-                    torch.nn.Linear(256, 256),
-                    torch.nn.Dropout(p=0.2),
-                    torch.nn.LeakyReLU(),
+                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                summarizer = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 128,
+                    tailsize = 32,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
                 )
             ),
+            
+            torch.nn.BatchNorm2d(32),
             
             # 14 -> 7
             models.DistillationLayer(
-                cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256),
+                interpreter = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1,
+                    dropout = 0.1,
+                    bias = True
                 ),
-                lin = torch.nn.Sequential(
-                    torch.nn.Linear(256, 256),
-                    torch.nn.Dropout(p=0.2),
-                    torch.nn.LeakyReLU(),
+                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                summarizer = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 16,
+                    layers = 1,
+                    dropout = 0.1,
+                    bias = True
                 )
             ),
+            
+            torch.nn.BatchNorm2d(16),
             
             # 7 -> 4
             models.DistillationLayer(
-                cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256),
+                interpreter = models.DenseNet(
+                    headsize = 16,
+                    bodysize = 32,
+                    tailsize = 32,
+                    layers = 1,
+                    dropout = 0.1,
+                    bias = True
                 ),
-                lin = torch.nn.Sequential(
-                    torch.nn.Linear(256, 256),
-                    torch.nn.Dropout(p=0.2),
-                    torch.nn.LeakyReLU(),
+                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                summarizer = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 32,
+                    tailsize = 8,
+                    layers = 1,
+                    dropout = 0.1,
+                    bias = True
                 )
             ),
             
-            # 4 -> 1
-            models.Reshape(len, 256, 16, contiguous=True),
-            models.Permute(0, 2, 1), # N, W*H, C
-            models.Mean(dim=1), # N, C
+            torch.nn.BatchNorm2d(8),
             
-            torch.nn.Linear(256, 64),
-            torch.nn.Dropout(p=0.2),
-            torch.nn.LeakyReLU(),
-            torch.nn.Linear(64, classes),
-            torch.nn.LeakyReLU(),
+            # 4 -> 1
+            models.DistillationLayer(
+                interpreter = models.DenseNet(
+                    headsize = 8,
+                    bodysize = 32,
+                    tailsize = 32,
+                    layers = 1,
+                    dropout = 0.1,
+                    bias = True
+                ),
+                pool = torch.nn.AvgPool2d(4, stride=1, padding=0),
+                summarizer = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 16,
+                    tailsize = classes,
+                    layers = 2,
+                    dropout = 0.1,
+                    bias = True
+                )
+            ),
+
+            models.Reshape(len, classes)
         )

@@ -11,7 +11,7 @@ class C_350K(Base):
         return "350K"
 
     def create_net(self, classes, channels):
-        return torch.nn.Sequential( # Parameter count: 344954
+        return torch.nn.Sequential( # Parameter count: 30K
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),

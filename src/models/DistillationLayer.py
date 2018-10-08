@@ -1,13 +1,19 @@
 import torch
 
+import misc
+
+PERMUTATION = (2, 3, 0, 1) # (W, H, N, C)
+
 class DistillationLayer(torch.nn.Module):
 
-    def __init__(self, cnn, lin):
+    def __init__(self, interpreter, pool, summarizer):
         super(DistillationLayer, self).__init__()
-        self.cnn = cnn
-        self.lin = lin
+        self.interpreter = interpreter
+        self.pool = pool
+        self.summarizer = summarizer
         
     def forward(self, X):
-        X = self.cnn(X).permute(0, 2, 3, 1) # (N, W, H, C)
-        X = self.lin(X).permute(0, 3, 1, 2) # (N, C, W, H)
+        X = misc.matrix.apply_permutation(self.interpreter, X, PERMUTATION)
+        X = self.pool(X)
+        X = misc.matrix.apply_permutation(self.summarizer, X, PERMUTATION)
         return X
