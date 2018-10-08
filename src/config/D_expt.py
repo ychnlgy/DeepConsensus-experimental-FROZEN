@@ -15,6 +15,7 @@ class D_expt(Base):
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 5, padding=2, stride=1),
+            torch.nn.AvgPool2d(2),
             torch.nn.PReLU(),
             torch.nn.BatchNorm2d(256),
             
