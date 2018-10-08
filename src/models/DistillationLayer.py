@@ -1,7 +1,5 @@
 import torch
 
-PERMUTATION = (0, 2, 3, 1) # (N, W, H, C)
-
 class DistillationLayer(torch.nn.Module):
 
     def __init__(self, cnn, lin):
@@ -10,6 +8,6 @@ class DistillationLayer(torch.nn.Module):
         self.lin = lin
         
     def forward(self, X):
-        X = self.cnn(X).permute(PERMUTATION)
-        X = self.lin(X).permute(PERMUTATION)
+        X = self.cnn(X).permute(0, 2, 3, 1) # (N, W, H, C)
+        X = self.lin(X).permute(0, 3, 1, 2) # (N, C, W, H)
         return X
