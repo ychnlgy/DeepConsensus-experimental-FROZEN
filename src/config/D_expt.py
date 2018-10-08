@@ -11,7 +11,7 @@ class D_expt(Base):
         return "expt"
 
     def create_net(self, classes, channels):
-        return torch.nn.Sequential( # Parameter count: 6378
+        return torch.nn.Sequential( # Parameter count: 6474
             
             # 28 -> 28
             models.DistillationLayer(
@@ -52,7 +52,7 @@ class D_expt(Base):
             # 4 -> 1
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
+                    torch.nn.Conv2d(32, 32, 4, padding=0, stride=1, groups=32),
                     torch.nn.BatchNorm2d(32),
                 ),
                 lin = torch.nn.Linear(32, classes)
