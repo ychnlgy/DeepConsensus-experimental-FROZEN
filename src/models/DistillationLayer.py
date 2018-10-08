@@ -8,16 +8,14 @@ class DistillationLayer(torch.nn.Module):
         super(DistillationLayer, self).__init__()
         self.interpreter = interpreter
         self.summarizer = summarizer
-        self.pad = torch.nn.ReflectionPad2d(padding=padding)
-        self.pool = torch.nn.AvgPool2d(kernel_size=kernel, stride=stride)
+        self.pool = torch.nn.AvgPool2d(kernel_size=kernel, stride=stride, padding=padding)
         
     def forward(self, X):
-        out = self.pad(X)
         permutation = (2, 3, 0, 1)
-        out = self.interpreter(out.permute(permutation)).permute(permutation)
-        out = self.pool(out)
-        out = self.summarizer(out.permute(permutation)).permute(permutation)
-        return out.contiguous() # N, C'', W', H'
+        X = self.interpreter(X.permute(permutation)).permute(permutation)
+        X = self.pool(X)
+        X = self.summarizer(X.permute(permutation)).permute(permutation)
+        return X.contiguous() # N, C'', W', H'
     
     @staticmethod
     def unittest():
