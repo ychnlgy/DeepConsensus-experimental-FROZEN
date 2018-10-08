@@ -33,16 +33,16 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = 32,
-                    bodysize = 128,
-                    tailsize = 128,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 1,
                     dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
-                    tailsize = 32,
+                    headsize = 64,
+                    bodysize = 32,
+                    tailsize = 16,
                     layers = 2,
                     dropout = 0.2,
                     bias = False
@@ -52,22 +52,22 @@ class D_expt(Base):
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(16),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 128,
-                    tailsize = 128,
+                    headsize = 16,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     dropout = 0.0,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 32,
+                    bodysize = 32,
+                    tailsize = 8,
                     layers = 1,
                     dropout = 0.1,
                     bias = False
@@ -77,23 +77,23 @@ class D_expt(Base):
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(8),
             
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 128,
+                    headsize = 8,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     dropout = 0.0,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
+                    headsize = 32,
+                    bodysize = 32,
                     tailsize = classes,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.1,
                     bias = False
                 ),
