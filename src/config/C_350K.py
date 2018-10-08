@@ -21,19 +21,26 @@ class C_350K(Base):
             # 28 -> 14
             torch.nn.Conv2d(256, 256, 3, padding=1, stride=1, groups=256),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(256),
             
             # 14 -> 7
-            torch.nn.Conv2d(64, 36, 3, padding=1, stride=2, groups=256),
+            torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(36),
+            torch.nn.BatchNorm2d(256),
             
             # 7 -> 4
-            torch.nn.Conv2d(36, 28, 3, padding=1, stride=2, groups=256),
+            torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(28),
+            torch.nn.BatchNorm2d(256),
             
-            # 4 -> 10
-            torch.nn.Conv2d(28, classes, 4, padding=0),
-            models.Reshape(len, classes)
+            # 4 -> 1
+            models.Reshape(len, 256, 16, contiguous=True),
+            models.Permute(0, 2, 1), # N, W*H, C
+            models.Mean(dim=1), # N, C
+            
+            torch.nn.Linear(256, 64),
+            torch.nn.Dropout(p=0.2),
+            torch.nn.LeakyReLU(),
+            torch.nn.Linear(64, classes),
+            torch.nn.LeakyReLU(),
         )
