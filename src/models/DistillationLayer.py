@@ -9,7 +9,7 @@ class DistillationLayer(torch.nn.Module):
         self.interpreter = interpreter
         self.summarizer = summarizer
         self.pad = torch.nn.ReflectionPad2d(padding=padding)
-        self.pool = torch.nn.AvgPool2d(kernel_size=kernel, stride=stride)
+        self.pool = torch.nn.MaxPool2d(kernel_size=kernel, stride=stride)
         
     def forward(self, X):
         out = self.pad(X)
