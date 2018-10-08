@@ -14,82 +14,33 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count: 50K
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
-            torch.nn.AvgPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(256),
+            models.DistillationLayer(
+                cnn = torch.nn.Conv2d(channels, 32, 3, padding=1),
+                lin = torch.nn.Linear(32, 32)
+            ),
+            
+            # 28 -> 14
+            models.DistillationLayer(
+                cnn = torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
+                lin = torch.nn.Linear(32, 32)
+            ),
             
             # 14 -> 7
             models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 256,
-                    bodysize = 128,
-                    tailsize = 128,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
-                    tailsize = 32,
-                    layers = 2,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                kernel = 3,
-                stride = 2,
-                padding = 1
+                cnn = torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
+                lin = torch.nn.Linear(32, 32)
             ),
-            
-            torch.nn.BatchNorm2d(32),
             
             # 7 -> 4
             models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = 64,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
-                    tailsize = 16,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                kernel = 3,
-                stride = 2,
-                padding = 1
+                cnn = torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
+                lin = torch.nn.Linear(32, 32)
             ),
-            
-            torch.nn.BatchNorm2d(16),
             
             # 4 -> 1
             models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 32,
-                    tailsize = 32,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
-                    tailsize = classes,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = False
-                ),
-                kernel = 4,
-                stride = 1,
-                padding = 0
+                cnn = torch.nn.Conv2d(32, 32, 4, padding=0, stride=1, groups=32),
+                lin = torch.nn.Linear(32, classes)
             ),
             
             models.Reshape(len, classes)

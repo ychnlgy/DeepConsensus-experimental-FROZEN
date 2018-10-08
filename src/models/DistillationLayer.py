@@ -1,18 +1,15 @@
-import torch, math
+import torch
 
-import misc
+PERMUTATION = (0, 2, 3, 1) # (N, W, H, C)
 
 class DistillationLayer(torch.nn.Module):
 
-    def __init__(self, interpreter, summarizer, channels, kernel, stride, padding):
+    def __init__(self, cnn, lin):
         super(DistillationLayer, self).__init__()
-        self.interpreter = interpreter
-        self.summarizer = summarizer
-        self.pool = torch.nn.Conv2d(channels, channels, kernel_size=kernel, stride=stride, padding=padding, groups=channels)
+        self.cnn = cnn
+        self.lin = lin
         
     def forward(self, X):
-        permutation = (2, 3, 0, 1)
-        #X = self.interpreter(X.permute(permutation)).permute(permutation)
-        X = self.pool(X)
-        #X = self.summarizer(X.permute(permutation)).permute(permutation)
-        return X.contiguous()
+        X = self.cnn(X).permute(PERMUTATION)
+        X = self.lin(X).permute(PERMUTATION)
+        return X
