@@ -94,7 +94,7 @@ class D_expt(Base):
                     bodysize = 32,
                     tailsize = classes,
                     layers = 1,
-                    dropout = 0.2,
+                    dropout = 0.1,
                     bias = False
                 ),
                 kernel = 4,
