@@ -27,7 +27,7 @@ class D_expt(Base):
             # 14 -> 14
             torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(32),
             
             # 14 -> 7
             models.DistillationLayer(
