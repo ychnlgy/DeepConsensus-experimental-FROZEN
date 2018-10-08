@@ -33,9 +33,10 @@ def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1
         [Cnn28or32]
     )[classic](paramid, NUM_CLASSES, CHANNELS)
     
-    print_("Model parameters: %d" % model.paramcount(), silent)
-    
     if showparams:
+    
+        print_("Model parameters: %d" % model.paramcount(), silent)
+    
         if input("Continue? [y/n] ") != "y":
             raise SystemExit
     

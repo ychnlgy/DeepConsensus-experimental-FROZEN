@@ -55,7 +55,7 @@ class D_350K(Base):
                 interpreter = models.DenseNet(
                     headsize = 64,
                     bodysize = 256,
-                    tailsize = 128,
+                    tailsize = 32,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
@@ -81,7 +81,7 @@ class D_350K(Base):
                 interpreter = models.DenseNet(
                     headsize = 32,
                     bodysize = 128,
-                    tailsize = 64,
+                    tailsize = 16,
                     layers = 2,
                     dropout = 0.2,
                     bias = True

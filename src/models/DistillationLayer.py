@@ -14,5 +14,5 @@ class DistillationLayer(torch.nn.Module):
         permutation = (2, 3, 0, 1)
         X = self.interpreter(X.permute(permutation)).permute(permutation)
         X = self.pool(X)
-        X = self.summarizer(X.permute(permutation)).permute(permutation)
+        #X = self.summarizer(X.permute(permutation)).permute(permutation)
         return X.contiguous()
