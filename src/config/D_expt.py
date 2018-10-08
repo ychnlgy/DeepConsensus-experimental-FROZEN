@@ -11,7 +11,7 @@ class D_expt(Base):
         return "expt"
 
     def create_net(self, classes, channels):
-        return torch.nn.Sequential( # Parameter count: 219882
+        return torch.nn.Sequential( # Parameter count: 50K
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),

@@ -184,8 +184,8 @@ def unittest():
 
     from matplotlib import pyplot
     
-    td, tl, sd2, sl, n, c, i = get_cifar10(download=0)
-    td, tl, sd, sl, n, c, i = get_cifar10_corrupt(download=0, minmag=0.5, maxmag=1.5, mintrans=-5, maxtrans=5, minrot=-20, maxrot=20)
+    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=-12, maxtrans=12, minrot=0, maxrot=0)
     
 #    print("Showing train data")
 #    
