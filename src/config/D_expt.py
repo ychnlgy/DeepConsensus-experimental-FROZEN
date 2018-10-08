@@ -16,7 +16,7 @@ class D_expt(Base):
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 5, padding=2, stride=1),
             torch.nn.AvgPool2d(2),
-            torch.nn.PReLU(),
+            torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(256),
             
             # 14 -> 7
@@ -26,7 +26,7 @@ class D_expt(Base):
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
@@ -34,7 +34,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 32,
                     layers = 2,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 kernel = 3,
@@ -51,7 +51,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
@@ -59,7 +59,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 16,
                     layers = 1,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 kernel = 3,
@@ -76,7 +76,7 @@ class D_expt(Base):
                     bodysize = 32,
                     tailsize = 32,
                     layers = 1,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
@@ -84,7 +84,7 @@ class D_expt(Base):
                     bodysize = 32,
                     tailsize = classes,
                     layers = 1,
-                    dropout = 0.0,
+                    dropout = 0.2,
                     bias = False
                 ),
                 kernel = 4,
