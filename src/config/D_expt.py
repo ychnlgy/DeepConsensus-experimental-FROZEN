@@ -43,6 +43,7 @@ class D_expt(Base):
             ),
             
             torch.nn.BatchNorm2d(32),
+            models.AssertShape(32, 14, 14)
             
             # 14 -> 7
             models.DistillationLayer(
@@ -66,6 +67,7 @@ class D_expt(Base):
             ),
             
             torch.nn.BatchNorm2d(16),
+            models.AssertShape(16, 7, 7)
             
             # 7 -> 4
             models.DistillationLayer(
@@ -89,6 +91,7 @@ class D_expt(Base):
             ),
             
             torch.nn.BatchNorm2d(8),
+            models.AssertShape(8, 4, 4)
             
             # 4 -> 1
             models.DistillationLayer(
@@ -110,6 +113,6 @@ class D_expt(Base):
                     bias = True
                 )
             ),
-
-            models.Reshape(len, classes)
+            
+            models.Reshape(classes)
         )

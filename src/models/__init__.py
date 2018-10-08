@@ -1,5 +1,6 @@
 import models.util
 
+from .AssertShape import AssertShape
 from .Mean import Mean
 from .Permute import Permute
 from .Reshape import Reshape
