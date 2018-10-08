@@ -20,17 +20,17 @@ class D_350K(Base):
         return torch.nn.Sequential( # Parameter count: 344666
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 512, 3, padding=1, stride=1),
+            torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(512),
+            torch.nn.BatchNorm2d(256),
             
             # 28 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 512,
+                    headsize = 256,
                     bodysize = 256,
-                    tailsize = 64,
-                    layers = 2,
+                    tailsize = 256,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -42,21 +42,21 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 64,
+                channels = 256,
                 kernel = 3,
                 stride = 2,
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(256),
             
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
+                    headsize = 256,
                     bodysize = 256,
-                    tailsize = 32,
-                    layers = 2,
+                    tailsize = 256,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -68,21 +68,21 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 32,
+                channels = 256,
                 kernel = 3,
                 stride = 2,
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(256),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 128,
-                    tailsize = 16,
-                    layers = 2,
+                    headsize = 256,
+                    bodysize = 256,
+                    tailsize = 256,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -94,20 +94,20 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 16,
+                channels = 256,
                 kernel = 3,
                 stride = 2,
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(16),
+            torch.nn.BatchNorm2d(256),
             
-            models.Reshape(len, 16, 16, contiguous=True),
+            models.Reshape(len, 256, 16, contiguous=True),
             models.Permute(0, 2, 1), # N, W*H, C
             models.Mean(dim=1), # N, C
             
             models.DenseNet(
-                headsize = 16,
+                headsize = 256,
                 bodysize = 64,
                 tailsize = classes,
                 layers = 2,
