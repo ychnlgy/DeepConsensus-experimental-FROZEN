@@ -17,42 +17,63 @@ class D_expt(Base):
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
                     torch.nn.Conv2d(channels, 128, 3, padding=1),
+                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128),
                 ),
-                lin = torch.nn.Linear(128, 64)
+                lin = torch.nn.Sequential(
+                    torch.nn.Linear(128, 128),
+                    torch.nn.Dropout(p=0.2),
+                    torch.nn.LeakyReLU(),
+                )
             ),
             
             # 28 -> 14
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=32),
-                    torch.nn.BatchNorm2d(64),
+                    torch.nn.Conv2d(128, 128, 3, padding=1, stride=2, groups=32),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(128),
                 ),
-                lin = torch.nn.Linear(64, 32)
+                lin = torch.nn.Sequential(
+                    torch.nn.Linear(128, 64),
+                    torch.nn.Dropout(p=0.2),
+                    torch.nn.LeakyReLU(),
+                )
             ),
             
             # 14 -> 7
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
-                    torch.nn.BatchNorm2d(32),
+                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=32),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(64),
                 ),
-                lin = torch.nn.Linear(32, 32)
+                lin = torch.nn.Sequential(
+                    torch.nn.Linear(64, 64),
+                    torch.nn.Dropout(p=0.2),
+                    torch.nn.LeakyReLU(),
+                )
             ),
             
             # 7 -> 4
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=32),
-                    torch.nn.BatchNorm2d(32),
+                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=32),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(64),
                 ),
-                lin = torch.nn.Linear(32, 32)
+                lin = torch.nn.Sequential(
+                    torch.nn.Linear(64, 32),
+                    torch.nn.Dropout(p=0.2),
+                    torch.nn.LeakyReLU(),
+                )
             ),
             
             # 4 -> 1
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
                     torch.nn.Conv2d(32, 32, 4, padding=0, stride=1, groups=32),
+                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32),
                 ),
                 lin = torch.nn.Linear(32, classes)
