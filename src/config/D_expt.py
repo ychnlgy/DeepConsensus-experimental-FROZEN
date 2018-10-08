@@ -16,12 +16,12 @@ class D_expt(Base):
             # 28 -> 28
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(channels, 128, 3, padding=1),
+                    torch.nn.Conv2d(channels, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128),
+                    torch.nn.BatchNorm2d(256),
                 ),
                 lin = torch.nn.Sequential(
-                    torch.nn.Linear(128, 128),
+                    torch.nn.Linear(256, 256),
                     torch.nn.Dropout(p=0.2),
                     torch.nn.LeakyReLU(),
                 )
@@ -30,12 +30,12 @@ class D_expt(Base):
             # 28 -> 14
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(128, 128, 3, padding=1, stride=2, groups=32),
+                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128),
+                    torch.nn.BatchNorm2d(256),
                 ),
                 lin = torch.nn.Sequential(
-                    torch.nn.Linear(128, 64),
+                    torch.nn.Linear(256, 256),
                     torch.nn.Dropout(p=0.2),
                     torch.nn.LeakyReLU(),
                 )
@@ -44,12 +44,12 @@ class D_expt(Base):
             # 14 -> 7
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=32),
+                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64),
+                    torch.nn.BatchNorm2d(256),
                 ),
                 lin = torch.nn.Sequential(
-                    torch.nn.Linear(64, 64),
+                    torch.nn.Linear(256, 256),
                     torch.nn.Dropout(p=0.2),
                     torch.nn.LeakyReLU(),
                 )
@@ -58,12 +58,12 @@ class D_expt(Base):
             # 7 -> 4
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=32),
+                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=32),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64),
+                    torch.nn.BatchNorm2d(256),
                 ),
                 lin = torch.nn.Sequential(
-                    torch.nn.Linear(64, 32),
+                    torch.nn.Linear(256, 256),
                     torch.nn.Dropout(p=0.2),
                     torch.nn.LeakyReLU(),
                 )
@@ -72,11 +72,16 @@ class D_expt(Base):
             # 4 -> 1
             models.DistillationLayer(
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 32, 4, padding=0, stride=1, groups=32),
+                    torch.nn.Conv2d(256, 256, 4, padding=0, stride=1, groups=32),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32),
+                    torch.nn.BatchNorm2d(256),
                 ),
-                lin = torch.nn.Linear(32, classes)
+                lin = torch.nn.Sequential(
+                    torch.nn.Linear(256, 64),
+                    torch.nn.Dropout(p=0.2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.Linear(64, classes),
+                )
             ),
             
             models.Reshape(len, classes)
