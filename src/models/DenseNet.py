@@ -20,7 +20,7 @@ class DenseNet(torch.nn.Module):
                     for i in range(layers-2)
                 ]),
                 torch.nn.Linear(bodysize, tailsize),
-                torch.nn.Tanh()
+                torch.nn.ReLU()
             )
         
     def forward(self, X):
@@ -30,5 +30,5 @@ class DenseNet(torch.nn.Module):
         return torch.nn.Sequential(
             torch.nn.Linear(inputsize, outputsize, bias=self.bias),
             torch.nn.Dropout(self.dropout),
-            torch.nn.LeakyReLU()
+            torch.nn.ReLU()
         )
