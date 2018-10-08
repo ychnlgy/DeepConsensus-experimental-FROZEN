@@ -19,7 +19,7 @@ class C_350K(Base):
             torch.nn.BatchNorm2d(256),
             
             # 28 -> 14
-            torch.nn.Conv2d(256, 256, 3, padding=1, stride=1, groups=256),
+            torch.nn.Conv2d(256, 256, 3, padding=1, stride=2, groups=256),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(256),
             
