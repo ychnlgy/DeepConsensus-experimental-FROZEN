@@ -70,24 +70,13 @@ class D_expt(Base):
             ),
             
             # 4 -> 1
-            models.DistillationLayer(
-                cnn = torch.nn.Sequential(
-#                    torch.nn.Conv2d(256, 256, 4, padding=0, stride=1, groups=256),
-#                    torch.nn.LeakyReLU(),
-#                    torch.nn.BatchNorm2d(256),
-                ),
-                lin = torch.nn.Sequential(
-                    models.Reshape(len, 256, 16, contiguous=True),
-                    models.Permute(0, 2, 1), # N, W*H, C
-                    models.Mean(dim=1), # N, C
-                    
-                    torch.nn.Linear(256, 64),
-                    torch.nn.Dropout(p=0.2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.Linear(64, classes),
-                    torch.nn.LeakyReLU(),
-                )
-            ),
+            models.Reshape(len, 256, 16, contiguous=True),
+            models.Permute(0, 2, 1), # N, W*H, C
+            models.Mean(dim=1), # N, C
             
-            #models.Reshape(len, classes)
+            torch.nn.Linear(256, 64),
+            torch.nn.Dropout(p=0.2),
+            torch.nn.LeakyReLU(),
+            torch.nn.Linear(64, classes),
+            torch.nn.LeakyReLU(),
         )
