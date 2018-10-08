@@ -20,7 +20,7 @@ class DenseNet(torch.nn.Module):
                     for i in range(layers-2)
                 ]),
                 torch.nn.Linear(bodysize, tailsize),
-                torch.nn.LeakyReLU()
+                torch.nn.Tanh()
             )
         
     def forward(self, X):
