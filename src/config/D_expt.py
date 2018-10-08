@@ -11,7 +11,7 @@ class D_expt(Base):
         return "expt"
 
     def create_net(self, classes, channels):
-        return torch.nn.Sequential( # Parameter count: 248874
+        return torch.nn.Sequential( # Parameter count: 219882
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
@@ -37,7 +37,7 @@ class D_expt(Base):
                     tailsize = 128,
                     layers = 1,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 summarizer = models.DenseNet(
                     headsize = 128,
@@ -45,7 +45,7 @@ class D_expt(Base):
                     tailsize = 32,
                     layers = 2,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 kernel = 3,
                 stride = 2,
@@ -62,7 +62,7 @@ class D_expt(Base):
                     tailsize = 64,
                     layers = 1,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
@@ -70,7 +70,7 @@ class D_expt(Base):
                     tailsize = 32,
                     layers = 1,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 kernel = 3,
                 stride = 2,
@@ -87,7 +87,7 @@ class D_expt(Base):
                     tailsize = 64,
                     layers = 1,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
@@ -95,7 +95,7 @@ class D_expt(Base):
                     tailsize = classes,
                     layers = 2,
                     dropout = 0.2,
-                    bias = True
+                    bias = False
                 ),
                 kernel = 4,
                 stride = 1,
