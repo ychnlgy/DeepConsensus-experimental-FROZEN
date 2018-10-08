@@ -68,7 +68,7 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 128
+                channels = 128,
                 kernel = 3,
                 stride = 2,
                 padding = 1
@@ -94,7 +94,7 @@ class D_350K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                channels = 64
+                channels = 64,
                 kernel = 3,
                 stride = 2,
                 padding = 1
