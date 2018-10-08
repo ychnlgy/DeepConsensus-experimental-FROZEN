@@ -25,24 +25,24 @@ class D_expt(Base):
             torch.nn.BatchNorm2d(32),
             
             # 14 -> 14
-            torch.nn.Conv2d(32, 32, 3, padding=1, stride=1),
+            torch.nn.Conv2d(32, 64, 3, padding=1, stride=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
-                    tailsize = 32,
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 1,
                     dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 16,
-                    tailsize = 8,
+                    headsize = 64,
+                    bodysize = 32,
+                    tailsize = 16,
                     layers = 2,
                     dropout = 0.2,
                     bias = False
@@ -52,22 +52,22 @@ class D_expt(Base):
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(8),
+            torch.nn.BatchNorm2d(16),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 8,
-                    bodysize = 16,
-                    tailsize = 16,
+                    headsize = 16,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 16,
-                    tailsize = 8,
+                    headsize = 32,
+                    bodysize = 32,
+                    tailsize = 16,
                     layers = 1,
                     dropout = 0.2,
                     bias = False
@@ -77,21 +77,21 @@ class D_expt(Base):
                 padding = 1
             ),
             
-            torch.nn.BatchNorm2d(8),
+            torch.nn.BatchNorm2d(16),
             
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 8,
-                    bodysize = 16,
-                    tailsize = 16,
+                    headsize = 16,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     dropout = 0.2,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 16,
+                    headsize = 32,
+                    bodysize = 32,
                     tailsize = classes,
                     layers = 1,
                     dropout = 0.2,
