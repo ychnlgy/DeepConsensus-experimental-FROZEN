@@ -47,9 +47,9 @@ class D_expt(Base):
                     dropout = 0.2,
                     bias = False
                 ),
-                kernel = 2,
+                kernel = 3,
                 stride = 2,
-                padding = 0
+                padding = 1
             ),
             
             torch.nn.BatchNorm2d(8),
@@ -72,9 +72,9 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = False
                 ),
-                kernel = 2,
+                kernel = 3,
                 stride = 2,
-                padding = 0
+                padding = 1
             ),
             
             torch.nn.BatchNorm2d(4),
