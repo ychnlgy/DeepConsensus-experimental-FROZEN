@@ -14,7 +14,7 @@ class D_expt(Base):
         return torch.nn.Sequential( # Parameter count: 219882
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, 256, 5, padding=2, stride=1),
+            torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
             torch.nn.AvgPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(256),
