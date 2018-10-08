@@ -36,6 +36,7 @@ class D_30K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
+                channels = 32,
                 kernel = 3,
                 stride = 2,
                 padding = 1
@@ -61,6 +62,7 @@ class D_30K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
+                channels = 32,
                 kernel = 3,
                 stride = 2,
                 padding = 1
@@ -86,6 +88,7 @@ class D_30K(Base):
                     dropout = 0.2,
                     bias = True
                 ),
+                channels = 32,
                 kernel = 3,
                 stride = 2,
                 padding = 1

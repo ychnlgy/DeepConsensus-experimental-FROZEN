@@ -6,7 +6,7 @@ import misc
 
 from Models import DistillationNetwork28or32, Cnn28or32
 
-def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, **dataset_kwargs):
+def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
     epochs = int(epochs)
     cycle = int(cycle)
@@ -15,6 +15,7 @@ def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1
     rest = float(rest)
     classic = int(classic)
     datalimit = float(datalimit)
+    showparams = int(showparams)
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
@@ -34,7 +35,7 @@ def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1
     
     print_("Model parameters: %d" % model.paramcount(), silent)
     
-    if not silent:
+    if showparams:
         if input("Continue? [y/n] ") != "y":
             raise SystemExit
     
