@@ -15,24 +15,24 @@ class D_expt(Base):
             
             # 28 -> 28
             torch.nn.Conv2d(channels, 256, 3, padding=1, stride=1),
-            torch.nn.ReLU(),
+            torch.nn.PReLU(),
             torch.nn.BatchNorm2d(256),
             
             # 28 -> 14
-            torch.nn.Conv2d(256, 128, 3, padding=1, stride=1),
+            torch.nn.Conv2d(256, 64, 3, padding=1, stride=1),
             torch.nn.AvgPool2d(2),
-            torch.nn.ReLU(),
-            torch.nn.BatchNorm2d(128),
+            torch.nn.PReLU(),
+            torch.nn.BatchNorm2d(64),
             
             # 14 -> 14
-            torch.nn.Conv2d(128, 64, 3, padding=1, stride=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.Conv2d(64, 32, 3, padding=1, stride=1),
+            torch.nn.PReLU(),
+            torch.nn.BatchNorm2d(32),
             
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
+                    headsize = 32,
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
