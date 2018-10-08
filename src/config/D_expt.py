@@ -26,7 +26,7 @@ class D_expt(Base):
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
-                    dropout = 0.2,
+                    dropout = 0.0,
                     bias = False
                 ),
                 summarizer = models.DenseNet(
@@ -34,7 +34,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 32,
                     layers = 2,
-                    dropout = 0.2,
+                    dropout = 0.0,
                     bias = False
                 ),
                 kernel = 3,
@@ -59,7 +59,7 @@ class D_expt(Base):
                     bodysize = 64,
                     tailsize = 16,
                     layers = 1,
-                    dropout = 0.1,
+                    dropout = 0.0,
                     bias = False
                 ),
                 kernel = 3,
@@ -84,7 +84,7 @@ class D_expt(Base):
                     bodysize = 32,
                     tailsize = classes,
                     layers = 1,
-                    dropout = 0.1,
+                    dropout = 0.0,
                     bias = False
                 ),
                 kernel = 4,
