@@ -29,9 +29,9 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = initial_channels,
-                    bodysize = 128,
+                    bodysize = 256,
                     tailsize = 128,
-                    layers = 1,
+                    layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
