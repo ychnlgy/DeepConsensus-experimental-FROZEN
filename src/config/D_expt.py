@@ -12,7 +12,7 @@ class D_expt(Base):
 
     def create_net(self, classes, channels):
     
-        initial_channels = 96 * 3
+        initial_channels = 100 * 3
     
         return torch.nn.Sequential( # Parameter count: 79650
             
@@ -62,19 +62,19 @@ class D_expt(Base):
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
-                    tailsize = 32,
+                    tailsize = 64,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 )
             ),
             
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 32,
+                    headsize = 64,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
