@@ -12,7 +12,7 @@ class D_expt(Base):
 
     def create_net(self, classes, channels):
     
-        initial_channels = 64 * 3
+        initial_channels = 96 * 3
     
         return torch.nn.Sequential( # Parameter count: 79650
             
