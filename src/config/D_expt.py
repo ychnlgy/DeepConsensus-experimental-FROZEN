@@ -107,9 +107,9 @@ class D_expt(Base):
                 pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 32,
                     tailsize = classes,
-                    layers = 1,
+                    layers = 2,
                     dropout = 0.1,
                     bias = True
                 )
