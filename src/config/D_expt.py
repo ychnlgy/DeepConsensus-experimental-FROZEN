@@ -35,7 +35,7 @@ class D_expt(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                pool = torch.nn.MaxPool2d(2),
+                pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -58,7 +58,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.MaxPool2d(2),
+                pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
