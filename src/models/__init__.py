@@ -9,3 +9,4 @@ from .Savable import Savable
 from .DenseNet import DenseNet
 from .InfoConv import InfoConv
 from .DistillationLayer import DistillationLayer
+from .ResNet import ResNet

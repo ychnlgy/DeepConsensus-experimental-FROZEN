@@ -12,31 +12,35 @@ class D_expt(Base):
 
     def create_net(self, classes, channels):
     
-        initial_channels = 256 * 3
+        initial_channels = 128 * 3
     
         return torch.nn.Sequential( # Parameter count: 79650
             
             # 28 -> 28
-            torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(initial_channels),
+            models.ResNet(
+                kernelseq = [1, 3, 1],
+                headsize = channels,
+                bodysize = initial_channels,
+                tailsize = 256,
+                layers = 8
+            ),
             
             # 28 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = initial_channels,
+                    headsize = 256,
                     bodysize = 256,
                     tailsize = 128,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
-                    bodysize = 256,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 )
