@@ -1,0 +1,60 @@
+import torch
+
+from .Base import Base
+
+import models
+
+class C_expt(Base):
+
+    @staticmethod
+    def get_paramid():
+        return "expt"
+
+    def create_net(self, classes, channels):
+    
+        initial_channels = 64 * 3
+    
+        return torch.nn.Sequential( # Parameter count:
+            
+            # 28 -> 28
+            models.ResNet(
+                kernelseq = [3],
+                headsize = channels,
+                bodysize = initial_channels,
+                tailsize = initial_channels,
+                layers = 8
+            ),
+            
+            # 28 -> 14
+            torch.nn.Conv2d(initial_channels, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.MaxPool2d(2),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(64, 32, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.MaxPool2d(2),
+            torch.nn.BatchNorm2d(32),
+            
+            # 7 -> 4
+            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.AvgPool2d(2),
+            torch.nn.BatchNorm2d(32),
+            
+            # 4 -> 1
+            torch.nn.Conv2d(32, 16, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.AvgPool2d(4),
+            
+            models.Reshape(16),
+            models.DenseNet(
+                headsize = 16,
+                bodysize = 32,
+                tailsize = classes,
+                layers = 2,
+                dropout = 0.1,
+                bias = True
+            )
+        )
