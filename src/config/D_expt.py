@@ -79,7 +79,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.AvgPool2d(2),
+                pool = torch.nn.AvgPool2d(3, padding=1, stride=2),
                 summarizer = models.DenseNet(
                     headsize = 32,
                     bodysize = 32,
