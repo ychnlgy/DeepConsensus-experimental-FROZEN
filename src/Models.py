@@ -33,11 +33,7 @@ class Cnn28or32(Base):
     def get_nets(self):
         return [
             config.Random,
-            config.C_30K,
-            config.C_150K,
-            config.C_350K,
-            config.C_500K,
-            config.C_expt
+            config.C_100K,
         ]
 
 class DistillationNetwork28or32(Base):
@@ -51,10 +47,5 @@ class DistillationNetwork28or32(Base):
     
     def get_nets(self):
         return [
-            config.D_30K,
-            config.D_150K,
-            config.D_350K,
-            config.D_450K,
-            config.D_500K,
-            config.D_expt
+            config.D_100K,
         ]

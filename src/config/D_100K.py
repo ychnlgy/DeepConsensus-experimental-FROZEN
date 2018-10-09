@@ -4,7 +4,7 @@ from .Base import Base
 
 import models
 
-class D_expt(Base):
+class D_100K(Base):
 
     @staticmethod
     def get_paramid():
