@@ -1,7 +1,5 @@
 import torch
 
-import misc
-
 class ResBlock(torch.nn.Module):
     
     def __init__(self, kernelseq, headsize, bodysize, tailsize):
