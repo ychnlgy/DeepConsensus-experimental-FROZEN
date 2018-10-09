@@ -38,15 +38,16 @@ class C_expt(Base):
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-            torch.nn.Conv2d(64, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 32, 3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
-            torch.nn.AvgPool2d(3, padding=1, stride=2),
+            #torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(32, 32, 4, padding=0),
             torch.nn.LeakyReLU(),
-            torch.nn.AvgPool2d(4),
+            #torch.nn.AvgPool2d(4),
+            torch.nn.BatchNorm2d(32),
             
             models.Reshape(32),
             models.DenseNet(
