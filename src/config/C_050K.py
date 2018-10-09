@@ -4,17 +4,17 @@ from .Base import Base
 
 import models
 
-class D_expt(Base):
+class C_050K(Base):
 
     @staticmethod
     def get_paramid():
-        return "expt"
+        return "050K"
 
     def create_net(self, classes, channels):
     
         initial_channels = 96 * 3
     
-        return torch.nn.Sequential( # Parameter count: 49378
+        return torch.nn.Sequential( # Parameter count: 51010
             
             # 28 -> 28
             models.ResNet(
@@ -43,25 +43,15 @@ class D_expt(Base):
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
-            models.DistillationLayer(
-                interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = 64,
-                    layers = 1,
-                    dropout = 0.1,
-                    bias = True
-                ),
-                pool = torch.nn.AvgPool2d(4),
-                summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
-                    tailsize = classes,
-                    layers = 1,
-                    dropout = 0.1,
-                    bias = True
-                )
-            ),
+            torch.nn.AvgPool2d(4),
             
-            models.Reshape(classes)
+            models.Reshape(32),
+            models.DenseNet(
+                headsize = 32,
+                bodysize = 64,
+                tailsize = classes,
+                layers = 2,
+                dropout = 0.1,
+                bias = True
+            )
         )
