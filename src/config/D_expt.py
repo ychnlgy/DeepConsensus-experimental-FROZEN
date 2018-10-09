@@ -59,6 +59,8 @@ class D_expt(Base):
                 )
             ),
             
+            torch.nn.BatchNorm2d(core_channels//2),
+            
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
