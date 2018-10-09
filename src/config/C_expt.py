@@ -33,7 +33,7 @@ class C_expt(Base):
             torch.nn.Conv2d(core_channels, core_channels*2, 3, padding=1, groups=4),
             torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(3, stride=2, padding=1),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(core_channels*2),
             
             # 4 -> 1
             torch.nn.Conv2d(core_channels*2, 64, 3, padding=1, groups=8),
