@@ -42,24 +42,24 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = initial_channels,
-                    bodysize = initial_channels,
-                    tailsize = initial_channels,
+                    bodysize = core_channels,
+                    tailsize = core_channels,
                     layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
                 summarizer = models.DenseNet(
-                    headsize = initial_channels,
-                    bodysize = core_channels,
-                    tailsize = core_channels//2,
+                    headsize = core_channels,
+                    bodysize = core_channels//2,
+                    tailsize = core_channels//4,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
                 )
             ),
             
-            torch.nn.BatchNorm2d(core_channels//2),
+            torch.nn.BatchNorm2d(core_channels//4),
             
             # 4 -> 1
             models.DistillationLayer(
