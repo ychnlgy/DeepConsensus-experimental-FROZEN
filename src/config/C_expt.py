@@ -12,7 +12,7 @@ class C_expt(Base):
 
     def create_net(self, classes, channels):
     
-        core_channels = 64
+        core_channels = 128
         initial_channels = core_channels * channels
     
         return torch.nn.Sequential( # Parameter count: 49378
@@ -30,21 +30,21 @@ class C_expt(Base):
             torch.nn.BatchNorm2d(core_channels),
             
             # 7 -> 4
-            torch.nn.Conv2d(core_channels, 32, 3, padding=1, groups=1),
+            torch.nn.Conv2d(core_channels, 64, 3, padding=1, groups=2),
             torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(3, stride=2, padding=1),
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
-            torch.nn.Conv2d(32, 16, 3, padding=1, groups=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=2),
             torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(4),
-            torch.nn.BatchNorm2d(16),
+            torch.nn.BatchNorm2d(64),
             
-            models.Reshape(16),
+            models.Reshape(64),
             models.DenseNet(
-                headsize = 16,
-                bodysize = 32,
+                headsize = 64,
+                bodysize = 128,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.1,
