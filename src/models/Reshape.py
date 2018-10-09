@@ -12,6 +12,7 @@ class Reshape(torch.nn.Module):
         self.size = size
     
     def forward(self, X):
+        print(X.shape)
         X = self.make_contiguous(X)
         return X.view(len(X), *self.size)
     
