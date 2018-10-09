@@ -40,7 +40,7 @@ class C_expt(Base):
             # 7 -> 4
             torch.nn.Conv2d(32, 32, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.AvgPool2d(2),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
