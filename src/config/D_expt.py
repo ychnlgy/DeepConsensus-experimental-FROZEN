@@ -14,7 +14,7 @@ class D_expt(Base):
     
         initial_channels = 96 * 3
     
-        return torch.nn.Sequential( # Parameter count: 98274
+        return torch.nn.Sequential( # Parameter count: 49378
             
             # 28 -> 28
             models.ResNet(

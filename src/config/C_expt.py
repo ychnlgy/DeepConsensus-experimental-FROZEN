@@ -22,23 +22,23 @@ class C_expt(Base):
                 headsize = channels,
                 bodysize = initial_channels,
                 tailsize = initial_channels,
-                layers = 8
+                layers = 4
             ),
             
             # 28 -> 14
-            torch.nn.Conv2d(initial_channels, 64, 3, padding=1, groups=4),
+            torch.nn.Conv2d(initial_channels, 32, 3, padding=1, groups=4),
             torch.nn.LeakyReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(32),
             
             # 14 -> 7
-            torch.nn.Conv2d(64, 64, 3, padding=1, groups=2),
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=2),
             torch.nn.LeakyReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(32),
             
             # 7 -> 4
-            torch.nn.Conv2d(64, 32, 3, padding=1, stride=2, groups=2),
+            torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
