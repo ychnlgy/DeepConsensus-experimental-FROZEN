@@ -14,7 +14,7 @@ class D_expt(Base):
     
         initial_channels = 128 * 3
     
-        return torch.nn.Sequential( # Parameter count: 6474
+        return torch.nn.Sequential( # Parameter count: 79650
             
             # 28 -> 28
             torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
@@ -31,7 +31,7 @@ class D_expt(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 128,
@@ -55,7 +55,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
@@ -79,7 +79,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
+                pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 32,
                     bodysize = 32,
@@ -103,7 +103,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.AvgPool2d(4, stride=1, padding=0),
+                pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
                     headsize = 32,
                     bodysize = 16,
