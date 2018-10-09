@@ -23,6 +23,10 @@ class ResNet(torch.nn.Module):
         self.blocks = torch.nn.ModuleList(blocks)
 
     def forward(self, X):
+        N, C, W, H = X.size()
+        d, r = divmod(self.bodysize, C)
+        assert r == 0
+        X = X.repeat(1, d, 1, 1)
         for block in self.blocks[:-1]:
             X = block(X) + X
         return self.blocks[-1](X)
