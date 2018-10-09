@@ -35,7 +35,7 @@ class D_expt(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
+                pool = torch.nn.MaxPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -58,7 +58,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
+                pool = torch.nn.MaxPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -81,7 +81,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 3, padding=1, stride=2, groups=128),
+                pool = torch.nn.AvgPool2d(3, padding=1, stride=2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -104,7 +104,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 4, groups=128),
+                pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 64,
