@@ -18,7 +18,7 @@ class D_expt(Base):
             
             # 28 -> 28
             models.ResNet(
-                kernelseq = [1, 3, 1],
+                kernelseq = [3],
                 headsize = channels,
                 bodysize = initial_channels,
                 tailsize = initial_channels,
