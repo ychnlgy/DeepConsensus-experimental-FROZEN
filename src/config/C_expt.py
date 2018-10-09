@@ -14,7 +14,7 @@ class C_expt(Base):
     
         initial_channels = 64 * 3
     
-        return torch.nn.Sequential( # Parameter count:
+        return torch.nn.Sequential( # Parameter count: 162K
             
             # 28 -> 28
             models.ResNet(
@@ -32,26 +32,26 @@ class C_expt(Base):
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
-            torch.nn.Conv2d(64, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 32, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
-            torch.nn.Conv2d(32, 16, 3, padding=1),
+            torch.nn.Conv2d(32, 32, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(4),
             
-            models.Reshape(16),
+            models.Reshape(32),
             models.DenseNet(
-                headsize = 16,
-                bodysize = 32,
+                headsize = 32,
+                bodysize = 64,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.1,
