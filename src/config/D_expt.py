@@ -21,14 +21,14 @@ class D_expt(Base):
                 kernelseq = [3],
                 headsize = channels,
                 bodysize = initial_channels,
-                tailsize = 128,
+                tailsize = initial_channels,
                 layers = 8
             ),
             
             # 28 -> 14
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 128,
+                    headsize = initial_channels,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
