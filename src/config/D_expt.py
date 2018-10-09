@@ -12,7 +12,7 @@ class D_expt(Base):
 
     def create_net(self, classes, channels):
     
-        initial_channels = 64 * 3
+        initial_channels = 256 * 3
     
         return torch.nn.Sequential( # Parameter count: 79650
             
@@ -29,87 +29,87 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = initial_channels,
+                    bodysize = 512,
+                    tailsize = 256,
+                    layers = 2,
+                    dropout = 0.2,
+                    bias = True
+                ),
+                pool = torch.nn.AvgPool2d(2),
+                summarizer = models.DenseNet(
+                    headsize = 256,
                     bodysize = 256,
                     tailsize = 128,
                     layers = 1,
                     dropout = 0.2,
                     bias = True
-                ),
-                pool = torch.nn.AvgPool2d(2),
-                summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 128,
-                    tailsize = 64,
-                    layers = 1,
-                    dropout = 0.2,
-                    bias = True
                 )
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(128),
             
             # 14 -> 7
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 128,
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = 256,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 256,
+                    bodysize = 256,
+                    tailsize = 128,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 )
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(128),
             
             # 7 -> 4
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 128,
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = 256,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(3, padding=1, stride=2),
                 summarizer = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 256,
+                    bodysize = 256,
+                    tailsize = 128,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 )
             ),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(128),
             
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 128,
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = 256,
                     layers = 1,
                     dropout = 0.1,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
-                    headsize = 128,
+                    headsize = 256,
                     bodysize = 64,
                     tailsize = classes,
-                    layers = 2,
+                    layers = 3,
                     dropout = 0.1,
                     bias = True
                 )
