@@ -44,15 +44,15 @@ class D_expt(Base):
                     headsize = initial_channels,
                     bodysize = initial_channels*2,
                     tailsize = initial_channels*2,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
                 summarizer = models.DenseNet(
                     headsize = initial_channels*2,
-                    bodysize = initial_channels,
-                    tailsize = core_channels,
+                    bodysize = core_channels,
+                    tailsize = core_channels//2,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
@@ -62,17 +62,17 @@ class D_expt(Base):
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = core_channels,
-                    bodysize = core_channels*2,
-                    tailsize = core_channels*2,
-                    layers = 2,
+                    headsize = core_channels//4,
+                    bodysize = core_channels,
+                    tailsize = core_channels,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
-                    headsize = core_channels*2,
-                    bodysize = core_channels,
+                    headsize = core_channels,
+                    bodysize = core_channels//2,
                     tailsize = classes,
                     layers = 2,
                     dropout = 0.2,
