@@ -31,7 +31,7 @@ class D_expt(Base):
                     headsize = initial_channels,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     dropout = 0.2,
                     bias = True
                 ),
