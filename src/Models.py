@@ -36,7 +36,8 @@ class Cnn28or32(Base):
             config.C_30K,
             config.C_150K,
             config.C_350K,
-            config.C_500K
+            config.C_500K,
+            config.C_expt
         ]
 
 class DistillationNetwork28or32(Base):
