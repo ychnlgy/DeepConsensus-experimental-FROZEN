@@ -12,43 +12,39 @@ class C_expt(Base):
 
     def create_net(self, classes, channels):
     
-        initial_channels = 96 * 3
+        core_channels = 64
+        initial_channels = core_channels * channels
     
-        return torch.nn.Sequential( # Parameter count: 51010
-            
-            # 28 -> 28
-            models.ResNet(
-                kernelseq = [3],
-                headsize = channels,
-                bodysize = initial_channels,
-                tailsize = initial_channels,
-                layers = 4
-            ),
+        return torch.nn.Sequential( # Parameter count: 49378
             
             # 28 -> 14
-            torch.nn.Conv2d(initial_channels, 64, 3, padding=1, groups=8),
+            torch.nn.Conv2d(channels, initial_channels, 3, padding=1, groups=channels),
             torch.nn.LeakyReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(initial_channels),
             
             # 14 -> 7
-            torch.nn.Conv2d(64, 32, 3, padding=1, groups=2),
+            torch.nn.Conv2d(initial_channels, core_channels, 3, padding=1, groups=core_channels),
             torch.nn.LeakyReLU(),
             torch.nn.MaxPool2d(2),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(core_channels),
             
             # 7 -> 4
-            torch.nn.Conv2d(32, 32, 3, padding=1, stride=2, groups=2),
+            torch.nn.Conv2d(core_channels, 32, 3, padding=1, groups=32),
             torch.nn.LeakyReLU(),
+            torch.nn.AvgPool2d(3, stride=2, padding=1),
             torch.nn.BatchNorm2d(32),
             
             # 4 -> 1
+            torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
+            torch.nn.LeakyReLU(),
             torch.nn.AvgPool2d(4),
+            torch.nn.BatchNorm2d(16),
             
-            models.Reshape(32),
+            models.Reshape(16),
             models.DenseNet(
-                headsize = 32,
-                bodysize = 64,
+                headsize = 16,
+                bodysize = 32,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.1,
