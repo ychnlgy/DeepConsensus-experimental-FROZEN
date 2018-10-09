@@ -12,7 +12,7 @@ class D_expt(Base):
 
     def create_net(self, classes, channels):
     
-        core_channels = 64
+        core_channels = 128
         initial_channels = core_channels * channels
     
         return torch.nn.Sequential( # Parameter count: 49378
@@ -33,17 +33,17 @@ class D_expt(Base):
             models.DistillationLayer(
                 interpreter = models.DenseNet(
                     headsize = core_channels,
-                    bodysize = core_channels,
-                    tailsize = core_channels,
+                    bodysize = core_channels*2,
+                    tailsize = core_channels*2,
                     layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(3, stride=2, padding=1),
                 summarizer = models.DenseNet(
-                    headsize = core_channels,
-                    bodysize = 32,
-                    tailsize = 16,
+                    headsize = core_channels*2,
+                    bodysize = core_channels,
+                    tailsize = 64,
                     layers = 2,
                     dropout = 0.2,
                     bias = True
@@ -53,20 +53,20 @@ class D_expt(Base):
             # 4 -> 1
             models.DistillationLayer(
                 interpreter = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 32,
-                    tailsize = 32,
+                    headsize = 64,
+                    bodysize = 128,
+                    tailsize = 128,
                     layers = 1,
-                    dropout = 0.1,
+                    dropout = 0.2,
                     bias = True
                 ),
                 pool = torch.nn.AvgPool2d(4),
                 summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
+                    headsize = 128,
+                    bodysize = 64,
                     tailsize = classes,
-                    layers = 1,
-                    dropout = 0.1,
+                    layers = 2,
+                    dropout = 0.2,
                     bias = True
                 )
             ),
