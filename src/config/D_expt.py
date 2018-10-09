@@ -35,7 +35,7 @@ class D_expt(Base):
                     dropout = 0.2,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 2, groups=128),
+                pool = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -58,7 +58,7 @@ class D_expt(Base):
                     dropout = 0.1,
                     bias = True
                 ),
-                pool = torch.nn.Conv2d(128, 128, 2, groups=128),
+                pool = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
