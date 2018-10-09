@@ -9,6 +9,8 @@ class ResNet(torch.nn.Module):
         
         assert layers > 0
         
+        self.bodysize = bodysize
+        
         if layers == 1:
             blocks = [ResBlock(kernelseq, headsize, bodysize, tailsize)]
         
