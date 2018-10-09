@@ -4,11 +4,11 @@ from .Base import Base
 
 import models
 
-class C_expt(Base):
+class C_100K(Base):
 
     @staticmethod
     def get_paramid():
-        return "expt"
+        return "100K"
 
     def create_net(self, classes, channels):
     
