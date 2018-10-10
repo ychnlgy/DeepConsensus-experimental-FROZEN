@@ -1,7 +1,10 @@
-from .Savable import Savable
 from .Reshape import Reshape
+from .Savable import Savable
+
 from .DenseNet import DenseNet
 
-from .AttentionPool import AttentionPool
-from .DistillationBlock import DistillationBlock
-from .DistillationNet import DistillationNet
+from .SumPool import SumPool
+
+from .DistillBlock import DistillBlock
+from .DistillNet import DistillNet
+
