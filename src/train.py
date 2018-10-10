@@ -11,7 +11,6 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
     trainbatch = int(trainbatch)
     testbatch = int(testbatch)
     rest = float(rest)
-    classic = int(classic)
     datalimit = float(datalimit)
     showparams = int(showparams)
     
