@@ -21,5 +21,5 @@ class DistillationBlock(torch.nn.Module):
     
         out = self.cnn(X)
         atn, out = self.atn(out)
-        lin = self.lin(atn) * self.lam
+        lin = self.lin(atn) #* self.lam
         return out, lin
