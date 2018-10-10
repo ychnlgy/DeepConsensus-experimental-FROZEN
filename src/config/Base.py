@@ -2,10 +2,10 @@ import torch
 
 import models
 
-class Model(models.Savable):
+class Base(models.Savable):
     
     def __init__(self, channels, classes):
-        super(Model, self).__init__()
+        super(Base, self).__init__()
         self.net = self.create_net(channels, classes)
     
     def forward(self, X):
