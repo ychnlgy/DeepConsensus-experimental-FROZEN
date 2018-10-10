@@ -1,17 +1,12 @@
 import torch
 
-class Base(torch.nn.Module):
+import models
 
-    def __init__(self, classes, channels):
-        super(Base, self).__init__()
-        self.net = self.create_net(classes, channels)
+class Model(models.Savable):
+    
+    def __init__(self, channels, classes):
+        super(Model, self).__init__()
+        self.net = self.create_net(channels, classes)
     
     def forward(self, X):
         return self.net(X)
-    
-    @staticmethod
-    def get_paramid():
-        raise NotImplementedError
-    
-    def create_net(self, classes, channels):
-        raise NotImplementedError

@@ -2,11 +2,9 @@
 
 import torch, tqdm, time, numpy
 
-import misc
+import misc, config
 
-from Models import DistillationNetwork28or32, Cnn28or32
-
-def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
     epochs = int(epochs)
     cycle = int(cycle)
@@ -27,11 +25,7 @@ def main(dataset, trainbatch, testbatch, classic, paramid, cycle=10, datalimit=1
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    model = select_netsize(
-        IMAGESIZE,
-        [DistillationNetwork28or32],
-        [Cnn28or32]
-    )[classic](paramid, NUM_CLASSES, CHANNELS)
+    model = config.Model0(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
@@ -120,12 +114,6 @@ def iter_dataloader(dataloader, device, silent):
     bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
     for i, (X, y) in enumerate(bar):
         yield i, X.to(device), y.to(device), bar
-
-def select_netsize(imagesize, DistillNets, Cnns):
-    return [
-        {imsz:N for N in Nets for imsz in N.expected_imagesizes()}[imagesize]
-        for Nets in [DistillNets, Cnns]
-    ]
 
 @misc.main
 def _main(repeat=1, **kwargs):

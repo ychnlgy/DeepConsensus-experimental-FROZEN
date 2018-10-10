@@ -1,0 +1,24 @@
+import torch
+
+class DistillationBlock(torch.nn.Module):
+
+    def __init__(self, cnn, atn, lin):
+        super(DistillationBlock, self).__init__()
+        self.cnn = cnn
+        self.atn = atn
+        self.lin = lin
+        
+    def forward(self, X):
+    
+        '''
+        
+        Returns the 
+            [1] convolution and 
+            [2] prediction using the attended, summed infovectors.
+        
+        '''
+    
+        out = self.cnn(X)
+        atn = self.atn(out)
+        lin = self.lin(atn)
+        return out, lin
