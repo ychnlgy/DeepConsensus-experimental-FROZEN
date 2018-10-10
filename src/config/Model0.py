@@ -13,18 +13,18 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(channels, 96, 3, padding=1, groups=channels),
+                        torch.nn.Conv2d(channels, 48, 3, padding=1, groups=channels),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(96)
+                        torch.nn.BatchNorm2d(48)
                     ),
                     pool = models.SumPool(
                         paramsize = 128,
                         net = models.DenseNet(
                             headsize = 128,
-                            bodysize = 256,
-                            tailsize = 96,
-                            layers = 2,
+                            bodysize = 128,
+                            tailsize = 48,
+                            layers = 1,
                             dropout = 0.0,
                             bias = True
                         ),
@@ -35,18 +35,18 @@ class Model(Base):
                 # 14 -> 7
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(96, 64, 3, padding=1, groups=32),
+                        torch.nn.Conv2d(48, 32, 3, padding=1, groups=16),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(32)
                     ),
                     pool = models.SumPool(
                         paramsize = 64,
                         net = models.DenseNet(
                             headsize = 64,
-                            bodysize = 128,
-                            tailsize = 64,
-                            layers = 2,
+                            bodysize = 32,
+                            tailsize = 32,
+                            layers = 1,
                             dropout = 0.0,
                             bias = True
                         ),
@@ -57,18 +57,18 @@ class Model(Base):
                 # 7 -> 4
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                        torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
                         torch.nn.LeakyReLU(),
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
-                        torch.nn.BatchNorm2d(32)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.SumPool(
                         paramsize = 32,
                         net = models.DenseNet(
                             headsize = 32,
-                            bodysize = 64,
-                            tailsize = 32,
-                            layers = 2,
+                            bodysize = 16,
+                            tailsize = 16,
+                            layers = 1,
                             dropout = 0.0,
                             bias = True
                         ),
@@ -77,12 +77,11 @@ class Model(Base):
                 ),
             ),
             
-            # distilled vector of 96 + 64 + 32
             models.DenseNet(
-                headsize = 96 + 64 + 32,
-                bodysize = 64,
+                headsize = 48 + 32 + 16,
+                bodysize = None,
                 tailsize = classes,
-                layers = 2,
+                layers = 1,
                 dropout = 0.0, # because the vector is distilled
                 bias = True
             )
