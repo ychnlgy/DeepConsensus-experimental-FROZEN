@@ -15,10 +15,10 @@ class SumPool(torch.nn.Module):
     
         weights = self.max(self.net(self.prm))
         weights = weights.view(1, -1, 1, 1)
-        X = self.sig(X) * weights
+        X = self.sig(X* weights) 
         
-        print(X)
-        input()
+        #print(X)
+        #input()
         #if not self.training:
         #    X[X < self.thd] = 0
         #    X[X >=self.thd] = 1
