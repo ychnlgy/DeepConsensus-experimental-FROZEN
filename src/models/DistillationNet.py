@@ -14,7 +14,7 @@ class DistillationNet(torch.nn.Module):
             X, pred = block(X)
             predictions.append(pred)
         
-        predictions = self.net(torch.cat(predictions, dim=0)) # TODO: can add penalty for depth later.
+        predictions = self.net(torch.cat(predictions, dim=1)) # TODO: can add penalty for depth later.
         
         if self.training:
             return self.lam * self.tail(X) + predictions # CNN output matters.
