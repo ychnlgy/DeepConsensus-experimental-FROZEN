@@ -11,8 +11,10 @@ class AttentionPool(torch.nn.Module):
         N, C, W, H = X.size()
         X = X.view(N, C, W*H)
         X = X.transpose(1, 2) # N, W*H, C
-        weights = self.max(self.net(X)) # N, W*H, 1
-        assert weights.size() == (N, W*H)
-        out = (weights * X).sum(dim=1).squeeze(1)
+        weights = self.max(self.net(X))
+        assert weights.size() == (N, W*H, 1)
+        weighted = weights * X
+        out = weighted.sum(dim=1).squeeze(1)
         assert out.size() == (N, C)
-        return out, weights.view(N, 1, W, H)
+        weighted = weighted.transpose(1, 2).view(N, C, W, H)
+        return out, weighted
