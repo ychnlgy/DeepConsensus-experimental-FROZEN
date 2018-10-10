@@ -15,7 +15,8 @@ class DistillationNet(torch.nn.Module):
         
         predictions = sum(predictions) # TODO: can add penalty for depth later.
         
-        if self.training:
-            return self.lam * self.tail(X) + predictions # CNN output matters.
-        else:
-            return predictions # only feature analysis matters.
+        return self.tail(X)
+#        if self.training:
+#            return self.lam * self.tail(X) + predictions # CNN output matters.
+#        else:
+#            return predictions # only feature analysis matters.
