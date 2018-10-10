@@ -8,7 +8,7 @@ class DistillationNet(torch.nn.Module):
     
     def forward(self, X):
         predictions = []
-        for block in blocks:
+        for block in self.blocks:
             X, pred = block(X)
             predictions.append(pred)
         
