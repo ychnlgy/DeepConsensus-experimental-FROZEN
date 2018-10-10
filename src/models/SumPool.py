@@ -17,9 +17,9 @@ class SumPool(torch.nn.Module):
         weights = weights.view(1, -1, 1, 1)
         X = self.sig(X) * weights
         
-        if not self.training:
-            X[X < self.thd] = 0
-            X[X >=self.thd] = 1
+        #if not self.training:
+        #    X[X < self.thd] = 0
+        #    X[X >=self.thd] = 1
         
         X = X.view(N, C, W*H).sum(dim=-1)
         assert X.size() == (N, C)
