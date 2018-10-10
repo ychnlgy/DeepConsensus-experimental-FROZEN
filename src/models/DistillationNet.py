@@ -1,7 +1,7 @@
 import torch
 
 class DistillationNet(torch.nn.Module):
-    def __init__(self, tail, *blocks):
+    def __init__(self, *blocks, tail=None):
         super(DistillationNet, self).__init__()
         self.tail = tail
         self.blocks = torch.nn.ModuleList(blocks)
