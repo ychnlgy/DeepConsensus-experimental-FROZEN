@@ -73,7 +73,7 @@ class Model(Base):
                     bias = True
                 ),
                 
-                weight = 0.5
+                weight = 0.3
             
             ),
             
@@ -107,45 +107,17 @@ class Model(Base):
                     bias = True
                 ),
                 
-                weight = 0.25
-            
-            ),
-            
-            models.DistillationBlock(
-            
-                # 4 -> 1
-                cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.AvgPool2d(4),
-                    torch.nn.BatchNorm2d(16)
-                ),
-                
-                atn = models.AttentionPool(
-                    net = models.DenseNet(
-                        headsize = 16,
-                        bodysize = 1,
-                        tailsize = 1,
-                        layers = 1,
-                        dropout = 0.1,
-                        bias = True
-                    )
-                ),
-                
-                lin = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 16,
-                    tailsize = classes,
-                    layers = 1,
-                    dropout = 0.1,
-                    bias = True
-                ),
-                
-                weight = 0.1
+                weight = 0.10
             
             ),
             
             tail = torch.nn.Sequential(
+            
+                torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
+                torch.nn.LeakyReLU(),
+                torch.nn.AvgPool2d(4),
+                torch.nn.BatchNorm2d(16)
+            
                 models.Reshape(16),
                 models.DenseNet(
                     headsize = 16,
