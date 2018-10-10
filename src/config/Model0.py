@@ -116,7 +116,7 @@ class Model(Base):
                 torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
                 torch.nn.LeakyReLU(),
                 torch.nn.AvgPool2d(4),
-                torch.nn.BatchNorm2d(16)
+                torch.nn.BatchNorm2d(16),
             
                 models.Reshape(16),
                 models.DenseNet(
