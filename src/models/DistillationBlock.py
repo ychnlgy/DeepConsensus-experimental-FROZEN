@@ -2,11 +2,12 @@ import torch
 
 class DistillationBlock(torch.nn.Module):
 
-    def __init__(self, cnn, atn, lin):
+    def __init__(self, cnn, atn, lin, weight):
         super(DistillationBlock, self).__init__()
         self.cnn = cnn
         self.atn = atn
         self.lin = lin
+        self.lam = weight
         
     def forward(self, X):
     
@@ -20,5 +21,5 @@ class DistillationBlock(torch.nn.Module):
     
         out = self.cnn(X)
         atn = self.atn(out)
-        lin = self.lin(atn)
+        lin = self.lin(atn) * self.lam
         return out, lin

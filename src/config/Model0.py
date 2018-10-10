@@ -37,7 +37,9 @@ class Model(Base):
                     layers = 2,
                     dropout = 0.2,
                     bias = True
-                )
+                ),
+                
+                weight = 1
                 
             ),
             
@@ -69,7 +71,9 @@ class Model(Base):
                     layers = 2,
                     dropout = 0.2,
                     bias = True
-                )
+                ),
+                
+                weight = 0.5
             
             ),
             
@@ -101,7 +105,9 @@ class Model(Base):
                     layers = 2,
                     dropout = 0.2,
                     bias = True
-                )
+                ),
+                
+                weight = 0.25
             
             ),
             
@@ -133,7 +139,9 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.1,
                     bias = True
-                )
+                ),
+                
+                weight = 0.1
             
             ),
             
@@ -147,5 +155,7 @@ class Model(Base):
                     dropout = 0.1,
                     bias = True
                 )
-            )
+            ),
+                
+            weight = 0.01
         )
