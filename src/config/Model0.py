@@ -22,9 +22,9 @@ class Model(Base):
                 atn = models.AttentionPool(
                     net = models.DenseNet(
                         headsize = 96,
-                        bodysize = 32,
+                        bodysize = 1,
                         tailsize = 1,
-                        layers = 2,
+                        layers = 1,
                         dropout = 0.2,
                         bias = True
                     )
@@ -32,9 +32,9 @@ class Model(Base):
                 
                 lin = models.DenseNet(
                     headsize = 96,
-                    bodysize = 32,
+                    bodysize = 96,
                     tailsize = classes,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
@@ -56,9 +56,9 @@ class Model(Base):
                 atn = models.AttentionPool(
                     net = models.DenseNet(
                         headsize = 64,
-                        bodysize = 32,
+                        bodysize = 1,
                         tailsize = 1,
-                        layers = 2,
+                        layers = 1,
                         dropout = 0.2,
                         bias = True
                     )
@@ -66,14 +66,14 @@ class Model(Base):
                 
                 lin = models.DenseNet(
                     headsize = 64,
-                    bodysize = 32,
+                    bodysize = 64,
                     tailsize = classes,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 
-                weight = 0.3
+                weight = 0.5
             
             ),
             
@@ -90,9 +90,9 @@ class Model(Base):
                 atn = models.AttentionPool(
                     net = models.DenseNet(
                         headsize = 32,
-                        bodysize = 16,
+                        bodysize = 1,
                         tailsize = 1,
-                        layers = 2,
+                        layers = 1,
                         dropout = 0.2,
                         bias = True
                     )
@@ -100,14 +100,14 @@ class Model(Base):
                 
                 lin = models.DenseNet(
                     headsize = 32,
-                    bodysize = 16,
+                    bodysize = 32,
                     tailsize = classes,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.2,
                     bias = True
                 ),
                 
-                weight = 0.10
+                weight = 0.25
             
             ),
             

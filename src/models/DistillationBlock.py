@@ -20,6 +20,6 @@ class DistillationBlock(torch.nn.Module):
         '''
     
         out = self.cnn(X)
-        atn = self.atn(out)
+        atn, weights = self.atn(out)
         lin = self.lin(atn) * self.lam
-        return out, lin
+        return out*weights, lin
