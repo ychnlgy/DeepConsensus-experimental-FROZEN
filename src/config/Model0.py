@@ -11,7 +11,7 @@ class Model(Base):
             models.DistillNet(
             
                 # 28 -> 14
-                models.DistillationBlock(
+                models.DistillBlock(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(channels, 96, 3, padding=1, groups=channels),
                         torch.nn.LeakyReLU(),
@@ -33,7 +33,7 @@ class Model(Base):
                 ),
                 
                 # 14 -> 7
-                models.DistillationBlock(
+                models.DistillBlock(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(96, 64, 3, padding=1, groups=32),
                         torch.nn.LeakyReLU(),
@@ -55,7 +55,7 @@ class Model(Base):
                 ),
                 
                 # 7 -> 4
-                models.DistillationBlock(
+                models.DistillBlock(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
                         torch.nn.LeakyReLU(),
