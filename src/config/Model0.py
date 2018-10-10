@@ -13,9 +13,9 @@ class Model(Base):
             
                 # 28 -> 14
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(channels, 96, 3, padding=1, groups=channels),
+                    torch.nn.Conv2d(channels, 96, 3, padding=1, groups=channels, stride=2),
                     torch.nn.LeakyReLU(),
-                    torch.nn.MaxPool2d(2),
+                    #torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(96)
                 ),
                 
@@ -47,9 +47,9 @@ class Model(Base):
             
                 # 14 -> 7
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(96, 64, 3, padding=1, groups=32),
+                    torch.nn.Conv2d(96, 64, 3, padding=1, groups=32, stride=2),
                     torch.nn.LeakyReLU(),
-                    torch.nn.MaxPool2d(2),
+                    #torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(64)
                 ),
                 
@@ -81,9 +81,9 @@ class Model(Base):
             
                 # 7 -> 4
                 cnn = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32, stride=2),
                     torch.nn.LeakyReLU(),
-                    torch.nn.AvgPool2d(3, padding=1, stride=2),
+                    #torch.nn.AvgPool2d(3, padding=1, stride=2),
                     torch.nn.BatchNorm2d(32)
                 ),
                 
@@ -111,25 +111,25 @@ class Model(Base):
             
             ),
             
-            tail = torch.nn.Sequential(
-            
-                torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
-                torch.nn.LeakyReLU(),
-                torch.nn.AvgPool2d(4),
-                torch.nn.BatchNorm2d(16),
-            
-                models.Reshape(16),
-                models.DenseNet(
-                    headsize = 16,
-                    bodysize = 32,
-                    tailsize = classes,
-                    layers = 2,
-                    dropout = 0.1,
-                    bias = True
-                )
-            ),
-                
-            weight = 0.01,
+#            tail = torch.nn.Sequential(
+#            
+#                torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
+#                torch.nn.LeakyReLU(),
+#                torch.nn.AvgPool2d(4),
+#                torch.nn.BatchNorm2d(16),
+#            
+#                models.Reshape(16),
+#                models.DenseNet(
+#                    headsize = 16,
+#                    bodysize = 32,
+#                    tailsize = classes,
+#                    layers = 2,
+#                    dropout = 0.1,
+#                    bias = True
+#                )
+#            ),
+#                
+#            weight = 0.01,
             
             net = models.DenseNet(
                 headsize = 96,
