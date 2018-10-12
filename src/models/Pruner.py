@@ -67,7 +67,7 @@ class Pruner(torch.nn.Module):
             Updates weights for selecting which channels to zero out.
         
         '''
-        self.prune_num += 1
+        
         
         if self.prune_num % self.prune_rest == 0:
             diff = self.find_correlations()
@@ -83,6 +83,7 @@ class Pruner(torch.nn.Module):
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
             else:
                 print("No pruning occurred.")
+        self.prune_num += 1
     
     # === PRIVATE ===
     

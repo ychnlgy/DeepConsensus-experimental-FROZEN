@@ -63,7 +63,7 @@ class Model(Base):
                 bodysize = 256,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.0, # because the vector is distilled
+                dropout = 0.2, # because the vector is distilled
                 bias = True
             )
         )
