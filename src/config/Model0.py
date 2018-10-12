@@ -4,7 +4,7 @@ import models
 
 from .Base import Base
 
-PRUNE = 7
+PRUNE = 5
 
 class Model(Base):
 
