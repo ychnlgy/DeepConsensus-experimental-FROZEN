@@ -73,7 +73,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         headsize = model.paramcount(),
         bodysize = 1024,
         tailsize = 1,
-        layers = 3,
+        layers = 2,
         dropout = 0.2,
         bias = True
     ))
