@@ -50,6 +50,8 @@ class Pruner(torch.nn.Module):
             self.prune()
             self.tracked = False
         
+        print(self.weights.size(), X.size(), self.miu.size())
+        input()
         X = self.weights * X + (1 - self.weights) * self.miu
         counted = self.counter(X)
         
