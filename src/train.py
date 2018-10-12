@@ -90,6 +90,8 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(split, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
+    iter_validloader = infinite(iter_dataloader(validloader, device, silent=True))
+    
     lossf = torch.nn.CrossEntropyLoss().to(device)
     lossd = torch.nn.L1Loss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
@@ -103,6 +105,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     for epoch in range(PRETRAIN):
         
         c = s = n = 0.0
+        v = w = m = 0.0
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
@@ -121,38 +124,29 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             loss.backward()
             optimizer.step()
             
-            if i % cycle == 0:
-                bar.set_description("[Pretraining %d/%d] %.3f" % (epoch+1, PRETRAIN, s/n))
-        
-        # Update the discriminator
+            # Update the discriminator
             
-        model.eval()
-        
-        vscore = vc = vn = 0.0
+            model.eval()
             
-        for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
-        
+            j, Xv, yv, barv = next(iter_validloader)
             yh = model(Xv)
-            lossv = lossf(yh, yv)
-            vscore += lossv
-            vn += len(yv)
-            vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
+            loss2 = lossf(yh, yv)
+            v += loss2.item()
+            m += 1.0
+            w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
             
-            if j % cycle == 0:
-                barv.set_description(" ---- <Validation> %.3f" % (vc/vn))
+            loss3 = lossd(loss2, loss)
+            discoptim.zero_grad()
+            loss3.backward()
+            discoptim.step()
+            
+            if i % cycle == 0:
+                bar.set_description("[Pretraining %d/%d] %.3f (%.3f validation)" % (epoch+1, PRETRAIN, s/n, w/m))
         
-        vscore /= vn
-        
-        score = discr()
-        dscr = lossd(score, vscore)
-        
-        discoptim.zero_grad()
-        dscr.backward()
-        discoptim.step()
-    
     for epoch in iterepochs(epochs):
         
         c = s = n = 0.0
+        v = w = m = 0.0
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
@@ -161,44 +155,36 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             model.train()
             
             yh = model(X)
-            loss = lossf(yh, y) + discr() # NOTE: Here is the new loss function
+            loss1 = lossf(yh, y)
             
             c += loss.item()
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
             optimizer.zero_grad()
-            loss.backward()
+            (loss1 + discr()).backward() # NOTE: new loss
             optimizer.step()
             
-            if i % cycle == 0:
-                bar.set_description("[Iteration %d] %.3f" % (epoch, s/n))
-        
-        # Update the discriminator
+            # Update the discriminator
             
-        model.eval()
-        
-        vscore = vc = vn = 0.0
+            model.eval()
             
-        for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
-        
+            j, Xv, yv, barv = next(iter_validloader)
             yh = model(Xv)
-            lossv = lossf(yh, yv)
-            vscore += lossv
-            vn += len(yv)
-            vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
+            loss2 = lossf(yh, yv)
+            v += loss2.item()
+            m += 1.0
+            w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
             
-            if j % cycle == 0:
-                barv.set_description(" -- <Validation> %.3f" % (vc/vn))
+            loss3 = lossd(loss2, loss1)
+            discoptim.zero_grad()
+            loss3.backward()
+            discoptim.step()
+            
+            if i % cycle == 0:
+                bar.set_description("[Epoch %d] %.3f (%.3f validation)" % (epoch, s/n, w/m))
         
-        vscore /= vn
-        
-        score = discr()
-        dscr = lossd(score, vscore)
-        
-        discoptim.zero_grad()
-        dscr.backward()
-        discoptim.step()
+        scheduler.step(w/m)
         
         with torch.no_grad():
             
@@ -217,6 +203,11 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         time.sleep(rest)
     
     return testscore
+
+def infinite(iterator):
+    while True:
+        for i in iterator:
+            yield i
 
 def print_(s, silent):
     if not silent:
