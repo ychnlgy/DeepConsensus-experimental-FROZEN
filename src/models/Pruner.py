@@ -48,9 +48,9 @@ class Pruner(torch.nn.Module):
         self.setup(X)
         
         if not self.training and self.tracked:
-            
+            print(usescore)
             if usescore:
-                print(vscore, self.lowest)
+                
                 if vscore >= self.lowest:
             
                     if self.waited >= self.patience:
