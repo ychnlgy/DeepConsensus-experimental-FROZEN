@@ -121,34 +121,34 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             loss.backward()
             optimizer.step()
             
-            # Update the discriminator
-            
-            model.eval()
-            
-            vscore = vc = vn = 0.0
-                
-            for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
-            
-                yh = model(Xv)
-                lossv = lossf(yh, yv)
-                vscore += lossv
-                vn += len(yv)
-                vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
-                
-                if j % cycle == 0:
-                    barv.set_description(" ---- <Validation> %.3f" % (vc/vn))
-            
-            vscore /= vn
-            
-            score = discr()
-            dscr = lossd(score, vscore)
-            
-            discoptim.zero_grad()
-            dscr.backward()
-            discoptim.step()
-            
             if i % cycle == 0:
                 bar.set_description("[Pretraining %d/%d] %.3f" % (epoch+1, PRETRAIN, s/n))
+        
+        # Update the discriminator
+            
+        model.eval()
+        
+        vscore = vc = vn = 0.0
+            
+        for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
+        
+            yh = model(Xv)
+            lossv = lossf(yh, yv)
+            vscore += lossv
+            vn += len(yv)
+            vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
+            
+            if j % cycle == 0:
+                barv.set_description(" ---- <Validation> %.3f" % (vc/vn))
+        
+        vscore /= vn
+        
+        score = discr()
+        dscr = lossd(score, vscore)
+        
+        discoptim.zero_grad()
+        dscr.backward()
+        discoptim.step()
     
     for epoch in iterepochs(epochs):
         
@@ -171,36 +171,34 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             loss.backward()
             optimizer.step()
             
-            # Update the discriminator
-            
-            model.eval()
-            
-            vscore = vc = vn = 0.0
-                
-            for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
-            
-                yh = model(Xv)
-                lossv = lossf(yh, yv)
-                vscore += lossv
-                vn += len(yv)
-                vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
-                
-                if j % cycle == 0:
-                    barv.set_description(" -- <Validation> %.3f" % (vc/vn))
-            
-            vscore /= vn
-            
-            score = discr()
-            dscr = lossd(score, vscore)
-            
-            discoptim.zero_grad()
-            dscr.backward()
-            discoptim.step()
-            
             if i % cycle == 0:
                 bar.set_description("[Iteration %d] %.3f" % (epoch, s/n))
         
+        # Update the discriminator
+            
         model.eval()
+        
+        vscore = vc = vn = 0.0
+            
+        for j, Xv, yv, barv in iter_dataloader(validloader, device, silent):
+        
+            yh = model(Xv)
+            lossv = lossf(yh, yv)
+            vscore += lossv
+            vn += len(yv)
+            vc += (torch.argmax(yh, dim=1) == yv).float().mean().item()
+            
+            if j % cycle == 0:
+                barv.set_description(" -- <Validation> %.3f" % (vc/vn))
+        
+        vscore /= vn
+        
+        score = discr()
+        dscr = lossd(score, vscore)
+        
+        discoptim.zero_grad()
+        dscr.backward()
+        discoptim.step()
         
         with torch.no_grad():
             
