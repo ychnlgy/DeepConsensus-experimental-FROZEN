@@ -91,6 +91,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             raise SystemExit
     
     model = model.to(device)
+    discr = discr.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(split, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     iter_validloader = infinite(iter_dataloader(validloader, device, silent=True))
