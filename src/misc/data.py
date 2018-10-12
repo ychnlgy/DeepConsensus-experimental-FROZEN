@@ -11,12 +11,11 @@ import torchvision.datasets
 DIR = os.path.dirname(__file__)
 ROOT = os.path.join(DIR, "..", "..", "data")
 
-def create_trainvalid_split(datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch):
+def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch):
     assert 0 <= datalimit <= 1
     n = int(len(train_dat) * datalimit)
     indices = numpy.arange(n)
     numpy.random.shuffle(indices)
-    p = 0.2
     split = int(round(p*n))
     trainidx = torch.from_numpy(indices[split:n])
     valididx = torch.from_numpy(indices[:split])
