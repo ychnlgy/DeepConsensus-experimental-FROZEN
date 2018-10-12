@@ -185,6 +185,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         
         c = s = n = 0.0
         v = w = m = 0.0
+        dloss = 0.0
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
@@ -210,16 +211,16 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             yh = model(Xv)
             loss2 = lossf(yh, yv)
             v += loss2.item()
-            m += 1.0
             w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
             loss3 = discriminator_loss(loss1, loss2, discr)
+            dloss += loss3.item()
             discoptim.zero_grad()
             loss3.backward()
             discoptim.step()
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f (%.3f verr)" % (epoch, s/n, w/m))
+                bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/n, dloss/n))
         
-        scheduler.step(w/m)
+        scheduler.step(w/n)
         
         with torch.no_grad():
             
