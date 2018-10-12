@@ -67,6 +67,7 @@ class Pruner(torch.nn.Module):
             Updates weights for selecting which channels to zero out.
         
         '''
+        self.prune_num += 1
         
         if self.prune_num % self.prune_rest == 0:
             diff = self.find_correlations()
@@ -82,8 +83,6 @@ class Pruner(torch.nn.Module):
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
             else:
                 print("No pruning occurred.")
-    
-        self.prune_num += 1
     
     # === PRIVATE ===
     
@@ -106,11 +105,12 @@ class Pruner(torch.nn.Module):
         '''
         
         local_miu, local_std, global_miu, global_std = self.tracker.stats()
+        weights = self.weights.squeeze()
         local_miu, local_std, global_miu, global_std = (
-            self.weights * local_miu,
-            self.weights * local_std,
-            self.weights * global_miu,
-            self.weights * global_std
+            weights * local_miu,
+            weights * local_std,
+            weights * global_miu,
+            weights * global_std
         )
         #self.miu = global_miu.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
