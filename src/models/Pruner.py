@@ -106,7 +106,7 @@ class Pruner(torch.nn.Module):
         local_miu, local_std, global_miu, global_std = self.tracker.stats()
         #self.miu = global_miu.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
-        dist = (global_std + local_std) * self.delta
+        dist = (global_std) * self.delta
         diff[diff < dist] = 0
         diff[diff >=dist] = 1
         return diff.byte()
@@ -127,6 +127,6 @@ class Pruner(torch.nn.Module):
     
         classes, C = diff.size()
         diff = diff.sum(dim=0)
-        xor = (diff > 0) & (diff < classes)
+        xor = (diff > 0)# & (diff < classes)
         xor = xor.view(1, C, 1, 1)
         return xor
