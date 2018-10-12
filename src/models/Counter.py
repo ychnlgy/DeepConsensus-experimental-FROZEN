@@ -16,8 +16,9 @@ class Counter(torch.nn.Module):
         '''
     
         N, C, W, H = X.size()
-        X = X.view(N, C, W*H)
+        M = W*H
+        X = X.view(N, C, M)
         X = torch.tanh(X)**2
-        X = X.sum(dim=-1)
+        X = X.sum(dim=-1)/M
         assert X.size() == (N, C)
         return X
