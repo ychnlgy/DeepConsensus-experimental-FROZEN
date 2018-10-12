@@ -67,9 +67,14 @@ class Pruner(torch.nn.Module):
         '''
     
         diff = self.find_correlations()
-        diff = self.xor(diff)
+        diff = self.xor(diff).float()
         assert diff.size() == self.weights.size()
+        newd = (self.weights.sum() - diff.sum()).item()
         self.weights = diff
+        
+        assert newd >= 0
+        if newd > 0:
+            print(newd)
     
     # === PRIVATE ===
     
@@ -120,4 +125,4 @@ class Pruner(torch.nn.Module):
         diff = diff.sum(dim=0)
         xor = (diff > 0) & (diff < classes)
         xor = xor.view(1, C, 1, 1)
-        return xor.float()
+        return xor
