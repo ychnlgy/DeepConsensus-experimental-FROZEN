@@ -62,7 +62,7 @@ class Model(Base):
                 headsize = 128*channels + 128 + 64,
                 bodysize = 256,
                 tailsize = classes,
-                layers = 3,
+                layers = 2,
                 dropout = 0.0, # because the vector is distilled
                 bias = True
             )
