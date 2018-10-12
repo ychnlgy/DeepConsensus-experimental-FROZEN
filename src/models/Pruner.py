@@ -65,7 +65,7 @@ class Pruner(torch.nn.Module):
                     self.lowest = vscore
                     self.waited = 0
             
-            self.tracker.reset()
+                self.tracker.reset()
 
             assert labels is not None
             self.tracker(counted, labels)
