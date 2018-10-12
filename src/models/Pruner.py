@@ -70,8 +70,6 @@ class Pruner(torch.nn.Module):
         
         '''
         
-        self.prune_num += 1
-        
         if self.prune_num % self.prune_rest == 0:
             diff = self.find_correlations()
             diff = self.xor(diff).float()
@@ -84,6 +82,9 @@ class Pruner(torch.nn.Module):
             assert newd >= 0
             if newd > 0:
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
+    
+        else:
+            self.prune_num += 1
     
     # === PRIVATE ===
     

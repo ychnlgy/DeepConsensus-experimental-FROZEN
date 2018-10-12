@@ -21,7 +21,7 @@ class Model(Base):
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 3
+                        prune_rest = 10
                     )
                 ),
                 
@@ -36,7 +36,7 @@ class Model(Base):
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 3
+                        prune_rest = 10
                     )
                 ),
                 
@@ -51,7 +51,7 @@ class Model(Base):
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 3
+                        prune_rest = 10
                     )
                 ),
             ),
