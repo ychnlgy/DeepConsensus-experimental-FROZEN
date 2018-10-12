@@ -94,7 +94,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     discr = discr.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(split, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
-    iter_validloader = infinite(iter_dataloader(validloader, device, silent=True))
+    iter_validloader = infinite(iter_dataloader, validloader, device, silent=True)
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
@@ -163,13 +163,9 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
-            print(1)
-            
             optimizer.zero_grad()
             (loss1 + discr()).backward(retain_graph=True) # NOTE: new loss
             optimizer.step()
-            
-            print(2)
             
             # Update the discriminator
             
@@ -181,16 +177,12 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             v += loss2.item()
             m += 1.0
             w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
-            
             loss3 = discriminator_loss(loss1, loss2, discr)
             discoptim.zero_grad()
             loss3.backward()
             discoptim.step()
-            
             if i % cycle == 0:
                 bar.set_description("[Epoch %d] %.3f (%.3f verr)" % (epoch, s/n, w/m))
-            
-            print(3)
         
         scheduler.step(w/m)
         
@@ -212,9 +204,9 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     
     return testscore
 
-def infinite(iterator):
+def infinite(fn, *args, **kwargs):
     while True:
-        for i in iterator:
+        for i in fn(*args, **kwargs):
             yield i
 
 def print_(s, silent):
