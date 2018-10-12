@@ -1,6 +1,8 @@
 import torch
 
-class Discriminator(torch.nn.Module):
+from .Savable import Savable
+
+class Discriminator(Savable):
     
     def __init__(self, classifier, net):
         super(Discriminator, self).__init__()
