@@ -6,7 +6,7 @@ from .Base import Base
 
 class Model(Base):
 
-    def create_net(self, channels, classes):
+    def create_net(self, channels, classes, delta):
         return torch.nn.Sequential(
             models.DistillNet(
             
@@ -19,7 +19,7 @@ class Model(Base):
                         torch.nn.BatchNorm2d(48)
                     ),
                     pruner = models.Pruner(
-                        delta = 1,
+                        delta = delta,
                         classes = classes
                     )
                 ),
@@ -33,7 +33,7 @@ class Model(Base):
                         torch.nn.BatchNorm2d(32)
                     ),
                     pruner = models.Pruner(
-                        delta = 1,
+                        delta = delta,
                         classes = classes
                     )
                 ),
@@ -47,7 +47,7 @@ class Model(Base):
                         torch.nn.BatchNorm2d(16)
                     ),
                     pruner = models.Pruner(
-                        delta = 1,
+                        delta = delta,
                         classes = classes
                     )
                 ),

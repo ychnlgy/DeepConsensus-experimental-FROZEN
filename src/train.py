@@ -4,7 +4,7 @@ import torch, tqdm, time, numpy
 
 import misc, config
 
-def main(dataset, trainbatch, testbatch, pretrain=3, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, trainbatch, testbatch, delta, pretrain=3, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
     pretrain = int(pretrain)
     epochs = int(epochs)
@@ -14,6 +14,7 @@ def main(dataset, trainbatch, testbatch, pretrain=3, cycle=10, datalimit=1.0, re
     rest = float(rest)
     datalimit = float(datalimit)
     showparams = int(showparams)
+    delta = float(delta)
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
@@ -25,7 +26,7 @@ def main(dataset, trainbatch, testbatch, pretrain=3, cycle=10, datalimit=1.0, re
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    model = config.Model0(CHANNELS, NUM_CLASSES)
+    model = config.Model0(CHANNELS, NUM_CLASSES, delta)
     
     if showparams:
     
