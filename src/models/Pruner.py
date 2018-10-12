@@ -78,7 +78,7 @@ class Pruner(torch.nn.Module):
             newd = (self.weights.sum() - diff.sum()).item()
             self.weights = diff
             
-            assert newd >= 0
+            #assert newd >= 0
             if newd != 0:
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
             else:
@@ -135,5 +135,5 @@ class Pruner(torch.nn.Module):
     
         classes, C = diff.size()
         diff = diff.sum(dim=0)
-        xor = (diff > 0)# & (diff < classes)
+        xor = (diff > 0) & (diff < classes)
         return xor
