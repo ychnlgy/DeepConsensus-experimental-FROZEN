@@ -77,7 +77,7 @@ class Pruner(torch.nn.Module):
             newd = (self.weights.sum() - diff.sum()).item()
             self.weights = diff
             
-            assert newd >= 0
+            #assert newd >= 0
             if newd > 0:
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
