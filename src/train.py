@@ -150,7 +150,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         
         c = s = n = 0.0
         v = w = m = 0.0
-        
+        print("here")
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
             # Update the model
