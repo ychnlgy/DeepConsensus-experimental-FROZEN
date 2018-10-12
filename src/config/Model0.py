@@ -18,7 +18,7 @@ class Model(Base):
                         torch.nn.Conv2d(channels, 128*channels, 3, padding=1, groups=channels),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(256)
+                        torch.nn.BatchNorm2d(128*channels)
                     ),
                     pruner = models.Pruner(
                         delta = delta,
