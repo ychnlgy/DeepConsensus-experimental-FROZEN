@@ -100,11 +100,11 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         torch.nn.LeakyReLU(),
         torch.nn.BatchNorm1d(8),
         
-        torch.nn.Conv1d(8, 4, 5, stride=2, padding=2, groups=4),
+        torch.nn.Conv1d(8, 1, 5, stride=2, padding=2, groups=4),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm1d(4),
+        torch.nn.BatchNorm1d(1),
         
-        models.Reshape(84),
+        models.Reshape(1700),
         
         models.DenseNet(
             headsize = 84,
