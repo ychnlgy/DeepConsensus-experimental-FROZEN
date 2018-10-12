@@ -20,9 +20,11 @@ class Pruner(torch.nn.Module):
         
     '''
 
-    def __init__(self, delta, classes):
+    def __init__(self, delta, classes, prune_rest):
         super(Pruner, self).__init__()
         self.tracked = False
+        self.prune_rest = prune_rest
+        self.prune_num  = 0
         self.delta = delta
         self.counter = Counter()
         self.tracker = DistributionTracker(classes)
@@ -69,16 +71,20 @@ class Pruner(torch.nn.Module):
         '''
     
         diff = self.find_correlations()
-        diff = self.xor(diff).float()
-        self.tracker.reset()
         
-        assert diff.size() == self.weights.size()
-        newd = (self.weights.sum() - diff.sum()).item()
-        self.weights = diff
+        self.prune_num += 1
         
-        assert newd >= 0
-        if newd > 0:
-            print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
+        if self.prune_num % self.prune_rest == 0:
+            diff = self.xor(diff).float()
+            self.tracker.reset()
+            
+            assert diff.size() == self.weights.size()
+            newd = (self.weights.sum() - diff.sum()).item()
+            self.weights = diff
+            
+            assert newd >= 0
+            if newd > 0:
+                print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
     # === PRIVATE ===
     
