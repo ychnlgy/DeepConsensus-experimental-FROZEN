@@ -10,7 +10,8 @@ class Discriminator(Savable):
         self.net = net
     
     def forward(self):
-        return self.net(self.get_classifierparams())
+        params = self.get_classifierparams().view(1, 1, -1)
+        return self.net(params)
     
     def get_classifierparams(self):
         return torch.cat([

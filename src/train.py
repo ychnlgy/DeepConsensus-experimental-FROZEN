@@ -76,7 +76,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     model = Model(CHANNELS, NUM_CLASSES)
     discr = models.Discriminator(model, torch.nn.Sequential(
     
-        torch.nn.Conv1d(1, 64, 5, stride=2, padding=2),
+        torch.nn.Conv1d(CHANNELS, 64, 5, stride=2, padding=2),
         torch.nn.LeakyReLU(),
         torch.nn.BatchNorm2d(64),
         
