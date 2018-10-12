@@ -4,6 +4,8 @@ import models
 
 from .Base import Base
 
+PRUNE = 5
+
 class Model(Base):
 
     def create_net(self, channels, classes, delta):
@@ -13,54 +15,54 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(channels, 48, 3, padding=1, groups=channels),
+                        torch.nn.Conv2d(channels, 128*channels, 3, padding=1, groups=channels),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(48)
+                        torch.nn.BatchNorm2d(256)
                     ),
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 10
+                        prune_rest = PRUNE
                     )
                 ),
                 
                 # 14 -> 7
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(48, 32, 3, padding=1, groups=16),
+                        torch.nn.Conv2d(128*channels, 128, 3, padding=1, groups=128),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(32)
+                        torch.nn.BatchNorm2d(128)
                     ),
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 10
+                        prune_rest = PRUNE
                     )
                 ),
                 
                 # 7 -> 4
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
+                        torch.nn.Conv2d(128, 64, 3, padding=1, groups=64),
                         torch.nn.LeakyReLU(),
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
-                        torch.nn.BatchNorm2d(16)
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pruner = models.Pruner(
                         delta = delta,
                         classes = classes,
-                        prune_rest = 10
+                        prune_rest = PRUNE
                     )
                 ),
             ),
             
             models.DenseNet(
-                headsize = 48 + 32 + 16,
-                bodysize = None,
+                headsize = 128*channels + 128 + 64,
+                bodysize = 256,
                 tailsize = classes,
-                layers = 1,
+                layers = 3,
                 dropout = 0.0, # because the vector is distilled
                 bias = True
             )

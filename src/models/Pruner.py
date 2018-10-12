@@ -78,8 +78,10 @@ class Pruner(torch.nn.Module):
             self.weights = diff
             
             #assert newd >= 0
-            if newd > 0:
+            if newd != 0:
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
+            else:
+                print("No pruning occurred.")
     
         self.prune_num += 1
     
