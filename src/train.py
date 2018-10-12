@@ -96,7 +96,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            yh = model((X, y, lowest, i == 0))
+            yh = model(X)
             loss = lossf(yh, y)
             c += loss.item()
             n += 1.0
