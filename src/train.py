@@ -78,31 +78,31 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     
         torch.nn.Conv1d(CHANNELS, 64, 5, stride=2, padding=2),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(64),
+        torch.nn.BatchNorm1d(64),
         
         torch.nn.Conv1d(64, 128, 5, stride=2, padding=2, groups=64),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(128),
+        torch.nn.BatchNorm1d(128),
         
         torch.nn.Conv1d(128, 64, 5, stride=2, padding=2, groups=64),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(64),
+        torch.nn.BatchNorm1d(64),
         
         torch.nn.Conv1d(64, 32, 5, stride=2, padding=2, groups=32),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(32),
+        torch.nn.BatchNorm1d(32),
         
         torch.nn.Conv1d(32, 16, 5, stride=2, padding=2, groups=16),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(16),
+        torch.nn.BatchNorm1d(16),
         
         torch.nn.Conv1d(16, 8, 5, stride=2, padding=2, groups=8),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(8),
+        torch.nn.BatchNorm1d(8),
         
         torch.nn.Conv1d(8, 4, 5, stride=2, padding=2, groups=4),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(4),
+        torch.nn.BatchNorm1d(4),
         
         models.Reshape(model.paramcount()//32),
         
