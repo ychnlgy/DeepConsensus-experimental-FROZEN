@@ -189,7 +189,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            for i in range(5):
+            for p in range(5):
                 # Update the model
                 model.train()
                 
