@@ -70,7 +70,8 @@ class Pruner(torch.nn.Module):
         diff = self.xor(diff)
         assert diff.size() == self.weights.size()
         self.weights = diff
-        print("Pruned %d channels." % self.weights.sum().item())
+        print(self.weights.squeeze())
+        #print("Pruned %d channels." % self.weights.sum().item())
     
     # === PRIVATE ===
     
