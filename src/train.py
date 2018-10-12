@@ -47,6 +47,9 @@ class Model(models.Savable):
     def forward(self, X):
         return self.net(X)
 
+def discriminator_loss(loss1, loss2, discr):
+    return ((loss1 - loss2)**2 - discr())**2
+
 def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
     split = float(split)
@@ -93,7 +96,6 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     iter_validloader = infinite(iter_dataloader(validloader, device, silent=True))
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
-    lossd = torch.nn.L1Loss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     discoptim = torch.optim.Adam(discr.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
@@ -114,14 +116,14 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             model.train()
             
             yh = model(X)
-            loss = lossf(yh, y)
+            loss1 = lossf(yh, y)
             
-            c += loss.item()
+            c += loss1.item()
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
             optimizer.zero_grad()
-            loss.backward()
+            loss1.backward()
             optimizer.step()
             
             # Update the discriminator
@@ -135,7 +137,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             m += 1.0
             w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
             
-            loss3 = lossd(loss2, loss)
+            loss3 = discriminator_loss(loss1, loss2, discr)
             discoptim.zero_grad()
             loss3.backward()
             discoptim.step()
@@ -157,7 +159,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             yh = model(X)
             loss1 = lossf(yh, y)
             
-            c += loss.item()
+            c += loss1.item()
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
@@ -176,7 +178,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             m += 1.0
             w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
             
-            loss3 = lossd(loss2, loss1)
+            loss3 = discriminator_loss(loss1, loss2, discr)
             discoptim.zero_grad()
             loss3.backward()
             discoptim.step()
