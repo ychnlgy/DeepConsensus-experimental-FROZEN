@@ -189,6 +189,8 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             
             if i % cycle == 0:
                 bar.set_description("[Epoch %d] %.3f (%.3f verr)" % (epoch, s/n, w/m))
+            
+            print(3)
         
         scheduler.step(w/m)
         
