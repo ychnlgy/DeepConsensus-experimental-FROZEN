@@ -189,19 +189,20 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            # Update the model
-            model.train()
-            
-            yh = model(X)
-            loss1 = lossf(yh, y)
-            
-            c += loss1.item()
-            n += 1.0
-            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
-            
-            optimizer.zero_grad()
-            (loss1 + 0.001*discr()).backward(retain_graph=True) # NOTE: new loss
-            optimizer.step()
+            for i in range(5):
+                # Update the model
+                model.train()
+                
+                yh = model(X)
+                loss1 = lossf(yh, y)
+                
+                c += loss1.item()
+                n += 1.0
+                s += (torch.argmax(yh, dim=1) == y).float().mean().item()
+                
+                optimizer.zero_grad()
+                (loss1 + 0.001*discr()).backward(retain_graph=True) # NOTE: new loss
+                optimizer.step()
             
             # Update the discriminator
             
