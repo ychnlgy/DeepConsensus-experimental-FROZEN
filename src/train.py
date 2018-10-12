@@ -104,10 +104,10 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         torch.nn.LeakyReLU(),
         torch.nn.BatchNorm1d(4),
         
-        models.Reshape(model.paramcount()//32),
+        models.Reshape(84),
         
         models.DenseNet(
-            headsize = model.paramcount()//32,
+            headsize = 84,
             bodysize = 128,
             tailsize = 1,
             layers = 2,
