@@ -46,10 +46,11 @@ class Pruner(torch.nn.Module):
         '''
         
         self.setup(X)
+        counted = self.counter(X)
         
-        if not self.training and self.tracked:
-            print(usescore)
-            if usescore:
+        if self.training:
+        
+            if self.tracked and usescore:
                 
                 if vscore >= self.lowest:
             
@@ -66,10 +67,7 @@ class Pruner(torch.nn.Module):
             
             self.tracker.reset()
             self.tracked = False
-        
-        counted = self.counter(X)
-        
-        if self.training:
+
             assert labels is not None
             self.tracker(counted, labels)
             self.tracked = True
