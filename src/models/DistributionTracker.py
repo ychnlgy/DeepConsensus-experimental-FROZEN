@@ -29,38 +29,6 @@ class DistributionTracker(torch.nn.Module):
         self.add(labels, X)
         self.sqr(labels, X)
     
-    def count(self, labels):
-        ones = torch.ones(len(labels)).to(labels.device)
-        self.num.put_(labels, ones, accumulate=True)
-    
-    def add(self, labels, X):
-        self.miu.put_(self.ind[labels], X, accumulate=True)
-    
-    def sqr(self, labels, X):
-        self.std.put_(self.ind[labels], X**2, accumulate=True)
-    
-    def setup(self, X):
-        N, D = X.size()
-        self.num = torch.zeros(self.c).view(-1, 1).to(X.device)
-        self.miu = torch.zeros(self.c, D).to(X.device)
-        self.std = torch.zeros(self.c, D).to(X.device)
-        
-        ind = torch.arange(self.c).view(-1, 1).repeat(1, D)*D + torch.arange(0, D).view(1, D)
-        self.ind = ind.long().to(X.device)
-        
-        self.switch_setup()
-    
-    def switch_setup(self):
-        self.setup, self._setup = self._setup, self.setup
-
-    def _setup(self, X):
-        return
-        
-    def correct_num(self, num):
-        num = num.clone()
-        num[num <= 0] = 1
-        return num
-    
     def stats(self):
         
         '''
@@ -83,8 +51,41 @@ class DistributionTracker(torch.nn.Module):
         global_miu = self.calc_mean(self.miu.sum(dim=0), total)
         global_std = self.calc_std( self.std.sum(dim=0), total, global_miu)
 
-        self.switch_setup()
         return local_miu, local_std, global_miu, global_std
+    
+    def reset(self):
+        self.setup, self._setup = self._setup, self.setup
+    
+    # === PRIVATE ===
+    
+    def count(self, labels):
+        ones = torch.ones(len(labels)).to(labels.device)
+        self.num.put_(labels, ones, accumulate=True)
+    
+    def add(self, labels, X):
+        self.miu.put_(self.ind[labels], X, accumulate=True)
+    
+    def sqr(self, labels, X):
+        self.std.put_(self.ind[labels], X**2, accumulate=True)
+    
+    def setup(self, X):
+        N, D = X.size()
+        self.num = torch.zeros(self.c).view(-1, 1).to(X.device)
+        self.miu = torch.zeros(self.c, D).to(X.device)
+        self.std = torch.zeros(self.c, D).to(X.device)
+        
+        ind = torch.arange(self.c).view(-1, 1).repeat(1, D)*D + torch.arange(0, D).view(1, D)
+        self.ind = ind.long().to(X.device)
+        
+        self.reset()
+
+    def _setup(self, X):
+        return
+        
+    def correct_num(self, num):
+        num = num.clone()
+        num[num <= 0] = 1
+        return num
     
     def calc_mean(self, miu, num):
         return miu / self.correct_num(num)

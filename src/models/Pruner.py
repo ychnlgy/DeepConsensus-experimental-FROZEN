@@ -55,6 +55,8 @@ class Pruner(torch.nn.Module):
             self.tracker(counted, labels)
             self.tracked = True
         
+        counted = self.normalize(counted)
+        
         return X, counted
     
     def prune(self):
@@ -68,24 +70,28 @@ class Pruner(torch.nn.Module):
     
         diff = self.find_correlations()
         diff = self.xor(diff).float()
+        self.tracker.reset()
+        
         assert diff.size() == self.weights.size()
         newd = (self.weights.sum() - diff.sum()).item()
         self.weights = diff
         
         assert newd >= 0
         if newd > 0:
-            print("Pruned %d/%d channels" % (self.weights.sum(), self.weights.numel()))
+            print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
     # === PRIVATE ===
+    
+    def normalize(self, counted):
+        return (counted - self.miu)/self.std
     
     def setup(self, X):
         N, C, W, H = X.size()
         # all features are considered at first
         self.weights = torch.ones(1, C, 1, 1).to(X.device)
+        self.miu = torch.zeros(1, C, 1, 1).to(X.device)
+        self.std = torch.ones(1, C, 1, 1).to(X.device)
         self.setup = misc.util.do_nothing
-    
-    def reset_tracker(self):
-        return self.tracker.stats()
     
     def find_correlations(self):
         
@@ -98,7 +104,9 @@ class Pruner(torch.nn.Module):
         
         '''
         
-        local_miu, local_std, global_miu, global_std = self.reset_tracker()
+        local_miu, local_std, global_miu, global_std = self.tracker.stats()
+        self.miu = global_miu.view(1, -1, 1, 1)
+        self.std = global_std.view(1, -1, 1, 1)
         global_miu = global_miu.view(1, -1)
         global_std = global_std.view(1, -1)
         diff = (global_miu - local_miu).abs()
