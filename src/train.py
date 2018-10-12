@@ -4,8 +4,9 @@ import torch, tqdm, time, numpy
 
 import misc, config
 
-def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, trainbatch, testbatch, pretrain=3, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
+    pretrain = int(pretrain)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -40,11 +41,9 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
     
-    PRETRAIN = 3
-    
     model.train()
     
-    for epoch in range(1, PRETRAIN+1):
+    for epoch in range(1, pretrain+1):
         
         c = s = n = 0.0
     
@@ -60,7 +59,7 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
             optimizer.step()
             
             if i % cycle == 0:
-                bar.set_description("[Pretraining %d/%d] %.3f" % (epoch, PRETRAIN, s/n))
+                bar.set_description("[Pretraining %d/%d] %.3f" % (epoch, pretrain, s/n))
     
     lowest = float("inf")
     

@@ -119,7 +119,7 @@ class Pruner(torch.nn.Module):
     
         C, D = diff.size()
         diff = diff.sum(dim=1)
-        xor = (diff > 0 & diff < C)
+        xor = (diff > 0) & (diff < C)
         diff[xor] = 1
         diff[1-xor] = 0
         diff = diff.view(1, C, 1, 1)
