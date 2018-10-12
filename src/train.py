@@ -213,6 +213,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
                 yh = model(Xv)
                 loss2 = lossf(yh, yv)
                 v += loss2.item()
+                m += 1.0
                 w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
                 loss3 = discriminator_loss(loss1, loss2, discr)
                 dloss += loss3.item()
@@ -221,9 +222,9 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
                 discoptim.step()
                 
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/n, dloss/n))
+                bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/m, dloss/m))
         
-        scheduler.step(w/n)
+        scheduler.step(w/m)
         
         with torch.no_grad():
             
