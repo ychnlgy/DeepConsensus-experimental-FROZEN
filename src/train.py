@@ -144,7 +144,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             discoptim.step()
             
             if i % cycle == 0:
-                bar.set_description("[Pretraining %d/%d] %.3f (%.3f validation)" % (epoch+1, PRETRAIN, s/n, w/m))
+                bar.set_description("[Pretrain %d/%d] %.3f (%.3f verr)" % (epoch+1, PRETRAIN, s/n, w/m))
         
     for epoch in iterepochs(epochs):
         
@@ -185,7 +185,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             discoptim.step()
             
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f (%.3f validation)" % (epoch, s/n, w/m))
+                bar.set_description("[Epoch %d] %.3f (%.3f verr)" % (epoch, s/n, w/m))
         
         scheduler.step(w/m)
         
