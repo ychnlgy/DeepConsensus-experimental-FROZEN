@@ -115,8 +115,8 @@ class Pruner(torch.nn.Module):
         #self.miu = global_miu.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
         dist = (global_std) * self.delta
-        diff[diff < dist] = 0
-        diff[diff >=dist] = 1
+        diff[diff <=dist] = 0
+        diff[diff > dist] = 1
         return diff.byte()
     
     def xor(self, diff):
