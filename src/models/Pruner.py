@@ -83,8 +83,7 @@ class Pruner(torch.nn.Module):
             if newd > 0:
                 print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
-        else:
-            self.prune_num += 1
+        self.prune_num += 1
     
     # === PRIVATE ===
     
