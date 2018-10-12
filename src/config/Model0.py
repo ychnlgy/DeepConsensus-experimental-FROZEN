@@ -15,10 +15,10 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(channels, 128*channels, 3, padding=1, groups=channels),
+                        torch.nn.Conv2d(channels, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.BatchNorm2d(128*channels)
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pruner = models.Pruner(
                         delta = delta,
@@ -30,7 +30,7 @@ class Model(Base):
                 # 14 -> 7
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(128*channels, 128, 3, padding=1, groups=128),
+                        torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
                         torch.nn.LeakyReLU(),
                         torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(128)
@@ -59,7 +59,7 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 128*channels + 128 + 64,
+                headsize = 64 + 128 + 64,
                 bodysize = 256,
                 tailsize = classes,
                 layers = 2,
