@@ -7,14 +7,10 @@ class Discriminator(Savable):
     def __init__(self, classifier, net):
         super(Discriminator, self).__init__()
         self.classifier = classifier
-        self.params = torch.nn.Parameter(
-            self.get_classifierparams()
-        )
         self.net = net
     
     def forward(self):
-        assert (self.get_classifierparams() - self.params).norm() < 1e-6
-        return self.net(self.params)
+        return self.net(self.get_classifierparams())
     
     def get_classifierparams(self):
         return torch.cat([
