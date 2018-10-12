@@ -80,7 +80,7 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     
     if showparams:
     
-        print_(" === PARAMETERS === ")
+        print_(" === PARAMETERS === ", silent)
         print_("Model        : %d" % model.paramcount(), silent)
         print_("Discriminator: %d" % discr.paramcount(), silent)
     
