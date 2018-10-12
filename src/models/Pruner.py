@@ -89,7 +89,7 @@ class Pruner(torch.nn.Module):
     def setup(self, X):
         N, C, W, H = X.size()
         # all features are considered at first
-        self.weights = torch.ones(1, C, 1, 1).to(X.device)
+        self.weights = torch.ones(C).to(X.device)
         #self.miu = torch.zeros(1, C, 1, 1).to(X.device)
         self.setup = misc.util.do_nothing
     
@@ -127,7 +127,7 @@ class Pruner(torch.nn.Module):
             ByteTensor of shape (classes, C)
         
         Returns:
-            ByteTensor of shape (1, C, 1, 1), mask representing
+            ByteTensor of shape (C), mask representing
             the features that are pertinent for distinguishing
             between the classes.
         
@@ -136,5 +136,4 @@ class Pruner(torch.nn.Module):
         classes, C = diff.size()
         diff = diff.sum(dim=0)
         xor = (diff > 0)# & (diff < classes)
-        xor = xor.view(1, C, 1, 1)
         return xor
