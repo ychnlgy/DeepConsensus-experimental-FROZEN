@@ -4,9 +4,8 @@ import torch, tqdm, time, numpy
 
 import misc, config
 
-def main(dataset, trainbatch, testbatch, delta, pretrain=3, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, trainbatch, testbatch, delta, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
-    pretrain = int(pretrain)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -41,26 +40,6 @@ def main(dataset, trainbatch, testbatch, delta, pretrain=3, cycle=10, datalimit=
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
-    
-    model.train()
-    
-    for epoch in range(1, pretrain+1):
-        
-        c = s = n = 0.0
-    
-        for i, X, y, bar in iter_dataloader(dataloader, device, silent):
-            
-            yh = model(X)
-            loss = lossf(yh, y)
-            c += loss.item()
-            n += 1.0
-            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-            
-            if i % cycle == 0:
-                bar.set_description("[Pretraining %d/%d] %.3f" % (epoch, pretrain, s/n))
     
     lowest = float("inf")
     
