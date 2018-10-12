@@ -50,14 +50,12 @@ class Pruner(torch.nn.Module):
             self.prune()
             self.tracked = False
         
-        X = self.weights * X
+        X = self.weights * X + (1 - self.weights) * self.miu
         counted = self.counter(X)
         
         if self.training and labels is not None:
             self.tracker(counted, labels)
             self.tracked = True
-        
-        counted = self.normalize(counted)
         
         return X, counted
     
@@ -87,9 +85,6 @@ class Pruner(torch.nn.Module):
     
     # === PRIVATE ===
     
-    def normalize(self, counted):
-        return counted#(counted - self.miu)/self.std
-    
     def setup(self, X):
         N, C, W, H = X.size()
         # all features are considered at first
@@ -109,9 +104,9 @@ class Pruner(torch.nn.Module):
         
         '''
         
-        local_miu, local_std, self.miu, self.std = self.tracker.stats()
-        global_miu = self.miu.view(1, -1)
-        global_std = self.std.view(1, -1)
+        local_miu, local_std, global_miu, global_std = self.tracker.stats()
+        self.miu = global_miu.view(1, -1, 1, 1)
+        self.std = global_std.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
         dist = (global_std + local_std) * self.delta
         diff[diff < dist] = 0
