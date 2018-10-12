@@ -69,12 +69,11 @@ class Pruner(torch.nn.Module):
             Updates weights for selecting which channels to zero out.
         
         '''
-    
-        diff = self.find_correlations()
         
         self.prune_num += 1
         
         if self.prune_num % self.prune_rest == 0:
+            diff = self.find_correlations()
             diff = self.xor(diff).float()
             self.tracker.reset()
             
