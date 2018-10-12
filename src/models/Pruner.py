@@ -88,7 +88,7 @@ class Pruner(torch.nn.Module):
     # === PRIVATE ===
     
     def normalize(self, counted):
-        return (counted - self.miu)/self.std
+        return counted#(counted - self.miu)/self.std
     
     def setup(self, X):
         N, C, W, H = X.size()
