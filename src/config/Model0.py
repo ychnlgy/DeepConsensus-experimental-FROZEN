@@ -34,7 +34,7 @@ class Model(Base):
                         torch.nn.BatchNorm2d(32)
                     ),
                     pruner = models.Pruner(
-                        delta = delta*0.5,
+                        delta = delta*0.75,
                         classes = classes,
                         prune_rest = 10
                     )
@@ -49,7 +49,7 @@ class Model(Base):
                         torch.nn.BatchNorm2d(16)
                     ),
                     pruner = models.Pruner(
-                        delta = delta*0.25,
+                        delta = delta*0.33,
                         classes = classes,
                         prune_rest = 10
                     )
