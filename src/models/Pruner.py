@@ -117,7 +117,7 @@ class Pruner(torch.nn.Module):
         
         '''
     
-        C, D = diff.size()
+        classes, C = diff.size()
         diff = diff.sum(dim=1)
         xor = (diff > 0) & (diff < C)
         xor = xor.view(1, C, 1, 1)
