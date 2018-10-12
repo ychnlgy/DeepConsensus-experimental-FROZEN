@@ -18,7 +18,7 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(48)
                     ),
-                    pool = models.Pruner(
+                    pruner = models.Pruner(
                         delta = 1,
                         classes = classes
                     )
@@ -32,7 +32,7 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(32)
                     ),
-                    pool = models.Pruner(
+                    pruner = models.Pruner(
                         delta = 1,
                         classes = classes
                     )
@@ -46,7 +46,7 @@ class Model(Base):
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
                         torch.nn.BatchNorm2d(16)
                     ),
-                    pool = models.Pruner(
+                    pruner = models.Pruner(
                         delta = 1,
                         classes = classes
                     )
