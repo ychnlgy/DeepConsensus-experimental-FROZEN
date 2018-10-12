@@ -48,7 +48,9 @@ class Model(models.Savable):
         return self.net(X)
 
 def discriminator_loss(loss1, loss2, discr):
-    return ((loss1 - loss2)**2 - discr())**2
+    dscr = discr()
+    print(dscr)
+    return ((loss1 - loss2).abs() - dscr).abs()
 
 def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
