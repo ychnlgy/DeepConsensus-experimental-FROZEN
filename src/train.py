@@ -223,7 +223,10 @@ def iterepochs(end):
         i += 1
 
 def iter_dataloader(dataloader, device, silent):
-    bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
+    if silent:
+        bar = dataloader
+    else:
+        bar = tqdm.tqdm(dataloader, ncols=80)
     for i, (X, y) in enumerate(bar):
         yield i, X.to(device), y.to(device), bar
 
