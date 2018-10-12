@@ -50,7 +50,7 @@ class Pruner(torch.nn.Module):
             self.prune()
             self.tracked = False
         
-        X = self.weights * X + (1 - self.weights) * self.miu
+        X = self.weights * X #+ (1 - self.weights) * self.miu
         counted = self.counter(X)
         
         if self.training and labels is not None:
@@ -89,7 +89,7 @@ class Pruner(torch.nn.Module):
         N, C, W, H = X.size()
         # all features are considered at first
         self.weights = torch.ones(1, C, 1, 1).to(X.device)
-        self.miu = torch.zeros(1, C, 1, 1).to(X.device)
+        #self.miu = torch.zeros(1, C, 1, 1).to(X.device)
         self.setup = misc.util.do_nothing
     
     def find_correlations(self):
@@ -104,8 +104,7 @@ class Pruner(torch.nn.Module):
         '''
         
         local_miu, local_std, global_miu, global_std = self.tracker.stats()
-        self.miu = global_miu.view(1, -1, 1, 1)
-        self.std = global_std.view(1, -1, 1, 1)
+        #self.miu = global_miu.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
         dist = (global_std + local_std) * self.delta
         diff[diff < dist] = 0
