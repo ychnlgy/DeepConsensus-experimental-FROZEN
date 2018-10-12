@@ -41,7 +41,7 @@ class DistributionTracker(torch.nn.Module):
     
     def setup(self, X):
         N, D = X.size()
-        self.num = torch.zeros(self.c).view(-1, 1)
+        self.num = torch.zeros(self.c).view(-1, 1).to(X.device)
         self.miu = torch.zeros(self.c, D).to(X.device)
         self.std = torch.zeros(self.c, D).to(X.device)
         
