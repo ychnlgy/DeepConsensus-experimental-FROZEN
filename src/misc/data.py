@@ -184,7 +184,7 @@ def unittest():
     from matplotlib import pyplot
     
     td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=-12, maxtrans=12, minrot=0, maxrot=0)
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=0.7, maxmag=1.3, mintrans=-12, maxtrans=12, minrot=-15, maxrot=15)
     
 #    print("Showing train data")
 #    

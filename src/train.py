@@ -10,33 +10,33 @@ class Model(models.Savable):
         self.net = torch.nn.Sequential(
             
             # 28 -> 14
-            torch.nn.Conv2d(channels, 64, 3, padding=1),
+            torch.nn.Conv2d(channels, 128, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(128),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(128, 64, 3, padding=1, groups=2),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 14 -> 7
-            torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
-            torch.nn.MaxPool2d(2),
+            # 7 -> 4
+            torch.nn.Conv2d(64, 32, 3, padding=1, groups=2),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
-            # 7 -> 4
-            torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
-            torch.nn.AvgPool2d(3, padding=1, stride=2),
+            # 4 -> 1
+            torch.nn.Conv2d(32, 16, 3, padding=1, groups=1),
+            torch.nn.AvgPool2d(4),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(16),
             
-            # 4 -> 1
-            torch.nn.Conv2d(16, 8, 3, padding=1, groups=8),
-            torch.nn.AvgPool2d(4),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(8),
-            
-            models.Reshape(8),
+            models.Reshape(16),
             models.DenseNet(
-                headsize = 8,
-                bodysize = 32,
+                headsize = 16,
+                bodysize = 64,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.1,
