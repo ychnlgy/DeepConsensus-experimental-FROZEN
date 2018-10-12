@@ -46,7 +46,7 @@ class Pruner(torch.nn.Module):
         '''
         
         self.setup(X)
-        counted = self.counter(X*self.weights)
+        counted = self.counter(X)*self.weights
         
         if self.training:
         
@@ -71,7 +71,7 @@ class Pruner(torch.nn.Module):
             self.tracker(counted, labels)
             self.tracked = True
         
-        return X, counted*self.weights
+        return X, counted#*self.weights
     
     def prune(self):
     
