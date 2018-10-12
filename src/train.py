@@ -154,7 +154,6 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
             # Update the model
-            print("jere")
             model.train()
             
             yh = model(X)
@@ -164,9 +163,13 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
+            print(1)
+            
             optimizer.zero_grad()
             (loss1 + discr()).backward(retain_graph=True) # NOTE: new loss
             optimizer.step()
+            
+            print(2)
             
             # Update the discriminator
             
