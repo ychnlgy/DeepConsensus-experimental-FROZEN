@@ -96,12 +96,18 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         torch.nn.LeakyReLU(),
         torch.nn.BatchNorm2d(16),
         
-        torch.nn.Conv1d(16, 1, 5, stride=2, padding=2),
+        torch.nn.Conv1d(16, 8, 5, stride=2, padding=2, groups=8),
         torch.nn.LeakyReLU(),
-        torch.nn.BatchNorm2d(1),
+        torch.nn.BatchNorm2d(8),
+        
+        torch.nn.Conv1d(8, 4, 5, stride=2, padding=2, groups=4),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(4),
+        
+        models.Reshape(model.paramcount()//32),
         
         models.DenseNet(
-            headsize = model.paramcount()//64,
+            headsize = model.paramcount()//32,
             bodysize = 128,
             tailsize = 1,
             layers = 2,
