@@ -5,7 +5,14 @@ class DistillNet(torch.nn.Module):
         super(DistillNet, self).__init__()
         self.blocks = torch.nn.ModuleList(blocks)
     
-    def forward(self, X, labels=None):
+    def forward(self, X_labels):
+        
+        if type(X_labels) == tuple:
+            X, labels = X_labels
+        else:
+            X = X_labels
+            labels = None
+        
         vecs = []
         for block in self.blocks:
             X, vec = block(X, labels)
