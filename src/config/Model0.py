@@ -15,9 +15,9 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(channels, 64, 3, padding=1),
+                        torch.nn.Conv2d(channels, 64, 3, padding=1, stride=2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.MaxPool2d(2),
+                        #torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pruner = models.Pruner(
@@ -30,9 +30,9 @@ class Model(Base):
                 # 14 -> 7
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
+                        torch.nn.Conv2d(64, 128, 3, padding=1, groups=64, stride=2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.MaxPool2d(2),
+                        #torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(128)
                     ),
                     pruner = models.Pruner(
@@ -45,9 +45,9 @@ class Model(Base):
                 # 7 -> 4
                 models.DistillBlock(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(128, 64, 3, padding=1, groups=64),
+                        torch.nn.Conv2d(128, 64, 3, padding=1, groups=64, stride=2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.AvgPool2d(3, padding=1, stride=2),
+                        #torch.nn.AvgPool2d(3, padding=1, stride=2),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pruner = models.Pruner(
