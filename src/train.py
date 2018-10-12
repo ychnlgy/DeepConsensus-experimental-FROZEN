@@ -189,35 +189,37 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            for p in range(5):
-                # Update the model
-                model.train()
-                
-                yh = model(X)
-                loss1 = lossf(yh, y)
-                
-                c += loss1.item()
-                n += 1.0
-                s += (torch.argmax(yh, dim=1) == y).float().mean().item()
-                
-                optimizer.zero_grad()
-                (loss1 + 0.001*discr()).backward(retain_graph=True) # NOTE: new loss
-                optimizer.step()
+            
+            # Update the model
+            model.train()
+            
+            yh = model(X)
+            loss1 = lossf(yh, y)
+            
+            c += loss1.item()
+            n += 1.0
+            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
+            
+            optimizer.zero_grad()
+            (loss1 + 0.001*discr()).backward(retain_graph=True) # NOTE: new loss
+            optimizer.step()
             
             # Update the discriminator
             
             model.eval()
             
-            j, Xv, yv, barv = next(iter_validloader)
-            yh = model(Xv)
-            loss2 = lossf(yh, yv)
-            v += loss2.item()
-            w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
-            loss3 = discriminator_loss(loss1, loss2, discr)
-            dloss += loss3.item()
-            discoptim.zero_grad()
-            loss3.backward()
-            discoptim.step()
+            for p in range(5):
+                j, Xv, yv, barv = next(iter_validloader)
+                yh = model(Xv)
+                loss2 = lossf(yh, yv)
+                v += loss2.item()
+                w += (torch.argmax(yh, dim=1) == yv).float().mean().item()
+                loss3 = discriminator_loss(loss1, loss2, discr)
+                dloss += loss3.item()
+                discoptim.zero_grad()
+                loss3.backward()
+                discoptim.step()
+                
             if i % cycle == 0:
                 bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/n, dloss/n))
         
