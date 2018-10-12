@@ -106,6 +106,12 @@ class Pruner(torch.nn.Module):
         '''
         
         local_miu, local_std, global_miu, global_std = self.tracker.stats()
+        local_miu, local_std, global_miu, global_std = (
+            self.weights * local_miu,
+            self.weights * local_std,
+            self.weights * global_miu,
+            self.weights * global_std
+        )
         #self.miu = global_miu.view(1, -1, 1, 1)
         diff = (global_miu - local_miu).abs()
         dist = (global_std) * self.delta
