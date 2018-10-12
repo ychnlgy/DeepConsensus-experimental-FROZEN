@@ -40,6 +40,23 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
     
+    PRETRAIN = 3
+    
+    for epoch in range(1, PRETRAIN+1): # pretrain
+        for i, X, y, bar in iter_dataloader(dataloader, device, silent):
+            
+            yh = model(X)
+            loss = lossf(yh, y)
+            c += loss.item()
+            n += 1.0
+            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            
+            if i % cycle == 0:
+                bar.set_description("[Pretraining %d/%d] %.3f" % (epoch, PRETRAIN, s/n))
+    
     lowest = float("inf")
     
     for epoch in iterepochs(epochs):
@@ -50,7 +67,7 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            yh = model(X)
+            yh = model(X, y)
             loss = lossf(yh, y)
             c += loss.item()
             n += 1.0

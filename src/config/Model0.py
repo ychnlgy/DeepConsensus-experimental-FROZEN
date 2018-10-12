@@ -18,17 +18,9 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(48)
                     ),
-                    pool = models.SumPool(
-                        paramsize = 128,
-                        net = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 128,
-                            tailsize = 48,
-                            layers = 1,
-                            dropout = 0.0,
-                            bias = True
-                        ),
-                        threshold = 0.02
+                    pool = models.Pruner(
+                        delta = 1,
+                        classes = classes
                     )
                 ),
                 
@@ -40,17 +32,9 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.BatchNorm2d(32)
                     ),
-                    pool = models.SumPool(
-                        paramsize = 64,
-                        net = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
-                            tailsize = 32,
-                            layers = 1,
-                            dropout = 0.0,
-                            bias = True
-                        ),
-                        threshold = 0.02
+                    pool = models.Pruner(
+                        delta = 1,
+                        classes = classes
                     )
                 ),
                 
@@ -62,17 +46,9 @@ class Model(Base):
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
                         torch.nn.BatchNorm2d(16)
                     ),
-                    pool = models.SumPool(
-                        paramsize = 32,
-                        net = models.DenseNet(
-                            headsize = 32,
-                            bodysize = 16,
-                            tailsize = 16,
-                            layers = 1,
-                            dropout = 0.0,
-                            bias = True
-                        ),
-                        threshold = 0.02
+                    pool = models.Pruner(
+                        delta = 1,
+                        classes = classes
                     )
                 ),
             ),

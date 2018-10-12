@@ -5,9 +5,9 @@ class DistillNet(torch.nn.Module):
         super(DistillNet, self).__init__()
         self.blocks = torch.nn.ModuleList(blocks)
     
-    def forward(self, X):
+    def forward(self, X, labels=None):
         vecs = []
         for block in self.blocks:
-            X, vec = block(X)
+            X, vec = block(X, labels)
             vecs.append(vec)
         return torch.cat(vecs, dim=1) # N, C
