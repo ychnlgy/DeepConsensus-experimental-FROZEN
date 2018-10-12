@@ -13,7 +13,7 @@ class Discriminator(Savable):
         self.net = net
     
     def forward(self):
-        assert (self.get_classifierparams() == self.params).all()
+        assert (self.get_classifierparams() - self.params).norm() < 1e-6
         return self.net(self.params)
     
     def get_classifierparams(self):
