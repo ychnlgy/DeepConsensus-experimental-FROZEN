@@ -42,7 +42,12 @@ def main(dataset, trainbatch, testbatch, cycle=10, datalimit=1.0, rest=0, epochs
     
     PRETRAIN = 3
     
+    model.train()
+    
     for epoch in range(1, PRETRAIN+1):
+        
+        c = s = n = 0.0
+    
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
             yh = model(X)
