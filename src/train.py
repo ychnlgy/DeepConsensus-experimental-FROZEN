@@ -51,7 +51,7 @@ def main(dataset, trainbatch, testbatch, delta, cycle=10, datalimit=1.0, rest=0,
         
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            yh = model((X, y))
+            yh = model((X, y, lowest, i == 0))
             loss = lossf(yh, y)
             c += loss.item()
             n += 1.0
@@ -79,6 +79,10 @@ def main(dataset, trainbatch, testbatch, delta, cycle=10, datalimit=1.0, rest=0,
             
             c /= n
             s /= n
+            
+            if lowest > c:
+                lowest = c
+                print("Updated best validation score.")
             
             scheduler.step(c)
             

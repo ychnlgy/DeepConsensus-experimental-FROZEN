@@ -8,13 +8,14 @@ class DistillNet(torch.nn.Module):
     def forward(self, X_labels):
         
         if type(X_labels) == tuple:
-            X, labels = X_labels
+            X, labels, scores, usescore = X_labels
         else:
             X = X_labels
-            labels = None
+            labels = scores = None
+            usescore = False
         
         vecs = []
         for block in self.blocks:
-            X, vec = block(X, labels)
+            X, vec = block(X, scores, labels, usescore)
             vecs.append(vec)
         return torch.cat(vecs, dim=1) # N, C

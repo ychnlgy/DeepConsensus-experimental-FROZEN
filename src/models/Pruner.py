@@ -20,16 +20,17 @@ class Pruner(torch.nn.Module):
         
     '''
 
-    def __init__(self, delta, classes, prune_rest):
+    def __init__(self, delta, classes, patience):
         super(Pruner, self).__init__()
         self.tracked = False
-        self.prune_rest = prune_rest
-        self.prune_num  = 0
+        self.patience = patience
+        self.waited = 0
         self.delta = delta
         self.counter = Counter()
         self.tracker = DistributionTracker(classes)
+        self.lowest = float("inf")
     
-    def forward(self, X, labels=None):
+    def forward(self, X, vscore=None, labels=None, usescore=False):
         
         '''
         
@@ -47,13 +48,29 @@ class Pruner(torch.nn.Module):
         self.setup(X)
         
         if not self.training and self.tracked:
-            self.prune()
+            
+            if usescore:
+            
+                if vscore > self.lowest:
+            
+                    if self.waited >= self.patience:
+                        self.waited = 0
+                        self.prune()
+                        
+                    else:
+                        self.waited += 1
+                
+                else:
+                    self.lowest = vscore
+                    self.waited = 0
+            
+            self.tracker.reset()
             self.tracked = False
         
-        #X = self.weights * X #+ (1 - self.weights) * self.miu
         counted = self.counter(X)
         
-        if self.training and labels is not None:
+        if self.training:
+            assert labels is not None
             self.tracker(counted, labels)
             self.tracked = True
         
@@ -67,23 +84,8 @@ class Pruner(torch.nn.Module):
             Updates weights for selecting which channels to zero out.
         
         '''
-        self.prune_num += 1
-        
-        if self.prune_num % self.prune_rest == 0:
-            diff = self.find_correlations()
-            diff = self.xor(diff).float()
-            self.tracker.reset()
-            
-            assert diff.size() == self.weights.size()
-            newd = (self.weights.sum() - diff.sum()).item()
-            self.weights = diff
-            
-            #assert newd >= 0
-            if newd != 0:
-                print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
-            else:
-                print("No pruning occurred.")
-        
+        self.weights = self.find_correlations()
+        print("Using %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
     # === PRIVATE ===
     
@@ -91,7 +93,6 @@ class Pruner(torch.nn.Module):
         N, C, W, H = X.size()
         # all features are considered at first
         self.weights = torch.ones(C).to(X.device)
-        #self.miu = torch.zeros(1, C, 1, 1).to(X.device)
         self.setup = misc.util.do_nothing
     
     def find_correlations(self):
@@ -100,41 +101,20 @@ class Pruner(torch.nn.Module):
         
         Returns:
             ByteTensor of shape (classes, C), mask of which features
-            have means that are delta*(stdev1 + stdev2) different
+            have means that are delta*stdev different
             from their expected value.
         
         '''
         
         local_miu, local_std, global_miu, global_std = self.tracker.stats()
-#        weights = self.weights.squeeze()
-#        local_miu, local_std, global_miu, global_std = (
-#            weights * local_miu,
-#            weights * local_std,
-#            weights * global_miu,
-#            weights * global_std
-#        )
-        #self.miu = global_miu.view(1, -1, 1, 1)
-        diff = (global_miu - local_miu).abs()
-        dist = (global_std) * self.delta
-        diff[diff <=dist] = 0
-        diff[diff > dist] = 1
-        return diff.byte()
-    
-    def xor(self, diff):
-    
-        '''
+        diff_pos = local_miu - global_miu
+        diff_neg = global_miu - local_miu
+        dist = global_std * self.delta
+        diff_pos[diff_pos <=dist] = 0
+        diff_pos[diff_pos > dist] = 1
+        diff_neg[diff_neg <=dist] = 0
+        diff_neg[diff_neg > dist] = 1
         
-        Given:
-            ByteTensor of shape (classes, C)
-        
-        Returns:
-            ByteTensor of shape (C), mask representing
-            the features that are pertinent for distinguishing
-            between the classes.
-        
-        '''
-    
-        classes, C = diff.size()
-        diff = diff.sum(dim=0)
-        xor = (diff > 0) & (diff < classes)
-        return xor
+        diff_pos = diff_pos.sum(dim=0)
+        diff_neg = diff_neg.sum(dim=0)
+        return (diff_pos > 0) | (diff_neg > 0)

@@ -7,6 +7,6 @@ class DistillBlock(torch.nn.Module):
         self.conv = conv
         self.pruner = pruner
         
-    def forward(self, X, labels):
+    def forward(self, X, *args):
         out = self.conv(X)
-        return self.pruner(out, labels)
+        return self.pruner(out, *args)
