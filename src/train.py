@@ -49,7 +49,7 @@ class Model(models.Savable):
 
 def discriminator_loss(loss1, loss2, discr):
     dscr = discr()
-    print(dscr)
+    print(dscr, (loss1 - loss2).abs())
     return ((loss1 - loss2).abs() - dscr).abs()
 
 def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
