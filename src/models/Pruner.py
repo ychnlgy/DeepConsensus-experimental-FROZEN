@@ -74,7 +74,7 @@ class Pruner(torch.nn.Module):
         
         assert newd >= 0
         if newd > 0:
-            print(newd)
+            print("Pruned %d/%d channels" % (self.weights.sum(), self.weights.numel()))
     
     # === PRIVATE ===
     
