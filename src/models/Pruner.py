@@ -51,7 +51,7 @@ class Pruner(torch.nn.Module):
             
             if usescore:
             
-                if vscore > self.lowest:
+                if vscore >= self.lowest:
             
                     if self.waited >= self.patience:
                         self.waited = 0
