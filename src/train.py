@@ -49,7 +49,7 @@ class Model(models.Savable):
 
 def discriminator_loss(loss1, loss2, discr):
     dscr = discr()
-    print(dscr, (loss1 - loss2).abs())
+    #print(dscr, (loss1 - loss2).abs())
     return ((loss1 - loss2).abs() - dscr).abs()
 
 def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
@@ -74,13 +74,40 @@ def main(dataset, split=0.9, trainbatch=100, testbatch=100, cycle=10, datalimit=
     }[dataset](**dataset_kwargs)
     
     model = Model(CHANNELS, NUM_CLASSES)
-    discr = models.Discriminator(model, models.DenseNet(
-        headsize = model.paramcount(),
-        bodysize = 1024,
-        tailsize = 1,
-        layers = 2,
-        dropout = 0.2,
-        bias = True
+    discr = models.Discriminator(model, torch.nn.Sequential(
+    
+        torch.nn.Conv1d(1, 64, 5, stride=2, padding=2),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(64),
+        
+        torch.nn.Conv1d(64, 128, 5, stride=2, padding=2, groups=64),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(128),
+        
+        torch.nn.Conv1d(128, 64, 5, stride=2, padding=2, groups=64),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(64),
+        
+        torch.nn.Conv1d(64, 32, 5, stride=2, padding=2, groups=64),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(32),
+        
+        torch.nn.Conv1d(64, 32, 5, stride=2, padding=2, groups=32),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(32),
+        
+        torch.nn.Conv1d(32, 1, 5, stride=2, padding=2),
+        torch.nn.LeakyReLU(),
+        torch.nn.BatchNorm2d(1),
+        
+        models.DenseNet(
+            headsize = model.paramcount()//64,
+            bodysize = 128,
+            tailsize = 1,
+            layers = 2,
+            dropout = 0.2,
+            bias = True
+        ),
     ))
     
     if showparams:
