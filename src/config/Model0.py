@@ -83,10 +83,10 @@ class Model(Base):
                     dropout = 0.2
                 ),
                 pooler = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=64),
+                    torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                     torch.nn.AvgPool2d(3, padding=1, stride=2),
                     torch.nn.LeakyReLU(),
-                    torch.nn.Conv2d(64, 32, 3, padding=1, stride=2, groups=32),
+                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
                     torch.nn.LeakyReLU(),
                 ),
                 summarizer = models.DenseNet(
@@ -110,7 +110,7 @@ class Model(Base):
                     dropout = 0.1
                 ),
                 pooler = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=64),
+                    torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                     torch.nn.AvgPool2d(4),
                     torch.nn.LeakyReLU()
                 ),
