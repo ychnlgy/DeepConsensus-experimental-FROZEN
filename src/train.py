@@ -4,7 +4,7 @@ import torch, tqdm, time, numpy
 
 import misc, models
 
-class Model(torch.nn.Module):
+class Model(models.Savable):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__()
