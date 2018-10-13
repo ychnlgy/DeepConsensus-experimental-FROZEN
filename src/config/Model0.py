@@ -9,28 +9,46 @@ class Model(Base):
     def create_net(self, channels, classes):
         return torch.nn.Sequential(
         
-            torch.nn.Conv2d(channels, 512, 3, padding=1),
+            models.ResNet(
+                kernelseq = [3],
+                headsize = channels,
+                bodysize = 64,
+                tailsize = 64,
+                layers = 8
+            ),
+            
+            # 28 -> 14
+            torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(512),
+            torch.nn.BatchNorm2d(32),
             
-            models.Permute(0, 2, 3, 1), # N, W, H, C
-            models.Reshape(-1, 512),
-            
-            torch.nn.Linear(512, 256),
+            # 14 -> 7
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
             
-            torch.nn.Linear(256, 128),
+            # 7 -> 4
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
             
-            models.Mean(dim=1),
-            
-            torch.nn.Linear(128, 64),
+            # 4 -> 1
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.AvgPool2d(4),
             torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
             
-            torch.nn.Linear(64, 32),
-            torch.nn.LeakyReLU(),
+            models.Reshape(32),
             
-            torch.nn.Linear(32, classes)
+            models.DenseNet(
+                headsize = 32,
+                bodysize = 64,
+                tailsize = classes,
+                layers = 2
+            )
         
 #            models.DistillNet(
 #            
