@@ -110,7 +110,7 @@ class Model(Base):
                     dropout = 0.1
                 ),
                 pooler = torch.nn.Sequential(
-                    t#orch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                    #torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                     torch.nn.AvgPool2d(4),
                     #torch.nn.LeakyReLU()
                 ),
