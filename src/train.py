@@ -24,7 +24,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    model = config.Model0(CHANNELS, NUM_CLASSES)
+    model = config.Model1(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
