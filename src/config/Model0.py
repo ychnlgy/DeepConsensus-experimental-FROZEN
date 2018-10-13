@@ -83,7 +83,7 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.Conv2d(64, 64, 2, stride=2, groups=64),
+                pooler = torch.nn.Conv2d(64, 64, 4, stride=4, groups=64),
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
