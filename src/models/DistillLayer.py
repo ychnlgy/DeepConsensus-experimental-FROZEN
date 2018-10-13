@@ -16,4 +16,4 @@ class DistillLayer(torch.nn.Module):
         X = misc.matrix.apply_permutation(self.intp, X, PERMUTATION)
         X = self.pool(X)
         X = misc.matrix.apply_permutation(self.sumz, X, PERMUTATION)
-        return X
+        return X.contiguous()
