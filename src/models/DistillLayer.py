@@ -12,7 +12,6 @@ class DistillLayer(torch.nn.Module):
         convout = self.convlayer(X)
         N, C, W, H = convout.size()
         infovec = convout.permute(0, 2, 3, 1).view(N, W*H, C)
-        N, L, C = infovec.size()
-        counted = self.counter(infovec).mean(dim=1).squeeze(1)
+        counted = self.counter(infovec).mean(dim=1)
         summary = self.summarizer(counted)
         return convout, summary

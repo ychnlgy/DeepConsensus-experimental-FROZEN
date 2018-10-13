@@ -12,4 +12,6 @@ class DistillNet(torch.nn.Module):
             X, vec = layer(X)
             vecs.append(vec)
         summary = torch.cat(vecs, dim=0)
+        print(summary.size())
+        input()
         return summary
