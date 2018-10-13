@@ -1,5 +1,3 @@
-#!/usr/bin/python3
+from misc.data import unittest
 
-import models
-
-models.DistributionTracker.unittest()
+unittest()

@@ -40,7 +40,10 @@ class Model(torch.nn.Module):
                     models.DenseNet(
                         headsize = 8,
                         bodysize = 32,
-                        tailsize = 1
+                        tailsize = 1,
+                        layers= 2,
+                        dropout = 0.2,
+                        bias = True
                     )
                     
                 ) for i in range(classes)
@@ -52,7 +55,7 @@ class Model(torch.nn.Module):
 
 
 def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
-    
+
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -60,7 +63,6 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
     rest = float(rest)
     datalimit = float(datalimit)
     showparams = int(showparams)
-    delta = float(delta)
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
@@ -76,68 +78,63 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
     
     if showparams:
     
-        print_("Model parameters: %d" % model.paramcount(), silent)
+        print_(" === PARAMETERS === ", silent)
+        print_("Model        : %d" % model.paramcount(), silent)
+        print_("Discriminator: %d" % discr.paramcount(), silent)
     
         if input("Continue? [y/n] ") != "y":
             raise SystemExit
     
     model = model.to(device)
-    dataloader, validloader, testloader = misc.data.create_trainvalid_split(datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
+    dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
     
     lowest = float("inf")
-    
+      
     for epoch in iterepochs(epochs):
-        
-        model.train()
         
         c = s = n = 0.0
         
+        model.train()
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            yh = model((X, y, lowest, i == 0))
-            loss = lossf(yh, y)
-            c += loss.item()
+            yh = model(X)
+            loss1 = lossf(yh, y)
+            
+            c += loss1.item()
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
+            
             optimizer.zero_grad()
-            loss.backward()
+            loss1.backward()
             optimizer.step()
             
             if i % cycle == 0:
-                bar.set_description("[E %d] %.3f" % (epoch, s/n))
+                bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/m, dloss/m))
         
         model.eval()
         
         with torch.no_grad():
             
-            c = s = n = 0.0
+            v = w = m = 0.0
             
-            for i, X, y, bar in iter_dataloader(validloader, device, silent):
+            for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
                 
                 yh = model(X)
-                loss = lossf(yh, y)
-                c += loss.item()
-                n += 1.0
-                s += (torch.argmax(yh, dim=1) == y).float().mean().item()
+                v += lossf(yh, y).item()
+                w += (torch.argmax(yh, dim=1) == y).float().mean().item()
+                m += 1
             
-            c /= n
-            s /= n
+            print_(" -- <VERR> %.3f" % testscore, silent)
             
-            if lowest > c:
-                lowest = c
-                print("Updated best validation score.")
-            
-            scheduler.step(c)
-            
-            print_("<SCORE> %.5f" % s, silent)
+            scheduler.step(v/m)
             
             testscore = n = 0.0
             
-            for i, X, y, bar in iter_dataloader(testloader, device, silent):
+            for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
                 
                 yh = model(X)
                 n += 1.0
@@ -145,11 +142,16 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
             
             testscore /= n
             
-            print_("<TEST > %.5f" % testscore, silent)
+            print_(" -- <TEST> %.3f" % testscore, silent)
     
         time.sleep(rest)
     
     return testscore
+
+def infinite(fn, *args, **kwargs):
+    while True:
+        for i in fn(*args, **kwargs):
+            yield i
 
 def print_(s, silent):
     if not silent:
