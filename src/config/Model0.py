@@ -22,7 +22,7 @@ class Model(Base):
                     ),
                     
                     counter = torch.nn.Sequential(
-                        torch.nn.DenseNet(
+                        models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
@@ -51,7 +51,7 @@ class Model(Base):
                     ),
                     
                     counter = torch.nn.Sequential(
-                        torch.nn.DenseNet(
+                        models.DenseNet(
                             headsize = 32,
                             bodysize = 32,
                             tailsize = 32,
@@ -80,7 +80,7 @@ class Model(Base):
                     ),
                     
                     counter = torch.nn.Sequential(
-                        torch.nn.DenseNet(
+                        models.DenseNet(
                             headsize = 32,
                             bodysize = 32,
                             tailsize = 32,
@@ -109,7 +109,7 @@ class Model(Base):
                     ),
                     
                     counter = torch.nn.Sequential(
-                        torch.nn.DenseNet(
+                        models.DenseNet(
                             headsize = 16,
                             bodysize = 32,
                             tailsize = 32,
