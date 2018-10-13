@@ -51,7 +51,7 @@ class Model(Base):
                 )
             ),
             
-            # 14 -> 7
+            # 7 -> 4
             models.DistillLayer(
                 interpreter = models.DenseNet(
                     headsize = 32,
@@ -59,27 +59,10 @@ class Model(Base):
                     tailsize = 64,
                     layers = 1
                 ),
-                pooler = torch.nn.AvgPool2d(2),
-                summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 16,
-                    tailsize = 16,
-                    layers = 1
-                )
-            ),
-            
-            # 7 -> 4
-            models.DistillLayer(
-                interpreter = models.DenseNet(
-                    headsize = 16,
-                    bodysize = 32,
-                    tailsize = 32,
-                    layers = 1
-                ),
                 pooler = torch.nn.AvgPool2d(3, padding=1, stride=2),
                 summarizer = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
+                    headsize = 64,
+                    bodysize = 64,
                     tailsize = 16,
                     layers = 1
                 )
