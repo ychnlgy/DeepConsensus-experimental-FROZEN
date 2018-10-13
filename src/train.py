@@ -4,56 +4,6 @@ import torch, tqdm, time, numpy
 
 import misc, models
 
-class Model(models.Savable):
-
-    def __init__(self, channels, classes):
-        super(Model, self).__init__()
-        self.net = models.MultiNeg(
-            [
-                torch.nn.Sequential(
-                    
-                    # 28 -> 14
-                    torch.nn.Conv2d(channels, 64, 3, padding=1),
-                    torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64),
-                    
-                    # 14 -> 7
-                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
-                    torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32),
-                    
-                    # 7 -> 4
-                    torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
-                    torch.nn.AvgPool2d(3, padding=1, stride=2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(16),
-                    
-                    # 4 -> 1
-                    torch.nn.Conv2d(16, 8, 3, padding=1, groups=8),
-                    torch.nn.AvgPool2d(4),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(8),
-                    
-                    models.Reshape(8),
-                    models.DenseNet(
-                        headsize = 8,
-                        bodysize = 32,
-                        tailsize = 1,
-                        layers= 2,
-                        dropout = 0.2,
-                        bias = True
-                    )
-                    
-                ) for i in range(classes)
-            ]
-        )
-    
-    def forward(self, X):
-        return self.net(X)
-
-
 def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     epochs = int(epochs)
@@ -146,11 +96,6 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
         time.sleep(rest)
     
     return testscore
-
-def infinite(fn, *args, **kwargs):
-    while True:
-        for i in fn(*args, **kwargs):
-            yield i
 
 def print_(s, silent):
     if not silent:

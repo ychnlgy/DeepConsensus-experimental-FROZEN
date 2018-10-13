@@ -2,7 +2,7 @@ import torch
 
 class DenseNet(torch.nn.Module):
     
-    def __init__(self, headsize, bodysize, tailsize, layers, dropout, bias):
+    def __init__(self, headsize, bodysize, tailsize, layers, dropout=0.0, bias=True):
         super(DenseNet, self).__init__()
         
         assert layers > 0
@@ -11,7 +11,7 @@ class DenseNet(torch.nn.Module):
         self.bias = bias
         
         if layers == 1:
-            self.net = self.create_unit(headsize, tailsize)
+            self.net = torch.nn.Linear(inputsize, tailsize, bias=bias)
         else:
             self.net = torch.nn.Sequential(
                 self.create_unit(headsize, bodysize),
@@ -19,8 +19,7 @@ class DenseNet(torch.nn.Module):
                     self.create_unit(bodysize, bodysize)
                     for i in range(layers-2)
                 ]),
-                torch.nn.Linear(bodysize, tailsize),
-                torch.nn.LeakyReLU()
+                torch.nn.Linear(bodysize, tailsize, bias=bias)
             )
         
     def forward(self, X):
