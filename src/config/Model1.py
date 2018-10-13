@@ -31,7 +31,7 @@ class Model(Base):
                 torch.nn.BatchNorm2d(256),
                 torch.nn.Conv2d(256, 128, 3, padding=1, groups=128),
                 torch.nn.LeakyReLU()
-            )
+            ),
             
             # summarizer
             torch.nn.Conv2d(128, 64, 3, padding=1, groups=64),
