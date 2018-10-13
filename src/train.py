@@ -2,7 +2,7 @@
 
 import torch, tqdm, time, numpy
 
-import misc, models
+import misc, config
 
 def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
@@ -24,7 +24,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    model = Model(CHANNELS, NUM_CLASSES)
+    model = config.Model0(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
