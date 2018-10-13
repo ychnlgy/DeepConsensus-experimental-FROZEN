@@ -128,7 +128,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
                 m += 1
             
-            print_(" -- <VERR> %.3f" % w/m, silent)
+            print_(" -- <VERR> %.3f" % (w/m), silent)
             
             scheduler.step(v/m)
             
