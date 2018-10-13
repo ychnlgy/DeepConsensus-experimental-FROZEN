@@ -113,7 +113,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
             optimizer.step()
             
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f (%.3f verr, %.3f dloss)" % (epoch, s/n, w/m, dloss/m))
+                bar.set_description("[Epoch %d] %.3f" % (epoch, s/n))
         
         model.eval()
         
@@ -128,7 +128,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
                 m += 1
             
-            print_(" -- <VERR> %.3f" % testscore, silent)
+            print_(" -- <VERR> %.3f" % w/m, silent)
             
             scheduler.step(v/m)
             
