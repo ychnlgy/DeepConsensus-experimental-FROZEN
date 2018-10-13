@@ -102,7 +102,7 @@ class Model(Base):
                 models.DistillLayer(
                 
                     convlayer = torch.nn.Sequential(
-                        torch.nn.Conv2d(32, 16, 3, padding=1, groups=32),
+                        torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
                         torch.nn.AvgPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(16)
