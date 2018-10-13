@@ -83,7 +83,7 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.AvgPool(4)
+                pooler = torch.nn.AvgPool(4),
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
