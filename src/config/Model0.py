@@ -28,7 +28,7 @@ class Model(Base):
                 ),
                 pooler = torch.nn.Sequential(
                     torch.nn.Conv2d(256, 256, 3, padding=1, groups=256),
-                    torch.nn.LeakyReLU()
+                    torch.nn.LeakyReLU(),
                     torch.nn.AvgPool2d(2),
                     torch.nn.BatchNorm2d(256),
                     torch.nn.Conv2d(256, 128, 3, padding=1, groups=128),
