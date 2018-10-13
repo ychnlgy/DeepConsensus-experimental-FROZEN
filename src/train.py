@@ -31,7 +31,7 @@ class Model(torch.nn.Module):
                     torch.nn.BatchNorm2d(16),
                     
                     # 4 -> 1
-                    torch.nn.Conv2d(16, 8, padding=1, groups=8),
+                    torch.nn.Conv2d(16, 8, 3, padding=1, groups=8),
                     torch.nn.AvgPool2d(4),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(8),
