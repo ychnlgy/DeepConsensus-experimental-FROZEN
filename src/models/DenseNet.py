@@ -11,7 +11,7 @@ class DenseNet(torch.nn.Module):
         self.bias = bias
         
         if layers == 1:
-            self.net = torch.nn.Linear(inputsize, tailsize, bias=bias)
+            self.net = torch.nn.Linear(headsize, tailsize, bias=bias)
         else:
             self.net = torch.nn.Sequential(
                 self.create_unit(headsize, bodysize),
