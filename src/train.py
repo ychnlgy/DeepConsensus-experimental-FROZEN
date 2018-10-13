@@ -79,8 +79,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0
     if showparams:
     
         print_(" === PARAMETERS === ", silent)
-        print_("Model        : %d" % model.paramcount(), silent)
-        print_("Discriminator: %d" % discr.paramcount(), silent)
+        print_("Model: %d" % model.paramcount(), silent)
     
         if input("Continue? [y/n] ") != "y":
             raise SystemExit
