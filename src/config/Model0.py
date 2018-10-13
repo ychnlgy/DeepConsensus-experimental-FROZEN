@@ -66,14 +66,14 @@ class Model(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 32,
+                    bodysize = 16,
                     tailsize = 16,
-                    layers = 2,
+                    layers = 1,
                     dropout = 0.1
                 )
             ),
             
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(16),
             
             # 4 -> 1
             models.DistillLayer(
