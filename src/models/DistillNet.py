@@ -11,7 +11,5 @@ class DistillNet(torch.nn.Module):
         for layer in self.layers:
             X, vec = layer(X)
             vecs.append(vec)
-        summary = torch.cat(vecs, dim=0)
-        print(summary.size())
-        input()
+        summary = torch.cat(vecs, dim=1) # N, C1 + C2 +...
         return summary
