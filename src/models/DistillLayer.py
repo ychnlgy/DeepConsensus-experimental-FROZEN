@@ -7,7 +7,7 @@ class DistillLayer(torch.nn.Module):
     def __init__(self, interpreter, pooler, summarizer):
         super(DistillLayer, self).__init__()
         self.intp = interpreter
-        self.pool = pool
+        self.pool = pooler
         self.sumz = summarizer
     
     def forward(self, X):
