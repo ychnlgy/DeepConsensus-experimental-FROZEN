@@ -1,17 +1,17 @@
 import torch
 
+PERMUTATION = (2, 3, 0, 1)
+
 class DistillLayer(torch.nn.Module):
 
-    def __init__(self, convlayer, counter, summarizer):
+    def __init__(self, interpreter, pooler, summarizer):
         super(DistillLayer, self).__init__()
-        self.convlayer  = convlayer
-        self.counter    = counter
-        self.summarizer = summarizer
+        self.intp = interpreter
+        self.pool = pool
+        self.sumz = summarizer
     
     def forward(self, X):
-        convout = self.convlayer(X)
-        N, C, W, H = convout.size()
-        infovec = convout.permute(0, 2, 3, 1).view(N, W*H, C)
-        counted = self.counter(infovec).mean(dim=1)
-        summary = self.summarizer(counted)
-        return convout, summary
+        X = misc.matrix.apply_permutation(self.intp, X, PERMUTATION)
+        X = self.pool(X)
+        X = misc.matrix.apply_permutation(self.sumz, X, PERMUTATION)
+        return X
