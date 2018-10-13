@@ -66,7 +66,7 @@ class Model(Base):
                 ),
                 summarizer = models.DenseNet(
                     headsize = 64,
-                    bodysize = 16,
+                    bodysize = 32,
                     tailsize = 16,
                     layers = 2,
                     dropout = 0.1
