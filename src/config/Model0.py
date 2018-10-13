@@ -22,7 +22,7 @@ class Model(Base):
             torch.nn.Linear(256, 128),
             torch.nn.LeakyReLU(),
             
-            torch.nn.Mean(dim=1),
+            models.Mean(dim=1),
             
             torch.nn.Linear(128, 64),
             torch.nn.LeakyReLU(),
