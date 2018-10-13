@@ -10,3 +10,4 @@ from .Pruner import Pruner
 from .DistillBlock import DistillBlock
 from .DistillNet import DistillNet
 
+from .MultiNeg import MultiNeg

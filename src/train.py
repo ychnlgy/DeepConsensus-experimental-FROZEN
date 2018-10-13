@@ -2,9 +2,56 @@
 
 import torch, tqdm, time, numpy
 
-import misc, config
+import misc, models
 
-def main(dataset, trainbatch, testbatch, delta, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+class Model(torch.nn.Module):
+
+    def __init__(self, channels, classes):
+        super(Model, self).__init__()
+        self.net = models.MultiNeg(
+            [
+                torch.nn.Sequential(
+                    
+                    # 28 -> 14
+                    torch.nn.Conv2d(channels, 64, 3, padding=1),
+                    torch.nn.MaxPool2d(2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(64),
+                    
+                    # 14 -> 7
+                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                    torch.nn.MaxPool2d(2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(32),
+                    
+                    # 7 -> 4
+                    torch.nn.Conv2d(32, 16, 3, padding=1, groups=16),
+                    torch.nn.AvgPool2d(3, padding=1, stride=2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(16),
+                    
+                    # 4 -> 1
+                    torch.nn.Conv2d(16, 8, padding=1, groups=8),
+                    torch.nn.AvgPool2d(4),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(8),
+                    
+                    models.Reshape(8),
+                    models.DenseNet(
+                        headsize = 8,
+                        bodysize = 32,
+                        tailsize = 1
+                    )
+                    
+                ) for i in range(classes)
+            ]
+        )
+    
+    def forward(self, X):
+        return self.net(X)
+
+
+def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
     
     epochs = int(epochs)
     cycle = int(cycle)
@@ -25,7 +72,7 @@ def main(dataset, trainbatch, testbatch, delta, cycle=10, datalimit=1.0, rest=0,
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    model = config.Model0(CHANNELS, NUM_CLASSES, delta=delta)
+    model = Model(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
