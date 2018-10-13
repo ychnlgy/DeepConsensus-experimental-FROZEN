@@ -26,7 +26,7 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
+                pooler = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -45,7 +45,7 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.Conv2d(128, 128, 2, stride=2, groups=128),
+                pooler = torch.nn.AvgPool2d(2),
                 summarizer = models.DenseNet(
                     headsize = 128,
                     bodysize = 128,
@@ -64,7 +64,7 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.Conv2d(64, 64, 3, padding=1, stride=2, groups=64),
+                pooler = torch.nn.AvgPool2d(3, padding=1, stride=2),
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
@@ -83,12 +83,12 @@ class Model(Base):
                     layers = 1,
                     dropout = 0.2
                 ),
-                pooler = torch.nn.Conv2d(64, 64, 4, stride=4, groups=64),
+                pooler = torch.nn.AvgPool(4)
                 summarizer = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
                     tailsize = classes,
-                    layers = 1,
+                    layers = 2,
                     dropout = 0.2
                 )
             ),
