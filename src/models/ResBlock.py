@@ -22,7 +22,7 @@ class ResBlock(torch.nn.Module):
     
     def create_unit(self, c_in, c_out, kernel):
         return torch.nn.Sequential(
-            torch.nn.Conv2d(c_in, c_out, kernel, padding=kernel//2, groups=c_in),
+            torch.nn.Conv2d(c_in, c_out, kernel, padding=kernel//2, groups=min(c_in, c_out)),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(c_out)
         )
