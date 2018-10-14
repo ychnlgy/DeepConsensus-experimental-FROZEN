@@ -44,10 +44,6 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(32),
-                        
-                        torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(32)
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
@@ -73,10 +69,6 @@ class Model(Base):
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(16),
-                        
-                        torch.nn.Conv2d(16, 16, 3, padding=1, groups=16),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(16)
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
@@ -102,10 +94,6 @@ class Model(Base):
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(8),
-                        
-                        torch.nn.Conv2d(8, 8, 3, padding=1, groups=8),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(8)
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
