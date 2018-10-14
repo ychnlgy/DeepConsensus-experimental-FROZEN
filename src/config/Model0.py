@@ -16,14 +16,14 @@ class Model(Base):
                     convlayer = models.ResNet(
                         kernelseq = [3, 3],
                         headsize = channels,
-                        bodysize = 256,
-                        tailsize = 256,
+                        bodysize = 64,
+                        tailsize = 64,
                         layers = 8
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
-                        headsize = 256,
-                        bodysize = 256,
+                        headsize = 64,
+                        bodysize = 64,
                         tailsize = 32,
                         layers = 1,
                         dropout = 0.2
