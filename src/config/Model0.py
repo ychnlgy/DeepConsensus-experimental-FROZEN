@@ -62,30 +62,30 @@ class Model(Base):
                     ),
                 ),
                     
-                # 14 -> 7
-                models.DistillLayer(
-                    convlayer = torch.nn.Sequential(
-                        torch.nn.Conv2d(128, 128, 3, padding=1, groups=128),
-                        torch.nn.MaxPool2d(2),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(128),
-                    ),
-                    dropout = 0.2,
-                    interpreter = models.DenseNet(
-                        headsize = 128,
-                        bodysize = 128,
-                        tailsize = 64,
-                        layers = 2,
-                        dropout = 0.2
-                    ),
-                    summarizer = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 32,
-                        tailsize = 16,
-                        layers = 2,
-                        dropout = 0.2
-                    )
-                ),
+#                # 14 -> 7
+#                models.DistillLayer(
+#                    convlayer = torch.nn.Sequential(
+#                        torch.nn.Conv2d(128, 128, 3, padding=1, groups=128),
+#                        torch.nn.MaxPool2d(2),
+#                        torch.nn.LeakyReLU(),
+#                        torch.nn.BatchNorm2d(128),
+#                    ),
+#                    dropout = 0.2,
+#                    interpreter = models.DenseNet(
+#                        headsize = 128,
+#                        bodysize = 128,
+#                        tailsize = 64,
+#                        layers = 2,
+#                        dropout = 0.2
+#                    ),
+#                    summarizer = models.DenseNet(
+#                        headsize = 64,
+#                        bodysize = 32,
+#                        tailsize = 16,
+#                        layers = 2,
+#                        dropout = 0.2
+#                    )
+#                ),
                 
 #                # 7 -> 4
 #                models.DistillLayer(
@@ -115,7 +115,7 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 64 + 32 + 16,
+                headsize = 64 + 32,
                 bodysize = 256,
                 tailsize = classes,
                 layers = 2,
