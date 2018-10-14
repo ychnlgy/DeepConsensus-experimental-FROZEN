@@ -39,7 +39,7 @@ def main(dataset, classic, trainbatch=100, testbatch=300, cycle=10, datalimit=1.
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
     lowest = float("inf")
       
