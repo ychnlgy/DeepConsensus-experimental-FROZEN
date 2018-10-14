@@ -24,14 +24,14 @@ class Model(Base):
                     interpreter = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
-                        tailsize = 128,
+                        tailsize = 64,
                         layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 128,
-                        tailsize = 64,
+                        tailsize = 32,
                         layers = 2,
                         dropout = 0.2
                     ),
@@ -40,22 +40,22 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillLayer(
                     convlayer = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(32),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
-                        headsize = 32,
-                        bodysize = 64,
+                        headsize = 64,
+                        bodysize = 128,
                         tailsize = 64,
                         layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
-                        bodysize = 64,
+                        bodysize = 128,
                         tailsize = 32,
                         layers = 2,
                         dropout = 0.2
@@ -115,8 +115,8 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 64 + 32,
-                bodysize = 256,
+                headsize = 32 + 32,
+                bodysize = 128,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
