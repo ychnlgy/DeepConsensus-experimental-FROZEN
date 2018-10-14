@@ -31,19 +31,18 @@ class Model(Base):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(32)
                     ),
+                    dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 32,
                         bodysize = 256,
                         tailsize = 128,
-                        layers = 2,
-                        dropout = 0.2
+                        layers = 2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 128,
                         bodysize = 64,
                         tailsize = 16,
-                        layers = 2,
-                        dropout = 0.2
+                        layers = 2
                     ),
                 ),
                     
@@ -59,6 +58,7 @@ class Model(Base):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(16)
                     ),
+                    dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 16,
                         bodysize = 64,
@@ -69,8 +69,7 @@ class Model(Base):
                         headsize = 64,
                         bodysize = 8,
                         tailsize = 8,
-                        layers = 1,
-                        dropout = 0.1
+                        layers = 1
                     )
                 ),
                 
@@ -86,18 +85,18 @@ class Model(Base):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(8)
                     ),
+                    dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 8,
                         bodysize = 8,
                         tailsize = 32,
-                        layers = 1,
+                        layers = 1
                     ),
                     summarizer = models.DenseNet(
                         headsize = 32,
                         bodysize = 2,
                         tailsize = 2,
-                        layers = 1,
-                        dropout = 0.1
+                        layers = 1
                     )
                 ),
                 
