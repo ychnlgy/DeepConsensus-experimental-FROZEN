@@ -2,18 +2,18 @@ import torch
 
 import misc
 
-PERMUTATION = (2, 3, 0, 1)
-
 class DistillLayer(torch.nn.Module):
 
-    def __init__(self, interpreter, pooler, summarizer):
+    def __init__(self, convlayer, interpreter, summarizer):
         super(DistillLayer, self).__init__()
-        self.intp = interpreter
-        self.pool = pooler
-        self.sumz = summarizer
+        self.convlayer   = convlayer
+        self.interpreter = interpreter
+        self.summarizer  = summarizer
     
     def forward(self, X):
-        X = misc.matrix.apply_permutation(self.intp, X, PERMUTATION)
-        X = self.pool(X)
-        X = misc.matrix.apply_permutation(self.sumz, X, PERMUTATION)
-        return X.contiguous()
+        convout = self.convlayer(X)
+        interpd = self.interpreter(convout.permute(0, 2, 3, 1)) # N, W, H, C
+        N, W, H, C = interpd.size()
+        interpd = interpd.view(N, W*H, C).mean(dim=1)
+        summary = self.summarizer(interpd)
+        return convout, summary
