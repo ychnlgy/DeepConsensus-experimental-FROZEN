@@ -5,12 +5,12 @@ class DenseNet(torch.nn.Module):
     def __init__(self, headsize, bodysize, tailsize, layers, dropout=0.0, bias=True):
         super(DenseNet, self).__init__()
         
-        assert layers > 0
-        
         self.dropout = dropout
         self.bias = bias
         
-        if layers == 1:
+        if layers == 0:
+            self.net = torch.nn.Sequential()
+        elif layers == 1:
             self.net = self.create_unit(headsize, tailsize)
         else:
             self.net = torch.nn.Sequential(
