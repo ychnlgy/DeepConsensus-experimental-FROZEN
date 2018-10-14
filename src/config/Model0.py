@@ -43,7 +43,7 @@ class Model(Base):
                         torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(32),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
