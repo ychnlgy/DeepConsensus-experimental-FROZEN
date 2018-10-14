@@ -18,37 +18,47 @@ class Model(Base):
             ),
             
             # 28 -> 14
-            models.DistillLayer(
-                interpreter = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 256,
-                    tailsize = 256,
-                    layers = 1,
-                    dropout = 0.2
-                ),
-                pooler = torch.nn.Sequential(
-                    torch.nn.AvgPool2d(2),
-                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=1, groups=256),
-                    torch.nn.LeakyReLU(),
-                    #torch.nn.BatchNorm2d(256),
-                    #torch.nn.Conv2d(256, 128, 3, padding=1, groups=128),
-                    #torch.nn.LeakyReLU()
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 256,
-                    bodysize = 64,
-                    tailsize = 64,
-                    layers = 1,
-                    dropout = 0.2
-                )
-            ),
+            torch.nn.Conv2d(128, 256, 3, padding=1, stride=1, groups=128),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(256),
             
-            torch.nn.BatchNorm2d(64),
+            torch.nn.Conv2d(256, 128, 3, padding=1, groups=128),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(128),
+            
+#            # 28 -> 14
+#            models.DistillLayer(
+#                interpreter = models.DenseNet(
+#                    headsize = 128,
+#                    bodysize = 256,
+#                    tailsize = 256,
+#                    layers = 1,
+#                    dropout = 0.2
+#                ),
+#                pooler = torch.nn.Sequential(
+#                    torch.nn.AvgPool2d(2),
+#                    torch.nn.Conv2d(256, 256, 3, padding=1, stride=1, groups=256),
+#                    torch.nn.LeakyReLU(),
+#                    #torch.nn.BatchNorm2d(256),
+#                    #torch.nn.Conv2d(256, 128, 3, padding=1, groups=128),
+#                    #torch.nn.LeakyReLU()
+#                ),
+#                summarizer = models.DenseNet(
+#                    headsize = 256,
+#                    bodysize = 64,
+#                    tailsize = 64,
+#                    layers = 1,
+#                    dropout = 0.2
+#                )
+#            ),
+            
+#            torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
             models.DistillLayer(
                 interpreter = models.DenseNet(
-                    headsize = 64,
+                    headsize = 128,
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
