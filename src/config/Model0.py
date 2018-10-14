@@ -45,7 +45,7 @@ class Model(Base):
                         layers = 2,
                         dropout = 0.2
                     ),
-                )
+                ),
                     
                 # 14 -> 7
                 models.DistillLayer(
