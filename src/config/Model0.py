@@ -23,16 +23,16 @@ class Model(Base):
                     dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
-                        bodysize = 32,
-                        tailsize = 16,
-                        layers = 1,
+                        bodysize = 128,
+                        tailsize = 64,
+                        layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 16,
-                        bodysize = 32,
-                        tailsize = 16,
-                        layers = 1,
+                        headsize = 64,
+                        bodysize = 128,
+                        tailsize = 32,
+                        layers = 2,
                         dropout = 0.2
                     ),
                 ),
@@ -40,23 +40,23 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillLayer(
                     convlayer = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(32),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
-                        headsize = 32,
-                        bodysize = 16,
-                        tailsize = 8,
-                        layers = 1,
+                        headsize = 64,
+                        bodysize = 128,
+                        tailsize = 64,
+                        layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 8,
-                        bodysize = 32,
-                        tailsize = 8,
+                        headsize = 64,
+                        bodysize = 128,
+                        tailsize = 32,
                         layers = 1,
                         dropout = 0.2
                     ),
@@ -115,8 +115,8 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 16 + 8,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 128,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
