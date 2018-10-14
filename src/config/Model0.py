@@ -41,8 +41,7 @@ class Model(Base):
                     bodysize = 16,
                     tailsize = 16,
                     layers = 1
-                )
-            ),
+                ),
                 
                 # 14 -> 7
                 models.DistillLayer(
@@ -97,8 +96,7 @@ class Model(Base):
                         layers = 1
                     )
                 ),
-                
-                
+            
             ),
             
             models.DenseNet(
