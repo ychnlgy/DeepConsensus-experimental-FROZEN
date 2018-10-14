@@ -77,7 +77,7 @@ class Model(Base):
                         torch.nn.Conv2d(16, 8, 3, padding=1, groups=8),
                         torch.nn.AvgPool2d(3, padding=1, stride=2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(8)
+                        torch.nn.BatchNorm2d(8),
                         
                         torch.nn.Conv2d(8, 8, 3, padding=1, groups=8),
                         torch.nn.LeakyReLU(),
