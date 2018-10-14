@@ -29,7 +29,7 @@ class Model(Base):
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
+                        headsize = 128,
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
@@ -54,7 +54,7 @@ class Model(Base):
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
+                        headsize = 128,
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
