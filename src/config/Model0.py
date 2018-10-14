@@ -17,6 +17,8 @@ class Model(Base):
                 layers = 8
             ),
             
+            torch.nn.Dropout2d(p=0.2),
+            
 #            # 28 -> 14
 #            torch.nn.Conv2d(128, 128, 3, padding=1, stride=1, groups=128),
 #            torch.nn.MaxPool2d(2),
