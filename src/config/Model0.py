@@ -39,7 +39,7 @@ class Model(Base):
                     dropout = 0.0
                 ),
                 pooler = torch.nn.Sequential(
-                    torch.nn.MaxPool2d(2),
+                    torch.nn.AvgPool2d(2),
                     #torch.nn.Conv2d(128, 128, 3, padding=1, stride=1, groups=128),
                     #torch.nn.LeakyReLU(),
                     #torch.nn.BatchNorm2d(256),
@@ -67,7 +67,7 @@ class Model(Base):
                     dropout = 0.0
                 ),
                 pooler = torch.nn.Sequential(
-                    torch.nn.MaxPool2d(2),
+                    torch.nn.AvgPool2d(2),
                     #torch.nn.Conv2d(128, 128, 3, padding=1, stride=1, groups=128),
                     #torch.nn.LeakyReLU(),
                     #torch.nn.BatchNorm2d(128),
