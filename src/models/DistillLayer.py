@@ -16,6 +16,6 @@ class DistillLayer(torch.nn.Module):
         convinp = self.dropout(convout)
         interpd = self.interpreter(convinp.permute(0, 2, 3, 1)) # N, W, H, C
         N, W, H, C = interpd.size()
-        interpd = interpd.view(N, W*H, C).mean(dim=1)
+        interpd = interpd.view(N, W*H, C).sum(dim=1)
         summary = self.summarizer(interpd)
         return convout, summary
