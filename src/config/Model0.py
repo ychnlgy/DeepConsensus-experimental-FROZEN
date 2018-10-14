@@ -33,8 +33,8 @@ class Model(Base):
             models.DistillLayer(
                 interpreter = models.DenseNet(
                     headsize = 128,
-                    bodysize = 128,
-                    tailsize = 128,
+                    bodysize = 256,
+                    tailsize = 256,
                     layers = 1,
                     dropout = 0.0
                 ),
@@ -47,7 +47,7 @@ class Model(Base):
                     #torch.nn.LeakyReLU()
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
+                    headsize = 256,
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
@@ -61,8 +61,8 @@ class Model(Base):
             models.DistillLayer(
                 interpreter = models.DenseNet(
                     headsize = 128,
-                    bodysize = 128,
-                    tailsize = 128,
+                    bodysize = 256,
+                    tailsize = 256,
                     layers = 1,
                     dropout = 0.0
                 ),
@@ -75,7 +75,7 @@ class Model(Base):
                     #torch.nn.LeakyReLU(),
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 128,
+                    headsize = 256,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
@@ -89,8 +89,8 @@ class Model(Base):
             models.DistillLayer(
                 interpreter = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
-                    tailsize = 64,
+                    bodysize = 128,
+                    tailsize = 128,
                     layers = 1,
                     dropout = 0.0
                 ),
@@ -102,8 +102,8 @@ class Model(Base):
                     #torch.nn.LeakyReLU(),
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
+                    headsize = 128,
+                    bodysize = 32,
                     tailsize = 32,
                     layers = 1,
                     dropout = 0.0
@@ -116,8 +116,8 @@ class Model(Base):
             models.DistillLayer(
                 interpreter = models.DenseNet(
                     headsize = 32,
-                    bodysize = 32,
-                    tailsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 1,
                     dropout = 0.0
                 ),
@@ -127,7 +127,7 @@ class Model(Base):
                     #torch.nn.LeakyReLU()
                 ),
                 summarizer = models.DenseNet(
-                    headsize = 32,
+                    headsize = 64,
                     bodysize = 32,
                     tailsize = classes,
                     layers = 1,
