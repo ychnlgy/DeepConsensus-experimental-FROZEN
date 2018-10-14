@@ -23,8 +23,8 @@ class Model(Base):
                         layers = 8
                     ),
                     interpreter = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 64,
+                        headsize = 128,
+                        bodysize = 128,
                         tailsize = 128,
                         layers = 1,
                         dropout = 0.2
