@@ -17,8 +17,6 @@ class Model(Base):
                 layers = 8
             ),
             
-            torch.nn.Dropout2d(p=0.2),
-            
             # 28 -> 14
             torch.nn.Conv2d(128, 128, 3, padding=1, stride=1, groups=128),
             torch.nn.MaxPool2d(2),
@@ -64,7 +62,7 @@ class Model(Base):
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.4
                 ),
                 pooler = torch.nn.Sequential(
                     torch.nn.AvgPool2d(2),
@@ -79,7 +77,7 @@ class Model(Base):
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.2
                 )
             ),
             
@@ -92,7 +90,7 @@ class Model(Base):
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.2
                 ),
                 pooler = torch.nn.Sequential(
                     torch.nn.AvgPool2d(3, padding=1, stride=2),
@@ -106,7 +104,7 @@ class Model(Base):
                     bodysize = 32,
                     tailsize = 32,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.2
                 )
             ),
             
@@ -119,7 +117,7 @@ class Model(Base):
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.1
                 ),
                 pooler = torch.nn.Sequential(
                     torch.nn.AvgPool2d(4),
@@ -129,7 +127,7 @@ class Model(Base):
                     bodysize = 32,
                     tailsize = classes,
                     layers = 1,
-                    dropout = 0.0
+                    dropout = 0.1
                 )
             ),
             
