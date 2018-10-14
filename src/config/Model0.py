@@ -18,21 +18,21 @@ class Model(Base):
                         headsize = channels,
                         bodysize = 64,
                         tailsize = 64,
-                        layers = 4
+                        layers = 8
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
-                        bodysize = 128,
+                        bodysize = 256,
                         tailsize = 128,
-                        layers = 1,
+                        layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 128,
-                        bodysize = 128,
+                        bodysize = 256,
                         tailsize = 32,
-                        layers = 1,
+                        layers = 2,
                         dropout = 0.2
                     ),
                 ),
@@ -48,16 +48,16 @@ class Model(Base):
                     dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
-                        bodysize = 64,
-                        tailsize = 64,
-                        layers = 1,
+                        bodysize = 128,
+                        tailsize = 96,
+                        layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 64,
+                        headsize = 96,
+                        bodysize = 128,
                         tailsize = 32,
-                        layers = 1,
+                        layers = 2,
                         dropout = 0.2
                     ),
                 ),
@@ -141,7 +141,7 @@ class Model(Base):
             
             models.DenseNet(
                 headsize = 32 + 32,
-                bodysize = 128,
+                bodysize = 256,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
