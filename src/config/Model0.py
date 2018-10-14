@@ -16,33 +16,37 @@ class Model(Base):
                 tailsize = 64,
                 layers = 8
             ),
-                
-            # 28 -> 14
-            models.DistillLayer(
-                convlayer = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
-                    torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32),
+            
+            models.DistillNet(
+            
+                # 28 -> 14
+                models.DistillLayer(
+                    convlayer = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 32, 3, padding=1, groups=32),
+                        torch.nn.MaxPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(32),
+                        
+                        torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(32)
+                    ),
+                    interpreter = models.DenseNet(
+                        headsize = 32,
+                        bodysize = 256,
+                        tailsize = 128,
+                        layers = 2,
+                        dropout = 0.2
+                    ),
+                    summarizer = models.DenseNet(
+                        headsize = 128,
+                        bodysize = 64,
+                        tailsize = 16,
+                        layers = 2,
+                        dropout = 0.2
+                    ),
+                )
                     
-                    torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32)
-                ),
-                interpreter = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 32,
-                    tailsize = 64,
-                    layers = 1,
-                    dropout = 0.2
-                ),
-                summarizer = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 16,
-                    tailsize = 16,
-                    layers = 1
-                ),
-                
                 # 14 -> 7
                 models.DistillLayer(
                     convlayer = torch.nn.Sequential(
@@ -57,16 +61,16 @@ class Model(Base):
                     ),
                     interpreter = models.DenseNet(
                         headsize = 16,
-                        bodysize = 16,
-                        tailsize = 32,
+                        bodysize = 64,
+                        tailsize = 64,
                         layers = 1,
-                        dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 32,
+                        headsize = 64,
                         bodysize = 8,
                         tailsize = 8,
-                        layers = 1
+                        layers = 1,
+                        dropout = 0.1
                     )
                 ),
                 
@@ -85,18 +89,18 @@ class Model(Base):
                     interpreter = models.DenseNet(
                         headsize = 8,
                         bodysize = 8,
-                        tailsize = 16,
+                        tailsize = 32,
                         layers = 1,
-                        dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 16,
+                        headsize = 32,
                         bodysize = 2,
                         tailsize = 2,
-                        layers = 1
+                        layers = 1,
+                        dropout = 0.1
                     )
                 ),
-            
+                
             ),
             
             models.DenseNet(
