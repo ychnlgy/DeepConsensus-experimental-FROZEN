@@ -20,20 +20,20 @@ class Model(Base):
                         tailsize = 64,
                         layers = 4
                     ),
-                    dropout = 0.2,
+                    dropout = 0.4,
                     interpreter = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
-                        dropout = 0.2
+                        dropout = 0.4
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
                         tailsize = 32,
                         layers = 2,
-                        dropout = 0.2
+                        dropout = 0.4
                     ),
                 ),
             
@@ -45,20 +45,20 @@ class Model(Base):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
                     ),
-                    dropout = 0.2,
+                    dropout = 0.4,
                     interpreter = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
-                        dropout = 0.2
+                        dropout = 0.4
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
-                        dropout = 0.2
+                        dropout = 0.4
                     ),
                 ),
                     
@@ -119,6 +119,6 @@ class Model(Base):
                 bodysize = 128,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2
+                dropout = 0.4
             )
         )
