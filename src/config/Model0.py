@@ -26,7 +26,7 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = torch.abs
+                        activation = torch.distributions.transform.AbsTransform()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
@@ -59,7 +59,7 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = torch.abs
+                        activation = torch.distributions.transform.AbsTransform()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
