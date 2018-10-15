@@ -20,30 +20,28 @@ class Model(Base):
                         tailsize = 64,
                         layers = 8
                     ),
+                    dropout = 0.2,
                     masker = models.DenseNet(
                         headsize = 64,
                         bodysize = 32,
                         tailsize = 1,
                         layers = 2,
-                        dropout = 0.2,
+                        dropout = 0.0,
                         activation = models.AbsTanh()
                     ),
-                    dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
-                        bodysize = 128,
-                        tailsize = 128,
+                        bodysize = 64,
+                        tailsize = 64,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.0,
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.0,
                     ),
                 ),
             
@@ -55,30 +53,28 @@ class Model(Base):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
                     ),
+                    dropout = 0.2,
                     masker = models.DenseNet(
                         headsize = 64,
                         bodysize = 32,
                         tailsize = 1,
                         layers = 2,
-                        dropout = 0.2,
+                        dropout = 0.0,
                         activation = models.AbsTanh()
                     ),
-                    dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
-                        bodysize = 128,
-                        tailsize = 128,
+                        bodysize = 64,
+                        tailsize = 64,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.0,
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.0,
                     ),
                 ),
                 
@@ -89,6 +85,6 @@ class Model(Base):
                 bodysize = 128,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2
+                dropout = 0.0
             )
         )
