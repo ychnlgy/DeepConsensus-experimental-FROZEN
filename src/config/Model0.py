@@ -16,12 +16,12 @@ class Model(Base):
                     convlayer = models.ResNet(
                         kernelseq = [3, 3],
                         headsize = channels,
-                        bodysize = 64,
-                        tailsize = 64,
+                        bodysize = 63,
+                        tailsize = 63,
                         layers = 8
                     ),
                     masker = models.DenseNet(
-                        headsize = 64,
+                        headsize = 63,
                         bodysize = 32,
                         tailsize = 1,
                         layers = 2,
