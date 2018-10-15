@@ -1,3 +1,4 @@
+from .AbsTanh import AbsTanh
 from .Mean import Mean
 from .Reshape import Reshape
 from .Permute import Permute

@@ -4,9 +4,10 @@ import misc
 
 class DistillLayer(torch.nn.Module):
 
-    def __init__(self, convlayer, dropout, interpreter, summarizer):
+    def __init__(self, convlayer, masker, dropout, interpreter, summarizer):
         super(DistillLayer, self).__init__()
         self.convlayer   = convlayer
+        self.masker      = masker
         self.interpreter = interpreter
         self.summarizer  = summarizer
         self.dropout     = torch.nn.Dropout2d(p=dropout)
@@ -14,9 +15,11 @@ class DistillLayer(torch.nn.Module):
     def forward(self, X):
         convout = self.convlayer(X)
         convinp = self.dropout(convout)
-        interpd = self.interpreter(convinp.permute(0, 2, 3, 1)) # N, W, H, C
+        convinp = convinp.permute(0, 2, 3, 1) # N, W, H, C
+        maskout = self.masker(convinp).view(N, W*H, 1)
+        interpd = self.interpreter(convinp)
         N, W, H, C = interpd.size()
-        #convout = interpd.permute(0, 3, 1, 2) # N, C, W, H
-        interpd = interpd.view(N, W*H, C).sum(dim=1)
-        summary = self.summarizer(interpd)
+        interpd = interpd.view(N, W*H, C)
+        spooled = (maskout * interpd).sum(dim=1)
+        summary = self.summarizer(spooled)
         return convout, summary
