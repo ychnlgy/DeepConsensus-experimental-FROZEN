@@ -13,6 +13,7 @@ class ResNet(torch.nn.Module):
         
         if layers == 1:
             blocks = [ResBlock(kernelseq, headsize, bodysize, tailsize)]
+            print(blocks)
         
         else:
             blocks = [ResBlock(kernelseq, headsize, bodysize, bodysize)]

@@ -16,7 +16,6 @@ class ResBlock(torch.nn.Module):
             net.append(self.create_unit(bodysize, tailsize, kernelseq[-1]))
         
         self.net = torch.nn.Sequential(*net)
-        print(self.net)
     
     def forward(self, X):
         return self.net(X)
