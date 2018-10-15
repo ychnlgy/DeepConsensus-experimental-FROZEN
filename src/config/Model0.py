@@ -26,7 +26,7 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.Abs()
+                        activation = models.Sigmoid()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
@@ -34,16 +34,14 @@ class Model(Base):
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.2
                     ),
                 ),
             
@@ -61,7 +59,7 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.Abs()
+                        activation = models.Sigmoid()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
@@ -69,16 +67,14 @@ class Model(Base):
                         bodysize = 128,
                         tailsize = 64,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
                         bodysize = 32,
                         tailsize = 16,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.2
                     ),
                 ),
                 
@@ -89,7 +85,6 @@ class Model(Base):
                 bodysize = 128,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2,
-                activation = models.Abs()
+                dropout = 0.2
             )
         )
