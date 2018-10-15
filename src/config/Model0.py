@@ -48,13 +48,13 @@ class Model(Base):
                 # 28 -> 14
                 models.DistillLayer(
                     convlayer = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                        torch.nn.Conv2d(63, 63, 3, padding=1, groups=63),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(63),
                     ),
                     masker = models.DenseNet(
-                        headsize = 64,
+                        headsize = 63,
                         bodysize = 32,
                         tailsize = 1,
                         layers = 2,
@@ -63,7 +63,7 @@ class Model(Base):
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
-                        headsize = 64,
+                        headsize = 63,
                         bodysize = 128,
                         tailsize = 96,
                         layers = 2,
