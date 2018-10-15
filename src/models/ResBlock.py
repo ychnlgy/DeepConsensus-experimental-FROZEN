@@ -7,7 +7,6 @@ class ResBlock(torch.nn.Module):
         
         if len(kernelseq) == 1:
             net = [self.create_unit(headsize, tailsize, kernelseq[0])]
-            print(net)
         else:
             net = [self.create_unit(headsize, bodysize, kernelseq[0])]
             net.extend([
@@ -17,6 +16,7 @@ class ResBlock(torch.nn.Module):
             net.append(self.create_unit(bodysize, tailsize, kernelseq[-1]))
         
         self.net = torch.nn.Sequential(*net)
+        print(self.net)
     
     def forward(self, X):
         return self.net(X)
