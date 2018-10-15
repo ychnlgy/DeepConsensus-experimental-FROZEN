@@ -17,12 +17,12 @@ class Model(Base):
                         kernelseq = [3, 3],
                         headsize = channels,
                         bodysize = 128,
-                        tailsize = 64,
+                        tailsize = 128,
                         layers = 8
                     ),
                     dropout = 0.2,
                     masker = models.DenseNet(
-                        headsize = 64,
+                        headsize = 128,
                         bodysize = 32,
                         tailsize = 1,
                         layers = 2,
@@ -30,16 +30,17 @@ class Model(Base):
                         activation = models.AbsTanh()
                     ),
                     interpreter = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 128,
-                        tailsize = 32,
+                        headsize = 128,
+                        bodysize = 256,
+                        tailsize = 128,
                         layers = 2,
                         dropout = 0.2,
+                        activation = models.AbsTanh()
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 32,
+                        headsize = 128,
                         bodysize = 64,
-                        tailsize = 16,
+                        tailsize = 32,
                         layers = 2,
                         dropout = 0.2,
                     ),
@@ -81,8 +82,8 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 16,
-                bodysize = 32,
+                headsize = 32,
+                bodysize = 64,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
