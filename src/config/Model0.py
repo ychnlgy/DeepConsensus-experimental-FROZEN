@@ -63,14 +63,14 @@ class Model(Base):
                         activation = models.AbsTanh()
                     ),
                     interpreter = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 128,
-                        tailsize = 128,
+                        tailsize = 64,
                         layers = 2,
                         dropout = 0.2,
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
