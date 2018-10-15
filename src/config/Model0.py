@@ -30,7 +30,7 @@ class Model(Base):
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
-                        headsize = 64,
+                        headsize = 63,
                         bodysize = 256,
                         tailsize = 128,
                         layers = 2,
