@@ -13,7 +13,7 @@ class ResNet(torch.nn.Module):
         
         if layers == 1:
             blocks = [ResBlock(kernelseq, headsize, bodysize, tailsize)]
-            print(blocks)
+            self.forward = self.forward_one
         
         else:
             blocks = [ResBlock(kernelseq, headsize, bodysize, bodysize)]
@@ -33,3 +33,6 @@ class ResNet(torch.nn.Module):
         for block in self.blocks[1:-1]:
             X = block(X) + X
         return self.blocks[-1](X)
+    
+    def forward_one(self, X):
+        return self.blocks[0](X)
