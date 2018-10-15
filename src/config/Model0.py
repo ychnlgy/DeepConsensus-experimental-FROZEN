@@ -26,18 +26,18 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = torch.nn.Sigmoid()
+                        activation = models.AbsTanh()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
-                        tailsize = 64,
+                        tailsize = 128,
                         layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
+                        headsize = 128,
                         bodysize = 64,
                         tailsize = 32,
                         layers = 2,
@@ -59,18 +59,18 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = torch.nn.Sigmoid()
+                        activation = models.AbsTanh()
                     ),
                     dropout = 0.2,
                     interpreter = models.DenseNet(
                         headsize = 64,
                         bodysize = 128,
-                        tailsize = 64,
+                        tailsize = 128,
                         layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
+                        headsize = 128,
                         bodysize = 32,
                         tailsize = 16,
                         layers = 2,
