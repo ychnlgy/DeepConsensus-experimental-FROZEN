@@ -18,7 +18,7 @@ class Model(Base):
                         headsize = channels,
                         bodysize = 128,
                         tailsize = 128,
-                        layers = 24
+                        layers = 8
                     ),
                     dropout = 0.2,
                     masker = models.DenseNet(
