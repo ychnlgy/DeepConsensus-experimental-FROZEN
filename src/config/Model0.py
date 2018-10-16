@@ -28,69 +28,31 @@ class Model(Base):
                         layers = 2,
                         dropout = 0.2,
                         activation = models.AbsTanh(),
-                        #default = models.Abs()
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
-                        bodysize = 256,
-                        tailsize = 256,
+                        bodysize = 96,
+                        tailsize = 64,
                         layers = 2,
                         dropout = 0.2,
-                        #activation = models.Abs(),
-                        #default = 
+                        activation = models.Abs()
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 256,
-                        bodysize = 128,
-                        tailsize = 128,
-                        layers = 1,
-                        dropout = 0.2,
-                        #activation = models.AbsTanh(),
-                        #default = models.Abs()
+                        headsize = 64,
+                        bodysize = 32,
+                        tailsize = 32,
+                        layers = 0, # deactivated
+                        dropout = 0.0,
                     ),
                 ),
-            
-#                # 28 -> 14
-#                models.DistillLayer(
-#                    convlayer = torch.nn.Sequential(
-#                        torch.nn.Conv2d(128, 64, 3, padding=1, groups=64),
-#                        torch.nn.MaxPool2d(2),
-#                        torch.nn.LeakyReLU(),
-#                        torch.nn.BatchNorm2d(64),
-#                    ),
-#                    dropout = 0.2,
-#                    masker = models.DenseNet(
-#                        headsize = 64,
-#                        bodysize = 32,
-#                        tailsize = 1,
-#                        layers = 2,
-#                        dropout = 0.2,
-#                        activation = models.AbsTanh()
-#                    ),
-#                    interpreter = models.DenseNet(
-#                        headsize = 64,
-#                        bodysize = 128,
-#                        tailsize = 64,
-#                        layers = 2,
-#                        dropout = 0.2,
-#                    ),
-#                    summarizer = models.DenseNet(
-#                        headsize = 64,
-#                        bodysize = 64,
-#                        tailsize = 32,
-#                        layers = 2,
-#                        dropout = 0.2,
-#                    ),
-#                ),
                 
             ),
             
             models.DenseNet(
-                headsize = 128,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 32,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2,
-                default = models.Abs()
+                dropout = 0.0
             )
         )
