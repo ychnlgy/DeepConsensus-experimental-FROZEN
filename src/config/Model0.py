@@ -39,16 +39,16 @@ class Model(Base):
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
-                        bodysize = 96,
-                        tailsize = 64,
+                        bodysize = 64,
+                        tailsize = 256,
                         layers = 2,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 32,
-                        tailsize = 32,
-                        layers = 0, # deactivated
+                        headsize = 256,
+                        bodysize = 64,
+                        tailsize = 64,
+                        layers = 1, # deactivated
                         dropout = 0.0
                     ),
                 ),
