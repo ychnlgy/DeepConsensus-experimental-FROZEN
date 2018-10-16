@@ -35,7 +35,8 @@ class Model(Base):
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 1
-            torch.nn.Conv2d(64, 64, 4, padding=0, groups=4),
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=4),
+            torch.nn.AvgPool2d(4),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
