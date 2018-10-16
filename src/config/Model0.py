@@ -27,7 +27,15 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = torch.nn.Tanh(),
+                        activation = torch.nn.Tanh()
+                    ),
+                    selector = models.DenseNet(
+                        headsize = 128,
+                        bodysize = 64,
+                        tailsize = 128,
+                        layers = 2,
+                        dropout = 0.2,
+                        activation = torch.nn.Tanh()
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
