@@ -27,6 +27,7 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
+                        activation = models.AbsTanh()
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
