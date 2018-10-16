@@ -53,8 +53,6 @@ def get_mnist_corrupt(download=0, **kwargs):
 
 def make_corrupt(original, corrupt_train=False, **kwargs):
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE = original
-    print(corrupt_train)
-    input()
     if int(corrupt_train):
         trainData = make_data_corrupt(trainData, kwargs)
     testData = make_data_corrupt(testData, kwargs)
@@ -92,7 +90,7 @@ def get_cifar10(download=0):
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def get_cifar10_corrupt(download=0, **kwargs):
-    return make_corrupt(get_cifar10(download), kwargs)
+    return make_corrupt(get_cifar10(download), **kwargs)
 
 def get_circlesqr_translate(samples=400):
     
