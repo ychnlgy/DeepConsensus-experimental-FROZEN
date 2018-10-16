@@ -23,9 +23,9 @@ class Model(Base):
                     dropout = 0.2,
                     masker = models.DenseNet(
                         headsize = 64,
-                        bodysize = 32,
+                        bodysize = 128,
                         tailsize = 1,
-                        layers = 2,
+                        layers = 3,
                         dropout = 0.2,
                         activation = models.AbsTanh()
                     ),
