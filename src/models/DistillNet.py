@@ -20,7 +20,7 @@ class DistillNet(torch.nn.Module):
     
     def iter_forward(self, X):
         vecs = []
-        for i, (output, layer) in enumerate(zip(self.iternet, self.layers)):
+        for i, (output, layer) in enumerate(zip(self.iternet.iter_forward(X), self.layers)):
             vecs.append(layer(output)[1])
         assert i + 1 == len(self.layers)
         return torch.cat(vecs, dim=1)
