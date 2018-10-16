@@ -14,7 +14,7 @@ class Model(Base):
                 headsize = channels,
                 bodysize = 128,
                 tailsize = 128,
-                layers = 12
+                layers = 8
             ),
             
             # 28 -> 14
@@ -36,8 +36,8 @@ class Model(Base):
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 1
-            torch.nn.Conv2d(64, 64, 3, padding=1, groups=2),
-            torch.nn.AvgPool2d(4),
+            torch.nn.Conv2d(64, 64, 4, padding=0, groups=2),
+            #torch.nn.AvgPool2d(4),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
