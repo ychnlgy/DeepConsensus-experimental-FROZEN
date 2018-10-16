@@ -31,7 +31,7 @@ class Model(Base):
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
-                        bodysize = 256,
+                        bodysize = 128,
                         tailsize = 128,
                         layers = 2,
                         dropout = 0.2,
@@ -39,7 +39,7 @@ class Model(Base):
                     ),
                     summarizer = models.DenseNet(
                         headsize = 128,
-                        bodysize = 256,
+                        bodysize = 128,
                         tailsize = 64,
                         layers = 2,
                         dropout = 0.2,
