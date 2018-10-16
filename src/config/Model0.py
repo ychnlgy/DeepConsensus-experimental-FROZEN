@@ -32,17 +32,17 @@ class Model(Base):
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
-                        bodysize = 32,
-                        tailsize = 64,
+                        bodysize = 256,
+                        tailsize = 256,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.Abs(),
+                        #activation = models.Abs(),
                         #default = 
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 32,
-                        tailsize = 32,
+                        headsize = 256,
+                        bodysize = 128,
+                        tailsize = 128,
                         layers = 1,
                         dropout = 0.2,
                         #activation = models.AbsTanh(),
@@ -86,7 +86,7 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 32,
+                headsize = 128,
                 bodysize = 64,
                 tailsize = classes,
                 layers = 2,
