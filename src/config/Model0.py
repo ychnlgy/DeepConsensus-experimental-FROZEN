@@ -16,31 +16,31 @@ class Model(Base):
                     convlayer = models.ResNet(
                         kernelseq = [3, 3],
                         headsize = channels,
-                        bodysize = 64,
-                        tailsize = 64,
+                        bodysize = 128,
+                        tailsize = 128,
                         layers = 8
                     ),
                     dropout = 0.2,
                     masker = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 128,
+                        headsize = 128,
+                        bodysize = 256,
                         tailsize = 1,
-                        layers = 3,
+                        layers = 2,
                         dropout = 0.2,
                     ),
                     interpreter = models.DenseNet(
-                        headsize = 64,
-                        bodysize = 128,
-                        tailsize = 128,
+                        headsize = 128,
+                        bodysize = 256,
+                        tailsize = 256,
                         layers = 2,
                         dropout = 0.2,
                     ),
                     summarizer = models.DenseNet(
-                        headsize = 128,
-                        bodysize = 64,
-                        tailsize = 64,
+                        headsize = 256,
+                        bodysize = 128,
+                        tailsize = 128,
                         layers = 1,
-                        dropout = 0.0,
+                        dropout = 0.2,
                     ),
                 ),
             
@@ -80,10 +80,10 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 64,
-                bodysize = 32,
+                headsize = 128,
+                bodysize = 256,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.1
+                dropout = 0.2
             )
         )
