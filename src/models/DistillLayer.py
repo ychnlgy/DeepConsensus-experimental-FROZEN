@@ -21,7 +21,7 @@ class DistillLayer(torch.nn.Module):
         convinp = convinp.view(N, W*H, C)
         maskout = self.masker(convinp)
         selects = self.selector(convinp)
-        interpd = self.interpreter(convinp)
-        spooled = (maskout * interpd * selects).sum(dim=1)
+        interpd = self.interpreter(convinp * selects)
+        spooled = (maskout * interpd).sum(dim=1)
         summary = self.summarizer(spooled)
         return convout, summary
