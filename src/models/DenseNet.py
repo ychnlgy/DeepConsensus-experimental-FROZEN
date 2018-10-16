@@ -6,9 +6,10 @@ class DenseNet(torch.nn.Module):
     
     def __init__(self, headsize, bodysize, tailsize, layers, dropout=0.0, bias=True, activation=DEFAULT_ACTIVATION):
         super(DenseNet, self).__init__()
-        assert layers > 0
         self.bias = bias
         
+        if layers == 0:
+            self.net = torch.nn.Sequential()
         if layers == 1:
             self.net = self.create_unit(headsize, tailsize, activation)
         else:
