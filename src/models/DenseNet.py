@@ -10,8 +10,7 @@ class DenseNet(torch.nn.Module):
         
         if layers == 0:
             self.net = torch.nn.Sequential()
-            print("Here")
-        if layers == 1:
+        elif layers == 1:
             self.net = self.create_unit(headsize, tailsize, activation)
         else:
             self.net = torch.nn.Sequential(
