@@ -28,7 +28,7 @@ class Model(Base):
                         layers = 2,
                         dropout = 0.2,
                         activation = models.AbsTanh(),
-                        default = models.Abs()
+                        #default = models.Abs()
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
@@ -36,8 +36,8 @@ class Model(Base):
                         tailsize = 64,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.AbsTanh(),
-                        default = models.Abs()
+                        #activation = models.AbsTanh(),
+                        #default = models.Abs()
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
@@ -45,8 +45,8 @@ class Model(Base):
                         tailsize = 32,
                         layers = 1,
                         dropout = 0.2,
-                        activation = models.AbsTanh(),
-                        default = models.Abs()
+                        #activation = models.AbsTanh(),
+                        #default = models.Abs()
                     ),
                 ),
             
