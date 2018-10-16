@@ -19,7 +19,7 @@ class DistillLayer(torch.nn.Module):
         convinp = convinp.permute(0, 2, 3, 1) # N, W, H, C
         N, W, H, C = convinp.size()
         maskout = self.masker(convinp).view(N, W*H, 1)
-        maskoud = self.softmax(maskout)
+        maskout = self.softmax(maskout)
         interpd = self.interpreter(convinp)
         N, W, H, C = interpd.size()
         interpd = interpd.view(N, W*H, C)
