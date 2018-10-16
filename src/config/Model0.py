@@ -35,7 +35,6 @@ class Model(Base):
                         tailsize = 128,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.AbsTanh()
                     ),
                     summarizer = models.DenseNet(
                         headsize = 128,
