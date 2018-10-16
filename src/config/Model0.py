@@ -41,7 +41,7 @@ class Model(Base):
                         bodysize = 64,
                         tailsize = 64,
                         layers = 1,
-                        dropout = 0.2,
+                        dropout = 0.0,
                     ),
                 ),
             
@@ -85,6 +85,6 @@ class Model(Base):
                 bodysize = 32,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2
+                dropout = 0.1
             )
         )
