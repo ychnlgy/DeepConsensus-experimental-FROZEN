@@ -26,13 +26,22 @@ class ResNet(torch.nn.Module):
         self.blocks = torch.nn.ModuleList(blocks)
 
     def forward(self, X):
+        for output in self.iter_forward(X):
+            continue
+        return output
+    
+    def iter_forward(self, X):
         N, C, W, H = X.size()
         d, r = divmod(self.bodysize, C)
         assert r == 0
-        X = self.blocks[0](X) + X.repeat(1, d, 1, 1)
+        W = self.blocks[0](X)
+        yield W
+        X = W + X.repeat(1, d, 1, 1)
         for block in self.blocks[1:-1]:
-            X = block(X) + X
-        return self.blocks[-1](X)
+            W = block(X)
+            yield W
+            X = W + X
+        yield self.blocks[-1](X)
     
     def forward_one(self, X):
         return self.blocks[0](X)

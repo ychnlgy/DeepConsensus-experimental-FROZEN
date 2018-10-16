@@ -2,9 +2,11 @@ import torch
 
 import misc
 
+EMPTY = torch.nn.Sequential()
+
 class DistillLayer(torch.nn.Module):
 
-    def __init__(self, convlayer, masker, dropout, interpreter, summarizer):
+    def __init__(self, masker, dropout, interpreter, summarizer, convlayer=EMPTY):
         super(DistillLayer, self).__init__()
         self.convlayer   = convlayer
         self.masker      = masker
