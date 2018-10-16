@@ -18,7 +18,6 @@ class Model(Base):
             ),
             
             # 28 -> 14
-            
             torch.nn.Conv2d(128, 64, 3, padding=1, groups=2),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
@@ -32,7 +31,7 @@ class Model(Base):
             
             # 7 -> 4
             torch.nn.Conv2d(64, 64, 3, padding=1, groups=2),
-            torch.nn.AvgPool2d(2),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
