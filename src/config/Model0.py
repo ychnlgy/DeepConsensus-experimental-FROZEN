@@ -4,8 +4,6 @@ import models
 
 from .Base import Base
 
-LAYERS = 8
-
 class Model(Base):
 
     def create_net(self, channels, classes):
@@ -24,17 +22,26 @@ class Model(Base):
                 
                 decoder = torch.nn.GRU(
                     input_size = 128,
-                    hidden_size = 64,
+                    hidden_size = 256,
                     num_layers = 1,
                     batch_first = True
                 ),
             
                 layers = [
+                
+                    # 28 -> 28
                     models.DistillLayer(
+                        convlayer = models.ResNet(
+                            kernelseq = [3, 3],
+                            headsize = channels,
+                            bodysize = 63,
+                            tailsize = 63,
+                            layers = 8
+                        ),
                         dropout = 0.2,
                         masker = models.DenseNet(
                             headsize = 63,
-                            bodysize = 32,
+                            bodysize = 128,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
@@ -42,27 +49,71 @@ class Model(Base):
                         ),
                         interpreter = models.DenseNet(
                             headsize = 63,
-                            bodysize = 64,
+                            bodysize = 128,
                             tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
-                    ) for i in range(LAYERS)
+                    ),
+                    
+                    # 28 -> 14
+                    models.DistillLayer(
+                        convlayer = torch.nn.Sequential(
+                            torch.nn.Conv2d(63, 31, 3, padding=1, groups=31),
+                            torch.nn.MaxPool2d(2),
+                            torch.nn.LeakyReLU(),
+                            torch.nn.BatchNorm2d(31)
+                        ),
+                        dropout = 0.2,
+                        masker = models.DenseNet(
+                            headsize = 31,
+                            bodysize = 64,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = models.AbsTanh()
+                        ),
+                        interpreter = models.DenseNet(
+                            headsize = 31,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                            dropout = 0.2
+                        )
+                    ),
+                    
+                    # 14 -> 14
+                    models.DistillLayer(
+                        convlayer = torch.nn.Sequential(
+                            torch.nn.Conv2d(31, 31, 3, padding=1, groups=31),
+                            torch.nn.LeakyReLU(),
+                            torch.nn.BatchNorm2d(31)
+                        ),
+                        dropout = 0.2,
+                        masker = models.DenseNet(
+                            headsize = 31,
+                            bodysize = 64,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = models.AbsTanh()
+                        ),
+                        interpreter = models.DenseNet(
+                            headsize = 31,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                            dropout = 0.2
+                        )
+                    ),
+                    
                 ],
-                
-                iternet = models.ResNet(
-                    kernelseq = [3, 3],
-                    headsize = channels,
-                    bodysize = 63,
-                    tailsize = 63,
-                    layers = LAYERS
-                ),
                 
             ),
             
             models.DenseNet(
-                headsize = 64,
-                bodysize = 32,
+                headsize = 256,
+                bodysize = 1024,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
