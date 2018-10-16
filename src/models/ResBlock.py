@@ -31,4 +31,4 @@ class ResBlock(torch.nn.Module):
     def calc_groups(self, c1, c2):
         c = min(c1, c2)
         # if c1 and c2 is divisble by c, their remainders is 0.
-        return [c, 1][bool((c1 % c) & (c2 % c))]
+        return [c, 1][bool((c1 % c) + (c2 % c))]
