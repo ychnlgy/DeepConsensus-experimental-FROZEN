@@ -23,43 +23,35 @@ class Model(Base):
                     dropout = 0.2,
                     masker = models.DenseNet(
                         headsize = 128,
-                        bodysize = 32,
-                        tailsize = 1,
-                        layers = 2,
-                        dropout = 0.2,
-                        activation = models.AbsTanh()
-                    ),
-                    selector = models.DenseNet(
-                        headsize = 128,
                         bodysize = 64,
-                        tailsize = 128,
-                        layers = 2,
+                        tailsize = 1,
+                        layers = 3,
                         dropout = 0.2,
                         activation = models.AbsTanh()
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
-                        bodysize = 64,
+                        bodysize = 256,
                         tailsize = 256,
-                        layers = 2,
+                        layers = 3,
                         dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 256,
-                        bodysize = 64,
-                        tailsize = 64,
-                        layers = 1, # deactivated
-                        dropout = 0.0
+                        bodysize = 128,
+                        tailsize = 128,
+                        layers = 2, # deactivated
+                        dropout = 0.05
                     ),
                 ),
                 
             ),
             
             models.DenseNet(
-                headsize = 64,
-                bodysize = 32,
+                headsize = 128,
+                bodysize = 64,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.0
+                dropout = 0.05
             )
         )
