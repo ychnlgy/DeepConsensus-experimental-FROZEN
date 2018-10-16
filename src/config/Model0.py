@@ -16,21 +16,21 @@ class Model(Base):
                     convlayer = models.ResNet(
                         kernelseq = [3, 3],
                         headsize = channels,
-                        bodysize = 128,
-                        tailsize = 128,
+                        bodysize = 64,
+                        tailsize = 64,
                         layers = 8
                     ),
                     dropout = 0.2,
                     masker = models.DenseNet(
-                        headsize = 128,
-                        bodysize = 64,
+                        headsize = 64,
+                        bodysize = 32,
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
                         activation = models.AbsTanh()
                     ),
                     interpreter = models.DenseNet(
-                        headsize = 128,
+                        headsize = 64,
                         bodysize = 128,
                         tailsize = 128,
                         layers = 2,
