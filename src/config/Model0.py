@@ -24,7 +24,7 @@ class Model(Base):
                 
                 decoder = torch.nn.GRU(
                     input_size = 256,
-                    hidden_size = 256,
+                    hidden_size = 128,
                     num_layers = 2,
                     batch_first = True,
                     dropout = 0.2
@@ -62,7 +62,7 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 256,
+                headsize = 128,
                 bodysize = 64,
                 tailsize = classes,
                 layers = 2,
