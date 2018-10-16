@@ -27,22 +27,21 @@ class Model(Base):
                         tailsize = 1,
                         layers = 2,
                         dropout = 0.2,
-                        activation = models.AbsTanh(),
+                        activation = torch.nn.Tanh(),
                     ),
                     interpreter = models.DenseNet(
                         headsize = 128,
                         bodysize = 96,
                         tailsize = 64,
                         layers = 2,
-                        dropout = 0.2,
-                        activation = models.Abs()
+                        dropout = 0.2
                     ),
                     summarizer = models.DenseNet(
                         headsize = 64,
                         bodysize = 32,
                         tailsize = 32,
                         layers = 0, # deactivated
-                        dropout = 0.0,
+                        dropout = 0.0
                     ),
                 ),
                 
