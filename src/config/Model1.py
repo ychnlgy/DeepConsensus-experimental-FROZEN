@@ -14,7 +14,7 @@ class Model(Base):
                 headsize = channels,
                 bodysize = 128,
                 tailsize = 128,
-                layers = 8
+                layers = 12
             ),
             
             # 28 -> 14
