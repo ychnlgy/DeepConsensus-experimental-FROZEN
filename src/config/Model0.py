@@ -16,7 +16,7 @@ class Model(Base):
                     convlayer = models.ResNet(
                         kernelseq = [3, 3],
                         headsize = channels,
-                        bodysize = 64,
+                        bodysize = 63,
                         tailsize = 64,
                         layers = 8
                     ),
