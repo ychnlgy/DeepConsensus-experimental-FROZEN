@@ -50,10 +50,10 @@ class Model(Base):
                     # 28 -> 14
                     models.DistillLayer(
                         convlayer = torch.nn.Sequential(
-                            torch.nn.Conv2d(123, 123, 3, padding=1, groups=123),
+                            torch.nn.Conv2d(63, 63, 3, padding=1, groups=63),
                             torch.nn.MaxPool2d(2),
                             torch.nn.LeakyReLU(),
-                            torch.nn.BatchNorm2d(123)
+                            torch.nn.BatchNorm2d(63)
                         ),
                         dropout = 0.2,
                         masker = models.DenseNet(
@@ -76,9 +76,9 @@ class Model(Base):
                     # 14 -> 14
                     models.DistillLayer(
                         convlayer = torch.nn.Sequential(
-                            torch.nn.Conv2d(123, 123, 3, padding=1, groups=123),
+                            torch.nn.Conv2d(63, 63, 3, padding=1, groups=63),
                             torch.nn.LeakyReLU(),
-                            torch.nn.BatchNorm2d(123)
+                            torch.nn.BatchNorm2d(63)
                         ),
                         dropout = 0.2,
                         masker = models.DenseNet(
