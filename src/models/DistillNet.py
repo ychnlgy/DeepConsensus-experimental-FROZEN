@@ -14,7 +14,7 @@ class DistillNet(torch.nn.Module):
             self.iternet = iternet
         
         self.layers = torch.nn.ModuleList(layers)
-        self.weight = torch.nn.Parameters(torch.rand(len(self.layers)).view(-1, 1, 1))
+        self.weight = torch.nn.Parameter(torch.rand(len(self.layers)).view(-1, 1, 1))
     
     def forward(self, X):
         vecs = misc.util.reverse_iterator(self.generate_vecs(X))
