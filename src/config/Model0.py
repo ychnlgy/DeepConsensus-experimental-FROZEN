@@ -14,7 +14,7 @@ class Model(Base):
                 encoder = torch.nn.RNN(
                     input_size = 128,
                     hidden_size = 256,
-                    num_layers = 1,
+                    num_layers = 2,
                     dropout = 0.2
                 ),
             
@@ -32,7 +32,7 @@ class Model(Base):
                         dropout = 0.2,
                         masker = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
@@ -40,7 +40,7 @@ class Model(Base):
                         ),
                         interpreter = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 128,
                             layers = 2,
                             dropout = 0.2
@@ -58,7 +58,7 @@ class Model(Base):
                         dropout = 0.2,
                         masker = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
@@ -66,7 +66,7 @@ class Model(Base):
                         ),
                         interpreter = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 128,
                             layers = 2,
                             dropout = 0.2
@@ -83,7 +83,7 @@ class Model(Base):
                         dropout = 0.2,
                         masker = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
@@ -91,7 +91,7 @@ class Model(Base):
                         ),
                         interpreter = models.DenseNet(
                             headsize = 123,
-                            bodysize = 64,
+                            bodysize = 256,
                             tailsize = 128,
                             layers = 2,
                             dropout = 0.2
@@ -104,7 +104,7 @@ class Model(Base):
             
             models.DenseNet(
                 headsize = 256,
-                bodysize = 1024,
+                bodysize = 512,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
