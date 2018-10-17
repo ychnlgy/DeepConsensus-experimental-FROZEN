@@ -18,7 +18,7 @@ class DistillNet(torch.nn.Module):
     def forward(self, X):
         vecs = misc.util.reverse_iterator(self.generate_vecs(X))
         vecs = torch.stack(vecs) # layers, N, C
-        return state[0] # N, C'
+        return vecs#state[0] # N, C'
     
     def generate_vecs(self, X):
         for layer in self.layers:
