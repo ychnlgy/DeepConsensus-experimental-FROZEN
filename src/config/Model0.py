@@ -11,20 +11,11 @@ class Model(Base):
         
             models.DistillNet(
             
-                encoder = torch.nn.GRU(
-                    input_size = 32,
-                    hidden_size = 64,
+                encoder = torch.nn.RNN(
+                    input_size = 64,
+                    hidden_size = 128,
                     num_layers = 2,
-                    batch_first = True,
-                    dropout = 0.2,
-                    bidirectional= True
-                ),
-                
-                decoder = torch.nn.GRU(
-                    input_size = 128,
-                    hidden_size = 32,
-                    num_layers = 1,
-                    batch_first = True
+                    dropout = 0.2
                 ),
             
                 layers = [
@@ -34,23 +25,23 @@ class Model(Base):
                         convlayer = models.ResNet(
                             kernelseq = [3, 3],
                             headsize = channels,
-                            bodysize = 123,
-                            tailsize = 123,
+                            bodysize = 63,
+                            tailsize = 63,
                             layers = 8
                         ),
                         dropout = 0.2,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 32,
+                            headsize = 63,
+                            bodysize = 128,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
-                            tailsize = 32,
+                            headsize = 63,
+                            bodysize = 128,
+                            tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
@@ -66,17 +57,17 @@ class Model(Base):
                         ),
                         dropout = 0.2,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 32,
+                            headsize = 63,
+                            bodysize = 128,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
-                            tailsize = 32,
+                            headsize = 63,
+                            bodysize = 128,
+                            tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
@@ -91,17 +82,17 @@ class Model(Base):
                         ),
                         dropout = 0.2,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 32,
+                            headsize = 63,
+                            bodysize = 128,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
-                            tailsize = 32,
+                            headsize = 63,
+                            bodysize = 128,
+                            tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
@@ -112,8 +103,8 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 32,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 128,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2

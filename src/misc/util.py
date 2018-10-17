@@ -6,6 +6,9 @@ UNITTEST = "unittest_"
 
 # === Functions ===
 
+def reverse_iterator(it):
+    return list(reversed(list(it)))
+
 def hardmap(fn, *args):
     return tuple(map(fn, args))
 
