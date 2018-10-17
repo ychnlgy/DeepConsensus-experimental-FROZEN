@@ -108,7 +108,6 @@ class Model(Base):
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
-            ),
+            )
             
-            models.Reshape(classes)
         )
