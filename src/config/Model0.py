@@ -11,8 +11,8 @@ class Model(Base):
         
             models.DistillNet(
             
-                encoder = torch.nn.RNN(
-                    input_size = 64,
+                encoder = torch.nn.GRU(
+                    input_size = 32,
                     hidden_size = 64,
                     num_layers = 2,
                     dropout = 0.2
@@ -25,76 +25,76 @@ class Model(Base):
                         convlayer = models.ResNet(
                             kernelseq = [3, 3],
                             headsize = channels,
-                            bodysize = 123,
-                            tailsize = 123,
+                            bodysize = 63,
+                            tailsize = 63,
                             layers = 8
                         ),
-                        dropout = 0.2,
+                        dropout = 0.0,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
+                            headsize = 63,
+                            bodysize = 32,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
+                            headsize = 63,
                             bodysize = 32,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2
+                            tailsize = 32,
+                            layers = 1,
+                            dropout = 0.0
                         )
                     ),
                     
                     # 28 -> 14
                     models.DistillLayer(
                         convlayer = torch.nn.Sequential(
-                            torch.nn.Conv2d(123, 123, 3, padding=1, groups=123),
+                            torch.nn.Conv2d(63, 32, 3, padding=1, groups=32),
                             torch.nn.MaxPool2d(2),
                             torch.nn.LeakyReLU(),
-                            torch.nn.BatchNorm2d(123)
+                            torch.nn.BatchNorm2d(32)
                         ),
-                        dropout = 0.2,
+                        dropout = 0.0,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
+                            headsize = 32,
+                            bodysize = 16,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
+                            headsize = 32,
                             bodysize = 32,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2
+                            tailsize = 32,
+                            layers = 1,
+                            dropout = 0.0
                         )
                     ),
                     
                     # 14 -> 14
                     models.DistillLayer(
                         convlayer = torch.nn.Sequential(
-                            torch.nn.Conv2d(123, 123, 3, padding=1, groups=123),
+                            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
                             torch.nn.LeakyReLU(),
-                            torch.nn.BatchNorm2d(123)
+                            torch.nn.BatchNorm2d(32)
                         ),
-                        dropout = 0.2,
+                        dropout = 0.0,
                         masker = models.DenseNet(
-                            headsize = 123,
-                            bodysize = 64,
+                            headsize = 32,
+                            bodysize = 16,
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
                             activation = models.AbsTanh()
                         ),
                         interpreter = models.DenseNet(
-                            headsize = 123,
+                            headsize = 32,
                             bodysize = 32,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2
+                            tailsize = 32,
+                            layers = 1,
+                            dropout = 0.0
                         )
                     ),
                     
@@ -107,6 +107,6 @@ class Model(Base):
                 bodysize = 32,
                 tailsize = classes,
                 layers = 2,
-                dropout = 0.2
+                dropout = 0.0
             )
         )
