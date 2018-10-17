@@ -7,19 +7,21 @@ class DistillNet(torch.nn.Module):
     def __init__(self, encoder, layers, iternet=None):
         super(DistillNet, self).__init__()
         
-        self.encoder = encoder
+        #self.encoder = encoder
         
         if iternet is not None:
             self.generate_vecs = self.generate_vecs_iter
             self.iternet = iternet
         
         self.layers = torch.nn.ModuleList(layers)
+        self.weight = torch.nn.Parameters(torch.rand(len(self.layers)).view(-1, 1, 1))
     
     def forward(self, X):
         vecs = misc.util.reverse_iterator(self.generate_vecs(X))
         vecs = torch.stack(vecs) # layers, N, C
-        encd, state = self.encoder(vecs)
-        return state[0] # N, C'
+        return (self.weight * vecs).sum(dim=0) # N, C
+        #encd, state = self.encoder(vecs)
+        #return state[0] # N, C'
     
     def generate_vecs(self, X):
         for layer in self.layers:
