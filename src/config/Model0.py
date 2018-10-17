@@ -13,8 +13,8 @@ class Model(Base):
             
                 encoder = torch.nn.RNN(
                     input_size = 64,
-                    hidden_size = 128,
-                    num_layers = 4,
+                    hidden_size = 64,
+                    num_layers = 2,
                     dropout = 0.2
                 ),
             
@@ -103,8 +103,8 @@ class Model(Base):
             ),
             
             models.DenseNet(
-                headsize = 128,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 32,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
