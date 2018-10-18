@@ -135,12 +135,43 @@ class Model(Base):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 128,
+                            tailsize = 4,
+                            layers = 2,
+                            dropout = 0.2
+                        )
+                        
+                    ) for i in range(3)
+                ] + [
+                    
+                    models.DistillPool(
+                    
+                        f = models.DenseNet(
+                            headsize = 4,
+                            bodysize = 16,
+                            tailsize = 64,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
+                        ),
+                        
+                        g = models.DenseNet(
+                            headsize = 68,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
+                        ),
+                        
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
                             tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
                         
-                    ) for i in range(4)
+                    )
                 ],
                 
             ),
