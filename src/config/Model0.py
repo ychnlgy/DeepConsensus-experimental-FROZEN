@@ -34,8 +34,8 @@ class Model(Base):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 4,
+                            bodysize = 128,
+                            tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
@@ -44,7 +44,7 @@ class Model(Base):
                 ],
                 
                 encoder = torch.nn.GRU(
-                    input_size = 4,
+                    input_size = 64,
                     hidden_size = 32,
                     num_layers = 2,
                     dropout = 0.0
