@@ -35,43 +35,38 @@ class Cnn(torch.nn.Module):
                 torch.nn.LeakyReLU(),
                 torch.nn.BatchNorm2d(64),
             
-                # 14 -> 14
+            ),
+            
+            torch.nn.Sequential(
+            
+                # 14 -> 7
                 torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.MaxPool2d(2),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+            
+            ),
+            
+            torch.nn.Sequential(
+            
+                # 7 -> 4
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.AvgPool2d(3, padding=1, stride=2),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+            
+            ),
+            
+            torch.nn.Sequential(
+            
+                # 4 -> 1
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.AvgPool2d(2),
                 torch.nn.LeakyReLU(),
                 torch.nn.BatchNorm2d(64),
                 
-#                # 14 -> 7
-#                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
-#                torch.nn.MaxPool2d(2),
-#                torch.nn.LeakyReLU(),
-#                torch.nn.BatchNorm2d(64),
-#                
-#                # 7 -> 4
-#                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
-#                torch.nn.AvgPool2d(3, padding=1, stride=2),
-#                torch.nn.LeakyReLU(),
-#                torch.nn.BatchNorm2d(64),
-#                
-#                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
-#                torch.nn.LeakyReLU(),
-#                torch.nn.BatchNorm2d(64),
-#                
-#                # 4 -> 1
-#                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
-#                torch.nn.AvgPool2d(4),
-#                torch.nn.LeakyReLU(),
-#                torch.nn.BatchNorm2d(64),
-#                
-#                models.Reshape(64),
-#                
-#                models.DenseNet(
-#                    headsize = 64,
-#                    bodysize = 32,
-#                    tailsize = classes,
-#                    layers = 2,
-#                    dropout = 0.2
-#                )
-            ),
+            )
+            
         ]
 
 class Model(Base):
@@ -113,7 +108,9 @@ class Model(Base):
                             dropout = 0.2
                         )
                         
-                    ),
+                    )
+                
+                ] + [
                     
                     models.DistillPool(
                     
@@ -143,7 +140,7 @@ class Model(Base):
                             dropout = 0.2
                         )
                         
-                    )
+                    ) for i in range(4)
                 ],
                 
             ),
