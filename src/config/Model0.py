@@ -35,9 +35,9 @@ class Cnn(torch.nn.Module):
                 torch.nn.LeakyReLU(),
                 torch.nn.BatchNorm2d(64),
             
-            ),
+            #),
             
-            torch.nn.Sequential(
+            #torch.nn.Sequential(
             
                 # 14 -> 7
                 torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
@@ -45,9 +45,9 @@ class Cnn(torch.nn.Module):
                 torch.nn.LeakyReLU(),
                 torch.nn.BatchNorm2d(64),
             
-            ),
+            #),
             
-            torch.nn.Sequential(
+            #torch.nn.Sequential(
             
                 # 7 -> 4
                 torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
@@ -55,11 +55,11 @@ class Cnn(torch.nn.Module):
                 torch.nn.LeakyReLU(),
                 torch.nn.BatchNorm2d(64),
             
-            ),
+            #),
             
-            torch.nn.Sequential(
+            #torch.nn.Sequential(
             
-                # 4 -> 1
+                # 4 -> 2
                 torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                 torch.nn.AvgPool2d(2),
                 torch.nn.LeakyReLU(),
@@ -82,15 +82,6 @@ class Model(Base):
                 
                     models.DistillPool(
                     
-                        f = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2,
-                            activation = torch.nn.Sigmoid()
-                        ),
-                    
                         g = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
@@ -108,51 +99,33 @@ class Model(Base):
                             dropout = 0.2
                         )
                         
-                    )
+                    ),
                 
-                ] + [
+#                ] + [
+#                    
+#                    models.DistillPool(
+#                        
+#                        g = models.DenseNet(
+#                            headsize = 68,
+#                            bodysize = 32,
+#                            tailsize = 1,
+#                            layers = 2,
+#                            dropout = 0.2,
+#                            activation = torch.nn.Sigmoid()
+#                        ),
+#                        
+#                        h = models.DenseNet(
+#                            headsize = 64,
+#                            bodysize = 128,
+#                            tailsize = 4,
+#                            layers = 2,
+#                            dropout = 0.2
+#                        )
+#                        
+#                    ) for i in range(3)
+#                ] + [
                     
                     models.DistillPool(
-                    
-                        f = models.DenseNet(
-                            headsize = 4,
-                            bodysize = 16,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2,
-                            activation = torch.nn.Sigmoid()
-                        ),
-                        
-                        g = models.DenseNet(
-                            headsize = 68,
-                            bodysize = 32,
-                            tailsize = 1,
-                            layers = 2,
-                            dropout = 0.2,
-                            activation = torch.nn.Sigmoid()
-                        ),
-                        
-                        h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 128,
-                            tailsize = 4,
-                            layers = 2,
-                            dropout = 0.2
-                        )
-                        
-                    ) for i in range(3)
-                ] + [
-                    
-                    models.DistillPool(
-                    
-                        f = models.DenseNet(
-                            headsize = 4,
-                            bodysize = 16,
-                            tailsize = 64,
-                            layers = 2,
-                            dropout = 0.2,
-                            activation = torch.nn.Sigmoid()
-                        ),
                         
                         g = models.DenseNet(
                             headsize = 68,
