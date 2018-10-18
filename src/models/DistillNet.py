@@ -11,7 +11,7 @@ class DistillNet(torch.nn.Module):
     
     def forward(self, X):
         # list of (N, C, W, H) from topmost to bottom
-        layers = misc.util.reverse_iterator(self.iternet.iter_forward(X))
+        layers = misc.util.reverse_iterator(self.iternet(X))
         
         summary = None
         for pool, layer in zip(self.pools, layers):

@@ -6,6 +6,74 @@ from .Base import Base
 
 LAYERS = 8
 
+class Cnn(torch.nn.Module):
+    
+    def __init__(self, channels, classes):
+        super(Cnn, self).__init__()
+        self.nets = torch.nn.ModuleList(self.create_nets(channels, classes))
+    
+    def forward(self, X):
+        for net in self.nets:
+            X = net(X)
+            yield X
+    
+    def create_nets(self, channels, classes):
+        return [
+            models.ResNet(
+                kernelseq = [3, 3],
+                headsize = channels,
+                bodysize = 64,
+                tailsize = 64,
+                layers = LAYERS
+            ),
+            
+            torch.nn.Sequential(
+            
+                # 28 -> 14
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.MaxPool2d(2),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+            
+                # 14 -> 14
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+                
+                # 14 -> 7
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.MaxPool2d(2),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+                
+                # 7 -> 4
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.AvgPool2d(3, padding=1, stride=2),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+                
+                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64),
+                
+#                # 4 -> 1
+#                torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+#                torch.nn.AvgPool2d(4),
+#                torch.nn.LeakyReLU(),
+#                torch.nn.BatchNorm2d(64),
+#                
+#                models.Reshape(64),
+#                
+#                models.DenseNet(
+#                    headsize = 64,
+#                    bodysize = 32,
+#                    tailsize = classes,
+#                    layers = 2,
+#                    dropout = 0.2
+#                )
+            ),
+        ]
+
 class Model(Base):
 
     def create_net(self, channels, classes):
@@ -13,13 +81,7 @@ class Model(Base):
         
             models.DistillNet(
             
-                iternet = models.ResNet(
-                    kernelseq = [3, 3],
-                    headsize = channels,
-                    bodysize = 64,
-                    tailsize = 64,
-                    layers = LAYERS
-                ),
+                iternet = Cnn(channels, classes),
             
                 pools = [
                 
@@ -39,8 +101,7 @@ class Model(Base):
                             layers = 2,
                             dropout = 0.2
                         )
-                    )
-                ] + [
+                    ),
                     
                     models.DistillPool(
                         g = models.DenseNet(
@@ -52,20 +113,20 @@ class Model(Base):
                             activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
+                            headsize = 96,
                             bodysize = 128,
-                            tailsize = 32,
+                            tailsize = 64,
                             layers = 2,
                             dropout = 0.2
                         )
-                    ) for i in range(LAYERS - 1)
+                    )
                 ],
                 
             ),
             
             models.DenseNet(
-                headsize = 32,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 32,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
