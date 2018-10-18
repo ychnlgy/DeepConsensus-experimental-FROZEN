@@ -38,9 +38,8 @@ class DistillPool(torch.nn.Module):
         z = self.combine(X, summary)
         c = self.f(z)
         w = self.g(z)
-        v = self.h(X)
-        assert c.size() == v.size()
-        return (v * c * w).sum(dim=1)
+        v = self.h(X * c) * w
+        return v.sum(dim=1)
     
     def combine(self, X, summary):
         if summary is None:
