@@ -50,7 +50,7 @@ class Model(Base):
             models.ResNet(
                 kernelseq = [3, 3],
                 headsize = channels,
-                bodysize = 63,
+                bodysize = 64,
                 tailsize = 64,
                 layers = 8
             ),
