@@ -13,15 +13,15 @@ class Model(Base):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
+            torch.nn.BatchNorm2d(64),
             
             models.DistillPool(
             
                 g = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 32,
                     tailsize = 1,
                     layers = 2,
                     dropout = 0.2,
@@ -29,18 +29,18 @@ class Model(Base):
                 ),
                 
                 h = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 128,
-                    tailsize = 128,
-                    layers = 1,
+                    headsize = 64,
+                    bodysize = 32,
+                    tailsize = 64,
+                    layers = 2,
                     dropout = 0.2
                 )
                 
             ),
             
             models.DenseNet(
-                headsize = 128,
-                bodysize = 64,
+                headsize = 64,
+                bodysize = 32,
                 tailsize = classes,
                 layers = 2,
                 dropout = 0.2
