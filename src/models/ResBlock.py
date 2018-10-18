@@ -1,7 +1,7 @@
 import torch
 
-LEAKY = torch.nn.LeakyReLU()
-EMPTY = torch.nn.Sequential()
+#LEAKY = torch.nn.LeakyReLU()
+#EMPTY = torch.nn.Sequential()
 
 class ResBlock(torch.nn.Module):
     
@@ -31,7 +31,8 @@ class ResBlock(torch.nn.Module):
         Cf = out.size(1)
         d, r = divmod(Cf, C0)
         
-        add = X.repeat(1, d, 1, 1)
+        if d > 0:
+            add = X.repeat(1, d, 1, 1)
         if r > 0:
             add = torch.cat([add, X[:,:r]], dim=1)
 
