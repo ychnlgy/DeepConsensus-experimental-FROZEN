@@ -29,7 +29,7 @@ class Model(Base):
                 ),
                 
                 h = models.DenseNet(
-                    headsize = 64,
+                    headsize = 128,
                     bodysize = 128,
                     tailsize = 128,
                     layers = 1,
