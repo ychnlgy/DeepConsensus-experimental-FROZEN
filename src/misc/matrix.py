@@ -5,5 +5,5 @@ def apply_permutation(module, X, permutation):
 
 def number(vec):
     ind = torch.arange(len(vec))
-    vec = torch.stack(ind, vec)
+    vec = torch.stack([ind, vec])
     return vec.transpose(0, 1)
