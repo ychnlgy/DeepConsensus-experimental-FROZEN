@@ -13,8 +13,9 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, g, h):
+    def __init__(self, f, g, h):
         super(DistillPool, self).__init__()
+        self.f = f
         self.g = g
         self.h = h
     
@@ -34,9 +35,12 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         X = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        w = self.g(self.combine(X, summary))
+        z = self.combine(X, summary)
+        c = self.f(z)
+        w = self.g(z)
         v = self.h(X)
-        return (w * v).sum(dim=1)
+        assert c.size() == v.size()
+        return (v * c * w).sum(dim=1)
     
     def combine(self, X, summary):
         if summary is None:
