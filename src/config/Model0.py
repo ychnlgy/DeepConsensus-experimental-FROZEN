@@ -113,7 +113,7 @@ class Model(Base):
                             activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
-                            headsize = 96,
+                            headsize = 64,
                             bodysize = 128,
                             tailsize = 64,
                             layers = 2,
