@@ -36,7 +36,7 @@ class Model(Base):
                             headsize = 64,
                             bodysize = 16,
                             tailsize = 16,
-                            layers = 1,
+                            layers = 2,
                             dropout = 0.2
                         )
                     ) for i in range(LAYERS)
@@ -46,7 +46,8 @@ class Model(Base):
                 encoder = torch.nn.GRU(
                     input_size = 16,
                     hidden_size = 64,
-                    num_layers = 2
+                    num_layers = 2,
+                    dropout = 0.2
                 ),
                 
             ),
