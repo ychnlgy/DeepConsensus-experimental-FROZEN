@@ -15,7 +15,7 @@ class Model(Base):
             
             torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(128),
             
             models.DistillPool(
             
