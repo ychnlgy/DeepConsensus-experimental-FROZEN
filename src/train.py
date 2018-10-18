@@ -133,8 +133,6 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
             
             print_(" -- <TEST> %.3f" % testscore, silent)
     
-        time.sleep(rest)
-    
     return testscore
 
 def print_(s, silent):
