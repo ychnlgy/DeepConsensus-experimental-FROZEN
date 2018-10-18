@@ -18,7 +18,7 @@ class Model(Base):
 #            ),
             
             # 28 -> 14
-            torch.nn.Conv2d(64, 64, 3, padding=1, groups=4),
+            torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
