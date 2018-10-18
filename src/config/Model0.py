@@ -25,7 +25,7 @@ class Model(Base):
                     tailsize = 1,
                     layers = 2,
                     dropout = 0.2,
-                    activation = torch.nn.Sigmoid()
+                    activation = models.AbsTanh()
                 ),
                 
                 h = models.DenseNet(
