@@ -11,7 +11,7 @@ class DistillPool(torch.nn.Module):
     Description:
         Sums g(v_i)*h(v_i) for an entire convolution layer.
     
-    ''''
+    '''
 
     def __init__(self, g, h):
         super(DistillPool, self).__init__()
