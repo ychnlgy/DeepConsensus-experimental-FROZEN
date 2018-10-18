@@ -13,9 +13,9 @@ class Model(Base):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
+            torch.nn.BatchNorm2d(64),
             
             models.DistillPool(
             
