@@ -1,30 +1,44 @@
 import torch
 
+LEAKY = torch.nn.LeakyReLU()
+EMPTY = torch.nn.Sequential()
+
 class ResBlock(torch.nn.Module):
     
     def __init__(self, kernelseq, headsize, bodysize, tailsize):
         super(ResBlock, self).__init__()
         
         if len(kernelseq) == 1:
-            net = [self.create_unit(headsize, tailsize, kernelseq[0])]
+            net = [self.create_unit(headsize, tailsize, kernelseq[0], EMPTY)]
         else:
             net = [self.create_unit(headsize, bodysize, kernelseq[0])]
             net.extend([
                 self.create_unit(bodysize, bodysize, k)
                 for k in kernelseq[1:-1]
             ])
-            net.append(self.create_unit(bodysize, tailsize, kernelseq[-1]))
+            net.append(self.create_unit(bodysize, tailsize, kernelseq[-1], EMPTY))
         
+        self.act = LEAKY
         self.net = torch.nn.Sequential(*net)
     
     def forward(self, X):
-        return self.net(X)
+        out = self.net(X)
+        add = self.add(out, X)
+        return self.act(add)
     
-    def create_unit(self, c_in, c_out, kernel):
+    def add(self, out, X):
+        C0 = X.size(1)
+        Cf = out.size(1)
+        d, r = divmod(Cf, C0)
+        add = torch.cat([X.repeat(1, d, 1, 1), X[:,:r]], dim=1)
+        assert add.size(1) == Cf
+        return out + add
+    
+    def create_unit(self, c_in, c_out, kernel, activation=LEAKY):
         groups = self.calc_groups(c_in, c_out)
         return torch.nn.Sequential(
             torch.nn.Conv2d(c_in, c_out, kernel, padding=kernel//2, groups=groups),
-            torch.nn.LeakyReLU(),
+            activation,
             torch.nn.BatchNorm2d(c_out)
         )
     
