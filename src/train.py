@@ -46,7 +46,7 @@ class Model(torch.nn.Module):
     def forward(self, X):
         return self.net(X)
 
-def main(dataset, classic, frozen, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     epochs = int(epochs)
     cycle = int(cycle)
