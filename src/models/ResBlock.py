@@ -30,7 +30,11 @@ class ResBlock(torch.nn.Module):
         C0 = X.size(1)
         Cf = out.size(1)
         d, r = divmod(Cf, C0)
-        add = torch.cat([X.repeat(1, d, 1, 1), X[:,:r]], dim=1)
+        
+        add = X.repeat(1, d, 1, 1)
+        if r > 0:
+            add = torch.cat([add, X[:,:r]], dim=1)
+
         assert add.size(1) == Cf
         return out + add
     
