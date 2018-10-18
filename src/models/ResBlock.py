@@ -1,7 +1,7 @@
 import torch
 
-#LEAKY = torch.nn.LeakyReLU()
-#EMPTY = torch.nn.Sequential()
+LEAKY = torch.nn.LeakyReLU()
+EMPTY = torch.nn.Sequential()
 
 class ResBlock(torch.nn.Module):
     
