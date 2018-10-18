@@ -46,6 +46,6 @@ class DistillPool(torch.nn.Module):
             M, K = summary.size()
             assert B == M
             s = summary.view(M, 1, K).repeat(1, N, 1)
-            o = torch.cat([X, s] dim=-1)
+            o = torch.cat([X, s], dim=-1)
             assert o.size() == (B, N, C + K)
             return o
