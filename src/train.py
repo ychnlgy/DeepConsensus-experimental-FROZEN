@@ -2,19 +2,58 @@
 
 import torch, tqdm, time, numpy, statistics
 
-import misc, config
+import misc, models
 
-def main(dataset, classic, frozen, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, rest=0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+class Model(torch.nn.Module):
 
-    classic = int(classic)
+    def __init__(self, channels, classes):
+        super(Model, self).__init__()
+        self.net = torch.nn.Sequential(
+            
+            # 28 -> 14
+            torch.nn.Conv2d(channels, 32, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            # 7 -> 4
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            # 4 -> 1
+            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.AvgPool2d(4),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(32),
+            
+            models.Reshape(32),
+            
+            torch.nn.Linear(32, 64),
+            torch.nn.LeakyReLU(),
+            torch.nn.Dropout(0.2),
+            
+            torch.nn.Linear(64, classes),
+        )
+    
+    def forward(self, X):
+        return self.net(X)
+
+def main(dataset, classic, frozen, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
     testbatch = int(testbatch)
-    rest = float(rest)
     datalimit = float(datalimit)
     showparams = int(showparams)
-    frozen = int(frozen)
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
@@ -26,12 +65,7 @@ def main(dataset, classic, frozen, trainbatch=100, testbatch=300, cycle=10, data
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    Models = [
-        [config.Model0, config.Model1],
-        [config.Frozen0]
-    ][frozen]
-    
-    model = Models[classic](CHANNELS, NUM_CLASSES)
+    model = Model(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
@@ -43,7 +77,7 @@ def main(dataset, classic, frozen, trainbatch=100, testbatch=300, cycle=10, data
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
-    lossf = torch.nn.CrossEntropyLoss().to(device)
+    lossf = models.MaxLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
