@@ -34,7 +34,7 @@ class Model(Base):
                     tailsize = 64,
                     layers = 2,
                     dropout = 0.2,
-                    activation = models.AbsTanh()
+                    #activation = models.AbsTanh()
                 )
                 
             ),
