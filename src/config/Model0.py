@@ -21,7 +21,7 @@ class Model(Base):
                     layers = LAYERS
                 ),
             
-                layers = [
+                pools = [
                 
                     models.DistillPool(
                         g = models.DenseNet(
@@ -35,20 +35,31 @@ class Model(Base):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 128,
-                            tailsize = 64,
+                            tailsize = 32,
                             layers = 2,
                             dropout = 0.2
                         )
-                    ) for i in range(LAYERS)
+                    )
+                ] + [
                     
+                    models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 96,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
+                        ),
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 32,
+                            layers = 2,
+                            dropout = 0.2
+                        )
+                    ) for i in range(LAYERS - 1)
                 ],
-                
-                encoder = torch.nn.GRU(
-                    input_size = 64,
-                    hidden_size = 32,
-                    num_layers = 2,
-                    dropout = 0.0
-                ),
                 
             ),
             
