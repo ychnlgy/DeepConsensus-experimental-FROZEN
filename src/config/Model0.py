@@ -107,8 +107,8 @@ class Model(Base):
                         
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 128,
-                            tailsize = 32,
+                            bodysize = 32,
+                            tailsize = 4,
                             layers = 2,
                             dropout = 0.2
                         )
