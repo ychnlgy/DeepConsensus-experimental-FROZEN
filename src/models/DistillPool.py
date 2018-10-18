@@ -34,18 +34,6 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         X = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        w = self.g(X)#self.combine(X, summary))
+        w = self.g(X)
         v = self.h(X) * w
         return v.sum(dim=1)
-    
-#    def combine(self, X, summary):
-#        if summary is None:
-#            return X
-#        else:
-#            B, N, C = X.size()
-#            M, K = summary.size()
-#            assert B == M
-#            s = summary.view(M, 1, K).repeat(1, N, 1)
-#            o = torch.cat([X, s], dim=-1)
-#            assert o.size() == (B, N, C + K)
-#            return o
