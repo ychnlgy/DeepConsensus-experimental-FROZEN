@@ -33,7 +33,8 @@ class Model(Base):
                     bodysize = 128,
                     tailsize = 64,
                     layers = 2,
-                    dropout = 0.2
+                    dropout = 0.2,
+                    activation = models.AbsTanh()
                 )
                 
             ),
