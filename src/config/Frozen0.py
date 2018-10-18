@@ -47,13 +47,17 @@ class Model(Base):
     def create_net(self, channels, classes):
         return torch.nn.Sequential(
         
-            models.ResNet(
-                kernelseq = [3, 3],
-                headsize = channels,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 8
-            ),
+            torch.nn.Conv2d(channels, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
             
             models.DistillPool(
             
