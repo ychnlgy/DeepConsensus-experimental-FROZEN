@@ -12,13 +12,13 @@ class Model(Base):
             models.ResNet(
                 kernelseq = [3, 3],
                 headsize = channels,
-                bodysize = 128,
-                tailsize = 128,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 8
             ),
             
             # 28 -> 14
-            torch.nn.Conv2d(128, 64, 3, padding=1, groups=4),
+            torch.nn.Conv2d(64, 64, 3, padding=1, groups=4),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
