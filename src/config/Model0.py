@@ -118,8 +118,8 @@ class Model(Base):
                     models.DistillPool(
                     
                         f = models.DenseNet(
-                            headsize = 96,
-                            bodysize = 32,
+                            headsize = 4,
+                            bodysize = 16,
                             tailsize = 64,
                             layers = 2,
                             dropout = 0.2,
@@ -127,7 +127,7 @@ class Model(Base):
                         ),
                         
                         g = models.DenseNet(
-                            headsize = 96,
+                            headsize = 36,
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
