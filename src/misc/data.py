@@ -51,11 +51,12 @@ def get_mnist(download=0):
 def get_mnist_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist(download), **kwargs)
 
-def make_corrupt(original, corrupt_train=False, **kwargs):
+def make_corrupt(original, corrupt_train=False, corrupt_test=True, **kwargs):
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE = original
     if int(corrupt_train):
         trainData = make_data_corrupt(trainData, kwargs)
-    testData = make_data_corrupt(testData, kwargs)
+    if int(corrupt_test):
+        testData = make_data_corrupt(testData, kwargs)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def make_data_corrupt(data, kwargs):
