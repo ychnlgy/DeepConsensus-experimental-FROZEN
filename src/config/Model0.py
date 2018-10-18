@@ -21,7 +21,7 @@ class Model(Base):
             
                 g = models.DenseNet(
                     headsize = 64,
-                    bodysize = 32,
+                    bodysize = 128,
                     tailsize = 1,
                     layers = 2,
                     dropout = 0.2,
@@ -30,7 +30,7 @@ class Model(Base):
                 
                 h = models.DenseNet(
                     headsize = 64,
-                    bodysize = 32,
+                    bodysize = 128,
                     tailsize = 64,
                     layers = 2,
                     dropout = 0.2
