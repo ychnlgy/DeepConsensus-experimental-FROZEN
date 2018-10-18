@@ -35,7 +35,12 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         X = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        c = self.f(summary).view(N, 1, C)
+        
+        if summary is None:
+            c = torch.ones(N, 1, C).to(X.device)
+        else:
+            c = self.f(summary).view(N, 1, C)
+        
         w = self.g(self.combine(X, summary))
         v = self.h(X * c) * w
         return v.sum(dim=1)
