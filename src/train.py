@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import torch, tqdm, time, numpy
+import torch, tqdm, time, numpy, statistics
 
 import misc, config
 
@@ -131,7 +131,7 @@ def _main(repeat=1, **kwargs):
             bar = tqdm.tqdm(range(repeat), ncols=80)
             for i in bar:
                 result = func(silent=True)
-                bar.set_description("Score: %.3f" % result)
+                bar.set_description("Score: %.3f, Stdev: %.3f" % (statistics.mean(out), statistics.stdev(out)))
                 out.append(result)
             print(out)
         else:

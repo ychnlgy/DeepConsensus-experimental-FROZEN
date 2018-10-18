@@ -10,7 +10,37 @@ class Model(Base):
     
     DO NOT CHANGE THE CODE ANYMORE!
     
-    Achieves __ on pure mnist-translation test set after 50 epochs.
+    67K parameters
+    
+    Achieves (random initializations):
+    
+        MNIST translation +-12
+            81.8
+            84.7
+            81.1
+            82.4
+            82.1
+            76.1
+            
+        MNIST rotation +-45
+            87.7
+            86.9
+            85.9
+            
+            vs ResNet + CNN (92K parameters)
+            89.6
+            89.0
+            89.8
+        
+        MNIST rotation +- 60
+            75.0
+            75.0
+            78.5
+            
+            vs ResNet + CNN (92K parameters)
+            77.7
+            79.6
+        
     
     '''
 
