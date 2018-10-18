@@ -9,13 +9,13 @@ class Model(Base):
     def create_net(self, channels, classes):
         return torch.nn.Sequential(
         
-            models.ResNet(
-                kernelseq = [3, 3],
-                headsize = channels,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 8
-            ),
+#            models.ResNet(
+#                kernelseq = [3, 3],
+#                headsize = channels,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 8
+#            ),
             
             # 28 -> 14
             torch.nn.Conv2d(64, 64, 3, padding=1, groups=4),
