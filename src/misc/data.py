@@ -217,7 +217,7 @@ def unittest():
     from matplotlib import pyplot
     
     td, tl, sd2, sl, n, c, i = get_emnist(split="letters", download=1)
-    td, tl, sd, sl, n, c, i = get_emnist_corrupt(split="letters", download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0)
+    td, tl, sd, sl, n, c, i = get_emnist_corrupt(split="letters", download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=1)
     
 #    print("Showing train data")
 #    

@@ -2,14 +2,15 @@ import random, numpy
 
 from .wscipy import scipy
 import scipy.misc
+import scipy.ndimage
 
 from .util import hardmap
 
-def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta):
+def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma):
 
-    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta = hardmap(
+    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma = hardmap(
         float, 
-        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta
+        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma
     )
 
     w, h = im.shape[:2]
@@ -20,10 +21,14 @@ def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta)
     px, py = randommove(ox, oy, mintrans, maxtrans)
     im = add_noise(im, alpha)
     im = reduce_colorgrad(im, beta)
+    im = gaussian_blur(im, sigma)
     return draw(im, px, py, w, h, originalshape)
     
 def rand_select(v0, vf):
     return random.random() * (vf - v0) + v0
+
+def gaussian_blur(im, sigma):
+    return scipy.ndimage.filters.gaussian_filter(im, sigma=sigma)
 
 def add_noise(im, alpha):
     alpha = rand_select(alpha, 1.0)
