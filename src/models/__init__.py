@@ -3,3 +3,4 @@ from .CosineDissimilarity import CosineDissimilarity
 from .CrossEntropyPenalizer import CrossEntropyPenalizer
 
 from .Classifier import Classifier
+from .DistillPool import DistillPool

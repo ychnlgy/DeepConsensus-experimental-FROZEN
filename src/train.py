@@ -13,44 +13,44 @@ class Model(torch.nn.Module):
             # === Convolutions ===
             
             # 28 -> 14
-            torch.nn.Conv2d(channels, 32, 3, padding=1),
+            torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
-            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.Conv2d(64, 128, 3, padding=1, groups=64),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(128),
             
             # 7 -> 4
-            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.Conv2d(128, 128, 3, padding=1, groups=128),
             torch.nn.AvgPool2d(3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(128),
             
             # 4 -> 1
-            torch.nn.Conv2d(32, 32, 3, padding=1, groups=32),
+            torch.nn.Conv2d(128, 128, 3, padding=1, groups=128),
             torch.nn.AvgPool2d(4),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(128),
             
             # === Dense layer ===
             
-            models.Reshape(32),
+            models.Reshape(128),
             
-            torch.nn.Linear(32, 64),
+            torch.nn.Linear(128, 256),
             torch.nn.LeakyReLU(),
             torch.nn.Dropout(0.2),
             
-            torch.nn.Linear(64, 32),
+            torch.nn.Linear(256, 128),
             torch.nn.LeakyReLU(),
             torch.nn.Dropout(0.2),
             
             # === Classification ===
             
-            models.Classifier(32, classes)
+            models.Classifier(128, classes)
         )
     
     def forward(self, X):
@@ -87,7 +87,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
-    lossf = models.CrossEntropyPenalizer().to(device)
+    lossf = torch.CrossEntropyPenalizer().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
@@ -101,14 +101,14 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
             yh = model(X)
-            loss1 = lossf(yh, y)
+            loss = lossf(yh, y)
             
-            c += loss1.item()
+            c += loss.item()
             n += 1.0
             s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             
             optimizer.zero_grad()
-            loss1.backward()
+            loss.backward()
             optimizer.step()
             
             if i % cycle == 0:
