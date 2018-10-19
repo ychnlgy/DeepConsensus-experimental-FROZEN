@@ -42,7 +42,7 @@ def get_mnist(download=0):
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
     trainLabels = torch.LongTensor(train.train_labels)
     
-    test = torchvision.datasets.MNIST(root=ROOT, train=False, transform=torchvision.transforms.ToTensor(), download=download)
+    test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
     testLabels = torch.LongTensor(test.test_labels)
 
@@ -72,7 +72,7 @@ def make_data_corrupt(data, kwargs):
     out = out.view(N, W, H, C).permute(0, 3, 1, 2)
     return out/255.0 # numpy converts 1.0 -> 255.0 automatically...
 
-def get_emnist_letters(download=0, split="letters"):
+def get_emnist(split, download=0): # recommended to use split = "letters"
     
     download = int(download)
     
@@ -89,13 +89,18 @@ def get_emnist_letters(download=0, split="letters"):
     
     train = torchvision.datasets.EMNIST(root=ROOT, split=split, train=True, download=download)
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
-    trainLabels = torch.LongTensor(train.train_labels)
+    trainData = trainData.transpose(-1, -2)
+    trainLabels = torch.LongTensor(train.train_labels) - 1 # make it 0-indexed
     
-    test = torchvision.datasets.EMNIST(root=ROOT, train=False, transform=torchvision.transforms.ToTensor(), download=download)
+    test = torchvision.datasets.EMNIST(root=ROOT, split=split, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
-    testLabels = torch.LongTensor(test.test_labels)
+    testData = testData.transpose(-1, -2)
+    testLabels = torch.LongTensor(test.test_labels) - 1 # make it 0-indexed
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_emnist_corrupt(split, download=0, **kwargs):
+    return make_corrupt(get_emnist(split, download), **kwargs)
 
 def get_cifar10(download=0):
     
@@ -211,8 +216,8 @@ def unittest():
 
     from matplotlib import pyplot
     
-    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0)
+    td, tl, sd2, sl, n, c, i = get_emnist(split="letters", download=1)
+    td, tl, sd, sl, n, c, i = get_emnist_corrupt(split="letters", download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0)
     
 #    print("Showing train data")
 #    
@@ -224,8 +229,15 @@ def unittest():
     
     print("Showing test data")
     
-    for ims in zip(sd[:10], sd2[:10]):
-        for im in ims:
+    N = 100
+    
+    indices = numpy.arange(len(sd))
+    numpy.random.shuffle(indices)
+    indices = indices[:N]
+    
+    for ims in zip(sd[indices], sd2[indices], sl[indices]):
+        print(ims[2])
+        for im in ims[:2]:
             im = im.permute(1, 2, 0).squeeze().numpy()
             pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
             pyplot.show()
