@@ -1,6 +1,6 @@
 import torch
 
-class ReluTanh(torch.nn.Module):
+class ReluTanh(torch.nn.LeakyReLU):
     
     def forward(self, X):
-        return torch.nn.functional.relu(torch.tanh(X))
+        return super(ReluTanh, self).forward(torch.tanh(X))
