@@ -165,7 +165,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -199,7 +199,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -232,7 +232,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -266,7 +266,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -299,7 +299,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 2,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -333,7 +333,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 1,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -366,7 +366,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 1,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -400,7 +400,7 @@ class Model(models.Savable):
                             tailsize = 1,
                             layers = 1,
                             dropout = 0.2,
-                            activation =  torch.nn.Sigmoid()
+                            #activation =  torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
