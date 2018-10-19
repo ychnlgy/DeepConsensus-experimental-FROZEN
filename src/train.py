@@ -27,7 +27,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -52,7 +53,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -77,7 +79,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -103,7 +106,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -128,7 +132,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -154,7 +159,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -179,7 +185,8 @@ class Model(torch.nn.Module):
                             bodysize = 32,
                             tailsize = 1,
                             layers = 2,
-                            dropout = 0.2
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         h = models.DenseNet(
                             headsize = 64,
