@@ -66,13 +66,16 @@ class Cnn(models.Savable):
             
             models.Reshape(64),
             
-            models.DenseNet(
-                headsize = 64,
-                bodysize = 32,
-                tailsize = classes,
-                layers = 2,
-                dropout = 0.2
-            )
+#            models.DenseNet(
+#                headsize = 64,
+#                bodysize = 32,
+#                tailsize = classes,
+#                layers = 2,
+#                dropout = 0.2
+#            )
+
+            models.Classifier(64, classes)
+
         )
     
     def forward(self, X):
@@ -108,6 +111,11 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
