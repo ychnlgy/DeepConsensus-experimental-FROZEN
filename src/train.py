@@ -92,11 +92,64 @@ class Model(models.Savable):
                     )
                 ),
                 
+                # 28 -> 14
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.MaxPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
+                        ),
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 32,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                    )
+                ),
+                
+                # 14 -> 14
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2,
+                            dropout = 0.2,
+                            activation = torch.nn.Sigmoid()
+                        ),
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                    )
+                ),
+                
             ),
             
             # === Classification ===
             
-            models.Classifier(64*3, classes)
+            models.Classifier(64*3 + 32 + 16, classes)
         )
     
     def forward(self, X):
