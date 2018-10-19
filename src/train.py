@@ -4,61 +4,6 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
-class ReverseDistill(models.Savable):
-
-    def __init__(self, channels, classes):
-        super(ReverseDistill, self).__init__()
-        
-        inputsize = 64
-        
-        self.net = torch.nn.Sequential(
-            
-            torch.nn.Linear(inputsize, 196),
-            torch.nn.Dropout(p=0.2),
-            torch.nn.LeakyReLU(),
-            
-            models.Reshape(4, 7, 7),
-            
-            torch.nn.Conv2d(4, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 7 -> 14
-            
-            torch.nn.Upsample(scale_factor=2),
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 14 -> 28
-            
-            torch.nn.Upsample(scale_factor=2),
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            torch.nn.Conv2d(64, channels, 3, padding=1)
-        )
-    
-    def forward(self, distilled):
-        out = self.net(distilled)
-        if not self.training:
-            return torch.nn.functional.sigmoid(out)
-        else:
-            return out
-
 class Cnn(models.Savable):
 
     def __init__(self, channels, classes):
@@ -137,7 +82,6 @@ class Model(models.Savable):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__()
-        self.prd = models.Classifier(64, classes)
         self.net = torch.nn.Sequential(
             
             # === Convolutions ===
@@ -362,26 +306,12 @@ class Model(models.Savable):
                 
             ),
             
-            # latent space transformation
-            
-            models.DenseNet(
-                headsize = 256,
-                bodysize = 128,
-                tailsize = 64,
-                layers = 2,
-                dropout = 0.2
-            )
+            models.Classifier(256, classes)
             
         )
     
     def forward(self, X):
-        vecs = self.net(X)
-        pred = self.prd(vecs)
-        
-        if self.training:
-            return vecs, pred
-        else:
-            return pred
+        return self.net(X)
 
 def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
@@ -415,8 +345,6 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
         if input("Continue? [y/n] ") != "y":
             raise SystemExit
     
-    reconstructor = ReverseDistill(CHANNELS, NUM_CLASSES).to(device)
-    
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
@@ -434,8 +362,7 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
         model.train()
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            vecs, yh = model(X)
-            Xh = reconstructor(vecs)
+            yh = model(X)
             loss = lossf(yh, y) + lossg(Xh.view(len(Xh), -1), X.view(len(Xh), -1))
             
             c += loss.item()
@@ -471,7 +398,6 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
             
                 highest = w
                 model.save(modelf)
-                reconstructor.save(modelf + "-r")
             
             scheduler.step(v/m)
             
