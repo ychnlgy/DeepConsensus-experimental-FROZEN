@@ -28,6 +28,7 @@ def rand_select(v0, vf):
     return random.random() * (vf - v0) + v0
 
 def gaussian_blur(im, sigma):
+    sigma = rand_select(0, sigma)
     return scipy.ndimage.filters.gaussian_filter(im, sigma=sigma)
 
 def add_noise(im, alpha):
