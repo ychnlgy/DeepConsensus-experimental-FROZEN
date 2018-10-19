@@ -4,6 +4,80 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
+class Cnn(models.Savable):
+
+    def __init__(self, channels, classes):
+        super(Cnn, self).__init__()
+        self.net = torch.nn.Sequential(
+        
+            # 28 -> 28
+            torch.nn.Conv2d(channels, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 14
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 14
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 7 -> 7
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 7 -> 4
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 4
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 1
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.AvgPool2d(4),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            models.Reshape(64),
+            
+            models.DenseNet(
+                headsize = 64,
+                bodysize = 32,
+                tailsize = classes,
+                layers = 2,
+                dropout = 0.2
+            )
+        )
+    
+    def forward(self, X):
+        return self.net(X)
+
 class Model(models.Savable):
 
     def __init__(self, channels, classes):
@@ -248,8 +322,9 @@ class Model(models.Savable):
     def forward(self, X):
         return self.net(X)
 
-def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
+    classic = int(classic)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -266,6 +341,8 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
         "cs_magnify": misc.data.get_circlesqr_magnify,
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
+    
+    Model = [Model, Cnn][classic]
     
     model = Model(CHANNELS, NUM_CLASSES)
     
