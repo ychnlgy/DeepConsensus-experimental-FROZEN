@@ -363,7 +363,7 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
             yh = model(X)
-            loss = lossf(yh, y) + lossg(Xh.view(len(Xh), -1), X.view(len(Xh), -1))
+            loss = lossf(yh, y)
             
             c += loss.item()
             n += 1.0
