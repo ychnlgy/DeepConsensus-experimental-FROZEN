@@ -4,7 +4,7 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
-class ReverseDistill(torch.nn.Module):
+class ReverseDistill(models.Savable):
 
     def __init__(self, channels, classes):
         super(ReverseDistill, self).__init__()
@@ -383,7 +383,7 @@ class Model(models.Savable):
         else:
             return pred
 
-def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     classic = int(classic)
     epochs = int(epochs)
@@ -462,7 +462,13 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
                 m += 1
             
-            print_(" -- <VERR> %.3f" % (w/m), silent)
+            w /= m
+            print_(" -- <VERR> %.3f" % w, silent)
+            
+            if w < lowest:
+                lowest = w
+                model.save(modelf)
+                reconstructor.save(modelf + "-r")
             
             scheduler.step(v/m)
             
