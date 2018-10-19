@@ -359,7 +359,7 @@ class Model(models.Savable):
             
             # === Classification ===
             
-            models.Classifier(32*7, classes)
+            models.Classifier(32*8, classes)
             
             
             
