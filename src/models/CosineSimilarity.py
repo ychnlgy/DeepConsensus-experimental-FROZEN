@@ -1,6 +1,6 @@
 import torch
 
-class CosineDissimilarity(torch.nn.CosineSimilarity):
+class CosineSimilarity(torch.nn.CosineSimilarity):
 
     '''
     
@@ -29,13 +29,13 @@ class CosineDissimilarity(torch.nn.CosineSimilarity):
         
         assert vectors.size() == targets.size()
 
-        cosines = super(CosineDissimilarity, self).forward(vectors, targets)
-        return 1 - cosines.view(N, C)
+        cosines = super(CosineSimilarity, self).forward(vectors, targets)
+        return cosines.view(N, C)
     
     @staticmethod
     def unittest():
         
-        cosine = CosineDissimilarity()
+        cosine = CosineSimilarity()
         
         vectors = torch.Tensor([
             [1, 1, 1],
