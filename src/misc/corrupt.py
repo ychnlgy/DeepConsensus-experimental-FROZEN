@@ -9,7 +9,7 @@ def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta)
 
     minmag, maxmag, minrot, maxrot, mintrans, maxtrans = hardmap(
         float, 
-        minmag, maxmag, minrot, maxrot, mintrans, maxtrans
+        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta
     )
 
     w, h = im.shape[:2]
