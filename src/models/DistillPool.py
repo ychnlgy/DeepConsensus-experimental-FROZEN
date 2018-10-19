@@ -13,9 +13,8 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, g, h, s):
+    def __init__(self, h, s):
         super(DistillPool, self).__init__()
-        self.g = g
         self.h = h
         self.s = s
     
@@ -35,7 +34,6 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         X = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        w = self.g(X)
-        v = self.h(X) * w
+        v = self.h(X)
         s = v.sum(dim=1)
         return self.s(s)
