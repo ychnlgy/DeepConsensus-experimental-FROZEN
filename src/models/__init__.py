@@ -1,5 +1,5 @@
 from .Reshape import Reshape
-from .CosineSimilarity import CosineSimilarity
+from .CosineDissimilarity import CosineDissimilarity
 from .CrossEntropyPenalizer import CrossEntropyPenalizer
 
 from .Classifier import Classifier
