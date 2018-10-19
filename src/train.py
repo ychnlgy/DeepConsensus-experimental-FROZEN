@@ -108,7 +108,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -141,7 +141,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -174,7 +174,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -208,7 +208,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -241,7 +241,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -275,7 +275,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -308,7 +308,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
+                            layers = 1,
                             dropout = 0.2
                         ),
                         s = models.DenseNet(
@@ -362,7 +362,7 @@ class Model(models.Savable):
 #            
 #            models.Classifier(64, classes)
             
-            models.Classifier(7 * 32, classes)
+            models.Classifier(64*3 + 32 + 16 + 8*2, classes)
             
             
             

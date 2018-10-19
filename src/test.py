@@ -1,3 +1,7 @@
 import models
 
-models.CosineDissimilarity.unittest()
+models.CosineSimilarity.unittest()
+
+import misc
+
+misc.data.unittest()
