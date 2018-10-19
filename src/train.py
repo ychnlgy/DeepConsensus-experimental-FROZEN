@@ -473,6 +473,9 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
                 model.save(modelf)
                 reconstructor.save(modelf + "-r")
             
+            else:
+                print(w, lowest)
+                
             scheduler.step(v/m)
             
             testscore = n = 0.0
@@ -504,7 +507,7 @@ def iter_dataloader(dataloader, device, silent):
     for i, (X, y) in enumerate(bar):
         yield i, X.to(device), y.to(device), bar
 
-@misc.main
+@misc.main(__name__)
 def _main(repeat=1, **kwargs):
 
     try:
