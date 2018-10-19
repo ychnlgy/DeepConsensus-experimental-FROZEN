@@ -7,7 +7,7 @@ from .util import hardmap
 
 def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta):
 
-    minmag, maxmag, minrot, maxrot, mintrans, maxtrans = hardmap(
+    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta = hardmap(
         float, 
         minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta
     )
