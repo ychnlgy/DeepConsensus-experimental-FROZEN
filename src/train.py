@@ -229,15 +229,20 @@ class Model(models.Savable):
             
             # === Classification ===
             
-            models.DenseNet(
-                headsize = 64*3 + 32 + 16 + 8*2,
-                bodysize = 32,
-                tailsize = 64,
-                layers = 2,
-                dropout = 0.2
-            ),
+#            models.DenseNet(
+#                headsize = 64*3 + 32 + 16 + 8*2,
+#                bodysize = 32,
+#                tailsize = 64,
+#                layers = 2,
+#                dropout = 0.2
+#            ),
+#            
+#            models.Classifier(64, classes)
             
-            models.Classifier(64, classes)
+            models.Classifier(64*3 + 32 + 16 + 8*2, classes)
+            
+            
+            
         )
     
     def forward(self, X):
