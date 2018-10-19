@@ -96,7 +96,7 @@ class Model(models.Savable):
             
             # === Classification ===
             
-            models.Classifier(64*3 + 32 + 16 + 8*2, classes)
+            models.Classifier(64*3, classes)
         )
     
     def forward(self, X):
