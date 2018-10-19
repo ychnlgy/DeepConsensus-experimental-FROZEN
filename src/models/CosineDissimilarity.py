@@ -35,7 +35,7 @@ class CosineDissimilarity(torch.nn.CosineSimilarity):
     @staticmethod
     def unittest():
         
-        cosine = CosineSimilarity()
+        cosine = CosineDissimilarity()
         
         vectors = torch.Tensor([
             [1, 1, 1],
