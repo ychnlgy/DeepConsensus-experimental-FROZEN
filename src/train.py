@@ -111,11 +111,11 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize
-                        ),
+#                        g = models.DenseNet(
+#                            headsize = 64,
+#                            bodysize = 64,
+#                            tailsize
+#                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
