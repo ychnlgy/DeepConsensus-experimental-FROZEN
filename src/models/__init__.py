@@ -1,3 +1,4 @@
+from .AbsTanh import AbsTanh
 from .Savable import Savable
 from .Reshape import Reshape
 from .CosineSimilarity import CosineSimilarity
