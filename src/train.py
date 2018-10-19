@@ -342,9 +342,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
         "cs_shrink": misc.data.get_circlesqr_shrink,
     }[dataset](**dataset_kwargs)
     
-    Model = [Model, Cnn][classic]
-    
-    model = Model(CHANNELS, NUM_CLASSES)
+    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
     
     if showparams:
     
