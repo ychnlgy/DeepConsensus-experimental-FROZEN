@@ -14,6 +14,7 @@ class CrossEntropyPenalizer(torch.nn.CrossEntropyLoss):
     
         vals, indx = yh.max(dim=1)
         wrong = (indx != y)
+        print(yh[wrong], y[wrong])
         if len(wrong) == 0:
             return EMPTY
         else:
