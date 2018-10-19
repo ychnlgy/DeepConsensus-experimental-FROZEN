@@ -362,7 +362,7 @@ class Model(models.Savable):
 #            
 #            models.Classifier(64, classes)
             
-            models.Classifier(64*3 + 32 + 16 + 8*2, classes)
+            models.Classifier(32*7, classes)
             
             
             
