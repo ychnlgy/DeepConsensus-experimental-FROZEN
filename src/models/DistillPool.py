@@ -18,7 +18,6 @@ class DistillPool(torch.nn.Module):
         self.g = g
         self.h = h
         self.s = s
-        self.m = torch.nn.Softmax(dim=1)
     
     def forward(self, X, summary=None):
     
@@ -37,6 +36,6 @@ class DistillPool(torch.nn.Module):
         N, C, W, H = X.size()
         X = X.permute(0, 2, 3, 1).view(N, W*H, C)
         w = self.g(X)
-        v = self.h(X) * self.m(w)
+        v = self.h(X) * w
         s = v.sum(dim=1)
         return self.s(s)
