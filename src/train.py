@@ -465,7 +465,7 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-            if w < lowest:
+            if w > lowest:
                 
                 print("Saving to %s..." % modelf)
             
@@ -473,9 +473,6 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
                 model.save(modelf)
                 reconstructor.save(modelf + "-r")
             
-            else:
-                print(w, lowest)
-                
             scheduler.step(v/m)
             
             testscore = n = 0.0
