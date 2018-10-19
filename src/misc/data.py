@@ -164,6 +164,46 @@ def get_circlesqr_translate(samples=400):
     
     return train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_sqrquadrants(samples=6000):
+    
+    samples = int(samples)
+    
+    NUM_CLASSES = 4
+    CHANNELS = 1
+    IMAGELEN = 28
+    IMAGESIZE = (IMAGELEN, IMAGELEN)
+    HALF = IMAGELEN // 2
+    
+    g = lambda s, d, sz: torch.from_numpy(d).view(s, *sz)
+    
+    def generate_set(samples):
+        dat = [None] * samples
+        lab = [None] * samples
+        
+        for i in range(samples):
+            lab[i] = random.randint(0, 3)
+            qx, qy = divmod(lab[i], 2)
+            dx = qx * HALF
+            dy = qy * HALF
+            r = random.randint(1, 5)
+            ox = r + random.randint(0, HALF-2*r-1)
+            oy = r + random.randint(0, HALF-2*r-1)
+            origin = (ox + dx, oy + dy)
+            dat[i] = generate_square(origin, r, IMAGELEN)
+        
+        dat = numpy.array(dat)
+        lab = numpy.array(lab)
+        
+        dat = g(samples, dat, [CHANNELS, IMAGELEN, IMAGELEN]).float()
+        lab = g(samples, lab, []).long()
+        return dat, lab
+    
+    half = IMAGELEN // 2
+    train_dat, train_lab = generate_set(samples)
+    test_dat, test_lab = generate_set(samples)
+    
+    return train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_circlesqr_magnify(*args, **kwargs):
     return get_circlesqr_resize(0, *args, **kwargs)
 
@@ -216,8 +256,17 @@ def unittest():
 
     from matplotlib import pyplot
     
-    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=1.5)
+    td, tl, sd2, sl, n, c, i = get_sqrquadrants()
+    
+    for im, lb in zip(td[:10], tl[:10]):
+        im = im.squeeze().numpy()
+        print(lb)
+        pyplot.imshow(im, cmap="gray")
+        pyplot.show()
+        pyplot.clf()
+    
+#    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
+#    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=1.5)
     
 #    print("Showing train data")
 #    
@@ -227,18 +276,18 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    print("Showing test data")
-    
-    N = 100
-    
-    indices = numpy.arange(len(sd))
-    numpy.random.shuffle(indices)
-    indices = indices[:N]
-    
-    for ims in zip(sd[indices], sd2[indices], sl[indices]):
-        print(ims[2])
-        for im in ims[:2]:
-            im = im.permute(1, 2, 0).squeeze().numpy()
-            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-            pyplot.show()
-            pyplot.clf()
+#    print("Showing test data")
+#    
+#    N = 100
+#    
+#    indices = numpy.arange(len(sd))
+#    numpy.random.shuffle(indices)
+#    indices = indices[:N]
+#    
+#    for ims in zip(sd[indices], sd2[indices], sl[indices]):
+#        print(ims[2])
+#        for im in ims[:2]:
+#            im = im.permute(1, 2, 0).squeeze().numpy()
+#            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#            pyplot.show()
+#            pyplot.clf()

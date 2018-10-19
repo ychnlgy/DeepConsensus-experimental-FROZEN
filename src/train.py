@@ -452,6 +452,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
         "cs_trans": misc.data.get_circlesqr_translate,
         "cs_magnify": misc.data.get_circlesqr_magnify,
         "cs_shrink": misc.data.get_circlesqr_shrink,
+        "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
