@@ -425,7 +425,7 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
-    lowest = float("inf")
+    highest = 0
       
     for epoch in iterepochs(epochs):
         
@@ -465,11 +465,11 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-            if w > lowest:
+            if w > highest and not silent:
                 
                 print("Saving to %s..." % modelf)
             
-                lowest = w
+                highest = w
                 model.save(modelf)
                 reconstructor.save(modelf + "-r")
             
