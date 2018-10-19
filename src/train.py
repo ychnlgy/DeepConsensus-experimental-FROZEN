@@ -10,6 +10,8 @@ class Model(torch.nn.Module):
         super(Model, self).__init__()
         self.net = torch.nn.Sequential(
             
+            # === Convolutions ===
+            
             # 28 -> 14
             torch.nn.Conv2d(channels, 32, 3, padding=1),
             torch.nn.MaxPool2d(2),
@@ -34,13 +36,21 @@ class Model(torch.nn.Module):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
+            # === Dense layer ===
+            
             models.Reshape(32),
             
             torch.nn.Linear(32, 64),
             torch.nn.LeakyReLU(),
             torch.nn.Dropout(0.2),
             
-            torch.nn.Linear(64, classes),
+            torch.nn.Linear(64, 32),
+            torch.nn.LeakyReLU(),
+            torch.nn.Dropout(0.2),
+            
+            # === Classification ===
+            
+            models.Classifier(32, classes)
         )
     
     def forward(self, X):
@@ -77,7 +87,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
-    lossf = models.MaxLoss().to(device)
+    lossf = models.CrossEntropyPenalizer().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
