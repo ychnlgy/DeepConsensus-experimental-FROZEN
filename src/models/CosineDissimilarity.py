@@ -29,7 +29,7 @@ class CosineDissimilarity(torch.nn.CosineSimilarity):
         
         assert vectors.size() == targets.size()
 
-        cosines = super(CosineSimilarity, self).forward(vectors, targets)
+        cosines = super(CosineDissimilarity, self).forward(vectors, targets)
         return 1 - cosines.view(N, C)
     
     @staticmethod
