@@ -9,7 +9,7 @@ class ReverseDistill(torch.nn.Module):
     def __init__(self, channels, classes):
         super(ReverseDistill, self).__init__()
         
-        inputsize = 256
+        inputsize = 64
         
         self.net = torch.nn.Sequential(
             
