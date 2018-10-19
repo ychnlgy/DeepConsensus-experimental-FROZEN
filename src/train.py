@@ -4,15 +4,56 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
-#class ReverseDistill(torch.nn.Module):
+class ReverseDistill(torch.nn.Module):
 
-#    def __init__(self):
-#        super(ReverseDistill, self).__init__()
-#        self.net = torch.nn.Sequential(
-#            
-#            # 
-#            
-#        )
+    def __init__(self, channels, classes):
+        super(ReverseDistill, self).__init__()
+        
+        inputsize = 32 + 2*16 + 2*8 + 3*4
+        
+        self.net = torch.nn.Sequential(
+            
+            torch.nn.Linear(inputsize, 196),
+            torch.nn.Dropout(p=0.2),
+            torch.nn.LeakyReLU(),
+            
+            models.Reshape(4, 7, 7),
+            
+            torch.nn.Conv2d(4, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 7 -> 14
+            
+            torch.nn.Upsample(scale_factor=2),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 28
+            
+            torch.nn.Upsample(scale_factor=2),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, channels, 3, padding=1)
+        )
+    
+    def forward(self, distilled):
+        return self.net(distilled)
 
 class Cnn(models.Savable):
 
@@ -381,16 +422,6 @@ class Model(models.Savable):
             ),
             
             # === Classification ===
-            
-#            models.DenseNet(
-#                headsize = 64*3 + 32 + 16 + 8*2,
-#                bodysize = 32,
-#                tailsize = 64,
-#                layers = 2,
-#                dropout = 0.2
-#            ),
-#            
-#            models.Classifier(64, classes)
             
             models.Classifier(32 + 2*16 + 2*8 + 3*4, classes)
             
