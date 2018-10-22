@@ -290,7 +290,7 @@ class Model(models.Savable):
     def forward(self, X):
         return self.net(X)
 
-def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     classic = int(classic)
     epochs = int(epochs)
@@ -369,12 +369,12 @@ def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, da
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-            if w > highest and not silent:
-                
-                print("Saving to %s..." % modelf)
-            
-                highest = w
-                model.save(modelf)
+#            if w > highest and not silent:
+#                
+#                print("Saving to %s..." % modelf)
+#            
+#                highest = w
+#                model.save(modelf)
             
             scheduler.step(v/m)
             
