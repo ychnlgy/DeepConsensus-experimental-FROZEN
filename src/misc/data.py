@@ -42,7 +42,7 @@ def get_mnist(download=0):
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
     trainLabels = torch.LongTensor(train.train_labels)
     
-    test = torchvision.datasets.MNIST(root=ROOT, train=False, transform=torchvision.transforms.ToTensor(), download=download)
+    test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
     testLabels = torch.LongTensor(test.test_labels)
 
@@ -51,11 +51,12 @@ def get_mnist(download=0):
 def get_mnist_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist(download), **kwargs)
 
-def make_corrupt(original, corrupt_train=False, **kwargs):
+def make_corrupt(original, corrupt_train=False, corrupt_test=True, **kwargs):
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE = original
     if int(corrupt_train):
         trainData = make_data_corrupt(trainData, kwargs)
-    testData = make_data_corrupt(testData, kwargs)
+    if int(corrupt_test):
+        testData = make_data_corrupt(testData, kwargs)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def make_data_corrupt(data, kwargs):
@@ -70,6 +71,36 @@ def make_data_corrupt(data, kwargs):
     out = torch.from_numpy(out).float()
     out = out.view(N, W, H, C).permute(0, 3, 1, 2)
     return out/255.0 # numpy converts 1.0 -> 255.0 automatically...
+
+def get_emnist(split, download=0): # recommended to use split = "letters"
+    
+    download = int(download)
+    
+    NUM_CLASSES = {
+        "byclass": 62,
+        "bymerge": 47,
+        "balanced": 47,
+        "letters": 26,
+        "digits": 10,
+        "mnist": 10
+    }[split]
+    CHANNELS = 1
+    IMAGESIZE = (28, 28)
+    
+    train = torchvision.datasets.EMNIST(root=ROOT, split=split, train=True, download=download)
+    trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    trainData = trainData.transpose(-1, -2)
+    trainLabels = torch.LongTensor(train.train_labels) - 1 # make it 0-indexed
+    
+    test = torchvision.datasets.EMNIST(root=ROOT, split=split, train=False, download=download)
+    testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    testData = testData.transpose(-1, -2)
+    testLabels = torch.LongTensor(test.test_labels) - 1 # make it 0-indexed
+
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_emnist_corrupt(split, download=0, **kwargs):
+    return make_corrupt(get_emnist(split, download), **kwargs)
 
 def get_cifar10(download=0):
     
@@ -133,6 +164,46 @@ def get_circlesqr_translate(samples=400):
     
     return train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_sqrquadrants(samples=6000):
+    
+    samples = int(samples)
+    
+    NUM_CLASSES = 4
+    CHANNELS = 1
+    IMAGELEN = 28
+    IMAGESIZE = (IMAGELEN, IMAGELEN)
+    HALF = IMAGELEN // 2
+    
+    g = lambda s, d, sz: torch.from_numpy(d).view(s, *sz)
+    
+    def generate_set(samples):
+        dat = [None] * samples
+        lab = [None] * samples
+        
+        for i in range(samples):
+            lab[i] = random.randint(0, 3)
+            qx, qy = divmod(lab[i], 2)
+            dx = qx * HALF
+            dy = qy * HALF
+            r = random.randint(1, 5)
+            ox = r + random.randint(0, HALF-2*r-1)
+            oy = r + random.randint(0, HALF-2*r-1)
+            origin = (ox + dx, oy + dy)
+            dat[i] = generate_square(origin, r, IMAGELEN)
+        
+        dat = numpy.array(dat)
+        lab = numpy.array(lab)
+        
+        dat = g(samples, dat, [CHANNELS, IMAGELEN, IMAGELEN]).float()
+        lab = g(samples, lab, []).long()
+        return dat, lab
+    
+    half = IMAGELEN // 2
+    train_dat, train_lab = generate_set(samples)
+    test_dat, test_lab = generate_set(samples)
+    
+    return train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_circlesqr_magnify(*args, **kwargs):
     return get_circlesqr_resize(0, *args, **kwargs)
 
@@ -185,8 +256,17 @@ def unittest():
 
     from matplotlib import pyplot
     
-    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=3, mintrans=0, maxtrans=0, minrot=0, maxrot=0)
+    td, tl, sd2, sl, n, c, i = get_sqrquadrants()
+    
+    for im, lb in zip(td[:10], tl[:10]):
+        im = im.squeeze().numpy()
+        print(lb)
+        pyplot.imshow(im, cmap="gray")
+        pyplot.show()
+        pyplot.clf()
+    
+#    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
+#    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=1.5)
     
 #    print("Showing train data")
 #    
@@ -196,11 +276,18 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    print("Showing test data")
-    
-    for ims in zip(sd[:10], sd2[:10]):
-        for im in ims:
-            im = im.permute(1, 2, 0).squeeze().numpy()
-            pyplot.imshow(im, cmap="gray")
-            pyplot.show()
-            pyplot.clf()
+#    print("Showing test data")
+#    
+#    N = 100
+#    
+#    indices = numpy.arange(len(sd))
+#    numpy.random.shuffle(indices)
+#    indices = indices[:N]
+#    
+#    for ims in zip(sd[indices], sd2[indices], sl[indices]):
+#        print(ims[2])
+#        for im in ims[:2]:
+#            im = im.permute(1, 2, 0).squeeze().numpy()
+#            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#            pyplot.show()
+#            pyplot.clf()
