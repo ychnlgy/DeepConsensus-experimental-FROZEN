@@ -39,10 +39,10 @@ class Grouper(Kernel):
         
         grouper = Grouper()
         
-        X1 = torch.rand(3, 2, 4, 5)
-        X2 = torch.rand(3, 2, 4, 5)
+        X1 = torch.rand(2, 2, 4, 5)
+        X2 = torch.rand(2, 2, 4, 5)
         
         y1 = grouper(X1)
         y2 = grouper(X2)
         
-        #raise NotImplementedError
+        print(X1)

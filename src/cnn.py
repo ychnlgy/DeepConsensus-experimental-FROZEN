@@ -20,30 +20,70 @@ class Model(models.Savable):
             # === Group <-> Role assignment ===
             
             # 28 -> 14
+            models.ChannelTransform(
+                net = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1
+                )
+            ),
             models.Grouper(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
+            models.ChannelTransform(
+                net = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1
+                )
+            ),
             models.Grouper(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
+            models.ChannelTransform(
+                net = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1
+                )
+            ),
             models.Grouper(kernel=3, padding=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 2
+            models.ChannelTransform(
+                net = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1
+                )
+            ),
             models.Grouper(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 2 -> 1
+            models.ChannelTransform(
+                net = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1
+                )
+            ),
             models.Grouper(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),

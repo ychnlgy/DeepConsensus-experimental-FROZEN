@@ -1,4 +1,5 @@
 from .ChannelClassifier import ChannelClassifier
+from .ChannelTransform import ChannelTransform
 from .Classifier import Classifier
 from .CosineSimilarity import CosineSimilarity
 from .DenseNet import DenseNet
