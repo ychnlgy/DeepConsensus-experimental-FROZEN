@@ -66,15 +66,15 @@ class Cnn(models.Savable):
             
             models.Reshape(64),
             
-#            models.DenseNet(
-#                headsize = 64,
-#                bodysize = 32,
-#                tailsize = classes,
-#                layers = 2,
-#                dropout = 0.2
-#            )
+            models.DenseNet(
+                headsize = 64,
+                bodysize = 32,
+                tailsize = classes,
+                layers = 2,
+                dropout = 0.2
+            )
 
-            models.Classifier(64, classes)
+            #models.Classifier(64, classes)
 
         )
     
