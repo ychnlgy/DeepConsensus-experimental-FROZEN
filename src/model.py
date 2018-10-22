@@ -25,10 +25,10 @@ class Model(models.Savable):
                 dropout = 0.2
             ),
             models.SoftmaxCombine(),
-#            models.ChannelClassifier(
-#                hiddensize = 64,
-#                classes = 16
-#            ),
+            models.ChannelClassifier(
+                hiddensize = 64,
+                classes = 16
+            ),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -42,6 +42,10 @@ class Model(models.Savable):
                 dropout = 0.2
             ),
             models.SoftmaxCombine(),
+            models.ChannelClassifier(
+                hiddensize = 64,
+                classes = 16
+            ),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -55,6 +59,10 @@ class Model(models.Savable):
                 dropout = 0.2
             ),
             models.SoftmaxCombine(kernel=3, padding=1, stride=2),
+            models.ChannelClassifier(
+                hiddensize = 64,
+                classes = 16
+            ),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
 #                classes = 32
@@ -73,6 +81,10 @@ class Model(models.Savable):
                 dropout = 0.2
             ),
             models.SoftmaxCombine(),
+            models.ChannelClassifier(
+                hiddensize = 64,
+                classes = 16
+            ),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
 #                classes = 32
@@ -91,6 +103,7 @@ class Model(models.Savable):
                 dropout = 0.2
             ),
             models.SoftmaxCombine(),
+
 #            models.ChannelClassifier(
 #                hiddensize = 64,
 #                classes = 32
