@@ -3,7 +3,7 @@ import torch
 class ChannelClassifier(torch.nn.Module):
 
     def __init__(self, observer, net, classifier):
-        super(ChannelTransform, self).__init__()
+        super(ChannelClassifier, self).__init__()
         self.obs = observer
         self.net = net
         self.cls = classifier
