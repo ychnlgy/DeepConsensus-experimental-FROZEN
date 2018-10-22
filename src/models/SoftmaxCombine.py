@@ -2,10 +2,10 @@ import torch
 
 from .Kernel import Kernel
 
-class Grouper(Kernel):
+class SoftmaxCombine(Kernel):
     
     def __init__(self, kernel=2, padding=0, stride=2, norm=2):
-        super(Grouper, self).__init__(kernel, stride)
+        super(SoftmaxCombine, self).__init__(kernel, stride)
         self.p = torch.nn.ZeroPad2d(padding)
         self.n = norm
         self.x = torch.nn.Softmax(dim=2)
@@ -37,7 +37,7 @@ class Grouper(Kernel):
         
         torch.manual_seed(5)
         
-        grouper = Grouper()
+        grouper = SoftmaxCombine()
         
         X1 = torch.rand(2, 2, 4, 5)
         X2 = torch.rand(2, 2, 4, 5)

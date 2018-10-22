@@ -3,7 +3,7 @@ from .ChannelTransform import ChannelTransform
 from .Classifier import Classifier
 from .CosineSimilarity import CosineSimilarity
 from .DenseNet import DenseNet
-from .Grouper import Grouper
+from .SoftmaxCombine import SoftmaxCombine
 from .InteractionObserver import InteractionObserver
 from .Kernel import Kernel
 from .Reshape import Reshape
