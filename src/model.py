@@ -18,13 +18,13 @@ class Model(models.Savable):
             
             # 28 -> 14
             models.InteractionObserver(),
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 1,
-                #dropout = 0.2
-            ),
+#            models.ChannelTransform(
+#                headsize = 64,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 1,
+#                #dropout = 0.2
+#            ),
             models.SoftmaxCombine(),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
@@ -36,13 +36,13 @@ class Model(models.Savable):
             
             # 14 -> 7
             models.InteractionObserver(),
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 1,
-                #dropout = 0.2
-            ),
+#            models.ChannelTransform(
+#                headsize = 64,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 1,
+#                #dropout = 0.2
+#            ),
             models.SoftmaxCombine(),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
@@ -54,18 +54,18 @@ class Model(models.Savable):
             
             # 7 -> 4
             models.InteractionObserver(),
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 1,
-                #dropout = 0.2
-            ),
+#            models.ChannelTransform(
+#                headsize = 64,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 1,
+#                #dropout = 0.2
+#            ),
             models.SoftmaxCombine(kernel=3, padding=1, stride=2),
-            models.ChannelClassifier(
-                hiddensize = 64,
-                classes = 16
-            ),
+#            models.ChannelClassifier(
+#                hiddensize = 64,
+#                classes = 16
+#            ),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
@@ -73,31 +73,31 @@ class Model(models.Savable):
             
             # 4 -> 2
             models.InteractionObserver(),
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 1,
-                #dropout = 0.2
-            ),
+#            models.ChannelTransform(
+#                headsize = 64,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 1,
+#                #dropout = 0.2
+#            ),
             models.SoftmaxCombine(),
-            models.ChannelClassifier(
-                hiddensize = 64,
-                classes = 16
-            ),
+#            models.ChannelClassifier(
+#                hiddensize = 64,
+#                classes = 16
+#            ),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 2 -> 1
             models.InteractionObserver(),
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 64,
-                tailsize = 64,
-                layers = 1,
-                #dropout = 0.2
-            ),
+#            models.ChannelTransform(
+#                headsize = 64,
+#                bodysize = 64,
+#                tailsize = 64,
+#                layers = 1,
+#                #dropout = 0.2
+#            ),
             models.SoftmaxCombine(),
             
             models.Reshape(64),
