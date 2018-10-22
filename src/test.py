@@ -1,7 +1,5 @@
+#!/usr/bin/python3
+
 import models
 
-models.CosineSimilarity.unittest()
-
-import misc
-
-misc.data.unittest()
+models.Grouper.unittest()
