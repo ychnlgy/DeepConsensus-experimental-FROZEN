@@ -10,7 +10,7 @@ class Kernel(torch.nn.Module):
         self.s = misc.param.convert2d(stride)
     
     def obtain_kernel_slices(self, U, *size):
-        return U[self.kx, self.ky].view(self.tx, self.ty, self.kn, *size)
+        return U[self.kx, self.ky].view(self.ty, self.tx, self.kn, *size).transpose(0, 1)
     
     def compute_kernel_indices(self, W, H):
         kx, ky = self.k
