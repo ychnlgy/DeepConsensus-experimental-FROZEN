@@ -23,4 +23,8 @@ class Kernel(torch.nn.Module):
         self.kx = sum(misc.matrix.true_permute(nx, ax))
         self.ky = sum(misc.matrix.true_permute(ny, ay))
         
+        print(self.kx)
+        print(self.ky)
+        input()
+        
         self.compute_kernel_indices = misc.util.do_nothing
