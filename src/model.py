@@ -1,3 +1,5 @@
+import torch
+
 import models
 
 class Model(models.Savable):
@@ -23,10 +25,10 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 128,
+                    bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2
+                    layers = 1,
+                    #dropout = 0.2
                 ),
                 classifier = models.Classifier(
                     hiddensize = 64,
@@ -40,10 +42,10 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 128,
+                    bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2
+                    layers = 1,
+                    #dropout = 0.2
                 ),
                 classifier = models.Classifier(
                     hiddensize = 64,
@@ -57,10 +59,10 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 128,
+                    bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2
+                    layers = 1,
+                    #dropout = 0.2
                 ),
                 classifier = models.Classifier(
                     hiddensize = 64,
@@ -74,26 +76,27 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 128,
+                    bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2
+                    layers = 1,
+                    #dropout = 0.2
                 ),
                 classifier = models.Classifier(
                     hiddensize = 64,
                     classes = 64
                 )
             ),
+            
             # 2 -> 1
             models.Grouper(),
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 128,
+                    bodysize = 64,
                     tailsize = 64,
-                    layers = 2,
-                    dropout = 0.2
+                    layers = 1,
+                    #dropout = 0.2
                 ),
                 classifier = models.Classifier(
                     hiddensize = 64,
