@@ -59,14 +59,14 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 9,
-                    bodysize = 32,
-                    tailsize = 32,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 32,
-                    classes = 32
+                    hiddensize = 64,
+                    classes = 64
                 )
             ),
             
@@ -76,18 +76,18 @@ class Model(models.Savable):
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 9,
-                    bodysize = 16,
-                    tailsize = 16,
+                    bodysize = 64,
+                    tailsize = 64,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 16,
-                    classes = 16
+                    hiddensize = 64,
+                    classes = 64
                 )
             ),
             
-            models.Reshape(16*4),
+            models.Reshape(64),
             
             models.Classifier(64, classes)
         )
