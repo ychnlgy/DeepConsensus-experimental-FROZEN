@@ -58,7 +58,6 @@ class Model(models.Savable):
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
             
             # 2 -> 1
             models.SoftmaxCombine(),
