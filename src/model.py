@@ -22,7 +22,7 @@ class Model(models.Savable):
             # 28 -> 14
             models.Grouper(),
             models.ChannelClassifier(
-                observer = models.InteractionObserver(),
+                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),#models.InteractionObserver(),
                 net = models.DenseNet(
                     headsize = 9,
                     bodysize = 64,
@@ -39,7 +39,7 @@ class Model(models.Savable):
             # 14 -> 7
             models.Grouper(),
             models.ChannelClassifier(
-                observer = models.InteractionObserver(),
+                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
                     headsize = 9,
                     bodysize = 64,
@@ -56,7 +56,7 @@ class Model(models.Savable):
             # 7 -> 4
             models.Grouper(kernel=3, padding=1),
             models.ChannelClassifier(
-                observer = models.InteractionObserver(),
+                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
                     headsize = 9,
                     bodysize = 64,
@@ -73,7 +73,7 @@ class Model(models.Savable):
             # 4 -> 2
             models.Grouper(),
             models.ChannelClassifier(
-                observer = models.InteractionObserver(),
+                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
                     headsize = 9,
                     bodysize = 64,
@@ -90,7 +90,7 @@ class Model(models.Savable):
             # 2 -> 1
             models.Grouper(),
             models.ChannelClassifier(
-                observer = models.InteractionObserver(),
+                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
                     headsize = 9,
                     bodysize = 64,
