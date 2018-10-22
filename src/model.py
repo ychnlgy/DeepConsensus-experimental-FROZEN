@@ -67,6 +67,7 @@ class Model(models.Savable):
                 classes = 16
             ),
             
+            models.Reshape(64),
             models.Classifier(hiddensize=64, classes=classes)
         )
     
