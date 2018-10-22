@@ -22,91 +22,91 @@ class Model(models.Savable):
             # 28 -> 14
             models.Grouper(),
             models.ChannelClassifier(
-                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),#models.InteractionObserver(),
+                observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 9,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 64,
-                    classes = 64
+                    hiddensize = 32,
+                    classes = 16
                 )
             ),
             
             # 14 -> 7
             models.Grouper(),
             models.ChannelClassifier(
-                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
+                observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 9,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 64,
-                    classes = 64
+                    hiddensize = 32,
+                    classes = 16
                 )
             ),
             
             # 7 -> 4
             models.Grouper(kernel=3, padding=1),
             models.ChannelClassifier(
-                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
+                observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 9,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 64,
-                    classes = 64
+                    hiddensize = 32,
+                    classes = 16
                 )
             ),
             
             # 4 -> 2
             models.Grouper(),
             models.ChannelClassifier(
-                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
+                observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 9,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 64,
-                    classes = 64
+                    hiddensize = 32,
+                    classes = 16
                 )
             ),
             
             # 2 -> 1
             models.Grouper(),
             models.ChannelClassifier(
-                observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
+                observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 128,
-                    tailsize = 64,
+                    headsize = 9,
+                    bodysize = 32,
+                    tailsize = 32,
                     layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
-                    hiddensize = 64,
-                    classes = 64
+                    hiddensize = 32,
+                    classes = 16
                 )
             ),
             
-            models.Reshape(64),
+            models.Reshape(16),
             
-            models.Classifier(64, classes)
+            models.Classifier(16, classes)
         )
     
     def forward(self, X):
