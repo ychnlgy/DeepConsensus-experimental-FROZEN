@@ -20,7 +20,7 @@ class Model(models.Savable):
             models.SoftmaxCombine(),
             models.ChannelClassifier(
                 hiddensize = 64,
-                classes = 16
+                classes = 32
             ),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
@@ -31,7 +31,7 @@ class Model(models.Savable):
             models.SoftmaxCombine(),
             models.ChannelClassifier(
                 hiddensize = 64,
-                classes = 16
+                classes = 32
             ),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
@@ -42,7 +42,7 @@ class Model(models.Savable):
             models.SoftmaxCombine(kernel=3, padding=1, stride=2),
             models.ChannelClassifier(
                 hiddensize = 64,
-                classes = 16
+                classes = 32
             ),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
@@ -53,7 +53,7 @@ class Model(models.Savable):
             models.SoftmaxCombine(),
             models.ChannelClassifier(
                 hiddensize = 64,
-                classes = 16
+                classes = 32
             ),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
@@ -64,7 +64,7 @@ class Model(models.Savable):
             models.SoftmaxCombine(),
             models.ChannelClassifier(
                 hiddensize = 64,
-                classes = 16
+                classes = 32
             ),
             
             models.Reshape(64),
