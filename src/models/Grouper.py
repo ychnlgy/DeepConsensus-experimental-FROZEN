@@ -58,3 +58,45 @@ class Grouper(Kernel):
          [1.1725, 1.1355, 0.9815, 0.3964, 1.0799]]
         ])).norm() < 1e-3
 
+        exp_norm_X1 = torch.exp(norm_X1)
+        assert (exp_norm_X1 - torch.Tensor([
+        [[2.9058, 1.3368, 2.4803, 3.1116, 3.8218],
+         [1.1590, 1.7373, 2.7266, 1.3047, 2.9100],
+         [1.8753, 1.8647, 1.0885, 2.2717, 2.9163],
+         [2.5659, 3.9722, 1.9213, 1.5560, 3.8544]],
+
+        [[1.8644, 1.5195, 1.4471, 2.2413, 2.4449],
+         [3.5835, 2.9259, 2.5651, 3.3919, 1.5121],
+         [3.5404, 1.6835, 1.7827, 2.4935, 3.4180],
+         [3.2301, 3.1128, 2.6684, 1.4865, 2.9445]]
+        ])).norm() < 1e-3
+        
+        softmax = torch.nn.Softmax(dim=-1)
+        softmax_X1_q1 = softmax(norm_X1[:,:2,:2].contiguous().view(-1, 4))
+        softmax_X1_q2 = softmax(norm_X1[:,:2,2:4].contiguous().view(-1, 4))
+        softmax_X1_q4 = softmax(norm_X1[:,2:4,2:4].contiguous().view(-1, 4))
+        assert (softmax_X1_q1 - torch.Tensor([
+            [0.4070, 0.1873, 0.1623, 0.2434],
+            [0.1885, 0.1536, 0.3622, 0.2957]
+        ])).norm() < 1e-3
+        assert (softmax_X1_q2 - torch.Tensor([
+            [0.2577, 0.3233, 0.2833, 0.1356],
+            [0.1500, 0.2324, 0.2659, 0.3517]
+        ])).norm() < 1e-3
+        assert (softmax_X1_q4 - torch.Tensor([
+            [0.1592, 0.3322, 0.2810, 0.2276],
+            [0.2114, 0.2957, 0.3165, 0.1763]
+        ])).norm() < 1e-3
+        
+        X1_q1 = X1[:,:,:2,:2].contiguous().view(2, 2, 4)
+        X1_q2 = X1[:,:,:2,2:4].contiguous().view(2, 2, 4)
+        X1_q4 = X1[:,:,2:4,2:4].contiguous().view(2, 2, 4)
+        
+        X1h_q1 = (softmax_X1_q1.view(2, 1, 4) * X1_q1).sum(dim=-1)
+        X1h_q2 = (softmax_X1_q2.view(2, 1, 4) * X1_q2).sum(dim=-1)
+        X1h_q4 = (softmax_X1_q4.view(2, 1, 4) * X1_q4).sum(dim=-1)
+        
+        assert (y1[:,:,0,0] - X1h_q1).norm() < 1e-3
+        assert (y1[:,:,0,1] - X1h_q2).norm() < 1e-3
+        assert (y1[:,:,1,1] - X1h_q4).norm() < 1e-3
+

@@ -27,7 +27,7 @@ class Model(models.Savable):
                     headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -44,7 +44,7 @@ class Model(models.Savable):
                     headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -61,7 +61,7 @@ class Model(models.Savable):
                     headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -78,7 +78,7 @@ class Model(models.Savable):
                     headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -95,7 +95,7 @@ class Model(models.Savable):
                     headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
-                    layers = 1,
+                    layers = 2,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(

@@ -16,5 +16,5 @@ class InteractionObserver(Kernel):
         U = X.permute(2, 3, 0, 1)
         cos = self.cos(U, U) # W, H, N
         slices = self.obtain_kernel_slices(cos, N) # W, H, 9, N
-        return slices.permute(3, 2, 0, 1)
+        return slices.permute(3, 2, 0, 1) # N, 9, W, H
         
