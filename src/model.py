@@ -54,7 +54,7 @@ class Model(models.Savable):
             ),
             
             # 7 -> 4
-            models.Grouper(),
+            models.Grouper(kernel=3, padding=1),
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
@@ -71,6 +71,23 @@ class Model(models.Savable):
             ),
             
             # 4 -> 2
+            models.Grouper(),
+            models.ChannelClassifier(
+                observer = models.InteractionObserver(),
+                net = models.DenseNet(
+                    headsize = 9,
+                    bodysize = 64,
+                    tailsize = 64,
+                    layers = 1,
+                    #dropout = 0.2
+                ),
+                classifier = models.Classifier(
+                    hiddensize = 64,
+                    classes = 64
+                )
+            ),
+            
+            # 2 -> 1
             models.Grouper(),
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
