@@ -2,7 +2,8 @@
 
 import torch, tqdm, time, numpy, statistics
 
-import misc, model
+import misc
+from model import Model
 
 def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
@@ -26,7 +27,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
-    model = model.Model(CHANNELS, NUM_CLASSES)
+    model = Model(CHANNELS, NUM_CLASSES)
     
     if showparams:
     
