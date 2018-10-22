@@ -22,7 +22,7 @@ class ChannelClassifier(torch.nn.Module):
     
         N, C, W, H = X.size()
         obs = self.obs(X)
-        obs = obs.permute(0, 2, 3, 1).view(-1, 9)
+        obs = obs.permute(0, 2, 3, 1).contiguous().view(-1, 9)
         lat = self.net(obs)
         cls = self.cls(lat)
         Np, Cp = cls.size()
