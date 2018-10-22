@@ -12,7 +12,7 @@ class ChannelClassifier(Homogenizer):
             X - Tensor of shape (N, C, W, H)
         
         Returns:
-            Tensor of shape (N, classes, W, H)
+            Tensor of shape (N, C', W, H)
         
         '''
     
