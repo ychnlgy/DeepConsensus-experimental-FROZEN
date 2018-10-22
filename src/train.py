@@ -132,7 +132,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        models.SoftmaxCombine(),
+                        torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
@@ -144,12 +144,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -169,12 +166,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -195,12 +189,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -220,12 +211,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -246,12 +234,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -271,12 +256,9 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
@@ -297,22 +279,14 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            #dropout = 0.2
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
                         ),
                     )
                 ),
                 
             ),
-            
-            models.Classifier(
-                hiddensize = 64,
-                classes = classes
-            )
             
         )
     

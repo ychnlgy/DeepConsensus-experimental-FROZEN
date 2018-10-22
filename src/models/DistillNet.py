@@ -7,8 +7,7 @@ class DistillNet(torch.nn.Module):
         self.layers = torch.nn.ModuleList(layers)
     
     def forward(self, X):
-        vecs = list(self.iter_forward(X))
-        return torch.cat(vecs, dim=1)
+        return sum(self.iter_forward(X))
     
     def iter_forward(self, X):
         for layer in self.layers:
