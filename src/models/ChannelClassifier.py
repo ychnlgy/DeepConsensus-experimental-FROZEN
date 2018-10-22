@@ -1,8 +1,8 @@
 import torch
 
-from .Classifier import Classifier
+from .Homogenizer import Homogenizer
 
-class ChannelClassifier(Classifier):
+class ChannelClassifier(Homogenizer):
     
     def forward(self, X):
     
