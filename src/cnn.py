@@ -23,9 +23,9 @@ class Model(models.Savable):
             models.ChannelTransform(
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 1
+                    layers = 2
                 )
             ),
             models.Grouper(),
@@ -37,9 +37,9 @@ class Model(models.Savable):
             models.ChannelTransform(
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 1
+                    layers = 2
                 )
             ),
             models.Grouper(),
@@ -51,9 +51,9 @@ class Model(models.Savable):
             models.ChannelTransform(
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 1
+                    layers = 2
                 )
             ),
             models.Grouper(kernel=3, padding=1),
@@ -65,9 +65,9 @@ class Model(models.Savable):
             models.ChannelTransform(
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 1
+                    layers = 2
                 )
             ),
             models.Grouper(),
@@ -79,9 +79,9 @@ class Model(models.Savable):
             models.ChannelTransform(
                 net = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 1
+                    layers = 2
                 )
             ),
             models.Grouper(),
