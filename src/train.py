@@ -2,11 +2,297 @@
 
 import torch, tqdm, time, numpy, statistics
 
-import misc
-from model import Model
+import misc, models
 
-def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+class Cnn(models.Savable):
 
+    def __init__(self, channels, classes):
+        super(Cnn, self).__init__()
+        self.net = torch.nn.Sequential(
+        
+            # 28 -> 28
+            torch.nn.Conv2d(channels, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 28
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 28 -> 14
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 14
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 14 -> 7
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 7 -> 7
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 7 -> 4
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.AvgPool2d(3, padding=1, stride=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 4
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 1
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.AvgPool2d(4),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            models.Reshape(64),
+            
+#            models.DenseNet(
+#                headsize = 64,
+#                bodysize = 32,
+#                tailsize = classes,
+#                layers = 2,
+#                dropout = 0.2
+#            )
+
+            models.Classifier(64, classes)
+
+        )
+    
+    def forward(self, X):
+        return self.net(X)
+
+class Model(models.Savable):
+
+    def __init__(self, channels, classes):
+        super(Model, self).__init__()
+        self.net = torch.nn.Sequential(
+            
+            # === Convolutions ===
+            
+            torch.nn.Sequential(
+                torch.nn.Conv2d(channels, 64, 3, padding=1),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64)
+            ),
+            
+            torch.nn.Sequential(
+                torch.nn.Conv2d(64, 64, 3, padding=1),
+                torch.nn.LeakyReLU(),
+                torch.nn.BatchNorm2d(64)
+            ),
+            
+            models.DistillNet(
+                
+                # 28 -> 28
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 28 -> 14
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.MaxPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 14 -> 14
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 14 -> 7
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.MaxPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 7 -> 7
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 7 -> 4
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.AvgPool2d(3, padding=1, stride=2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 4 -> 4
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+                # 4 -> 2
+                models.DistillLayer(
+                    conv = torch.nn.Sequential(
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.AvgPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64)
+                    ),
+                    pool = models.DistillPool(
+                        h = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 128,
+                            layers = 2,
+                            dropout = 0.2
+                        ),
+                        c = models.Classifier(
+                            hiddensize = 128,
+                            classes = classes
+                        )
+                    )
+                ),
+                
+            ),
+            
+        )
+    
+    def forward(self, X):
+        return self.net(X)
+
+def main(dataset, modelf, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+
+    classic = int(classic)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -27,7 +313,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
-    model = Model(CHANNELS, NUM_CLASSES)
+    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
     
     if showparams:
     
@@ -40,6 +326,7 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
+    lossg = torch.nn.BCEWithLogitsLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
@@ -82,12 +369,12 @@ def main(dataset, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, epochs
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-#            if w > highest and not silent:
-#                
-#                print("Saving to %s..." % modelf)
-#            
-#                highest = w
-#                model.save(modelf)
+            if w > highest and not silent:
+                
+                print("Saving to %s..." % modelf)
+            
+                highest = w
+                model.save(modelf)
             
             scheduler.step(v/m)
             
