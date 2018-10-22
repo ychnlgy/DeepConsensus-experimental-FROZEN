@@ -34,4 +34,50 @@ class Kernel(torch.nn.Module):
         kernel.compute_kernel_indices(2, 3)
         U = A.permute(2, 3, 0, 1)
         B = kernel.obtain_kernel_slices(U, 1, 1)
+        
+        assert (A.squeeze() == B.squeeze()).all()
+        
+        kernel = Kernel(2, 2)
+        
+        A = torch.arange(16).view(1, 1, 4, 4)
+        kernel.compute_kernel_indices(4, 4)
+        U = A.permute(2, 3, 0, 1)
+        B = kernel.obtain_kernel_slices(U, 1, 1)
+        
+        assert (A.squeeze() == torch.LongTensor([
+            [ 0,  1,  2,  3],
+            [ 4,  5,  6,  7],
+            [ 8,  9, 10, 11],
+            [12, 13, 14, 15]
+        ])).all()
+        
+        assert (B.squeeze() == torch.LongTensor([
+            [[ 0,  1,  4,  5],
+             [ 2,  3,  6,  7]],
 
+            [[ 8,  9, 12, 13],
+             [10, 11, 14, 15]]
+        ])).all()
+
+        A = torch.arange(32).view(1, 2, 4, 4)
+        kernel.compute_kernel_indices(4, 4)
+        U = A.permute(2, 3, 0, 1)
+        B = kernel.obtain_kernel_slices(U, 1, 2)
+        
+        print(A)
+        print(B.squeeze())
+#        assert (A.squeeze() == torch.LongTensor([
+#            [ 0,  1,  2,  3],
+#            [ 4,  5,  6,  7],
+#            [ 8,  9, 10, 11],
+#            [12, 13, 14, 15]
+#        ])).all()
+#        
+#        assert (B.squeeze() == torch.LongTensor([
+#            [[ 0,  1,  4,  5],
+#             [ 2,  3,  6,  7]],
+
+#            [[ 8,  9, 12, 13],
+#             [10, 11, 14, 15]]
+#        ])).all()
+    
