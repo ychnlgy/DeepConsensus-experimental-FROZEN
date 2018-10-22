@@ -18,7 +18,7 @@ class Model(models.Savable):
             
             # 28 -> 14
             models.InteractionObserver(),
-            models.ChannelClassifier(hiddensize=16, classes=16),
+            models.ChannelClassifier(hiddensize=9, classes=16),
             models.ChannelTransform(
                 headsize = 16,
                 bodysize = 32,
@@ -34,7 +34,7 @@ class Model(models.Savable):
             
             # 14 -> 7
             models.InteractionObserver(),
-            models.ChannelClassifier(hiddensize=16, classes=16),
+            models.ChannelClassifier(hiddensize=9, classes=16),
             models.ChannelTransform(
                 headsize = 16,
                 bodysize = 32,
@@ -50,7 +50,7 @@ class Model(models.Savable):
             
             # 7 -> 4
             models.InteractionObserver(),
-            models.ChannelClassifier(hiddensize=16, classes=16),
+            models.ChannelClassifier(hiddensize=9, classes=16),
             models.ChannelTransform(
                 headsize = 16,
                 bodysize = 32,
@@ -66,7 +66,7 @@ class Model(models.Savable):
             
             # 4 -> 2
             models.InteractionObserver(),
-            models.ChannelClassifier(hiddensize=16, classes=16),
+            models.ChannelClassifier(hiddensize=9, classes=16),
             models.ChannelTransform(
                 headsize = 16,
                 bodysize = 32,
@@ -82,7 +82,7 @@ class Model(models.Savable):
             
             # 2 -> 1
             models.InteractionObserver(),
-            models.ChannelClassifier(hiddensize=16, classes=16),
+            models.ChannelClassifier(hiddensize=9, classes=16),
             models.ChannelTransform(
                 headsize = 16,
                 bodysize = 32,
