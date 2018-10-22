@@ -31,3 +31,6 @@ class DenseNet(torch.nn.Module):
             torch.nn.Dropout(dropout),
             activation
         )
+    
+    def get_net(self):
+        return self.net

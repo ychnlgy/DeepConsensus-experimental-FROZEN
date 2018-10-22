@@ -17,18 +17,39 @@ class Model(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 14
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(kernel=3, padding=1, stride=2),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
@@ -40,6 +61,13 @@ class Model(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 2
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
@@ -51,6 +79,13 @@ class Model(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 2 -> 1
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
 #            models.ChannelClassifier(
 #                hiddensize = 64,
