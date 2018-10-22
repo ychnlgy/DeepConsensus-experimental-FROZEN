@@ -118,7 +118,7 @@ class Model(models.Savable):
                             layers = 2,
                             dropout = 0.2
                         ),
-                        s = models.DenseNet(
+                        c = models.DenseNet(
                             headsize = 128,
                             bodysize = 8,
                             tailsize = 8,
