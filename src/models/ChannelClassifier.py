@@ -1,6 +1,6 @@
 import torch
 
-from .Homogenizer import Homogenizer
+from .Classifier import Classifier
 
 class ChannelClassifier(Homogenizer):
     
