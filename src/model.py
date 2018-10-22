@@ -24,10 +24,10 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = torch.nn.AvgPool2d(3, padding=1, stride=1),#models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 9,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -41,10 +41,10 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
-                    headsize = 9,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -58,10 +58,10 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
-                    headsize = 9,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -75,10 +75,10 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
-                    headsize = 9,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
@@ -92,10 +92,10 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = torch.nn.AvgPool2d(3, padding=1, stride=1),
                 net = models.DenseNet(
-                    headsize = 9,
-                    bodysize = 64,
+                    headsize = 64,
+                    bodysize = 128,
                     tailsize = 64,
-                    layers = 2,
+                    layers = 1,
                     #dropout = 0.2
                 ),
                 classifier = models.Classifier(
