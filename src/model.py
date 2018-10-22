@@ -23,7 +23,7 @@ class Model(models.Savable):
                 classes = 16
             ),
             
-            torch.nn.Conv2d(16, 64, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -34,7 +34,7 @@ class Model(models.Savable):
                 classes = 16
             ),
             
-            torch.nn.Conv2d(16, 64, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -45,7 +45,7 @@ class Model(models.Savable):
                 classes = 16
             ),
             
-            torch.nn.Conv2d(16, 64, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -56,7 +56,7 @@ class Model(models.Savable):
                 classes = 16
             ),
             
-            torch.nn.Conv2d(16, 64, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
