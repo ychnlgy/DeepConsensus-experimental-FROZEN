@@ -16,5 +16,6 @@ class InteractionObserver(Kernel):
         U = P.permute(2, 3, 0, 1)
         cos = self.cos(U, U) # W, H, N
         slices = self.obtain_kernel_slices(cos, N) # W, H, 9, N
+        N, C, W, H = X.size()
         weight = slices.mean(dim=2).view(W, H, 1, N).permute(3, 2, 0, 1)
         return weight * X
