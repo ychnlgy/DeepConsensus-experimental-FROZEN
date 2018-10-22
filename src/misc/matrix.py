@@ -4,8 +4,8 @@ def apply_permutation(module, X, permutation):
     return module(X.permute(permutation)).permute(permutation)
 
 def pair_range(x, y, dx=1, dy=1):
-    ax = torch.arange(x).view(1, x).repeat(y, 1).view(-1) * dx
-    ay = torch.arange(y).view(y, 1).repeat(1, x).view(-1) * dy
+    ax = torch.arange(x).view(x, 1).repeat(1, y).view(-1) * dx
+    ay = torch.arange(y).view(1, y).repeat(x, 1).view(-1) * dy
     return ax.long(), ay.long()
 
 def true_permute(v1, v2):

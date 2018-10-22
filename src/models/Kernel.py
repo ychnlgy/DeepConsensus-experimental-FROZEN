@@ -10,7 +10,7 @@ class Kernel(torch.nn.Module):
         self.s = misc.param.convert2d(stride)
     
     def obtain_kernel_slices(self, U, *size):
-        return U[self.kx, self.ky].view(self.ty, self.tx, self.kn, *size).transpose(0, 1)
+        return U[self.kx, self.ky].view(self.tx, self.ty, self.kn, *size)
     
     def compute_kernel_indices(self, W, H):
         kx, ky = self.k
@@ -23,8 +23,15 @@ class Kernel(torch.nn.Module):
         self.kx = sum(misc.matrix.true_permute(nx, ax))
         self.ky = sum(misc.matrix.true_permute(ny, ay))
         
-        print(self.kx)
-        print(self.ky)
-        input()
-        
         self.compute_kernel_indices = misc.util.do_nothing
+    
+    @staticmethod
+    def unittest():
+        
+        kernel = Kernel(1, 1)
+        
+        A = torch.arange(6).view(1, 1, 2, 3)
+        kernel.compute_kernel_indices(2, 3)
+        U = A.permute(2, 3, 0, 1)
+        B = kernel.obtain_kernel_slices(U, 1, 1)
+
