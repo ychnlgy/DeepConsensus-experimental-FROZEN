@@ -2,7 +2,7 @@ import torch
 
 from .Classifier import Classifier
 
-class ChannelClassifier(Homogenizer):
+class ChannelClassifier(Classifier):
     
     def forward(self, X):
     
