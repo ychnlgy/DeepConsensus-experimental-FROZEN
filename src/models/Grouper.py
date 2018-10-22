@@ -21,7 +21,8 @@ class Grouper(Kernel):
             Tensor of shape (N, C, W', H')
         
         '''
-        
+        print(X.size())
+        input()
         X = self.p(X)
         N, C, W, H = X.size()
         self.compute_kernel_indices(W, H)
