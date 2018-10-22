@@ -19,9 +19,9 @@ class Model(models.Savable):
             # 28 -> 14
             models.InteractionObserver(),
             models.ChannelTransform(
-                headsize = 9,
-                bodysize = 32,
-                tailsize = 32,
+                headsize = 64,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 1,
                 #dropout = 0.2
             ),
@@ -30,16 +30,16 @@ class Model(models.Savable):
 #                hiddensize = 64,
 #                classes = 16
 #            ),
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
             models.InteractionObserver(),
             models.ChannelTransform(
-                headsize = 9,
-                bodysize = 32,
-                tailsize = 32,
+                headsize = 64,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 1,
                 #dropout = 0.2
             ),
@@ -48,16 +48,16 @@ class Model(models.Savable):
 #                hiddensize = 64,
 #                classes = 16
 #            ),
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
             models.InteractionObserver(),
             models.ChannelTransform(
-                headsize = 9,
-                bodysize = 32,
-                tailsize = 32,
+                headsize = 64,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 1,
                 #dropout = 0.2
             ),
@@ -67,16 +67,16 @@ class Model(models.Savable):
 #                classes = 16
 #            ),
             
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 4 -> 2
             models.InteractionObserver(),
             models.ChannelTransform(
-                headsize = 9,
-                bodysize = 32,
-                tailsize = 32,
+                headsize = 64,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 1,
                 #dropout = 0.2
             ),
@@ -85,23 +85,23 @@ class Model(models.Savable):
 #                hiddensize = 64,
 #                classes = 16
 #            ),
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             # 2 -> 1
             models.InteractionObserver(),
             models.ChannelTransform(
-                headsize = 9,
-                bodysize = 32,
-                tailsize = 32,
+                headsize = 64,
+                bodysize = 64,
+                tailsize = 64,
                 layers = 1,
                 #dropout = 0.2
             ),
             models.SoftmaxCombine(),
             
-            models.Reshape(32),
-            models.Classifier(hiddensize=32, classes=classes)
+            models.Reshape(64),
+            models.Classifier(hiddensize=64, classes=classes)
         )
     
     def forward(self, X):
