@@ -24,7 +24,7 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
+                    headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
@@ -41,7 +41,7 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
+                    headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
@@ -58,7 +58,7 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
+                    headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
@@ -75,7 +75,7 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
+                    headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
@@ -92,7 +92,7 @@ class Model(models.Savable):
             models.ChannelClassifier(
                 observer = models.InteractionObserver(),
                 net = models.DenseNet(
-                    headsize = 64,
+                    headsize = 9,
                     bodysize = 64,
                     tailsize = 64,
                     layers = 1,
