@@ -21,7 +21,10 @@ class DenseNet(torch.nn.Module):
                 ]),
                 self.create_unit(bodysize, tailsize, activation)
             )
-        
+    
+    def get_net(self):
+        return self.net
+    
     def forward(self, X):
         return self.net(X)
     
