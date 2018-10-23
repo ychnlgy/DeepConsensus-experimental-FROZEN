@@ -110,9 +110,12 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.Classifier(
-                            hiddensize = 64,
-                            classes = classes
+                        c = models.DenseNet(
+                            headsize = 128,
+                            bodysize = 32,
+                            tailsize = 32,
+                            layers = 1,
+                            
                         ),
                     )
                 ),
@@ -133,9 +136,12 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.Classifier(
-                            hiddensize = 64,
-                            classes = classes
+                        c = models.DenseNet(
+                            headsize = 128,
+                            bodysize = 32,
+                            tailsize = 32,
+                            layers = 1,
+                            
                         ),
                     )
                 ),
@@ -155,9 +161,12 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.Classifier(
-                            hiddensize = 64,
-                            classes = classes
+                        c = models.DenseNet(
+                            headsize = 128,
+                            bodysize = 32,
+                            tailsize = 32,
+                            layers = 1,
+                            
                         ),
                     )
                 ),
@@ -178,9 +187,12 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.Classifier(
-                            hiddensize = 64,
-                            classes = classes
+                        c = models.DenseNet(
+                            headsize = 128,
+                            bodysize = 32,
+                            tailsize = 32,
+                            layers = 1,
+                            
                         ),
                     )
                 ),
@@ -276,6 +288,8 @@ class Model(models.Savable):
 #                ),
                 
             ),
+            
+            models.Classifier(128, classes)
             
         )
     
