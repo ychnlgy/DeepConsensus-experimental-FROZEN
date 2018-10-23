@@ -1,3 +1,4 @@
+from .Norm import Norm
 from .AbsTanh import AbsTanh
 from .Savable import Savable
 from .Reshape import Reshape
