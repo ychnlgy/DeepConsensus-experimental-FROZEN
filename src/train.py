@@ -156,8 +156,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -179,8 +179,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -201,8 +201,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -224,8 +224,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -246,8 +246,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -269,8 +269,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -291,8 +291,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
@@ -314,8 +314,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 128,
-                            layers = 2,
-                            dropout = 0.2
+                            layers = 1,
+                            activation = models.AbsTanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
