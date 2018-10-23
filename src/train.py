@@ -110,7 +110,7 @@ class Cnn(models.Savable):
                 dropout = 0.2
             ),
             
-            models.SoftmaxCombine(2, padding=0, stride=1),
+            models.SoftmaxCombine(3, padding=1, stride=1),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
