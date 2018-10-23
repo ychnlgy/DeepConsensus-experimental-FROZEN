@@ -327,11 +327,10 @@ class Model(models.Savable):
             ),
             
             models.DenseNet(
-                headsize = 256,
-                bodysize = 128,
+                headsize = 32,
+                bodysize = 32,
                 tailsize = classes,
-                layers = 2,
-                dropout = 0.2
+                layers = 1
             ),
             
         )
