@@ -85,7 +85,6 @@ class Model(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -95,7 +94,6 @@ class Model(models.Savable):
                 # 28 -> 28
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
@@ -125,7 +123,6 @@ class Model(models.Savable):
                 # 28 -> 14
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.ReLU(),
@@ -156,7 +153,6 @@ class Model(models.Savable):
                 # 14 -> 14
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
@@ -186,7 +182,6 @@ class Model(models.Savable):
                 # 14 -> 7
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.ReLU(),
@@ -217,13 +212,6 @@ class Model(models.Savable):
                 # 7 -> 7
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        models.ChannelTransform(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1
-                        ),
-                        models.SoftmaxCombine(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
@@ -253,13 +241,6 @@ class Model(models.Savable):
                 # 7 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        models.ChannelTransform(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1
-                        ),
-                        models.SoftmaxCombine(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(3, padding=1, stride=2),
                         torch.nn.ReLU(),
@@ -290,13 +271,6 @@ class Model(models.Savable):
                 # 4 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        models.ChannelTransform(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1
-                        ),
-                        models.SoftmaxCombine(3, padding=1, stride=1),
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
