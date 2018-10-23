@@ -16,32 +16,32 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 28
-            torch.nn.MaxPool2d(3, padding=1, stride=1),
+            torch.nn.AvgPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 28
-            torch.nn.MaxPool2d(3, padding=1, stride=1),
+            torch.nn.AvgPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 14
-            torch.nn.MaxPool2d(2),
+            torch.nn.AvgPool2d(2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 14
-            torch.nn.MaxPool2d(3, padding=1, stride=1),
+            torch.nn.AvgPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
             
-            torch.nn.MaxPool2d(2),
+            torch.nn.AvgPool2d(2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
