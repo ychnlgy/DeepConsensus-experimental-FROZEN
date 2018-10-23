@@ -171,31 +171,31 @@ class Model(models.Savable):
                     )
                 ),
                 
-                # 14 -> 7
-                models.DistillLayer(
-                    conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(2),
-                        torch.nn.ReLU(),
-                        torch.nn.BatchNorm2d(64)
-                    ),
-                    pool = models.DistillPool(
-                        h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 128,
-                            layers = 1,
-                            
-                        ),
-                        c = models.DenseNet(
-                            headsize = 128,
-                            bodysize = 32,
-                            tailsize = 32,
-                            layers = 1,
-                            
-                        ),
-                    )
-                ),
+#                # 14 -> 7
+#                models.DistillLayer(
+#                    conv = torch.nn.Sequential(
+#                        torch.nn.Conv2d(64, 64, 3, padding=1),
+#                        torch.nn.MaxPool2d(2),
+#                        torch.nn.ReLU(),
+#                        torch.nn.BatchNorm2d(64)
+#                    ),
+#                    pool = models.DistillPool(
+#                        h = models.DenseNet(
+#                            headsize = 64,
+#                            bodysize = 64,
+#                            tailsize = 128,
+#                            layers = 1,
+#                            
+#                        ),
+#                        c = models.DenseNet(
+#                            headsize = 128,
+#                            bodysize = 32,
+#                            tailsize = 32,
+#                            layers = 1,
+#                            
+#                        ),
+#                    )
+#                ),
                 
 #                # 7 -> 7
 #                models.DistillLayer(
@@ -289,7 +289,7 @@ class Model(models.Savable):
                 
             ),
             
-            models.Classifier(128, classes)
+            models.Classifier(96, classes)
             
         )
     
