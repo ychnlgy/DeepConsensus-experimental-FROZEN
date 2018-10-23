@@ -62,7 +62,10 @@ class Cnn(models.Savable):
             
             models.Reshape(64),
 
-            torch.nn.Linear(64, classes)
+            torch.nn.Linear(64, 128),
+            torch.nn.LeakyReLU(),
+            torch.nn.Dropout(0.2),
+            torch.nn.Linear(128, classes)
             #models.Classifier(64, classes)
 
         )
