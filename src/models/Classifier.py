@@ -8,7 +8,7 @@ class Classifier(torch.nn.Module):
         super(Classifier, self).__init__()
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
         self.cos = models.CosineSimilarity()
-        self.dif = models.Norm(p=2)
+        self.dif = models.Norm(p=1)
         self.max = torch.nn.Softmax(dim=1)
     
     def forward(self, X):
