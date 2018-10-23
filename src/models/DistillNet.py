@@ -12,10 +12,6 @@ class DistillNet(torch.nn.Module):
         #return torch.cat(vecs, dim=1) # N, C1 + C2...
     
     def iter_forward(self, X):
-        i = 0
         for layer in self.layers:
             X, vec = layer(X)
-            if not i:
-                print(vec)
-                i += 1
             yield vec
