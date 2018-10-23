@@ -35,8 +35,8 @@ class Cnn(models.Savable):
 #            ),
             
             #torch.nn.MaxPool2d(2),
-            torch.nn.Conv2d(64, 64, 3, padding=1),
             models.SoftmaxCombine(),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -55,8 +55,8 @@ class Cnn(models.Savable):
 #            ),
             
             #torch.nn.MaxPool2d(2),
-            torch.nn.Conv2d(64, 64, 3, padding=1),
             models.SoftmaxCombine(),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -73,16 +73,16 @@ class Cnn(models.Savable):
 #                layers = 2,
 #                dropout = 0.2
 #            ),
-            
+            models.SoftmaxCombine(3, padding=1, stride=2),
             #torch.nn.MaxPool2d(3, padding=1, stride=2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
-            models.SoftmaxCombine(3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
+            
             # 4 -> 4
-            torch.nn.Conv2d(64, 64, 3, padding=1),
             models.SoftmaxCombine(4),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
