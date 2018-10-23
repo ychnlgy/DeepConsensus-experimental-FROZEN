@@ -99,7 +99,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -111,8 +111,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -122,7 +122,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -134,8 +134,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -144,7 +144,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -156,8 +156,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -167,7 +167,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -179,8 +179,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -189,7 +189,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -201,8 +201,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -212,7 +212,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(3, padding=1, stride=2),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -224,8 +224,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -234,7 +234,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -246,8 +246,8 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
@@ -257,7 +257,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
-                        torch.nn.LeakyReLU(),
+                        torch.nn.ReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
@@ -269,17 +269,12 @@ class Model(models.Savable):
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 128,
-                            classes = 32
+                            hiddensize = 64,
+                            classes = classes
                         ),
                     )
                 ),
                 
-            ),
-            
-            models.Classifier(
-                hiddensize = 256,
-                classes = classes
             ),
             
         )
