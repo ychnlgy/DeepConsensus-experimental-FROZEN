@@ -26,13 +26,13 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 14
-#            models.ChannelTransform(
-#                headsize = 64,
-#                bodysize = 128,
-#                tailsize = 64,
-#                layers = 2,
-#                dropout = 0.2
-#            ),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 1,
+                #dropout = 0.2
+            ),
             
             #torch.nn.MaxPool2d(2),
             models.SoftmaxCombine(),
@@ -46,13 +46,13 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
-#            models.ChannelTransform(
-#                headsize = 64,
-#                bodysize = 128,
-#                tailsize = 64,
-#                layers = 2,
-#                dropout = 0.2
-#            ),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 1,
+                #dropout = 0.2
+            ),
             
             #torch.nn.MaxPool2d(2),
             models.SoftmaxCombine(),
@@ -66,13 +66,13 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-#            models.ChannelTransform(
-#                headsize = 64,
-#                bodysize = 128,
-#                tailsize = 64,
-#                layers = 2,
-#                dropout = 0.2
-#            ),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 1,
+                #dropout = 0.2
+            ),
             models.SoftmaxCombine(3, padding=1, stride=2),
             #torch.nn.MaxPool2d(3, padding=1, stride=2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
@@ -81,6 +81,13 @@ class Cnn(models.Savable):
             
             
             # 4 -> 4
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 1,
+                #dropout = 0.2
+            ),
             models.SoftmaxCombine(4),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
