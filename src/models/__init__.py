@@ -7,3 +7,4 @@ from .DistillPool import DistillPool
 from .DistillLayer import DistillLayer
 from .DistillNet import DistillNet
 from .SoftmaxCombine import SoftmaxCombine
+from .ChannelTransform import ChannelTransform

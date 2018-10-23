@@ -26,8 +26,15 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 14
-            torch.nn.Conv2d(64, 64, 3, padding=1),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -37,8 +44,15 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
-            torch.nn.Conv2d(64, 64, 3, padding=1),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -48,8 +62,15 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-            torch.nn.Conv2d(64, 64, 3, padding=1),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(3, padding=1, stride=2),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
@@ -59,22 +80,26 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 1
-            torch.nn.Conv2d(64, 64, 3, padding=1),
+            models.ChannelTransform(
+                headsize = 64,
+                bodysize = 128,
+                tailsize = 64,
+                layers = 2,
+                dropout = 0.2
+            ),
             models.SoftmaxCombine(4),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
             
             models.Reshape(64),
             
-            models.DenseNet(
-                headsize = 64,
-                bodysize = 32,
-                tailsize = classes,
-                layers = 2,
-                dropout = 0.2
-            )
+#            models.DenseNet(
+#                headsize = 64,
+#                bodysize = 32,
+#                tailsize = classes,
+#                layers = 2,
+#                dropout = 0.2
+#            )
 
-            #models.Classifier(64, classes)
+            models.Classifier(64, classes)
 
         )
     
