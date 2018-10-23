@@ -15,6 +15,6 @@ class Classifier(torch.nn.Module):
         cs = self.cos(X, self.grp)
         confidence, indices = cs.max(dim=1)
         confidence = confidence.view(-1, 1)
-        confusion = self.max(self.dif(X, self.grp))
+        confusion = self.max(-self.dif(X, self.grp))
         assert len(confidence) == len(confusion)
         return confidence * confusion
