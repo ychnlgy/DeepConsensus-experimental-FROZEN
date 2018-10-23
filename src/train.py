@@ -16,11 +16,13 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 28
+            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 28 -> 28
+            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -32,42 +34,38 @@ class Cnn(models.Savable):
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 14
+            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 14 -> 7
             
-#            models.SoftmaxCombine(kernel=3, padding=1, stride=1),
-#            models.SoftmaxCombine(kernel=3, padding=1, stride=1),
-#            models.SoftmaxCombine(),
             torch.nn.MaxPool2d(2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 7
+            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-            
-            models.SoftmaxCombine(kernel=3, padding=1, stride=1),
-            models.SoftmaxCombine(kernel=3, padding=1, stride=1),
-            models.SoftmaxCombine(kernel=3, padding=1, stride=2),
-            
+            torch.nn.MaxPool2d(2),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 4 -> 4
+            torch.nn.MaxPool2d(3, padding=1, stride=1),
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            models.SoftmaxCombine(),
-            models.SoftmaxCombine(),
+            torch.nn.MaxPool2d(2),
+            torch.nn.MaxPool2d(2),
             
             models.Reshape(64),
 
