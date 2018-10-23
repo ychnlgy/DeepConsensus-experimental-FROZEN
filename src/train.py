@@ -51,7 +51,7 @@ class Cnn(models.Savable):
                 headsize = 64,
                 bodysize = 128,
                 tailsize = 64,
-                layers = 2,
+                layers = 1,
                 dropout = 0.2
             ),
             
@@ -88,7 +88,7 @@ class Cnn(models.Savable):
                 headsize = 64,
                 bodysize = 128,
                 tailsize = 64,
-                layers = 2,
+                layers = 1,
                 dropout = 0.2
             ),
             
@@ -106,11 +106,11 @@ class Cnn(models.Savable):
                 headsize = 64,
                 bodysize = 128,
                 tailsize = 64,
-                layers = 2,
+                layers = 1,
                 dropout = 0.2
             ),
             
-            models.SoftmaxCombine(3, padding=1, stride=1),
+            models.SoftmaxCombine(2, padding=0, stride=1),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
@@ -125,29 +125,11 @@ class Cnn(models.Savable):
                 headsize = 64,
                 bodysize = 128,
                 tailsize = 64,
-                layers = 2,
+                layers = 1,
                 dropout = 0.2
             ),
             
             models.SoftmaxCombine(2),
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            models.ChannelTransform(
-                headsize = 64,
-                bodysize = 128,
-                tailsize = 64,
-                layers = 2,
-                dropout = 0.2
-            ),
-            
-            models.SoftmaxCombine(3, padding=1, stride=1),
-            
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -161,7 +143,7 @@ class Cnn(models.Savable):
                 headsize = 64,
                 bodysize = 128,
                 tailsize = 64,
-                layers = 2,
+                layers = 1,
                 dropout = 0.2
             ),
             
