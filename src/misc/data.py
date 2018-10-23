@@ -256,17 +256,17 @@ def unittest():
 
     from matplotlib import pyplot
     
-    td, tl, sd2, sl, n, c, i = get_sqrquadrants()
+#    td, tl, sd2, sl, n, c, i = get_sqrquadrants()
+#    
+#    for im, lb in zip(td[:10], tl[:10]):
+#        im = im.squeeze().numpy()
+#        print(lb)
+#        pyplot.imshow(im, cmap="gray")
+#        pyplot.show()
+#        pyplot.clf()
     
-    for im, lb in zip(td[:10], tl[:10]):
-        im = im.squeeze().numpy()
-        print(lb)
-        pyplot.imshow(im, cmap="gray")
-        pyplot.show()
-        pyplot.clf()
-    
-#    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-#    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=1.5)
+    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0, sigma=0)
     
 #    print("Showing train data")
 #    
@@ -276,18 +276,18 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-#    print("Showing test data")
-#    
-#    N = 100
-#    
-#    indices = numpy.arange(len(sd))
-#    numpy.random.shuffle(indices)
-#    indices = indices[:N]
-#    
-#    for ims in zip(sd[indices], sd2[indices], sl[indices]):
-#        print(ims[2])
-#        for im in ims[:2]:
-#            im = im.permute(1, 2, 0).squeeze().numpy()
-#            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-#            pyplot.show()
-#            pyplot.clf()
+    print("Showing test data")
+    
+    N = 100
+    
+    indices = numpy.arange(len(sd))
+    numpy.random.shuffle(indices)
+    indices = indices[:N]
+    
+    for ims in zip(sd[indices], sd2[indices], sl[indices]):
+        print(ims[2])
+        for im in ims[:2]:
+            im = im.permute(1, 2, 0).squeeze().numpy()
+            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+            pyplot.show()
+            pyplot.clf()

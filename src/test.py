@@ -1,6 +1,6 @@
 import models
 
-models.CosineSimilarity.unittest()
+#models.CosineSimilarity.unittest()
 
 import misc
 
