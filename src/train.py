@@ -161,7 +161,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -184,7 +184,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -206,7 +206,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -229,7 +229,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -251,7 +251,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -274,7 +274,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -296,7 +296,7 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
@@ -319,11 +319,19 @@ class Model(models.Savable):
                         ),
                         c = models.Classifier(
                             hiddensize = 128,
-                            classes = classes
+                            classes = 32
                         ),
                     )
                 ),
                 
+            ),
+            
+            models.DenseNet(
+                headsize = 256,
+                bodysize = 128,
+                tailsize = classes,
+                layers = 2,
+                dropout = 0.2
             ),
             
         )
