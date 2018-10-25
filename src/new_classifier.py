@@ -121,7 +121,7 @@ class Model(torch.nn.Module):
         
         # === CLASS-DEPENDENT VARIANCE ===
         
-        self.vartrans = torch.nn.Linear(128, 1, bias=False)
+        self.vartrans = torch.nn.Linear(128, 1)
         self.clsvar = models.Classifier(
             hiddensize = 128,
             classes = classes
@@ -129,7 +129,7 @@ class Model(torch.nn.Module):
         
         # === CLASS-INDEPENDENT VARIANCE ===
         
-        self.var = torch.nn.Linear(128, 128, bias=False)
+        self.var = torch.nn.Linear(128, 128)
     
     def calc_loss(self, X, y):
         
