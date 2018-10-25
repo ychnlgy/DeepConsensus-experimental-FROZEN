@@ -112,8 +112,6 @@ class Model(torch.nn.Module):
             torch.nn.Tanh()
         )
         
-        self.reconstruction_loss = torch.nn.MSELoss()
-        
         # === MEANS ===
         
         self.means = models.Classifier(
@@ -137,22 +135,19 @@ class Model(torch.nn.Module):
         
         latent_vec = self.downconv(X)
         reconstruction = self.upconv(latent_vec)
-        print(X.shape, reconstruction.shape)
-        loss1 = self.reconstruction_loss(reconstruction, X)
-        print(loss1.size())
-        input()
+        loss1 = ((reconstruction - X)**2).mean()
         
         means = self.means.get_class_vec(y)
         clsvr = self.clsvar.get_class_vec(y)
         multp = self.vartrans(latent_vec)
         ivars = self.var(latent_vec)
-        loss2 = (latent_vec - (means + clsvr*multp + ivars)).norm(dim=1)
+        loss2 = (latent_vec - (means + clsvr*multp + ivars)).norm(dim=1).mean()
         
         loss3 = sum(
             [
-                self.l1 * clsvr.norm(dim=1),
-                self.l2 * multp,
-                self.l3 * ivars.norm(dim=1),
+                self.l1 * clsvr.norm(dim=1).mean(),
+                self.l2 * multp.mean(),
+                self.l3 * ivars.norm(dim=1).mean(),
                 self.l4 * self.var.weight.norm()
             ]
         )
