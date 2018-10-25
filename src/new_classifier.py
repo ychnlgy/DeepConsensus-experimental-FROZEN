@@ -152,13 +152,7 @@ class Model(torch.nn.Module):
             ]
         )
         
-        print(loss1.size(), loss2.size(), loss3.size())
-        input()
-        
-        total_loss = loss1 + loss2 + loss3
-        
-        assert total_loss.size() == y.size()
-        return total_loss.sum()
+        return loss1 + loss2 + loss3
     
     def forward(self, X):
         latent_vec = self.downconv(X)
