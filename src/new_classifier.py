@@ -125,7 +125,7 @@ class Model(torch.nn.Module):
         
         self.vartrans = torch.nn.Linear(128, 1, bias=False)
         self.clsvar = models.Classifier(
-            hiddensize = 128
+            hiddensize = 128,
             classes = classes
         )
         
