@@ -73,7 +73,7 @@ class Model(torch.nn.Module):
         
         self.upconv = torch.nn.Sequential(
             
-            models.Reshape(128, 1, 1)
+            models.Reshape(128, 1, 1),
             
             # 1 -> 7
             torch.nn.Upsample(scale_factor=7),
