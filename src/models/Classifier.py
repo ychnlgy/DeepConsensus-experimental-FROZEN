@@ -10,6 +10,9 @@ class Classifier(torch.nn.Module):
         self.cos = models.CosineSimilarity()
         self.max = torch.nn.Softmax(dim=1)
     
+    def get_class_vec(self, c):
+        return self.grp[c]
+    
     def forward(self, X):
         cs = self.cos(X, self.grp)
         confidence, indices = cs.max(dim=1)
