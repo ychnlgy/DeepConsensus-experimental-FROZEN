@@ -143,16 +143,16 @@ class Model(torch.nn.Module):
         ivars = self.var(latent_vec)
         loss2 = (latent_vec - (means + clsvr*multp + ivars)).norm(dim=1).mean()
         
-#        loss3 = sum(
-#            [
-#                self.l1 * clsvr.norm(dim=1).mean(),
-#                self.l2 * multp.mean(),
-#                self.l3 * ivars.norm(dim=1).mean(),
-#                self.l4 * self.var.weight.norm()
-#            ]
-#        )
+        loss3 = sum(
+            [
+                self.l1 * clsvr.norm(dim=1).mean(),
+                self.l2 * multp.mean(),
+                self.l3 * ivars.norm(dim=1).mean(),
+                self.l4 * self.var.weight.norm()
+            ]
+        )
         
-        return self.l1*loss1 + loss2# + loss3
+        return self.l1*loss1 + loss2 + loss3
     
     def forward(self, X):
         latent_vec = self.downconv(X)
