@@ -5,7 +5,7 @@ import models
 class Model(torch.nn.Module):
 
     def __init__(self, channels, classes, l1, l2, l3, l4):
-        super(Classifier, self).__init__()
+        super(Model, self).__init__()
         
         self.l1 = l1
         self.l2 = l2
