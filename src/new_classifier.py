@@ -134,8 +134,8 @@ class Model(torch.nn.Module):
     def calc_loss(self, X, y):
         
         latent_vec = self.downconv(X)
-        reconstruction = self.upconv(latent_vec)
-        loss1 = ((reconstruction - X)**2).mean()
+        #reconstruction = self.upconv(latent_vec)
+        #loss1 = ((reconstruction - X)**2).mean()
         
         means = self.means.get_class_vec(y)
         clsvr = self.clsvar.get_class_vec(y)
