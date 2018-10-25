@@ -139,6 +139,8 @@ class Model(torch.nn.Module):
         reconstruction = self.upconv(latent_vec)
         print(X.shape, reconstruction.shape)
         loss1 = self.reconstruction_loss(reconstruction, X)
+        print(loss1.size())
+        input()
         
         means = self.means.get_class_vec(y)
         clsvr = self.clsvar.get_class_vec(y)
