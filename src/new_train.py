@@ -13,7 +13,6 @@ def main(dataset, epochs, l1, l2, l3, l4, trainbatch=100, testbatch=300, cycle=1
     l3 = float(l3)
     l4 = float(l4)
 
-    classic = int(classic)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
