@@ -152,7 +152,7 @@ class Model(torch.nn.Module):
 #            ]
 #        )
         
-        return loss1 + loss2# + loss3
+        return self.l1*loss1 + loss2# + loss3
     
     def forward(self, X):
         latent_vec = self.downconv(X)
