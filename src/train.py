@@ -77,56 +77,56 @@ class Model(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # 28 -> 14
-            
-            torch.nn.Conv2d(64, 128, 3, padding=1),
-            torch.nn.MaxPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
-            
-            torch.nn.Conv2d(128, 128, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
-            
-            # 14 -> 7
-            
-            torch.nn.Conv2d(128, 256, 3, padding=1),
-            torch.nn.MaxPool2d(2),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(256),
-            
-            torch.nn.Conv2d(256, 256, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(256),
-            
-            # 7 -> 14
-            
-            torch.nn.Upsample(scale_factor=2),
-            torch.nn.Conv2d(256, 128, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
-            
-            torch.nn.Conv2d(128, 128, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(128),
-            
-            # 14 -> 28
-            
-            torch.nn.Upsample(scale_factor=2),
-            
-            torch.nn.Conv2d(128, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
-            
-            # === Convolutions ===
-            
-            torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+#            torch.nn.Conv2d(64, 64, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(64),
+#            
+#            # 28 -> 14
+#            
+#            torch.nn.Conv2d(64, 128, 3, padding=1),
+#            torch.nn.MaxPool2d(2),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(128),
+#            
+#            torch.nn.Conv2d(128, 128, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(128),
+#            
+#            # 14 -> 7
+#            
+#            torch.nn.Conv2d(128, 256, 3, padding=1),
+#            torch.nn.MaxPool2d(2),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(256),
+#            
+#            torch.nn.Conv2d(256, 256, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(256),
+#            
+#            # 7 -> 14
+#            
+#            torch.nn.Upsample(scale_factor=2),
+#            torch.nn.Conv2d(256, 128, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(128),
+#            
+#            torch.nn.Conv2d(128, 128, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(128),
+#            
+#            # 14 -> 28
+#            
+#            torch.nn.Upsample(scale_factor=2),
+#            
+#            torch.nn.Conv2d(128, 64, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(64),
+#            
+#            # === Convolutions ===
+#            
+#            torch.nn.Conv2d(64, 64, 3, padding=1),
+#            torch.nn.LeakyReLU(),
+#            torch.nn.BatchNorm2d(64),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
@@ -149,12 +149,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -174,12 +178,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -198,12 +206,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -223,12 +235,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -247,12 +263,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -272,12 +292,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -296,12 +320,16 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
                             tailsize = 32,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
@@ -320,22 +348,20 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.DenseNet(
+                        g = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 1,
                             layers = 1,
                         ),
+                        c = models.Classifier(
+                            hiddensize = 64,
+                            classes = classes
+                        )
                     )
                 ),
                 
-                classifier = models.Classifier(
-                    hiddensize = 256,
-                    classes = classes
-                )
-                
-            ),
-            
+            )
         )
     
     def forward(self, X):
