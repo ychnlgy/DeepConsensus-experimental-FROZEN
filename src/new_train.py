@@ -117,14 +117,11 @@ def iter_dataloader(dataloader, device, silent):
         total = sum(map(len, dataloader))
         bar = tqdm.tqdm(ncols=80, disable=silent, total=total)
         i = 0
-        print(total)
-        input()
         for y, dloader in enumerate(dataloader):
             for X in dloader:
-                print(X)
-                input()
                 bar.update()
-                yield i, X.to(device), y, bar
+                assert len(X) == 1
+                yield i, X[0].to(device), y, bar
                 i += 1
 
 @misc.main(__name__)
