@@ -52,9 +52,9 @@ def get_mnist(download=0):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
-def get_mnist64(**kwargs):
+def get_mnist64(download=0):
     IMAGESIZE = (64, 64)
-    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_mnist(**kwargs)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_mnist(download)
     trainData = convert_size(trainData, IMAGESIZE)
     testData = convert_size(testData, IMAGESIZE)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
@@ -285,33 +285,33 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
-    #td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=-8, maxtrans=8, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=0)
+    #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
+    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(download=0, minmag=1, maxmag=1, mintrans=16, maxtrans=32, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=0)
     
-    print("Showing train data")
-    
-    for i in range(10000):
-        label = tl[i].item()
-        #if label != 9:
-        #    continue
-        im = td[i]
-        im = im.squeeze().numpy()
-        pyplot.imshow(im, cmap="gray")
-        pyplot.show()
-        pyplot.clf()
-    
-#    print("Showing test data")
+#    print("Showing train data")
 #    
-#    N = 100
-#    
-#    indices = numpy.arange(len(sd))
-#    numpy.random.shuffle(indices)
-#    indices = indices[:N]
-#    
-#    for im, cls in zip(sd[indices], sl[indices]):
-#        label = cls.item()
-#        print(label)
-#        im = im.permute(1, 2, 0).squeeze().numpy()
-#        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#    for i in range(10000):
+#        label = tl[i].item()
+#        #if label != 9:
+#        #    continue
+#        im = td[i]
+#        im = im.squeeze().numpy()
+#        pyplot.imshow(im, cmap="gray")
 #        pyplot.show()
 #        pyplot.clf()
+    
+    print("Showing test data")
+    
+    N = 100
+    
+    indices = numpy.arange(len(sd))
+    numpy.random.shuffle(indices)
+    indices = indices[:N]
+    
+    for im, cls in zip(sd[indices], sl[indices]):
+        label = cls.item()
+        print(label)
+        im = im.permute(1, 2, 0).squeeze().numpy()
+        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.show()
+        pyplot.clf()
