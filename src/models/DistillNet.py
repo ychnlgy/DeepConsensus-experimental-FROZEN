@@ -8,8 +8,7 @@ class DistillNet(torch.nn.Module):
     
     def forward(self, X):
         vecs = list(self.iter_forward(X))
-        latent_vecs = torch.cat(vecs, dim=1) # N, C1 + C2...
-        return self.classifier(latent_vecs), latent_vecs
+        return torch.cat(vecs, dim=1) # N, C1 + C2...
     
     def iter_forward(self, X):
         for layer in self.layers:
