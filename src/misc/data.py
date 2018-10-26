@@ -64,8 +64,11 @@ def get_mnist64_corrupt(download=0, **kwargs):
 
 def convert_size(data, size):
     N, C, W, H = data.size()
+    X, Y = size
+    CX = (X - W)//2
+    CY = (Y - H)//2
     out = torch.zeros(N, C, *size)
-    out[:,:,:W,:H] = data
+    out[:,:,CX:CX+W,CY:CY+H] = data
     return out
 
 def get_mnist_corrupt(download=0, **kwargs):
@@ -286,7 +289,7 @@ def unittest():
 #        pyplot.clf()
     
     #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
-    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(download=0, minmag=1, maxmag=1, mintrans=16, maxtrans=32, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=0)
+    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0, sigma=0)
     
 #    print("Showing train data")
 #    
@@ -299,8 +302,8 @@ def unittest():
 #        pyplot.imshow(im, cmap="gray")
 #        pyplot.show()
 #        pyplot.clf()
-    
-    print("Showing test data")
+#    
+#    print("Showing test data")
     
     N = 100
     
