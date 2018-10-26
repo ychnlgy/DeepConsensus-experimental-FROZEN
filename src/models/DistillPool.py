@@ -13,7 +13,7 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, g, h, c):
+    def __init__(self, h, c):
         super(DistillPool, self).__init__()
         self.h = h
         self.c = c
