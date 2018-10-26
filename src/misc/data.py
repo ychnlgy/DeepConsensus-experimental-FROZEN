@@ -265,28 +265,34 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    #td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0, sigma=0)
+    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
+    #td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0, sigma=0)
     
 #    print("Showing train data")
 #    
-#    for im in td[:100]:
-#        im = im.squeeze().numpy()
-#        pyplot.imshow(im, cmap="gray")
-#        pyplot.show()
-#        pyplot.clf()
-    
-    print("Showing test data")
-    
-    N = 100
-    
-    indices = numpy.arange(len(sd))
-    numpy.random.shuffle(indices)
-    indices = indices[:N]
-    
-    for im, cls in zip(sd[indices], sl[indices]):
-        print(cls.item())
-        im = im.permute(1, 2, 0).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+    for i in range(10000):
+        label = tl[i].item()
+        if label != 9:
+            continue
+        im = td[i]
+        im = im.squeeze().numpy()
+        pyplot.imshow(im, cmap="gray")
         pyplot.show()
         pyplot.clf()
+    
+#    print("Showing test data")
+#    
+#    N = 100
+#    
+#    indices = numpy.arange(len(sd))
+#    numpy.random.shuffle(indices)
+#    indices = indices[:N]
+#    
+#    for im, cls in zip(sd[indices], sl[indices]):
+#        label = cls.item()
+#        if label != 7:
+#            continue
+#        im = im.permute(1, 2, 0).squeeze().numpy()
+#        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#        pyplot.show()
+#        pyplot.clf()

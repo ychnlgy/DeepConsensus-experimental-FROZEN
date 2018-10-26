@@ -1,4 +1,5 @@
 from .Norm import Norm
+from .SoftminNorm import SoftminNorm
 from .AbsTanh import AbsTanh
 from .Savable import Savable
 from .Reshape import Reshape

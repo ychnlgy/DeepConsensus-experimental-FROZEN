@@ -4,15 +4,11 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
-import new_classifier
+import separator
 
-def main(dataset, epochs, l1, l2, l3, l4, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
-    l1 = float(l1)
-    l2 = float(l2)
-    l3 = float(l3)
-    l4 = float(l4)
-
+    lamb = float(lamb)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -33,7 +29,7 @@ def main(dataset, epochs, l1, l2, l3, l4, trainbatch=100, testbatch=300, cycle=1
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
-    model = new_classifier.Model(CHANNELS, NUM_CLASSES, l1, l2, l3, l4)
+    model = separator.Model(CHANNELS, NUM_CLASSES, lamb)
     
     if showparams:
     
@@ -45,8 +41,6 @@ def main(dataset, epochs, l1, l2, l3, l4, trainbatch=100, testbatch=300, cycle=1
     model = model.to(device)
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
-    lossf = torch.nn.CrossEntropyLoss().to(device)
-    lossg = torch.nn.BCEWithLogitsLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
