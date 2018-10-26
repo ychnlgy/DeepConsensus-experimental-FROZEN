@@ -59,7 +59,7 @@ class Cnn(models.Savable):
             models.Reshape(64),
 
             models.Classifier(64, 32),
-            torch.nn.Linear(64, classes)
+            torch.nn.Linear(32, classes)
 
         )
     
