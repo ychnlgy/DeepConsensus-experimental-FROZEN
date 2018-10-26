@@ -72,11 +72,13 @@ class Model(torch.nn.Module):
         self.group_loss = torch.nn.CrossEntropyLoss()
     
     def calc_loss(self, X, y):
-        assert type(y) is int
         latent_vecs, group = self._forward(X)
         norms = self.instance_separator(latent_vecs, latent_vecs)
-        ytens = torch.LongTensor([y] * len(X)).to(X.device)
-        tloss = self.group_loss(group, ytens) - self.lamb*norms.mean()
+        
+        if type(y) is int:
+            y = torch.LongTensor([y] * len(X)).to(X.device)
+        
+        tloss = self.group_loss(group, y) - self.lamb*norms.mean()
         return group, tloss
     
     def forward(self, X):
