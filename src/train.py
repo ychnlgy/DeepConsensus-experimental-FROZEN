@@ -10,51 +10,80 @@ class Cnn(models.Savable):
         super(Cnn, self).__init__()
         self.net = torch.nn.Sequential(
         
-            # 28 -> 28
+            # 64 -> 64
             torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 28 -> 28
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 28 -> 28
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 28 -> 14
+            # 64 -> 32
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 14 -> 14
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 14 -> 7
+            # 32 -> 16
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 7 -> 7
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 7 -> 4
+            # 16 -> 8
             torch.nn.Conv2d(64, 64, 3, padding=1),
-            torch.nn.MaxPool2d(3, padding=1, stride=2),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 4 -> 1
-            torch.nn.MaxPool2d(4),
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 8 -> 4
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 2
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 2 -> 1
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
             
             models.Reshape(64),
 
@@ -333,6 +362,8 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
         "mnist-corrupt": misc.data.get_mnist_corrupt,
+        "mnist64": misc.data.get_mnist64,
+        "mnist64-corrupt": misc.data.get_mnist64_corrupt,
         "cifar10": misc.data.get_cifar10,
         "cifar10-corrupt": misc.data.get_cifar10_corrupt,
         "emnist": misc.data.get_emnist,

@@ -38,16 +38,35 @@ def get_mnist(download=0):
     NUM_CLASSES = 10
     CHANNELS = 1
     IMAGESIZE = (28, 28)
+    OUTSIZE = (64, 64)
     
     train = torchvision.datasets.MNIST(root=ROOT, train=True, download=download)
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    trainData = convert_size(trainData, OUTSIZE)
     trainLabels = torch.LongTensor(train.train_labels)
     
     test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    testData = convert_size(testData, OUTSIZE)
     testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_mnist64(**kwargs):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_mnist(**kwargs)
+    trainData = convert_size(trainData, IMAGESIZE)
+    testData = convert_size(testData, IMAGESIZE)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_mnist64_corrupt(download=0, **kwargs):
+    return make_corrupt(get_mnist64(download), **kwargs)
+
+def convert_size(data, size):
+    N, C, W, H = data.size()
+    out = torch.zeros(N, C, *size)
+    out[:,:,:W,:H] = data
+    return out
 
 def get_mnist_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist(download), **kwargs)
@@ -266,15 +285,15 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd2, sl, n, c, i = get_mnist(download=1)
-    #td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=0, maxtrans=0, minrot=0, maxrot=0, alpha=0.5, beta=1.0, sigma=0)
+    td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
+    #td, tl, sd, sl, n, c, i = get_mnist_corrupt(download=0, minmag=1, maxmag=1, mintrans=-8, maxtrans=8, minrot=0, maxrot=0, alpha=1.0, beta=1.0, sigma=0)
     
-#    print("Showing train data")
-#    
+    print("Showing train data")
+    
     for i in range(10000):
         label = tl[i].item()
-        if label != 9:
-            continue
+        #if label != 9:
+        #    continue
         im = td[i]
         im = im.squeeze().numpy()
         pyplot.imshow(im, cmap="gray")
@@ -291,8 +310,7 @@ def unittest():
 #    
 #    for im, cls in zip(sd[indices], sl[indices]):
 #        label = cls.item()
-#        if label != 7:
-#            continue
+#        print(label)
 #        im = im.permute(1, 2, 0).squeeze().numpy()
 #        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
 #        pyplot.show()
