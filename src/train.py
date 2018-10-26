@@ -149,12 +149,6 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
-                        ),
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
@@ -178,12 +172,6 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
-                        ),
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
@@ -205,12 +193,6 @@ class Model(models.Savable):
                             tailsize = 64,
                             layers = 1,
                             
-                        ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
                         ),
                         c = models.Classifier(
                             hiddensize = 64,
@@ -235,12 +217,6 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
-                        ),
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
@@ -262,12 +238,6 @@ class Model(models.Savable):
                             tailsize = 64,
                             layers = 1,
                             
-                        ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
                         ),
                         c = models.Classifier(
                             hiddensize = 64,
@@ -292,12 +262,6 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
-                        ),
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
@@ -320,12 +284,6 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
-                        ),
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
@@ -347,12 +305,6 @@ class Model(models.Savable):
                             tailsize = 64,
                             layers = 1,
                             
-                        ),
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 64,
-                            tailsize = 1,
-                            layers = 1,
                         ),
                         c = models.Classifier(
                             hiddensize = 64,
