@@ -20,7 +20,7 @@ def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_l
     trainidx = torch.from_numpy(indices[split:n])
     valididx = torch.from_numpy(indices[:split])
     
-    dataloader = create_loader(train_dat[trainidx], train_lab[trainidx], trainbatch, classes, byclass)
+    dataloader = create_loader(train_dat[trainidx], train_lab[trainidx], trainbatch)
     validloader = create_loader(train_dat[valididx], train_lab[valididx], testbatch)
     testloader = create_loader(test_dat, test_lab, testbatch)
     
