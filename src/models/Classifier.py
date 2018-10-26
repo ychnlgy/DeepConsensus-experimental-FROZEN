@@ -9,7 +9,7 @@ class Classifier(torch.nn.Module):
         self.init_groups(classes, hiddensize)
         self.cos = models.CosineSimilarity()
         self.max = torch.nn.Softmax(dim=1)
-        self.min = torch.nn.Softmin(dim=1)
+        self.min = torch.nn.Softmin(dim=-1)
     
     def init_groups(self, classes, hiddensize):
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
@@ -27,6 +27,4 @@ class Classifier(torch.nn.Module):
         confidence = confidence.view(-1, 1)
         confusion = self.max(cs)
         assert len(confidence) == len(confusion)
-        print(confidence.size(), confusion.size(), norm.size())
-        input()
         return confidence * confusion * norm
