@@ -27,4 +27,6 @@ class Classifier(torch.nn.Module):
         confidence = confidence.view(-1, 1)
         confusion = self.max(cs)
         assert len(confidence) == len(confusion)
+        print(norm.size())
+        input()
         return confidence * confusion * norm
