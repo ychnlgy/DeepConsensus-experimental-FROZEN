@@ -44,7 +44,7 @@ def reduce_colorgrad(im, beta):
 
 def randomresize(im, minmag, maxmag):
     scale = rand_select(minmag, maxmag)
-    return scipy.misc.imresize(im, scale)
+    return scipy.misc.imresize(im, scale, interp="nearest")
 
 def randommove(ox, oy, mintrans, maxtrans):
     px = ox + random.randint(mintrans, maxtrans)
