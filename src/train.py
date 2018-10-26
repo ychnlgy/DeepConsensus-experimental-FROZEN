@@ -53,15 +53,13 @@ class Cnn(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            # 4 -> 2
-            torch.nn.AvgPool2d(4),
+            # 4 -> 1
+            torch.nn.MaxPool2d(4),
             
             models.Reshape(64),
 
-            torch.nn.Linear(64, 128),
-            torch.nn.LeakyReLU(),
-            torch.nn.Dropout(0.2),
-            torch.nn.Linear(128, classes)
+            models.Classifier(64, 32),
+            torch.nn.Linear(32, classes)
 
         )
     
