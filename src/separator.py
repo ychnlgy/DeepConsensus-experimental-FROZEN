@@ -20,34 +20,30 @@ class Model(torch.nn.Module):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(32, 32, 3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
             # 28 -> 14
-            torch.nn.MaxPool2d(2),
             
             torch.nn.Conv2d(32, 32, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
-            torch.nn.Conv2d(32, 32, 3, padding=1),
+            torch.nn.Conv2d(32, 32, 3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
             # 14 -> 7
-            torch.nn.MaxPool2d(2),
-            
             torch.nn.Conv2d(32, 32, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32),
             
-            torch.nn.Conv2d(32, 64, 3, padding=1),
+            torch.nn.Conv2d(32, 64, 3, padding=1, stride=2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
             # 7 -> 4
-            torch.nn.MaxPool2d(3, padding=1, stride=2),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
@@ -74,10 +70,6 @@ class Model(torch.nn.Module):
     def calc_loss(self, X, y):
         latent_vecs, group = self._forward(X)
         norms = self.instance_separator(latent_vecs, latent_vecs)
-        
-        if type(y) is int:
-            y = torch.LongTensor([y] * len(X)).to(X.device)
-        
         tloss = self.group_loss(group, y) - self.lamb*norms.mean()
         return group, tloss
     
