@@ -39,7 +39,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -64,7 +64,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -88,7 +88,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -113,7 +113,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -137,7 +137,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -162,7 +162,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -186,7 +186,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -210,7 +210,7 @@ class Model(torch.nn.Module):
                         c = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
-                            tailsize = 32,
+                            tailsize = 16,
                             layers = 1,
                         ),
                     )
@@ -221,7 +221,7 @@ class Model(torch.nn.Module):
         
         self.instance_separator = models.Norm(p=2)
         #self.transform = torch.nn.Linear(256, 32)
-        self.grouper = models.Classifier(256, classes)
+        self.grouper = models.Classifier(128, classes)
         
         self.group_loss = torch.nn.CrossEntropyLoss()
     
