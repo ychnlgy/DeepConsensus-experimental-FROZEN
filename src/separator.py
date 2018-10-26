@@ -67,7 +67,7 @@ class Model(torch.nn.Module):
         
         self.instance_separator = models.Norm(p=2)
         self.transform = torch.nn.Linear(64, 32)
-        self.grouper = models.FixedClassifier(0.95, 32, classes)
+        self.grouper = models.Classifier(32, classes)
         
         self.group_loss = torch.nn.CrossEntropyLoss()
     
