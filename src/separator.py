@@ -236,6 +236,6 @@ class Model(torch.nn.Module):
     
     def _forward(self, X):
         latent_vecs = self.cnn(X)
-        trans = latent_vecs#self.transform(latent_vecs)
+        trans = self.transform(latent_vecs)
         group = self.grouper(trans)
         return latent_vecs, group
