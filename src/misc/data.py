@@ -11,7 +11,7 @@ import torchvision.datasets
 DIR = os.path.dirname(__file__)
 ROOT = os.path.join(DIR, "..", "..", "data")
 
-def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch):
+def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch, classes, byclass=0):
     assert 0 <= datalimit <= 1
     n = int(len(train_dat) * datalimit)
     indices = numpy.arange(n)
@@ -20,15 +20,25 @@ def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_l
     trainidx = torch.from_numpy(indices[split:n])
     valididx = torch.from_numpy(indices[:split])
     
-    dataset = torch.utils.data.TensorDataset(train_dat[trainidx], train_lab[trainidx])
-    dataloader = torch.utils.data.DataLoader(dataset, batch_size=trainbatch, shuffle=True)
+    dataloader = create_loader(train_dat[trainidx], train_lab[trainidx], trainbatch, classes, byclass)
+    validloader = create_loader(train_dat[valididx], train_lab[valididx], testbatch)
+    testloader = create_loader(test_dat, test_lab, testbatch)
     
-    validset = torch.utils.data.TensorDataset(train_dat[valididx], train_lab[valididx])
-    validloader = torch.utils.data.DataLoader(validset, batch_size=testbatch, shuffle=True)
-    
-    testset = torch.utils.data.TensorDataset(test_dat, test_lab)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=testbatch, shuffle=True)
     return dataloader, validloader, testloader
+
+def create_loader(dat, lab, batch, classes=None, byclass=False):
+    f = lambda ds: torch.utils.data.DataLoader(ds, batch_size=batch, shuffle=True)
+    if not byclass:
+        dataset = torch.utils.data.TensorDataset(dat, lab)
+        dataloader = f(dataset)
+    else:
+        lab, indices = torch.sort(lab)
+        assert classes is not None and classes > 0
+        classes = [(lab == i) for i in range(classes)]
+        tensors = [dat[i] for i in classes]
+        dataset = [torch.utils.data.TensorDataset(t) for t in tensors]
+        dataloader = [f(ds) for ds in dataset]
+    return dataloader
 
 def get_mnist(download=0):
     

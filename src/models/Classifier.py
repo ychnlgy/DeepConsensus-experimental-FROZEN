@@ -6,9 +6,12 @@ class Classifier(torch.nn.Module):
 
     def __init__(self, hiddensize, classes):
         super(Classifier, self).__init__()
-        self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
+        self.init_groups(classes, hiddensize)
         self.cos = models.CosineSimilarity()
         self.max = torch.nn.Softmax(dim=1)
+    
+    def init_groups(self, classes, hiddensize):
+        self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
     
     def get_class_vec(self, c):
         return self.grp[c]

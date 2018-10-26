@@ -6,8 +6,9 @@ import misc, models
 
 import separator
 
-def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, epochs, lamb, byclass, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
+    byclass = int(byclass)
     lamb = float(lamb)
     epochs = int(epochs)
     cycle = int(cycle)
@@ -39,7 +40,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             raise SystemExit
     
     model = model.to(device)
-    dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
+    dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch, NUM_CLASSES, byclass)
     
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
@@ -56,7 +57,6 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             yh, loss = model.calc_loss(X, y)
             
             c += loss.item()
-            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             n += 1.0
             
             optimizer.zero_grad()
@@ -64,7 +64,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             optimizer.step()
             
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f" % (epoch, s/n))
+                bar.set_description("[Epoch %d] %.4f" % (epoch, c/n))
         
         model.eval()
         
@@ -80,7 +80,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
                 m += 1
             
             w /= m
-            print_(" -- <VERR> %.3f" % w, silent)
+            print_(" -- <VERR> %.4f" % w, silent)
             
             scheduler.step(v/m)
             
@@ -94,7 +94,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             
             testscore /= n
             
-            print_(" -- <TEST> %.3f" % testscore, silent)
+            print_(" -- <TEST> %.4f" % testscore, silent)
     
     return testscore
 
@@ -109,9 +109,19 @@ def iterepochs(end):
         i += 1
 
 def iter_dataloader(dataloader, device, silent):
-    bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
-    for i, (X, y) in enumerate(bar):
-        yield i, X.to(device), y.to(device), bar
+    if type(dataloader) is not list:
+        bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
+        for i, (X, y) in enumerate(bar):
+            yield i, X.to(device), y.to(device), bar
+    else:
+        total = sum(map(len, dataloader))
+        bar = tqdm.tqdm(ncols=80, disable=silent, total=total)
+        i = 0
+        for y, dloader in enumerate(dataloader):
+            for X in dloader:
+                bar.update()
+                yield i, X.to(device), y, bar
+                i += 1
 
 @misc.main(__name__)
 def _main(repeat=1, **kwargs):
