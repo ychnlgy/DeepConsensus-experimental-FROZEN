@@ -6,9 +6,8 @@ import misc, models
 
 import separator
 
-def main(dataset, epochs, lamb, byclass, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
-    byclass = int(byclass)
     lamb = float(lamb)
     epochs = int(epochs)
     cycle = int(cycle)
@@ -40,7 +39,7 @@ def main(dataset, epochs, lamb, byclass, trainbatch=100, testbatch=300, cycle=10
             raise SystemExit
     
     model = model.to(device)
-    dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch, NUM_CLASSES, byclass)
+    dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
@@ -109,20 +108,9 @@ def iterepochs(end):
         i += 1
 
 def iter_dataloader(dataloader, device, silent):
-    if type(dataloader) is not list:
-        bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
-        for i, (X, y) in enumerate(bar):
-            yield i, X.to(device), y.to(device), bar
-    else:
-        total = sum(map(len, dataloader))
-        bar = tqdm.tqdm(ncols=80, disable=silent, total=total)
-        i = 0
-        for y, dloader in enumerate(dataloader):
-            for X in dloader:
-                bar.update()
-                assert len(X) == 1
-                yield i, X[0].to(device), y, bar
-                i += 1
+    bar = tqdm.tqdm(dataloader, ncols=80, disable=silent)
+    for i, (X, y) in enumerate(bar):
+        yield i, X.to(device), y.to(device), bar
 
 @misc.main(__name__)
 def _main(repeat=1, **kwargs):

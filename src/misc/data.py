@@ -11,7 +11,7 @@ import torchvision.datasets
 DIR = os.path.dirname(__file__)
 ROOT = os.path.join(DIR, "..", "..", "data")
 
-def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch, classes, byclass=0):
+def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch):
     assert 0 <= datalimit <= 1
     n = int(len(train_dat) * datalimit)
     indices = numpy.arange(n)
@@ -26,18 +26,9 @@ def create_trainvalid_split(p, datalimit, train_dat, train_lab, test_dat, test_l
     
     return dataloader, validloader, testloader
 
-def create_loader(dat, lab, batch, classes=None, byclass=False):
-    f = lambda ds: torch.utils.data.DataLoader(ds, batch_size=batch, shuffle=True)
-    if not byclass:
-        dataset = torch.utils.data.TensorDataset(dat, lab)
-        dataloader = f(dataset)
-    else:
-        lab, indices = torch.sort(lab)
-        assert classes is not None and classes > 0
-        classes = [(lab == i) for i in range(classes)]
-        tensors = [dat[i] for i in classes]
-        dataset = [torch.utils.data.TensorDataset(t) for t in tensors]
-        dataloader = [f(ds) for ds in dataset]
+def create_loader(dat, lab, batch):
+    dataset = torch.utils.data.TensorDataset(dat, lab)
+    dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch, shuffle=True)
     return dataloader
 
 def get_mnist(download=0):
