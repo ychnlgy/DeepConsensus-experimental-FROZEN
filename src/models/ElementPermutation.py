@@ -24,8 +24,7 @@ class ElementPermutation(torch.nn.Module):
         assert vectors.size() == targets.size()
 
         reduced = self.reduce(vectors, targets)
-        assert reduced.size() == (N, C)
-        return reduced
+        return reduced.view(N, C)
     
     def reduce(self, vectors, targets):
         raise NotImplementedError
