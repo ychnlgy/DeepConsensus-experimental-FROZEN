@@ -313,6 +313,11 @@ class Model(models.Savable):
                     )
                 ),
                 
+            ),
+            
+            models.Classifier(
+                hiddensize = 64 * 8,
+                classes = classes
             )
         )
     

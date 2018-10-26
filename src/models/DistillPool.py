@@ -16,7 +16,7 @@ class DistillPool(torch.nn.Module):
     def __init__(self, h, c):
         super(DistillPool, self).__init__()
         self.h = h
-        self.c = c
+        self.c = torch.nn.Softmax(dim=1)
     
     def forward(self, X):
     
