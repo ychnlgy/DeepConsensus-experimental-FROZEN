@@ -220,8 +220,8 @@ class Model(torch.nn.Module):
         )
         
         self.instance_separator = models.Norm(p=2)
-        #self.transform = torch.nn.Linear(256, 32)
-        self.grouper = models.Classifier(128, classes)
+        self.transform = torch.nn.Linear(128, 32)
+        self.grouper = models.Classifier(32, classes)
         
         self.group_loss = torch.nn.CrossEntropyLoss()
     
