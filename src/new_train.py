@@ -53,7 +53,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
         model.train()
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            loss = model.calc_loss(X, y)
+            yh, loss = model.calc_loss(X, y)
             
             c += loss.item()
             n += 1.0
@@ -73,8 +73,8 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             
             for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
                 
-                yh = model(X)
-                v += lossf(yh, y).item()
+                yh, loss = model.calc_loss(X, y)
+                v += loss.item()
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
                 m += 1
             
