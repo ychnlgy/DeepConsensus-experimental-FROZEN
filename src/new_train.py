@@ -56,6 +56,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             yh, loss = model.calc_loss(X, y)
             
             c += loss.item()
+            s += (torch.argmax(yh, dim=1) == y).float().mean().item()
             n += 1.0
             
             optimizer.zero_grad()
@@ -63,7 +64,7 @@ def main(dataset, epochs, lamb, trainbatch=100, testbatch=300, cycle=10, datalim
             optimizer.step()
             
             if i % cycle == 0:
-                bar.set_description("[Epoch %d] %.3f" % (epoch, c/n))
+                bar.set_description("[Epoch %d] %.3f" % (epoch, s/n))
         
         model.eval()
         
