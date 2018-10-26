@@ -6,14 +6,16 @@ class Classifier(torch.nn.Module):
 
     def __init__(self, hiddensize, classes):
         super(Classifier, self).__init__()
-        self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
-        self.cos = models.CosineSimilarity()
+        self.grp = torch.nn.Parameter(torch.rand(1, hiddensize, classes))
+        self.min = torch.nn.Softmin(dim=1)
     
     def get_class_vec(self, c):
         return self.grp[c]
     
     def forward(self, X):
-        return self.cos(X, self.grp)
+        N, D = X.size()
+        norm = (X.view(N, D, 1) - self.grp) ** 2
+        return self.min(norm.sum(dim=1))#self.cos(X, self.grp)
 #        confidence, indices = cs.max(dim=1)
 #        confidence = confidence.view(-1, 1)
 #        confusion = self.max(cs)
