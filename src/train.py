@@ -306,7 +306,7 @@ class Model(models.Savable):
                             layers = 1,
                             
                         ),
-                        c = models.SoftminNorm(
+                        c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
                         )
