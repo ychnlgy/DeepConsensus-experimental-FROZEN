@@ -1,5 +1,7 @@
 import torch
 
+import models
+
 class Model(torch.nn.Module):
 
     def __init__(self, channels, classes, lamb):
