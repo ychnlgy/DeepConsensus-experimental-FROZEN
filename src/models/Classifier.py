@@ -4,12 +4,13 @@ import models
 
 class Classifier(torch.nn.Module):
 
-    def __init__(self, hiddensize, classes):
+    def __init__(self, hiddensize, classes, gamma=100):
         super(Classifier, self).__init__()
+        self.gamma = gamme
         self.init_groups(classes, hiddensize)
         self.norm = models.SoftminNorm()
         self.cos = models.CosineSimilarity()
-        #self.max = torch.nn.Softmax(dim=1)
+        self.max = torch.nn.Softmax(dim=1)
     
     def init_groups(self, classes, hiddensize):
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
@@ -21,6 +22,7 @@ class Classifier(torch.nn.Module):
         norm = self.norm(X, self.grp)
 
         cs = self.cos(X, self.grp)
+        cs = self.max(cs * self.gamma)
         #confidence, indices = cs.max(dim=1)
         #confidence = confidence.view(-1, 1)
         #confusion = self.max(cs)
