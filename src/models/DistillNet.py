@@ -15,5 +15,5 @@ class DistillNet(torch.nn.Module):
         for layer in self.layers:
             X, vec = layer(X)
             yield vec
-        if self.training:
+        if not self.training:
             print(vec.max(dim=1)[0])
