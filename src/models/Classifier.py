@@ -8,7 +8,7 @@ class Classifier(torch.nn.Module):
         super(Classifier, self).__init__()
         self.init_groups(classes, hiddensize)
         self.norm = models.SoftminNorm()
-        #self.cos = models.CosineSimilarity()
+        self.cos = models.CosineSimilarity()
         #self.max = torch.nn.Softmax(dim=1)
     
     def init_groups(self, classes, hiddensize):
