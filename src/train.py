@@ -466,9 +466,9 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
             
-                if i < 5:
-                    print("")
-                    print(y[0])
+                misc.debug.ALLOW_PRINTING = i < 5
+                misc.debug.println("")
+                misc.debug.println(y[0])
             
                 yh = model(X)
                 v += lossf(yh, y).item()
@@ -493,9 +493,9 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
             
-                if i < 5:
-                    print("")
-                    print(y[0])
+                misc.debug.ALLOW_PRINTING = i < 5
+                misc.debug.println("")
+                misc.debug.println(y[0])
             
                 yh = model(X)
                 n += 1.0

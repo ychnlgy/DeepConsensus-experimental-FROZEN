@@ -1,5 +1,7 @@
 import torch
 
+import misc
+
 class DistillNet(torch.nn.Module):
 
     def __init__(self, *layers):
@@ -16,8 +18,7 @@ class DistillNet(torch.nn.Module):
         for layer in self.layers:
             X, vec = layer(X)
             
-            if not self.training:
-                print(vec[0])
+            misc.debug.println(vec[0])
             
             yield vec
             
