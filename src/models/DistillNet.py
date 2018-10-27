@@ -19,15 +19,16 @@ class DistillNet(torch.nn.Module):
             
     def combine(self, X):
         it = self.iter_forward(X)
-        a = next(it)
-        b = next(it)
-        m = self.max(a)
-        n = self.max(b)
-        p = None
-        yield a * n
-        for c in it:
-            p = self.max(c)
-            yield (m + p)/2.0 * b
-            a, b = b, c
-            m, n = n, p
-        yield m * b
+        return it
+#        a = next(it)
+#        b = next(it)
+#        m = self.max(a)
+#        n = self.max(b)
+#        p = None
+#        yield a * n
+#        for c in it:
+#            p = self.max(c)
+#            yield (m + p)/2.0 * b
+#            a, b = b, c
+#            m, n = n, p
+#        yield m * b
