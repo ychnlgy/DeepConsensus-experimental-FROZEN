@@ -465,6 +465,11 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             v = w = m = 0.0
             
             for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
+            
+                if i < 5:
+                    print("")
+                    print(y[0])
+            
                 yh = model(X)
                 v += lossf(yh, y).item()
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
@@ -487,9 +492,15 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             #input("Test begins")
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
+            
+                if i < 5:
+                    print("")
+                    print(y[0])
+            
                 yh = model(X)
                 n += 1.0
                 testscore += (torch.argmax(yh, dim=1) == y).float().mean().item()
+            
             
             testscore /= n
             
