@@ -4,7 +4,7 @@ import models
 
 class Classifier(torch.nn.Module):
 
-    def __init__(self, hiddensize, classes, gamma=100):
+    def __init__(self, hiddensize, classes, gamma=10):
         super(Classifier, self).__init__()
         self.gamma = gamma
         self.init_groups(classes, hiddensize)

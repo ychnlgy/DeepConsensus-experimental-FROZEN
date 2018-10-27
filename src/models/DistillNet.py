@@ -2,7 +2,7 @@ import torch
 
 class DistillNet(torch.nn.Module):
 
-    def __init__(self, *layers, gamma=100):
+    def __init__(self, *layers, gamma=10):
         super(DistillNet, self).__init__()
         self.gamma = gamma
         self.layers = torch.nn.ModuleList(layers)
