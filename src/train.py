@@ -161,6 +161,14 @@ class Model(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
             models.DistillNet(
                 
                 # 64 -> 64
@@ -188,10 +196,19 @@ class Model(models.Savable):
                 # 64 -> 32
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
+                    
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
+                    
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
                         h = models.DenseNet(
@@ -213,7 +230,11 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
                         h = models.DenseNet(
@@ -233,8 +254,17 @@ class Model(models.Savable):
                 # 32 -> 16
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
+                    
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
+                    
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(2),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
                     ),
@@ -258,7 +288,11 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
                         h = models.DenseNet(
@@ -278,10 +312,19 @@ class Model(models.Savable):
                 # 16 -> 8
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
+                    
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
+                        
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.MaxPool2d(3, padding=1, stride=2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
                         h = models.DenseNet(
@@ -303,7 +346,11 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(64),
+                        
+                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.LeakyReLU(),
+                        torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
                         h = models.DenseNet(
@@ -506,7 +553,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             testscore = n = 0.0
             
-            input("Test begins")
+            #input("Test begins")
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
                 yh = model(X)
@@ -517,7 +564,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            input("Test ends")
+            #input("Test ends")
             
     return testscore
 
