@@ -9,5 +9,5 @@ class DistillLayer(torch.nn.Module):
     
     def forward(self, X):
         conv = self.conv(X)
-        pool, ratios = self.pool(conv)
-        return conv*ratios, pool
+        pool, conv = self.pool(conv)
+        return conv, pool
