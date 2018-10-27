@@ -41,5 +41,5 @@ class DistillPool(torch.nn.Module):
         c = self.c(s)
         mean = self.c.get_mean_repr()
         norm = mean.norm()/s.norm(dim=1)
-        X = self.f(X * norm)
+        X = self.f(X * norm.view(N, 1, 1, 1))
         return c, X.permute(0, 2, 1).view(N, -1, W, H)
