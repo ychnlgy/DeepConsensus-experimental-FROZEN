@@ -6,7 +6,7 @@ class Classifier(torch.nn.Module):
 
     def __init__(self, hiddensize, classes, gamma=100):
         super(Classifier, self).__init__()
-        self.gamma = gamme
+        self.gamma = gamma
         self.init_groups(classes, hiddensize)
         self.norm = models.SoftminNorm()
         self.cos = models.CosineSimilarity()
