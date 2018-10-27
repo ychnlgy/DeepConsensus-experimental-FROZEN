@@ -41,5 +41,5 @@ class DistillPool(torch.nn.Module):
         assert neighbors.size() == v.size()
         ratios = neighbors/v
         N, D = ratios.size()
-        X = X * ratios.view(N. D, 1, 1)
+        X = X * ratios.view(N, D, 1, 1)
         return c, X
