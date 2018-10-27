@@ -151,13 +151,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -174,13 +174,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -196,13 +196,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -219,13 +219,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -241,13 +241,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -264,13 +264,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -286,13 +286,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -309,13 +309,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -331,13 +331,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -354,13 +354,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
@@ -376,13 +376,13 @@ class Model(models.Savable):
                     pool = models.DistillPool(
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 64,
-                            tailsize = 64,
-                            layers = 1,
+                            bodysize = 32,
+                            tailsize = 16,
+                            layers = 2,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 64,
+                            hiddensize = 16,
                             classes = classes
                         ),
                     )
