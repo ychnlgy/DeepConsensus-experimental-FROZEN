@@ -506,7 +506,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            input("Test ends")
+            #input("Test ends")
             
     return testscore
 
