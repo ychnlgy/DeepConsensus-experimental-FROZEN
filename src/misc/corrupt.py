@@ -6,11 +6,11 @@ import scipy.ndimage
 
 from .util import hardmap
 
-def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma):
+def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0):
 
-    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma = hardmap(
+    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma = hardmap(
         float, 
-        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta, sigma
+        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma
     )
 
     w, h = im.shape[:2]
@@ -19,25 +19,25 @@ def corrupt(im, minmag, maxmag, minrot, maxrot, mintrans, maxtrans, alpha, beta,
     im = randomresize(im, minmag, maxmag)
     im = randomrotate(im, minrot, maxrot)
     px, py = randommove(ox, oy, mintrans, maxtrans)
-    im = add_noise(im, alpha)
-    im = reduce_colorgrad(im, beta)
-    im = gaussian_blur(im, sigma)
+    im = add_noise(im, minalpha, maxalpha)
+    im = reduce_colorgrad(im, minbeta, maxbeta)
+    im = gaussian_blur(im, minsigma, maxsigma)
     return draw(im, px, py, w, h, originalshape)
     
 def rand_select(v0, vf):
     return random.random() * (vf - v0) + v0
 
-def gaussian_blur(im, sigma):
-    sigma = rand_select(0, sigma)
+def gaussian_blur(im, low, high):
+    sigma = rand_select(low, high)
     return scipy.ndimage.filters.gaussian_filter(im, sigma=sigma)
 
-def add_noise(im, alpha):
-    alpha = rand_select(alpha, 1.0)
+def add_noise(im, low, high):
+    alpha = rand_select(low, high)
     noise = numpy.random.rand(*im.shape) * 255.0
     return alpha * im + (1 - alpha) * noise
 
-def reduce_colorgrad(im, beta):
-    beta = rand_select(beta, 1.0)
+def reduce_colorgrad(im, low, high):
+    beta = rand_select(low, high)
     mean = numpy.mean(im)
     diff = im - mean
     return diff * beta + mean
