@@ -152,12 +152,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -175,12 +175,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -197,12 +197,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -220,12 +220,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -242,12 +242,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -265,12 +265,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -287,12 +287,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -310,12 +310,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -332,12 +332,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -355,12 +355,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
@@ -377,12 +377,12 @@ class Model(models.Savable):
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 16,
-                            layers = 2,
-                            
+                            tailsize = 8,
+                            layers = 3,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 8,
                             classes = classes
                         ),
                     )
