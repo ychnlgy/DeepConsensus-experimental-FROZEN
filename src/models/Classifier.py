@@ -19,10 +19,5 @@ class Classifier(torch.nn.Module):
     
     def forward(self, X):
         norm = self.norm(X, self.grp)
-
         cs = self.cos(X, self.grp)
-        #confidence, indices = cs.max(dim=1)
-        #confidence = confidence.view(-1, 1)
-        #confusion = self.max(cs)
-        #assert len(confidence) == len(confusion)
-        return cs * norm#confidence * confusion
+        return cs * norm
