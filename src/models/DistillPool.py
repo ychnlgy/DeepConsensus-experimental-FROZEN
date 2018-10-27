@@ -34,10 +34,4 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        X = self.h(U)
-        s = X.sum(dim=1)
-        c = self.c(s)
-        #_, indx = c.max(dim=1)
-        #r = self.c.get_class_vec(indx).view(N, -1).abs()/s.abs()
-        #X = X * r.view(N, 1, -1)
-        return c, X.permute(0, 2, 1).view(N, -1, W, H)
+        return self.c(self.h(U).sum(dim=1))

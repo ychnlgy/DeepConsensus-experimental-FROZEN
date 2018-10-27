@@ -7,9 +7,7 @@ class Classifier(torch.nn.Module):
     def __init__(self, hiddensize, classes):
         super(Classifier, self).__init__()
         self.init_groups(classes, hiddensize)
-        self.norm = models.SoftminNorm()
         self.cos = models.CosineSimilarity()
-        self.max = torch.nn.Softmax(dim=1)
     
     def init_groups(self, classes, hiddensize):
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
@@ -21,6 +19,4 @@ class Classifier(torch.nn.Module):
         return self.grp.mean(dim=0)
     
     def forward(self, X):
-        norm = self.norm(X, self.grp)
-        #cs = self.cos(X, self.grp)
-        return norm
+        return self.cos(X, self.grp)
