@@ -177,7 +177,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -200,7 +212,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -222,7 +246,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -245,7 +281,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -267,7 +315,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -290,7 +350,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -312,7 +384,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -335,7 +419,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -357,7 +453,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -380,7 +488,19 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
-                        )
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
+                        ),
                     )
                 ),
                 
@@ -402,6 +522,18 @@ class Model(models.Savable):
                         c = models.Classifier(
                             hiddensize = 64,
                             classes = classes
+                        ),
+                        s = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                        ),
+                        f = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 128,
+                            tailsize = 64,
+                            layers = 2,
                         )
                     )
                 ),

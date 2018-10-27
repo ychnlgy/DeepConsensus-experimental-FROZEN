@@ -13,10 +13,12 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, h, c):
+    def __init__(self, h, c, s, f):
         super(DistillPool, self).__init__()
         self.h = h
         self.c = c
+        self.s = s
+        self.f = f
     
     def forward(self, X):
     
@@ -35,5 +37,9 @@ class DistillPool(torch.nn.Module):
         N, C, W, H = X.size()
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
         X = self.h(U)
-        c = self.c(X.sum(dim=1))
+        s = self.s(X.sum(dim=1))
+        c = self.c(s)
+        mean = self.c.get_mean_repr()
+        norm = mean.norm()/s.norm(dim=1)
+        X = self.f(X * norm)
         return c, X.permute(0, 2, 1).view(N, -1, W, H)
