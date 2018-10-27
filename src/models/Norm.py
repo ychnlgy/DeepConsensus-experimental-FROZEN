@@ -10,5 +10,9 @@ class Norm(ElementPermutation):
     
     '''
     
+    def __init__(self, p=2):
+        super(Norm, self).__init__()
+        self.p = p
+    
     def reduce(self, vectors, targets):
-        return (vectors - targets)**2
+        return (vectors - targets).norm(p=self.p, dim=1)
