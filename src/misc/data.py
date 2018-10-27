@@ -292,7 +292,7 @@ def unittest():
     td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
         download=0,
         minmag=1, maxmag=1,
-        mintrans=20, maxtrans=20,
+        mintrans=-20, maxtrans=20,
         minrot=0, maxrot=0,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,

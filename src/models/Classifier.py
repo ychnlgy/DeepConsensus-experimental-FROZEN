@@ -21,6 +21,6 @@ class Classifier(torch.nn.Module):
         return self.grp.mean(dim=0)
     
     def forward(self, X):
-        #norm = self.norm(X, self.grp)
+        norm = self.norm(X, self.grp)
         cs = self.cos(X, self.grp)
-        return cs# * norm
+        return cs * norm

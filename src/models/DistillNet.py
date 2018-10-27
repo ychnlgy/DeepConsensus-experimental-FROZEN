@@ -5,7 +5,6 @@ class DistillNet(torch.nn.Module):
     def __init__(self, *layers):
         super(DistillNet, self).__init__()
         self.layers = torch.nn.ModuleList(layers)
-        self._max = torch.nn.Softmax(dim=1)
     
     def forward(self, X):
         vecs = sum(self.iter_forward(X))
@@ -15,7 +14,7 @@ class DistillNet(torch.nn.Module):
     def iter_forward(self, X):
         for layer in self.layers:
             X, vec = layer(X)
-        yield vec
+            yield vec
             
 #    def combine(self, X):
 #        it = self.iter_forward(X)
