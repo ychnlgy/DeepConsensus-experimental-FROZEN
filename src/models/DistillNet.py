@@ -12,6 +12,8 @@ class DistillNet(torch.nn.Module):
         #return torch.cat(vecs, dim=1) # N, C1 + C2...
     
     def iter_forward(self, X):
+        print("")
         for layer in self.layers:
             X, vec = layer(X)
+            print(vec.max())
             yield vec
