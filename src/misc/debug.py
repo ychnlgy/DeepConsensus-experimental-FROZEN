@@ -1,4 +1,4 @@
-ALLOW_PRINTING = True
+ALLOW_PRINTING = False
 
 def println(s):
     if ALLOW_PRINTING:
