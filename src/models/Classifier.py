@@ -17,6 +17,9 @@ class Classifier(torch.nn.Module):
     def get_class_vec(self, c):
         return self.grp[c]
     
+    def get_mean_repr(self):
+        return self.grp.mean(dim=0)
+    
     def forward(self, X):
         norm = self.norm(X, self.grp)
         cs = self.cos(X, self.grp)
