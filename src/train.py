@@ -164,7 +164,7 @@ class Model(models.Savable):
                 # 64 -> 64
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
@@ -187,7 +187,7 @@ class Model(models.Savable):
                 # 64 -> 32
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -210,7 +210,7 @@ class Model(models.Savable):
                 # 32 -> 32
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -233,7 +233,7 @@ class Model(models.Savable):
                 # 32 -> 16
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -256,7 +256,7 @@ class Model(models.Savable):
                 # 16 -> 16
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -279,7 +279,7 @@ class Model(models.Savable):
                 # 16 -> 8
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -302,7 +302,7 @@ class Model(models.Savable):
                 # 8 -> 8
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -325,7 +325,7 @@ class Model(models.Savable):
                 # 8 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -348,7 +348,7 @@ class Model(models.Savable):
                  # 4 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -371,7 +371,7 @@ class Model(models.Savable):
                  # 4 -> 2
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
@@ -394,7 +394,7 @@ class Model(models.Savable):
                  # 2 -> 2
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(64, 64, 3, padding=1, groups=64),
                         torch.nn.MaxPool2d(3, padding=1, stride=1),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64),
