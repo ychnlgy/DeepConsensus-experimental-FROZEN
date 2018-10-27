@@ -9,7 +9,7 @@ class DistillNet(torch.nn.Module):
     def forward(self, X):
         vecs = sum(self.iter_forward(X))
         if not self.training:
-            print(vecs.max(dim=1)[0])
+            print(vecs[0])
         return vecs
         #return torch.cat(vecs, dim=1) # N, C1 + C2...
     
