@@ -18,9 +18,9 @@ class DistillNet(torch.nn.Module):
             yield vec
     
     def combine(self, X):
-        out = 1
+        out = 0
         for vec in self.iter_forward(X):
-            out = out * vec
+            out = out + vec
         return out
             
 #    def combine(self, X):
