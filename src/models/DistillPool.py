@@ -37,6 +37,6 @@ class DistillPool(torch.nn.Module):
         v = self.h(U).sum(dim=1)
         c = self.c(v)
         mean = self.c.get_mean_repr().view(1, -1)
-        ratios = mean.norm()/v.norm()
-        X = X * ratios
+        ratios = mean.norm(dim=1)/v.norm(dim=1)
+        X = X * ratios.view(N, 1, 1, 1)
         return c, X
