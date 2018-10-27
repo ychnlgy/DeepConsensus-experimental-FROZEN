@@ -17,7 +17,6 @@ class DistillPool(torch.nn.Module):
         super(DistillPool, self).__init__()
         self.h = h
         self.c = c
-        self.s = s
     
     def forward(self, X):
     
