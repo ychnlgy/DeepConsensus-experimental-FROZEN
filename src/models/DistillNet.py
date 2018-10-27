@@ -14,4 +14,5 @@ class DistillNet(torch.nn.Module):
     def iter_forward(self, X):
         for layer in self.layers:
             X, vec = layer(X)
-        yield vec
+            print(vec[0])
+            yield vec
