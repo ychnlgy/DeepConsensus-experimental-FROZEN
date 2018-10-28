@@ -1,11 +1,6 @@
-import torch, math
+import torch
 
-import misc
-
-from .Classifier import Classifier
-from .ChannelTransform import ChannelTransform
-from .UniqueSquash import UniqueSquash
-from .SoftmaxCombine import SoftmaxCombine
+from .AbsTanh import AbsTanh
 
 class DistillPool(torch.nn.Module):
 
@@ -20,27 +15,13 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, length, channels, classes):
+    def __init__(self, channels, h, c):
         super(DistillPool, self).__init__()
-        self.layers = math.floor(math.log(length, 2))
-        self.transformers = torch.nn.ModuleList([
-            ChannelTransform(
-                headsize = channels,
-                bodysize = channels,
-                tailsize = channels,
-                layers = 1
-            ) for i in range(self.layers)
-        ])
-        self.classifier = Classifier(hiddensize=channels, classes=classes)
-        self.squash = torch.nn.ModuleList([
-            UniqueSquash(kernel=3, padding=1, stride=1)
-            for i in range(self.layers)
-        ])
-        self.combine = torch.nn.ModuleList([
-            SoftmaxCombine(kernel=2, padding=0, stride=2)
-            for i in range(self.layers)
-        ])
-        self.max = torch.nn.Softmax(dim=-1)
+        self.h = h
+        self.c = c
+        self.w = torch.nn.Parameter(torch.rand(1, 1, channels))
+        self.t = AbsTanh()
+        self.x = torch.nn.Softmax(dim=-1)
     
     def forward(self, X):
     
@@ -55,12 +36,10 @@ class DistillPool(torch.nn.Module):
             the features of the entire layer.
         
         '''
-        for i in range(self.layers):
-            X = self.squash[i](X)
-            X = self.combine[i](X)
-            X = self.transformers[i](X)
+    
         N, C, W, H = X.size()
-        X = X.view(N, C, W*H)
-        X = (X * self.max(X)).sum(dim=-1)
-        assert X.size() == (N, C)
-        return self.classifier(X)
+        U = X.permute(0, 2, 3, 1).view(N, W*H, C)
+        w = self.x(self.w)
+        v = self.h(U * w)
+        s = self.t(v).sum(dim=1)
+        return self.c(s)
