@@ -63,4 +63,4 @@ class DistillPool(torch.nn.Module):
         X = X.view(N, C, W*H)
         X = (X * self.max(X)).sum(dim=-1)
         assert X.size() == (N, C)
-        return self.c(X)
+        return self.classifier(X)
