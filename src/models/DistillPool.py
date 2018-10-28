@@ -45,10 +45,10 @@ class DistillPool(torch.nn.Module):
     
         N, C, W, H = X.size()
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        w = self.x(self.w)
-        v = self.h(U * w).permute(0, 2, 1).view(N, -1, W, H)
+        w = 1#self.x(self.w)
+        X = self.h(U * w).permute(0, 2, 1).view(N, -1, W, H)
         for layer in range(self.layers):
-            v = self.squash(v)
-        v = v.view(N, -1, W*H).permute(0, 2, 1)
+            X = self.squash(X)
+        v = X.view(N, -1, W*H).permute(0, 2, 1)
         s = self.t(v).sum(dim=1)
-        return self.c(s)
+        return self.c(s), X
