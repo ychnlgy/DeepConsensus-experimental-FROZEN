@@ -3,7 +3,7 @@ import torch
 from .Kernel import Kernel
 
 class UniqueSquash(Kernel):
-    def __init__(self, kernel=2, padding=0, stride=2, norm=2):
+    def __init__(self, kernel=3, padding=1, stride=1, norm=2):
         super(UniqueSquash, self).__init__(kernel, stride)
         self.p = torch.nn.ZeroPad2d(padding)
         self.n = norm

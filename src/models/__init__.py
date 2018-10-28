@@ -13,3 +13,4 @@ from .DistillNet import DistillNet
 from .SoftmaxCombine import SoftmaxCombine
 from .UniqueSquash import UniqueSquash
 from .ChannelTransform import ChannelTransform
+from .GravityField import GravityField

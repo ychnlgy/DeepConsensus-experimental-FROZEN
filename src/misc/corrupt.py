@@ -19,10 +19,11 @@ def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, 
     im = randomresize(im, minmag, maxmag)
     im = randomrotate(im, minrot, maxrot)
     px, py = randommove(ox, oy, mintrans, maxtrans)
+    im = draw(im, px, py, w, h, originalshape)
     im = add_noise(im, minalpha, maxalpha)
     im = reduce_colorgrad(im, minbeta, maxbeta)
     im = gaussian_blur(im, minsigma, maxsigma)
-    return draw(im, px, py, w, h, originalshape)
+    return im
     
 def rand_select(v0, vf):
     return random.random() * (vf - v0) + v0

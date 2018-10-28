@@ -291,10 +291,10 @@ def unittest():
     #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
     td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
         download=0,
-        minmag=1, maxmag=1,
+        minmag=3, maxmag=3,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=0.2, maxalpha=0.2,
+        minalpha=0.99, maxalpha=0.99,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0
     )
@@ -319,10 +319,29 @@ def unittest():
     numpy.random.shuffle(indices)
     indices = indices[:N]
     
-    for im, cls in zip(sd[indices], sl[indices]):
+    import models
+    
+    squash = models.UniqueSquash()#torch.nn.MaxPool2d(2)
+    squash2 = models.SoftmaxCombine()
+    
+    for img, cls in zip(sd[indices], sl[indices]):
         label = cls.item()
         print(label)
-        im = im.permute(1, 2, 0).squeeze().numpy()
+        im = img.permute(1, 2, 0).squeeze().numpy()
+        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.show()
+        pyplot.clf()
+        
+        img = img.unsqueeze(1)
+        
+        img = squash(img)
+        im = img.permute(2, 3, 0, 1).squeeze().numpy()
+        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.show()
+        pyplot.clf()
+        
+        img = squash2(img)
+        im = img.permute(2, 3, 0, 1).squeeze().numpy()
         pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
         pyplot.show()
         pyplot.clf()

@@ -1,7 +1,8 @@
 import models
 
-models.UniqueSquash.unittest()
+#models.UniqueSquash.unittest()
 #models.CosineSimilarity.unittest()
+models.GravityField.unittest()
 
 import misc
 
