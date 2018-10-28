@@ -32,8 +32,8 @@ class GravityField(torch.nn.Module):
         
         '''
         N, C, W, H = X.size()
-        w = X.norm(dim=1)
-        w = (w/w.view(N, W*H).sum(dim=-1).view(N, 1, 1)).view(N, 1, W, H)
+        w = torch.tanh(X.norm(dim=1))
+        #w = (w/w.view(N, W*H).sum(dim=-1).view(N, 1, 1)).view(N, 1, W, H)
         d = self.field * (1-w)
         z = self.convert_out(d)
         return self.insert_vecs(X, z)

@@ -4,8 +4,6 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
-from model import Model
-
 class Cnn(models.Savable):
 
     def __init__(self, channels, classes):
@@ -78,7 +76,7 @@ class Cnn(models.Savable):
     def forward(self, X):
         return self.net(X)
 
-class Model_OLD(models.Savable):
+class Model(models.Savable):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__()
@@ -104,7 +102,7 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
+                        layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -128,7 +126,7 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
+                        layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -151,7 +149,7 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
+                        layers = 2,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -175,7 +173,7 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
+                        layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -198,7 +196,7 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
+                        layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -222,7 +220,6 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -245,7 +242,6 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -269,7 +265,6 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -292,7 +287,6 @@ class Model_OLD(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
-                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,

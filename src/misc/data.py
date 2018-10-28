@@ -291,10 +291,10 @@ def unittest():
     #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
     td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
         download=0,
-        minmag=3, maxmag=3,
+        minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=0.99, maxalpha=0.99,
+        minalpha=0.8, maxalpha=0.8,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0
     )
@@ -321,8 +321,10 @@ def unittest():
     
     import models
     
-    squash = models.UniqueSquash()#torch.nn.MaxPool2d(2)
-    squash2 = models.SoftmaxCombine()
+    
+    squash = [models.UniqueSquash() for i in range(4)]
+    pool = [models.SoftmaxCombine() for i in range(4)]
+    #squash2 = models.GravityField(64, 32)
     
     for img, cls in zip(sd[indices], sl[indices]):
         label = cls.item()
@@ -334,14 +336,15 @@ def unittest():
         
         img = img.unsqueeze(1)
         
-        img = squash(img)
-        im = img.permute(2, 3, 0, 1).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-        pyplot.show()
-        pyplot.clf()
+        for i in range(4):
+            img = squash[i](img)
+            im = img.permute(2, 3, 0, 1).squeeze().numpy()
+            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+            pyplot.show()
+            pyplot.clf()
         
-        img = squash2(img)
-        im = img.permute(2, 3, 0, 1).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-        pyplot.show()
-        pyplot.clf()
+#        img = squash2(img)
+#        im = img.permute(2, 3, 0, 1).squeeze().numpy()
+#        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#        pyplot.show()
+#        pyplot.clf()
