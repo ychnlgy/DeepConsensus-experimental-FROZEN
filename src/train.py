@@ -82,13 +82,13 @@ class Model(models.Savable):
         super(Model, self).__init__()
         self.net = torch.nn.Sequential(
             
-            models.UniqueSquash(),
+            #models.UniqueSquash(),
             
             torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            models.UniqueSquash(),
+            #models.UniqueSquash(),
             
             # === Convolutions ===
             
@@ -96,7 +96,7 @@ class Model(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
-            models.UniqueSquash(),
+            #models.UniqueSquash(),
             
             models.DistillNet(
                 
