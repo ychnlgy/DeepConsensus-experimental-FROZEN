@@ -474,7 +474,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
             
-                misc.debug.ALLOW_PRINTING = i < 20
+                #misc.debug.ALLOW_PRINTING = i < 20
                 misc.debug.println("")
                 misc.debug.println(y[0])
             
@@ -501,7 +501,7 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
             
-                misc.debug.ALLOW_PRINTING = i < 20
+                #misc.debug.ALLOW_PRINTING = i < 20
                 misc.debug.println("")
                 misc.debug.println(y[0])
             
