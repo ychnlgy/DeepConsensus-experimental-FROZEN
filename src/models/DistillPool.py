@@ -22,18 +22,24 @@ class DistillPool(torch.nn.Module):
 
     def __init__(self, length, channels, classes):
         super(DistillPool, self).__init__()
-        layers = math.floor(math.log(length, 2))
+        self.layers = math.floor(math.log(length, 2))
         self.transformers = torch.nn.ModuleList([
             ChannelTransform(
                 headsize = channels,
                 bodysize = channels,
                 tailsize = channels,
                 layers = 1
-            ) for i in range(layers)
+            ) for i in range(self.layers)
         ])
         self.classifier = Classifier(hiddensize=channels, classes=classes)
-        self.squash = UniqueSquash(kernel=3, padding=1, stride=1)
-        self.combine = SoftmaxCombine(kernel=2, padding=0, stride=2)
+        self.squash = torch.nn.ModuleList([
+            UniqueSquash(kernel=3, padding=1, stride=1)
+            for i in range(self.layers)
+        ])
+        self.combine = torch.nn.ModuleList([
+            SoftmaxCombine(kernel=2, padding=0, stride=2)
+            for i in range(self.layers)
+        ])
         self.max = torch.nn.Softmax(dim=-1)
     
     def forward(self, X):
@@ -49,10 +55,10 @@ class DistillPool(torch.nn.Module):
             the features of the entire layer.
         
         '''
-        for transformer in self.transformers:
-            X = self.squash(X)
-            X = self.combine(X)
-            X = transformer(X)
+        for i in range(self.layers):
+            X = self.squash[i](X)
+            X = self.combine[i](X)
+            X = self.transformers[i](X)
         N, C, W, H = X.size()
         X = X.view(N, C, W*H)
         X = (X * self.max(X)).sum(dim=-1)
