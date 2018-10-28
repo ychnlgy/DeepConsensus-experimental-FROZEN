@@ -25,6 +25,14 @@ class Kernel(torch.nn.Module):
         
         self.compute_kernel_indices = misc.util.do_nothing
     
+    def calc_midpt(self):
+        kx, ky = self.k
+        d, r = divmod(kx, 2)
+        x = d + r - 1
+        d, r = divmod(ky, 2)
+        y = d + r - 1
+        return x + y * kx
+    
     @staticmethod
     def unittest():
         

@@ -1,6 +1,11 @@
-import torch
+import torch, math
 
 import misc
+
+from .Classifier import Classifier
+from .DenseNet import DenseNet
+from .UniqueSquash import UniqueSquash
+from .SoftmaxCombine import SoftmaxCombine
 
 class DistillPool(torch.nn.Module):
 
@@ -15,12 +20,21 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, g, h, c):
+    def __init__(self, length, channels, classes):
         super(DistillPool, self).__init__()
-        self.g = g
-        self.h = h
-        self.c = c
-        self.max = torch.nn.Softmax(dim=1)
+        layers = math.floor(math.log(length, 2))
+        self.transformers = torch.nn.ModuleList([
+            DenseNet(
+                headsize = channels,
+                bodysize = channels,
+                tailsize = channels,
+                layers = 1
+            ) for i in range(layers)
+        ])
+        self.classifier = Classifier(hiddensize=channels, classes=classes)
+        self.squash = UniqueSquash(kernel=3, padding=1, stride=1)
+        self.combine = SoftmaxCombine(kernel=2, padding=0, stride=2)
+        self.max = torch.nn.Softmax(dim=-1)
     
     def forward(self, X):
     
@@ -35,9 +49,13 @@ class DistillPool(torch.nn.Module):
             the features of the entire layer.
         
         '''
-    
+        
+        for transformer in self.transformers:
+            X = self.squash(X)
+            X = self.combine(X)
+            X = transformer(X)
         N, C, W, H = X.size()
-        U = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        w = self.max(self.g(U))
-        s = (self.h(U) * w).sum(dim=1)
-        return self.c(s)
+        X = X.view(N, C, W*H)
+        X = (X * self.max(X)).sum(dim=-1)
+        assert X.size() == (N, C)
+        return self.c(X)
