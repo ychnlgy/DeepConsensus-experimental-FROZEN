@@ -289,12 +289,12 @@ def unittest():
 #        pyplot.clf()
     
     #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
-    td, tl, sd, sl, n, c, i = get_cifar10_corrupt(
+    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
         download=0,
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
+        minalpha=0.5, maxalpha=0.5,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0
     )

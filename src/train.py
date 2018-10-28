@@ -82,9 +82,6 @@ class Model(models.Savable):
         super(Model, self).__init__()
         self.net = torch.nn.Sequential(
             
-            models.UniqueSquash(),
-            models.UniqueSquash(),
-            
             torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
@@ -316,7 +313,12 @@ class Model(models.Savable):
         )
     
     def forward(self, X):
+        if not self.training:
+            for i in range(4):
+                X = squash(X)
+    
         return self.net(X)
+squash = models.UniqueSquash()
 
 def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
