@@ -149,15 +149,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -172,15 +177,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -194,15 +204,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -217,15 +232,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -239,15 +259,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -262,15 +287,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -284,15 +314,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -307,15 +342,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -329,15 +369,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -352,15 +397,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -374,15 +424,20 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64),
                     ),
                     pool = models.DistillPool(
+                        g = models.DenseNet(
+                            headsize = 64,
+                            bodysize = 32,
+                            tailsize = 1,
+                            layers = 2
+                        ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
-                            tailsize = 8,
-                            layers = 3,
-                            activation = torch.nn.Sigmoid()
+                            tailsize = 32,
+                            layers = 1
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 32,
                             classes = classes
                         ),
                     )
@@ -432,7 +487,6 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=10, datalimit=
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     lossf = torch.nn.CrossEntropyLoss().to(device)
-    lossg = torch.nn.BCEWithLogitsLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
     
