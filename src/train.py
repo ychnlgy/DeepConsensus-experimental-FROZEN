@@ -106,13 +106,13 @@ class Model(models.Savable):
                         layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -131,13 +131,13 @@ class Model(models.Savable):
                         layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -155,13 +155,13 @@ class Model(models.Savable):
                         layers = 2,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -180,13 +180,13 @@ class Model(models.Savable):
                         layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -204,13 +204,13 @@ class Model(models.Savable):
                         layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -228,13 +228,13 @@ class Model(models.Savable):
                         channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -251,13 +251,13 @@ class Model(models.Savable):
                         channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -275,13 +275,13 @@ class Model(models.Savable):
                         channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
+                            bodysize = 64,
+                            tailsize = 64,
                             layers = 1,
                             
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
@@ -298,12 +298,13 @@ class Model(models.Savable):
                         channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 16,
-                            tailsize = 16,
-                            layers = 1
+                            bodysize = 64,
+                            tailsize = 64,
+                            layers = 1,
+                            
                         ),
                         c = models.Classifier(
-                            hiddensize = 16,
+                            hiddensize = 64,
                             classes = classes
                         ),
                     )
