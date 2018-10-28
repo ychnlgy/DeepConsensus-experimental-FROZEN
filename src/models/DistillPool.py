@@ -3,7 +3,7 @@ import torch, math
 import misc
 
 from .Classifier import Classifier
-from .DenseNet import DenseNet
+from .ChannelTransform import ChannelTransform
 from .UniqueSquash import UniqueSquash
 from .SoftmaxCombine import SoftmaxCombine
 
@@ -24,7 +24,7 @@ class DistillPool(torch.nn.Module):
         super(DistillPool, self).__init__()
         layers = math.floor(math.log(length, 2))
         self.transformers = torch.nn.ModuleList([
-            DenseNet(
+            ChannelTransform(
                 headsize = channels,
                 bodysize = channels,
                 tailsize = channels,
@@ -49,7 +49,6 @@ class DistillPool(torch.nn.Module):
             the features of the entire layer.
         
         '''
-        print(X.size())
         for transformer in self.transformers:
             X = self.squash(X)
             X = self.combine(X)
