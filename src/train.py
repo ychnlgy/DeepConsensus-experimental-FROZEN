@@ -84,9 +84,9 @@ class Model(models.Savable):
             
             # === Bottleneck ===
             
-            torch.nn.Conv2d(channels, 64, 3, padding=1),
+            torch.nn.Conv2d(channels, 16, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(16),
             
 #            torch.nn.Conv2d(64, 64, 3, padding=1),
 #            torch.nn.LeakyReLU(),
@@ -135,29 +135,29 @@ class Model(models.Savable):
             
             # === Convolutions ===
             
-            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.Conv2d(16, 16, 3, padding=1),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(64),
+            torch.nn.BatchNorm2d(16),
             
             models.DistillNet(
                 
                 # 64 -> 64
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -172,21 +172,21 @@ class Model(models.Savable):
                 # 64 -> 32
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -201,20 +201,20 @@ class Model(models.Savable):
                 # 32 -> 32
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -229,21 +229,21 @@ class Model(models.Savable):
                 # 32 -> 16
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -258,20 +258,20 @@ class Model(models.Savable):
                 # 16 -> 16
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -286,21 +286,21 @@ class Model(models.Savable):
                 # 16 -> 8
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -315,20 +315,20 @@ class Model(models.Savable):
                 # 8 -> 8
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -343,21 +343,21 @@ class Model(models.Savable):
                 # 8 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
@@ -372,20 +372,20 @@ class Model(models.Savable):
                  # 4 -> 4
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
+                        torch.nn.Conv2d(16, 16, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64)
+                        torch.nn.BatchNorm2d(16)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 1,
                             layers = 2
                         ),
                         h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
+                            headsize = 16,
+                            bodysize = 8,
                             tailsize = 4,
                             layers = 2,
                             activation = torch.nn.Sigmoid()
