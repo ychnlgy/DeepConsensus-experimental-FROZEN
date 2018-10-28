@@ -82,15 +82,21 @@ class Model(models.Savable):
         super(Model, self).__init__()
         self.net = torch.nn.Sequential(
             
+            models.UniqueSquash()
+            
             torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
+            
+            models.UniqueSquash()
             
             # === Convolutions ===
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
+            
+            models.UniqueSquash()
             
             models.DistillNet(
                 
@@ -103,7 +109,6 @@ class Model(models.Savable):
                     ),
                     pool = models.DistillPool(
                         channels = 64,
-                        layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
@@ -128,7 +133,6 @@ class Model(models.Savable):
                     ),
                     pool = models.DistillPool(
                         channels = 64,
-                        layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
@@ -152,7 +156,6 @@ class Model(models.Savable):
                     ),
                     pool = models.DistillPool(
                         channels = 64,
-                        layers = 2,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
@@ -177,7 +180,6 @@ class Model(models.Savable):
                     ),
                     pool = models.DistillPool(
                         channels = 64,
-                        layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
@@ -201,7 +203,6 @@ class Model(models.Savable):
                     ),
                     pool = models.DistillPool(
                         channels = 64,
-                        layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 64,
