@@ -49,7 +49,7 @@ class DistillPool(torch.nn.Module):
             the features of the entire layer.
         
         '''
-        
+        print(X.size())
         for transformer in self.transformers:
             X = self.squash(X)
             X = self.combine(X)
