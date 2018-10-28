@@ -18,7 +18,7 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, h, c, layers=0):
+    def __init__(self, channels, h, c, layers=0):
         super(DistillPool, self).__init__()
         self.layers = layers
         self.squash = UniqueSquash()

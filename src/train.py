@@ -102,6 +102,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
@@ -126,6 +127,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         layers = 4,
                         h = models.DenseNet(
                             headsize = 64,
@@ -149,6 +151,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         layers = 2,
                         h = models.DenseNet(
                             headsize = 64,
@@ -173,6 +176,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
@@ -196,6 +200,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         layers = 1,
                         h = models.DenseNet(
                             headsize = 64,
@@ -220,6 +225,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -242,6 +248,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -265,6 +272,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
@@ -287,6 +295,7 @@ class Model(models.Savable):
                         torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
+                        channels = 64,
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 16,
