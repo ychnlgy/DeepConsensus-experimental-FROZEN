@@ -173,7 +173,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(),
+                        torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
@@ -230,7 +230,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(),
+                        torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
@@ -287,7 +287,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(),
+                        torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
@@ -344,7 +344,7 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(),
+                        torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
