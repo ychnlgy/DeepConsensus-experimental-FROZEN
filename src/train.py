@@ -157,13 +157,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -173,9 +173,9 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(2),
+                        torch.nn.MaxPool2d(),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -186,13 +186,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -203,7 +203,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -214,13 +214,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -230,9 +230,9 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(2),
+                        torch.nn.MaxPool2d(),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -243,13 +243,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -260,7 +260,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -271,13 +271,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -287,9 +287,9 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(3, padding=1, stride=2),
+                        torch.nn.MaxPool2d(),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -300,13 +300,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -317,7 +317,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -328,13 +328,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -344,9 +344,9 @@ class Model(models.Savable):
                 models.DistillLayer(
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(2),
+                        torch.nn.MaxPool2d(),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -357,13 +357,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            bodysize = 32,
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
@@ -374,7 +374,7 @@ class Model(models.Savable):
                     conv = torch.nn.Sequential(
                         torch.nn.Conv2d(64, 64, 3, padding=1),
                         torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
+                        torch.nn.BatchNorm2d(64)
                     ),
                     pool = models.DistillPool(
                         g = models.DenseNet(
@@ -385,70 +385,13 @@ class Model(models.Savable):
                         ),
                         h = models.DenseNet(
                             headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
-                        ),
-                        c = models.Classifier(
-                            hiddensize = 8,
-                            classes = classes
-                        ),
-                    )
-                ),
-                
-                 # 4 -> 2
-                models.DistillLayer(
-                    conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.MaxPool2d(2),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
-                    ),
-                    pool = models.DistillPool(
-                        g = models.DenseNet(
-                            headsize = 64,
                             bodysize = 32,
-                            tailsize = 1,
-                            layers = 2
-                        ),
-                        h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
+                            tailsize = 4,
+                            layers = 2,
+                            activation = torch.nn.Sigmoid()
                         ),
                         c = models.Classifier(
-                            hiddensize = 8,
-                            classes = classes
-                        ),
-                    )
-                ),
-                
-                 # 2 -> 2
-                models.DistillLayer(
-                    conv = torch.nn.Sequential(
-                        torch.nn.Conv2d(64, 64, 3, padding=1),
-                        torch.nn.LeakyReLU(),
-                        torch.nn.BatchNorm2d(64),
-                    ),
-                    pool = models.DistillPool(
-                        g = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 32,
-                            tailsize = 1,
-                            layers = 2
-                        ),
-                        h = models.DenseNet(
-                            headsize = 64,
-                            bodysize = 8,
-                            tailsize = 8,
-                            layers = 1,
-                            activation = torch.nn.Tanh()
-                        ),
-                        c = models.Classifier(
-                            hiddensize = 8,
+                            hiddensize = 4,
                             classes = classes
                         ),
                     )
