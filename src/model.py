@@ -6,6 +6,7 @@ class Model(torch.nn.Module):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__()
+        print("OK")
         self.net = torch.nn.Sequential(
             
             # Do alternating convs, gravity pooling

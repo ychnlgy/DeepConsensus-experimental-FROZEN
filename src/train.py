@@ -4,6 +4,8 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models
 
+from model import Model
+
 class Cnn(models.Savable):
 
     def __init__(self, channels, classes):
@@ -76,7 +78,7 @@ class Cnn(models.Savable):
     def forward(self, X):
         return self.net(X)
 
-class Model(models.Savable):
+class Model_OLD(models.Savable):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__()
