@@ -153,8 +153,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2s
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -182,8 +181,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -210,8 +208,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -239,8 +236,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -267,8 +263,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -296,8 +291,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -324,8 +318,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -353,8 +346,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -381,8 +373,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -410,8 +401,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
@@ -438,8 +428,7 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2,
-                            activation = torch.nn.Sigmoid()
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
