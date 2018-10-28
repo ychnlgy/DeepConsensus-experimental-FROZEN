@@ -153,13 +153,14 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 1,
-                            layers = 2s
+                            layers = 2
                         ),
                         h = models.DenseNet(
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -187,7 +188,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -214,7 +216,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -242,7 +245,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -269,7 +273,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -297,7 +302,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -324,7 +330,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -352,7 +359,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -379,7 +387,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -407,7 +416,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
@@ -434,7 +444,8 @@ class Model(models.Savable):
                             headsize = 64,
                             bodysize = 32,
                             tailsize = 32,
-                            layers = 1
+                            layers = 1,
+                            activation = torch.nn.Tanh()
                         ),
                         c = models.Classifier(
                             hiddensize = 32,
