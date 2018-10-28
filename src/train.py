@@ -84,8 +84,6 @@ class Model(models.Savable):
             
             models.UniqueSquash(),
             models.UniqueSquash(),
-            models.UniqueSquash(),
-            models.UniqueSquash(),
             
             torch.nn.Conv2d(channels, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
