@@ -1,5 +1,6 @@
 import torch
 
+import misc
 from .AbsTanh import AbsTanh
 
 class DistillPool(torch.nn.Module):
@@ -42,4 +43,5 @@ class DistillPool(torch.nn.Module):
         w = self.x(self.w)
         v = self.h(U * w)
         s = self.t(v).sum(dim=1)
+        misc.debug.println(s[0])
         return self.c(s)
