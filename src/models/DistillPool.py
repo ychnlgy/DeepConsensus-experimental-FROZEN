@@ -4,6 +4,7 @@ import misc
 
 from .Classifier import Classifier
 from .UniqueSquash import UniqueSquash
+from .AbsTanh import AbsTanh
 
 class DistillPool(torch.nn.Module):
 
