@@ -4,7 +4,7 @@ class ResNet(torch.nn.Module):
 
     def __init__(self, *blocks):
         super(ResNet, self).__init__()
-        self.blocks = blocks
+        self.blocks = torch.nn.ModuleList(blocks)
     
     def forward(self, X):
         for X in self.iter_forward(X):
