@@ -150,8 +150,8 @@ def _main(repeat=1, **kwargs):
             bar = tqdm.tqdm(range(repeat), ncols=80)
             for i in bar:
                 result = func(silent=True)
-                bar.set_description("Score: %.3f, Stdev: %.3f" % (statistics.mean(out), statistics.stdev(out)))
                 out.append(result)
+                bar.set_description("Score: %.3f, Stdev: %.3f" % (statistics.mean(out), statistics.stdev(out)))
             print(out)
         else:
             func(silent=False)

@@ -76,11 +76,27 @@ def get_mnist_corrupt(download=0, **kwargs):
 
 def make_corrupt(original, corrupt_train=False, corrupt_test=True, **kwargs):
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE = original
+    
+    train_kwargs, test_kwargs = process_corrupt_kwargs(kwargs)
+    
     if int(corrupt_train):
-        trainData = make_data_corrupt(trainData, kwargs)
+        trainData = make_data_corrupt(trainData, train_kwargs)
     if int(corrupt_test):
-        testData = make_data_corrupt(testData, kwargs)
+        testData = make_data_corrupt(testData, test_kwargs)
+    
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+TRAIN_KEY = "TRAIN_"
+
+def process_corrupt_kwargs(kwargs):
+    train_kwargs = {}
+    test_kwargs = {}
+    for k, v in kwargs.items():
+        if k.startswith(TRAIN_KEY):
+            train_kwargs[k[len(TRAIN_KEY):]] = v
+        else:
+            test_kwargs[k] = v
+    return train_kwargs, test_kwargs
 
 def make_data_corrupt(data, kwargs):
     N, C, W, H = data.size()
