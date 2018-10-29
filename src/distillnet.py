@@ -13,30 +13,6 @@ class Model(ResNet):
     def make_distillpools(self, classes):
         return [
             models.DistillPool(
-                h = models.DenseNet(headsize = 32),
-                c = models.Classifier(32, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 32),
-                c = models.Classifier(32, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 32),
-                c = models.Classifier(32, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 64),
-                c = models.Classifier(64, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 64),
-                c = models.Classifier(64, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 64),
-                c = models.Classifier(64, classes)
-            ),
-            models.DistillPool(
                 h = models.DenseNet(headsize = 128),
                 c = models.Classifier(128, classes)
             ),
@@ -67,7 +43,7 @@ class Model(ResNet):
     
     def iter_forward(self, X):
         X = self.conv(X)
-        it = list(self.resnet.iter_forward(X))
+        it = list(self.resnet.iter_forward(X))[-len(self.distills):]
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
             yield distill(X)
