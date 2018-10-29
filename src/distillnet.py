@@ -13,20 +13,20 @@ class Model(ResNet):
     def make_distillpools(self, classes):
         return [
             models.DistillPool(
-                h = models.DenseNet(headsize = 32, tailsize = 16),
-                c = models.Classifier(16, classes)
+                h = models.DenseNet(headsize = 32),
+                c = models.Classifier(32, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 64, tailsize = 16),
-                c = models.Classifier(16, classes)
+                h = models.DenseNet(headsize = 64),
+                c = models.Classifier(64, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 128, tailsize = 16),
-                c = models.Classifier(16, classes)
+                h = models.DenseNet(headsize = 128),
+                c = models.Classifier(128, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 256, tailsize = 16),
-                c = models.Classifier(16, classes)
+                h = models.DenseNet(headsize = 256),
+                c = models.Classifier(256, classes)
             )
         ]
     
