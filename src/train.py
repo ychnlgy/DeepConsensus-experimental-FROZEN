@@ -151,7 +151,7 @@ def _main(repeat=1, **kwargs):
             for i in bar:
                 result = func(silent=True)
                 out.append(result)
-                bar.set_description("Score: %.3f, Stdev: %.3f" % (statistics.mean(out), statistics.stdev(out)))
+                bar.set_description("Score: %.3f" % result)
             print(out)
         else:
             func(silent=False)
