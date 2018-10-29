@@ -1,3 +1,5 @@
+import torch
+
 import models
 
 from resnet import Model as ResNet
