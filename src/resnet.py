@@ -53,7 +53,7 @@ class Model(torch.nn.Module):
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(64)
                     ),
-                    shortcut = torch.nn.Conv2d(64, 128, 1, stride=2)
+                    shortcut = torch.nn.Conv2d(32, 64, 1, stride=2)
                 ),
                 
                 models.ResBlock(
