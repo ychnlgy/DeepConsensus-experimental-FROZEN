@@ -14,3 +14,5 @@ from .SoftmaxCombine import SoftmaxCombine
 from .UniqueSquash import UniqueSquash
 from .ChannelTransform import ChannelTransform
 from .GravityField import GravityField
+from .ResBlock import ResBlock
+from .ResNet import ResNet

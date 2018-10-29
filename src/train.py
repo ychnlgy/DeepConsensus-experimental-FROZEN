@@ -361,6 +361,8 @@ class Model(models.Savable):
     def forward(self, X):
         return self.net(X)
 
+from resnet import Model as Cnn
+
 def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     classic = int(classic)
