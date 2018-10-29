@@ -34,8 +34,8 @@ class Model(ResNet):
         return sum(self.iter_forward(X))
     
     def iter_forward(self, X):
-        X = self.bottleneck(X)
-        it = list(self.resnet.iter_forward(X))[-len(self.distills):]
+        X = self.conv(X)
+        it = list(self.resnet.iter_forward(X))
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
             yield distill(X)
