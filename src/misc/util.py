@@ -6,6 +6,13 @@ UNITTEST = "unittest_"
 
 # === Functions ===
 
+def parse(f):
+    with open(f, "r") as fi:
+        for line in fi:
+            data = line.rstrip()
+            if data:
+                yield data
+
 def reverse_iterator(it):
     return list(reversed(list(it)))
 

@@ -1,0 +1,2 @@
+./train.py dataset=mnist64-corrupt mintrans=20 maxtrans=20 epochs=50 classic=0 repeat=5
+
