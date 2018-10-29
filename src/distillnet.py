@@ -21,7 +21,7 @@ class Model(ResNet):
             torch.nn.Conv2d(32, 64, 3, padding=1),
             torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32),
+            torch.nn.BatchNorm2d(64),
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
             torch.nn.LeakyReLU(),
