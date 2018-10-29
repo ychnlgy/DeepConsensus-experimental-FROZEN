@@ -80,7 +80,7 @@ class Model(torch.nn.Module):
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(128)
-                    )
+                    ),
                     shortcut = torch.nn.Conv2d(64, 128, 1, stride=2)
                 ),
                 
@@ -108,7 +108,7 @@ class Model(torch.nn.Module):
                         torch.nn.MaxPool2d(2),
                         torch.nn.LeakyReLU(),
                         torch.nn.BatchNorm2d(256)
-                    )
+                    ),
                     shortcut = torch.nn.Conv2d(128, 256, 1, stride=2)
                 ),
                 
