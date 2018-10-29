@@ -13,4 +13,4 @@ class ResBlock(torch.nn.Module):
         self.op = output
     
     def forward(self, X):
-        return self.ac(self.cn(X) + self.sc(X)), self.output
+        return self.ac(self.cn(X) + self.sc(X)), self.op
