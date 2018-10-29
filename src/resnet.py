@@ -129,8 +129,7 @@ class Model(torch.nn.Module):
                     torch.nn.Conv2d(256, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
-                ),
-                output = False
+                )
             )
         
         )
