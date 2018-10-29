@@ -39,7 +39,8 @@ class Model(torch.nn.Module):
                     torch.nn.Conv2d(32, 32, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
-                )
+                ),
+                output = False
             ),
             
             # 32 -> 16
