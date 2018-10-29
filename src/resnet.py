@@ -121,7 +121,7 @@ class Model(torch.nn.Module):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
                 )
-            )
+            ),
             
             # 8 -> 4
             models.ResBlock(
