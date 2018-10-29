@@ -135,3 +135,6 @@ class Model(torch.nn.Module):
             torch.nn.Linear(256, classes)
             
         )
+    
+    def forward(self, X):
+        return self.net(X)
