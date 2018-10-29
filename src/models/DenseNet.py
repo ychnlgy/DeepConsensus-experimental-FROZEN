@@ -4,9 +4,12 @@ DEFAULT_ACTIVATION = torch.nn.LeakyReLU()
 
 class DenseNet(torch.nn.Module):
     
-    def __init__(self, headsize, bodysize, tailsize, layers, dropout=0.0, bias=True, activation=DEFAULT_ACTIVATION, default=DEFAULT_ACTIVATION):
+    def __init__(self, headsize, tailsize=None, bodysize=None, layers=1, dropout=0.0, bias=True, activation=DEFAULT_ACTIVATION, default=DEFAULT_ACTIVATION):
         super(DenseNet, self).__init__()
         self.bias = bias
+        
+        if tailsize is None:
+            tailsize = headsize
         
         if layers == 0:
             self.net = torch.nn.Sequential()
