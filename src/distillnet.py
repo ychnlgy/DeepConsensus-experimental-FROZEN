@@ -8,9 +8,9 @@ class Model(ResNet):
 
     def __init__(self, channels, classes):
         super(Model, self).__init__(channels, classes)
-        self.distills = torch.nn.ModuleList(self.make_distillpools())
+        self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
 
-    def make_distillpools(self):
+    def make_distillpools(self, classes):
         return [
             models.DistillPool(
                 h = models.DenseNet(headsize = 32),
