@@ -19,10 +19,8 @@ class DistillPool(torch.nn.Module):
     
     '''
 
-    def __init__(self, channels, h, c, layers=0):
+    def __init__(self, channels, h, c):
         super(DistillPool, self).__init__()
-        self.layers = layers
-        self.squash = UniqueSquash()
         self.h = h
         self.c = c
         self.w = torch.nn.Parameter(torch.rand(1, 1, channels))
@@ -47,8 +45,6 @@ class DistillPool(torch.nn.Module):
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
         w = self.x(self.w)
         v = self.h(U * w).permute(0, 2, 1).view(N, -1, W, H)
-        for layer in range(self.layers):
-            v = self.squash(v)
         v = v.view(N, -1, W*H).permute(0, 2, 1)
         s = self.t(v).sum(dim=1)
         return self.c(s)
