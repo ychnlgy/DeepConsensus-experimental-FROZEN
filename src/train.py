@@ -125,6 +125,28 @@ class Model(models.Savable):
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(64),
             
+            # 8 -> 4
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.MaxPool2d(2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            # 4 -> 8
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.Upsample(scale_factor=2),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
+            torch.nn.Conv2d(64, 64, 3, padding=1),
+            torch.nn.LeakyReLU(),
+            torch.nn.BatchNorm2d(64),
+            
             # 8 -> 16
             
             torch.nn.Conv2d(64, 64, 3, padding=1),
