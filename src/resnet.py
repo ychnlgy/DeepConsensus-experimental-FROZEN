@@ -155,7 +155,7 @@ class Model(torch.nn.Module):
         self.net = torch.nn.Sequential(
             torch.nn.AvgPool2d(4),
             models.Reshape(512),
-            torch.nn.Linear(512, 1024)
+            torch.nn.Linear(512, 1024),
             torch.nn.Dropout(p=0.2),
             torch.nn.LeakyReLU(),
             torch.nn.Linear(1024, 1024),
