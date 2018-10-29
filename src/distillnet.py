@@ -118,6 +118,18 @@ class Model(ResNet):
                 h = models.DenseNet(headsize = 256),
                 c = models.Classifier(256, classes)
             ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 512),
+                c = models.Classifier(512, classes)
+            ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 512),
+                c = models.Classifier(512, classes)
+            ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 512),
+                c = models.Classifier(512, classes)
+            ),
         ]
     
     def forward(self, X):
