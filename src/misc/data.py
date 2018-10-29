@@ -294,9 +294,9 @@ def unittest():
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=0.5, maxalpha=0.5,
+        minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=0
+        minsigma=2, maxsigma=2
     )
     
 #    print("Showing train data")
@@ -334,17 +334,9 @@ def unittest():
         pyplot.show()
         pyplot.clf()
         
-        img = img.unsqueeze(1)
-        
-        for i in range(4):
-            img = squash[i](img)
-            im = img.permute(2, 3, 0, 1).squeeze().numpy()
-            pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-            pyplot.show()
-            pyplot.clf()
-        
-#        img = squash2(img)
-#        im = img.permute(2, 3, 0, 1).squeeze().numpy()
-#        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-#        pyplot.show()
-#        pyplot.clf()
+        img = img.unsqueeze(0)
+        img = squash[0](img)
+        im = img.permute(2, 3, 0, 1).squeeze().numpy()
+        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.show()
+        pyplot.clf()
