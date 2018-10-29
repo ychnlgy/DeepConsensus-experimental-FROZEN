@@ -13,5 +13,6 @@ class ResNet(torch.nn.Module):
     
     def iter_forward(self, X):
         for block in self.blocks:
-            X = block(X)
-            yield X
+            X, output = block(X)
+            if output:
+                yield X

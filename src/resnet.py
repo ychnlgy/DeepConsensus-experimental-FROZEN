@@ -9,6 +9,7 @@ class Model(torch.nn.Module):
         
         self.conv = torch.nn.Sequential(
             torch.nn.Conv2d(channels, 32, 5, padding=2),
+            torch.nn.MaxPool2d(2),
             torch.nn.LeakyReLU(),
             torch.nn.BatchNorm2d(32)
         )
@@ -20,7 +21,17 @@ class Model(torch.nn.Module):
                     torch.nn.Conv2d(32, 32, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
-                )
+                ),
+                output = False
+            ),
+            
+            models.ResBlock(
+                conv = torch.nn.Sequential(
+                    torch.nn.Conv2d(32, 32, 3, padding=1),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(32)
+                ),
+                output = False
             ),
             
             models.ResBlock(
@@ -31,15 +42,7 @@ class Model(torch.nn.Module):
                 )
             ),
             
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 32, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32)
-                )
-            ),
-            
-            # 64 -> 32
+            # 32 -> 16
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
@@ -48,7 +51,17 @@ class Model(torch.nn.Module):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64)
                 ),
-                shortcut = torch.nn.Conv2d(32, 64, 1, stride=2)
+                shortcut = torch.nn.Conv2d(32, 64, 1, stride=2),
+                output = False
+            ),
+            
+            models.ResBlock(
+                conv = torch.nn.Sequential(
+                    torch.nn.Conv2d(64, 64, 3, padding=1),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(64)
+                ),
+                output = False
             ),
             
             models.ResBlock(
@@ -59,15 +72,7 @@ class Model(torch.nn.Module):
                 )
             ),
             
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 64, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64)
-                )
-            ),
-            
-            # 32 -> 16
+            # 16 -> 8
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
@@ -76,7 +81,17 @@ class Model(torch.nn.Module):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128)
                 ),
-                shortcut = torch.nn.Conv2d(64, 128, 1, stride=2)
+                shortcut = torch.nn.Conv2d(64, 128, 1, stride=2),
+                output = False
+            ),
+            
+            models.ResBlock(
+                conv = torch.nn.Sequential(
+                    torch.nn.Conv2d(128, 128, 3, padding=1),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(128)
+                ),
+                output = False
             ),
             
             models.ResBlock(
@@ -87,15 +102,7 @@ class Model(torch.nn.Module):
                 )
             ),
             
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(128, 128, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128)
-                )
-            ),
-            
-            # 16 -> 8
+            # 8 -> 4
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
@@ -104,7 +111,8 @@ class Model(torch.nn.Module):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
                 ),
-                shortcut = torch.nn.Conv2d(128, 256, 1, stride=2)
+                shortcut = torch.nn.Conv2d(128, 256, 1, stride=2),
+                output = False
             ),
             
             models.ResBlock(
@@ -112,50 +120,25 @@ class Model(torch.nn.Module):
                     torch.nn.Conv2d(256, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
-                )
-            ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 256, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256)
-                )
-            ),
-            
-            # 8 -> 4
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 512, 3, padding=1),
-                    torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(512)
                 ),
-                shortcut = torch.nn.Conv2d(256, 512, 1, stride=2)
+                output = False
             ),
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(512, 512, 3, padding=1),
+                    torch.nn.Conv2d(256, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(512)
-                )
-            ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(512, 512, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(512)
-                )
+                    torch.nn.BatchNorm2d(256)
+                ),
+                output = False
             )
         
         )
         
         self.net = torch.nn.Sequential(
             torch.nn.AvgPool2d(4),
-            models.Reshape(512),
-            torch.nn.Linear(512, classes)
+            models.Reshape(256),
+            torch.nn.Linear(256, classes)
         )
     
     def forward(self, X):
