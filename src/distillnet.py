@@ -52,7 +52,7 @@ class Model(ResNet):
         ]
     
     def forward(self, X):
-        return sum(self.iter_forward(X))
+        return sum(self.combine(X))
     
     def iter_forward(self, X):
         X = self.conv(X)
