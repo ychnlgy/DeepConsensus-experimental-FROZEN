@@ -77,7 +77,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
-            save_image("%d-%d-perturb.png" % (i, label.item()), pert_image)
+            save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
             
             print(label.item())
             collect_answer(model, image)
