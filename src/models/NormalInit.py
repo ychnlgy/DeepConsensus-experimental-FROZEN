@@ -8,7 +8,7 @@ class NormalInit:
         if t in target_types:
             torch.nn.init.xavier_uniform(sequential.weight)
         else:
-            assert isinstance(sequential, torch.nn.Sequential):
+            assert isinstance(sequential, torch.nn.Sequential)
             for module in sequential:
                 if type(module) in target_types:
                     torch.nn.init.xavier_uniform(module.weight)
