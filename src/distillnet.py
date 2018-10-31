@@ -23,7 +23,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             models.DistillPool(
                 h = models.DenseNet(
@@ -34,7 +34,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
@@ -46,7 +46,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             models.DistillPool(
                 h = models.DenseNet(
@@ -57,7 +57,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
@@ -69,7 +69,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             models.DistillPool(
                 h = models.DenseNet(
@@ -80,7 +80,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
@@ -92,7 +92,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
@@ -104,7 +104,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = torch.nn.Tanh()
                 ),
-                c = models.Classifier(8, classes)
+                c = models.Classifier(8, classes + 1)
             )
         ]
     
