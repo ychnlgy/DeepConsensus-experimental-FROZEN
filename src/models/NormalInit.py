@@ -6,7 +6,7 @@ class NormalInit:
         t = type(sequential)
         target_types = self.get_init_targets()
         if t in target_types:
-            torch.nn.init.xavier_uniform(sequential.weight)
+            torch.nn.init.xavier_uniform_(sequential.weight)
         elif t is torch.nn.Sequential:
             for module in sequential:
                 self.init_weights(module)

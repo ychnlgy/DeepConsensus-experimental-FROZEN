@@ -11,7 +11,7 @@ class Classifier(torch.nn.Module):
     
     def init_groups(self, classes, hiddensize):
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
-        torch.nn.init.xavier_uniform(self.grp)
+        torch.nn.init.xavier_uniform_(self.grp)
     
     def get_class_vec(self, c):
         return self.grp[c]
