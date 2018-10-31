@@ -15,40 +15,84 @@ class Model(ResNet):
     def make_distillpools(self, classes):
         return [
             models.DistillPool(
-                h = models.DenseNet(headsize = 32),
-                c = models.Classifier(32, classes)
+                h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.4,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 32),
-                c = models.Classifier(32, classes)
+                h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.4,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             
             models.DistillPool(
-                h = models.DenseNet(headsize = 64),
-                c = models.Classifier(64, classes)
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.4,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 64),
-                c = models.Classifier(64, classes)
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.4,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             
             models.DistillPool(
-                h = models.DenseNet(headsize = 128),
-                c = models.Classifier(128, classes)
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.6,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             models.DistillPool(
-                h = models.DenseNet(headsize = 128),
-                c = models.Classifier(128, classes)
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.6,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             ),
             
             models.DistillPool(
-                h = models.DenseNet(headsize = 256),
-                c = models.Classifier(256, classes)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(headsize = 256),
-                c = models.Classifier(256, classes)
-            ),
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.6,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
         ]
     
     def forward(self, X):

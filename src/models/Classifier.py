@@ -7,7 +7,7 @@ class Classifier(torch.nn.Module):
     def __init__(self, hiddensize, classes):
         super(Classifier, self).__init__()
         self.init_groups(classes, hiddensize)
-        self.cos = models.Norm()
+        self.cos = models.CosineSimilarity()
     
     def init_groups(self, classes, hiddensize):
         self.grp = torch.nn.Parameter(torch.rand(classes, hiddensize))
@@ -19,4 +19,4 @@ class Classifier(torch.nn.Module):
         return self.grp.mean(dim=0)
     
     def forward(self, X):
-        return -self.cos(X, self.grp)
+        return self.cos(X, self.grp)
