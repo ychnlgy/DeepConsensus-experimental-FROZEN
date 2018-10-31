@@ -73,12 +73,11 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         images = iter(validloader)
         for i in range(fool):
             image, label = next(images)
-            i = label.item()
             save_image("%d-original.png" % i, image)
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
-            save_image("%d-perturb.png" % i, pert_image)
+            save_image("%d-%d-perturb.png" % (i, label.item()), pert_image)
             
             print(label.item())
             collect_answer(model, image)
