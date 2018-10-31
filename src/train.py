@@ -68,7 +68,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             images = iter(validloader)
             for i in range(fool):
                 image, label = next(images)
-                image = image.to(device)
+                image = image.to(device).squeeze(0)
                 print(label)
                 r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
                 print(r_tot, loop_i, label, k_i)
