@@ -16,3 +16,4 @@ from .ChannelTransform import ChannelTransform
 from .GravityField import GravityField
 from .ResBlock import ResBlock
 from .ResNet import ResNet
+from .NormalInit import NormalInit

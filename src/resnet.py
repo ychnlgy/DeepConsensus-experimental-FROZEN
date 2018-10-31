@@ -2,7 +2,7 @@ import torch
 
 import models
 
-class Model(torch.nn.Module):
+class Model(torch.nn.Module, models.NormalInit):
     
     def __init__(self, channels, classes):
         super(Model, self).__init__()
@@ -20,13 +20,8 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(32, 32, 3, padding=1),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32)
-                ),
-                output = False
-            ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
+                    torch.nn.BatchNorm2d(32),
+                    
                     torch.nn.Conv2d(32, 32, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
@@ -36,6 +31,10 @@ class Model(torch.nn.Module):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
+                    torch.nn.Conv2d(32, 32, 3, padding=1),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(32),
+                    
                     torch.nn.Conv2d(32, 32, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
@@ -50,6 +49,10 @@ class Model(torch.nn.Module):
                     torch.nn.Conv2d(32, 64, 3, padding=1),
                     torch.nn.MaxPool2d(2),
                     torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(64),
+                    
+                    torch.nn.Conv2d(64, 64, 3, padding=1),
+                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64)
                 ),
                 shortcut = torch.nn.Conv2d(32, 64, 1, stride=2),
@@ -60,17 +63,13 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(64, 64, 3, padding=1),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64)
-                ),
-                output = False
-            ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
+                    torch.nn.BatchNorm2d(64),
+                    
                     torch.nn.Conv2d(64, 64, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64)
-                )
+                ),
+                output = False
             ),
             
             # 16 -> 8
@@ -79,6 +78,10 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(64, 128, 3, padding=1),
                     torch.nn.MaxPool2d(2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(128),
+                    
+                    torch.nn.Conv2d(128, 128, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128)
                 ),
@@ -90,17 +93,13 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(128, 128, 3, padding=1),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128)
-                ),
-                output = False
-            ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
+                    torch.nn.BatchNorm2d(128),
+                    
                     torch.nn.Conv2d(128, 128, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128)
-                )
+                ),
+                output = False
             ),
             
             # 8 -> 4
@@ -109,6 +108,10 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(128, 256, 3, padding=1),
                     torch.nn.MaxPool2d(2),
+                    torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(256),
+                    
+                    torch.nn.Conv2d(256, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
                 ),
@@ -120,18 +123,14 @@ class Model(torch.nn.Module):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(256, 256, 3, padding=1),
                     torch.nn.LeakyReLU(),
+                    torch.nn.BatchNorm2d(256),
+                    
+                    torch.nn.Conv2d(256, 256, 3, padding=1),
+                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
                 ),
                 output = False
             ),
-            
-            models.ResBlock(
-                conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(256, 256, 3, padding=1),
-                    torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256)
-                )
-            )
         
         )
         
@@ -140,6 +139,12 @@ class Model(torch.nn.Module):
             models.Reshape(256),
             torch.nn.Linear(256, classes)
         )
+        
+        self.init_weights(self.conv)
+        self.init_weights(self.net)
+    
+    def get_init_targets(self):
+        return [torch.nn.Linear, torch.nn.Conv2d]
     
     def forward(self, X):
         return self.net(self.resnet(self.conv(X)))
