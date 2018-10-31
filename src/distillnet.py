@@ -93,6 +93,18 @@ class Model(ResNet):
                     activation = torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes)
+            ),
+            
+            models.DistillPool(
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = 8,
+                    layers = 2,
+                    dropout = 0.6,
+                    activation = torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes)
             )
         ]
     
