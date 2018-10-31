@@ -1,7 +1,5 @@
 import torch
 
-from .NormalInit import NormalInit
-
 DEFAULT_ACTIVATION = torch.nn.LeakyReLU()
 
 class DenseNet(torch.nn.Module):
