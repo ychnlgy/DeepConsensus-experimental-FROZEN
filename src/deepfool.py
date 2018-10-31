@@ -27,7 +27,7 @@ def deepfool(image, net, num_classes=10, overshoot=0.02, max_iter=50):
 
     f_image = net.forward(Variable(image[None, :, :, :], requires_grad=True)).data.cpu().numpy().flatten()
     I = (np.array(f_image)).flatten().argsort()[::-1]
-    print(I)
+
     I = I[0:num_classes]
     label = I[0]
 

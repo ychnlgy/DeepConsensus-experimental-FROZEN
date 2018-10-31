@@ -19,6 +19,12 @@ def save_image(name, image):
     pyplot.savefig(name)
     pyplot.clf()
 
+def collect_answer(model, image):
+    im = image.unsqueeze(0)
+    yh = torch.nn.functional.softmax(model(im), dim=1)
+    val, idx = yh.squeeze().max(dim=0)
+    print(idx.item(), val.item())
+
 def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     fool = int(fool)
@@ -68,11 +74,14 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         for i in range(fool):
             image, label = next(images)
             image = image.to(device).squeeze(0)
-            print(label)
             r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
-            print(r_tot, loop_i, label, k_i)
             save_image("%d-original.png" % i, image)
             save_image("%d-perturb.png" % i, pert_image)
+            
+            print(label)
+            collect_answer(model, image)
+            collect_answer(model, pert_image)
+            
         raise SystemExit(0)
         
     lossf = torch.nn.CrossEntropyLoss().to(device)
