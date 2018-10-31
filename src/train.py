@@ -15,7 +15,7 @@ from matplotlib import pyplot
 
 def save_image(name, image):
     image = image.squeeze().cpu().detach().numpy()
-    pyplot.imshow(image)
+    pyplot.imshow(image, cmap="gray")
     pyplot.savefig(name)
     pyplot.clf()
 
