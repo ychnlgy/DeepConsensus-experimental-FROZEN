@@ -78,7 +78,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             save_image("%d-original.png" % i, image)
             save_image("%d-perturb.png" % i, pert_image)
             
-            print(label)
+            print(label.item())
             collect_answer(model, image)
             collect_answer(model, pert_image)
             
