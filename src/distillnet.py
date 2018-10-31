@@ -93,6 +93,7 @@ class Model(ResNet):
                     activation = torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes)
+            )
         ]
     
     def forward(self, X):
