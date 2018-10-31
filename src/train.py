@@ -14,7 +14,7 @@ matplotlib.use("agg")
 from matplotlib import pyplot
 
 def save_image(name, image):
-    image = image.cpu().detach().numpy()
+    image = image.squeeze().cpu().detach().numpy()
     pyplot.imshow(image)
     pyplot.savefig(name)
     pyplot.clf()
