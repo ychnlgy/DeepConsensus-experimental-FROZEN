@@ -73,6 +73,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             print(r_tot, loop_i, label, k_i)
             save_image("%d-original.png" % i, image)
             save_image("%d-perturb.png" % i, pert_image)
+        raise SystemExit(0)
         
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
