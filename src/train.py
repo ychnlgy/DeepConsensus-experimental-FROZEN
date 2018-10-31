@@ -64,16 +64,15 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     if fool:
-        with torch.no_grad():
-            images = iter(validloader)
-            for i in range(fool):
-                image, label = next(images)
-                image = image.to(device).squeeze(0)
-                print(label)
-                r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
-                print(r_tot, loop_i, label, k_i)
-                save_image("%d-original.png" % i, image)
-                save_image("%d-perturb.png" % i, pert_image)
+        images = iter(validloader)
+        for i in range(fool):
+            image, label = next(images)
+            image = image.to(device).squeeze(0)
+            print(label)
+            r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
+            print(r_tot, loop_i, label, k_i)
+            save_image("%d-original.png" % i, image)
+            save_image("%d-perturb.png" % i, pert_image)
         
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
