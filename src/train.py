@@ -20,7 +20,7 @@ def save_image(name, image):
     pyplot.clf()
 
 def collect_answer(model, image):
-    im = image.unsqueeze(0)
+    im = image.view(1, 1, 64, 64)
     yh = torch.nn.functional.softmax(model(im), dim=1)
     val, idx = yh.squeeze().max(dim=0)
     print(idx.item(), val.item())
