@@ -9,25 +9,46 @@ class Model(ResNet):
     def __init__(self, channels, classes):
         super(Model, self).__init__(channels, classes)
         self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
+        self.max = torch.nn.Softmax(dim=1)
+        print("Using max")
 
     def make_distillpools(self, classes):
         return [
-#            models.DistillPool(
-#                h = models.DenseNet(headsize = 32),
-#                c = models.Classifier(32, classes)
-#            ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 32),
+                c = models.Classifier(32, classes)
+            ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 32),
+                c = models.Classifier(32, classes)
+            ),
+            
             models.DistillPool(
                 h = models.DenseNet(headsize = 64),
                 c = models.Classifier(64, classes)
             ),
             models.DistillPool(
+                h = models.DenseNet(headsize = 64),
+                c = models.Classifier(64, classes)
+            ),
+            
+            models.DistillPool(
                 h = models.DenseNet(headsize = 128),
                 c = models.Classifier(128, classes)
             ),
             models.DistillPool(
+                h = models.DenseNet(headsize = 128),
+                c = models.Classifier(128, classes)
+            ),
+            
+            models.DistillPool(
                 h = models.DenseNet(headsize = 256),
                 c = models.Classifier(256, classes)
-            )
+            ),
+            models.DistillPool(
+                h = models.DenseNet(headsize = 256),
+                c = models.Classifier(256, classes)
+            ),
         ]
     
     def forward(self, X):
@@ -39,3 +60,18 @@ class Model(ResNet):
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
             yield distill(X)
+    
+    def combine(self, X):
+        it = self.iter_forward(X)
+        a = next(it)
+        b = next(it)
+        m = self.max(a)
+        n = self.max(b)
+        p = None
+        yield a * n
+        for c in it:
+            p = self.max(c)
+            yield (m + p)/2.0 * b
+            a, b = b, c
+            m, n = n, p
+        yield m * b

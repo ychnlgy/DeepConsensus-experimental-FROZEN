@@ -26,7 +26,6 @@ class Model(models.Savable):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
                 ),
-                output = False
             ),
             
             models.ResBlock(
@@ -39,7 +38,6 @@ class Model(models.Savable):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32)
                 ),
-                output = False
             ),
             
             # 32 -> 16
@@ -56,7 +54,6 @@ class Model(models.Savable):
                     torch.nn.BatchNorm2d(64)
                 ),
                 shortcut = torch.nn.Conv2d(32, 64, 1, stride=2),
-                output = False
             ),
             
             models.ResBlock(
@@ -85,7 +82,6 @@ class Model(models.Savable):
                     torch.nn.BatchNorm2d(128)
                 ),
                 shortcut = torch.nn.Conv2d(64, 128, 1, stride=2),
-                output = False
             ),
             
             models.ResBlock(
@@ -114,7 +110,6 @@ class Model(models.Savable):
                     torch.nn.BatchNorm2d(256)
                 ),
                 shortcut = torch.nn.Conv2d(128, 256, 1, stride=2),
-                output = False
             ),
             
             models.ResBlock(
