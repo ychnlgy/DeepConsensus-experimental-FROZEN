@@ -1,8 +1,10 @@
 import torch
 
+from .NormalInit import NormalInit
+
 DEFAULT_ACTIVATION = torch.nn.LeakyReLU()
 
-class DenseNet(torch.nn.Module):
+class DenseNet(torch.nn.Module, NormalInit):
     
     def __init__(self, headsize, tailsize=None, bodysize=None, layers=1, dropout=0.0, bias=True, activation=DEFAULT_ACTIVATION, default=DEFAULT_ACTIVATION):
         super(DenseNet, self).__init__()
@@ -24,6 +26,11 @@ class DenseNet(torch.nn.Module):
                 ]),
                 self.create_unit(bodysize, tailsize, activation)
             )
+        
+        self.init_weights(self.net)
+    
+    def get_init_targets(self):
+        return [torch.nn.Linear]
     
     def get_net(self):
         return self.net

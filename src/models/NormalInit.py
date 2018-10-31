@@ -10,8 +10,7 @@ class NormalInit:
         else:
             assert isinstance(sequential, torch.nn.Sequential)
             for module in sequential:
-                if type(module) in target_types:
-                    torch.nn.init.xavier_uniform(module.weight)
+                self.init_weights(module)
     
     def get_init_targets(self):
         raise NotImplementedError
