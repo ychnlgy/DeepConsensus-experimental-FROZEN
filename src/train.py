@@ -70,6 +70,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
     if fool:
+        model.eval()
         images = iter(testloader)
         for i in range(fool):
             image, label = next(images)
