@@ -7,7 +7,7 @@ import misc, models, resnet
 from distillnet import Model
 from resnet import Model as Cnn
 
-def main(dataset, epochs, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(modelf, dataset, epochs, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     classic = int(classic)
     epochs = int(epochs)
@@ -90,12 +90,8 @@ def main(dataset, epochs, classic=0, trainbatch=100, testbatch=300, cycle=1, dat
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-#            if w > highest and not silent:
-#                
-#                print("Saving to %s..." % modelf)
-#            
-#                highest = w
-#                model.save(modelf)
+            print("Saving to %s..." % modelf)
+            model.save(modelf)
             
             scheduler.step(v/m)
             
