@@ -80,7 +80,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             
             save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
             
-            print(label.item())
+            print(label.item(), loop_i)
             collect_answer(model, image)
             collect_answer(model, pert_image)
             
