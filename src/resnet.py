@@ -69,7 +69,6 @@ class Model(torch.nn.Module, models.NormalInit):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64)
                 ),
-                output = False
             ),
             
             # 16 -> 8
@@ -99,7 +98,6 @@ class Model(torch.nn.Module, models.NormalInit):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128)
                 ),
-                output = False
             ),
             
             # 8 -> 4
@@ -129,7 +127,6 @@ class Model(torch.nn.Module, models.NormalInit):
                     torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256)
                 ),
-                output = False
             ),
         
         )
