@@ -7,8 +7,21 @@ import misc, models, resnet
 from distillnet import Model
 from resnet import Model as Cnn
 
-def main(modelf, dataset, epochs, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+from deepfool import deepfool
 
+import matplotlib
+matplotlib.use("agg")
+from matplotlib import pyplot
+
+def save_image(name, image):
+    image = image.squeeze(0).permute(1, 2, 0).cpu().detach().numpy()
+    pyplot.imshow(image)
+    pyplot.savefig(name)
+    pyplot.clf()
+
+def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+
+    fool = int(fool)
     classic = int(classic)
     epochs = int(epochs)
     cycle = int(cycle)
@@ -42,8 +55,26 @@ def main(modelf, dataset, epochs, classic=0, trainbatch=100, testbatch=300, cycl
             raise SystemExit
     
     model = model.to(device)
+    
+    if fool:
+        trainbatch = 1
+        testbatch = 1
+        model.load(modelf)
+    
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
     
+    if fool:
+        with torch.no_grad():
+            images = iter(validloader)
+            for i in range(fool):
+                image, label = next(images)
+                image = image.to(device)
+                print(label)
+                r_tot, loop_i, label, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
+                print(r_tot, loop_i, label, k_i)
+                save_image("%d-original.png" % i, image)
+                save_image("%d-perturb.png" % i, pert_image)
+        
     lossf = torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.5)
