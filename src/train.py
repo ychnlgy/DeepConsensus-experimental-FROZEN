@@ -7,6 +7,12 @@ import misc, models, resnet
 from distillnet import Model
 from resnet import Model as Cnn
 
+MADE_TESTSET = False
+
+train_dat = train_lab = test_dat = test_lab = NUM_CLASSES = CHANNELS = IMAGESIZE = None
+
+INITIALIZATION = None
+
 def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1.0, epochs=-1, device="cuda", silent=0, showparams=0, **dataset_kwargs):
 
     classic = int(classic)
@@ -17,22 +23,31 @@ def main(dataset, classic=0, trainbatch=100, testbatch=300, cycle=1, datalimit=1
     datalimit = float(datalimit)
     showparams = int(showparams)
     
-    train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
-        "mnist": misc.data.get_mnist,
-        "mnist-corrupt": misc.data.get_mnist_corrupt,
-        "mnist64": misc.data.get_mnist64,
-        "mnist64-corrupt": misc.data.get_mnist64_corrupt,
-        "cifar10": misc.data.get_cifar10,
-        "cifar10-corrupt": misc.data.get_cifar10_corrupt,
-        "emnist": misc.data.get_emnist,
-        "emnist-corrupt": misc.data.get_emnist_corrupt,
-        "cs_trans": misc.data.get_circlesqr_translate,
-        "cs_magnify": misc.data.get_circlesqr_magnify,
-        "cs_shrink": misc.data.get_circlesqr_shrink,
-        "sqrquad": misc.data.get_sqrquadrants,
-    }[dataset](**dataset_kwargs)
+    global MADE_TESTSET, train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE, INITIALIZATION
+    
+    if not MADE_TESTSET:
+        MADE_TESTSET = True
+        train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
+            "mnist": misc.data.get_mnist,
+            "mnist-corrupt": misc.data.get_mnist_corrupt,
+            "mnist64": misc.data.get_mnist64,
+            "mnist64-corrupt": misc.data.get_mnist64_corrupt,
+            "cifar10": misc.data.get_cifar10,
+            "cifar10-corrupt": misc.data.get_cifar10_corrupt,
+            "emnist": misc.data.get_emnist,
+            "emnist-corrupt": misc.data.get_emnist_corrupt,
+            "cs_trans": misc.data.get_circlesqr_translate,
+            "cs_magnify": misc.data.get_circlesqr_magnify,
+            "cs_shrink": misc.data.get_circlesqr_shrink,
+            "sqrquad": misc.data.get_sqrquadrants,
+        }[dataset](**dataset_kwargs)
     
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
+    
+    if INITIALIZATION is None:
+        INITIALIZATION = model.state_dict()
+    else:
+        model.load_state_dict(INITIALIZATION)
     
     if showparams:
     
