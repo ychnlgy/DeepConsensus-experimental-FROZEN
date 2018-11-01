@@ -15,7 +15,6 @@ class Model(ResNet):
         return [
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.4),
                     torch.nn.Linear(32, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -27,7 +26,6 @@ class Model(ResNet):
             ),
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.4),
                     torch.nn.Linear(32, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -40,7 +38,6 @@ class Model(ResNet):
             
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.4),
                     torch.nn.Linear(64, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -65,7 +62,6 @@ class Model(ResNet):
             
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.6),
                     torch.nn.Linear(128, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -77,7 +73,6 @@ class Model(ResNet):
             ),
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.6),
                     torch.nn.Linear(128, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -90,7 +85,6 @@ class Model(ResNet):
             
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.6),
                     torch.nn.Linear(256, 64),
                     torch.nn.LeakyReLU(),
                     
@@ -103,7 +97,6 @@ class Model(ResNet):
             
             models.DistillPool(
                 h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.6),
                     torch.nn.Linear(256, 64),
                     torch.nn.LeakyReLU(),
                     
