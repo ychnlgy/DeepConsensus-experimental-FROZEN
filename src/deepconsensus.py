@@ -40,7 +40,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[0], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -51,7 +51,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[1], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
@@ -63,7 +63,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[2], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -74,7 +74,7 @@ class Model(ResNet):
                     dropout = 0.4,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[3], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
@@ -86,7 +86,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[4], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -97,7 +97,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[5], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
@@ -109,7 +109,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[6], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
@@ -121,7 +121,7 @@ class Model(ResNet):
                     dropout = 0.6,
                     activation = self.act
                 ),
-                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+                c = models.Classifier(self.squash[7], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             )
         ]
     
