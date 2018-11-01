@@ -171,7 +171,7 @@ def main(
             w /= m
             print_(" -- <VERR> %.3f" % w, silent)
             
-            print("Saving to %s..." % modelf)
+            print_("Saving to %s..." % modelf)
             model.save(modelf)
             
             scheduler.step(v/m)

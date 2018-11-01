@@ -1,0 +1,2 @@
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 useconsensus=0 minsigma=1.5 maxsigma=1.5
+
