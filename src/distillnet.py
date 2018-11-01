@@ -13,28 +13,28 @@ class Model(ResNet):
 
     def make_distillpools(self, classes):
         return [
-            models.DistillPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(32, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            models.DistillPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(32, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
+#            models.DistillPool(
+#                h = torch.nn.Sequential(
+#                    torch.nn.Linear(32, 64),
+#                    torch.nn.LeakyReLU(),
+#                    
+#                    torch.nn.Dropout(p=0.4),
+#                    torch.nn.Linear(64, 8),
+#                    torch.nn.Tanh()
+#                ),
+#                c = models.Classifier(8, classes + 1)
+#            ),
+#            models.DistillPool(
+#                h = torch.nn.Sequential(
+#                    torch.nn.Linear(32, 64),
+#                    torch.nn.LeakyReLU(),
+#                    
+#                    torch.nn.Dropout(p=0.4),
+#                    torch.nn.Linear(64, 8),
+#                    torch.nn.Tanh()
+#                ),
+#                c = models.Classifier(8, classes + 1)
+#            ),
             
             models.DistillPool(
                 h = torch.nn.Sequential(

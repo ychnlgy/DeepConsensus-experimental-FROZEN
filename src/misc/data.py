@@ -331,7 +331,7 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_mnist64quads(download=0)
+    td, tl, sd, sl, n, c, i = get_cifar1064(download=1)
 #    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
 #        download=0,
 #        minmag=1, maxmag=1,
