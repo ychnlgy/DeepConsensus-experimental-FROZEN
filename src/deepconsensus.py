@@ -2,7 +2,7 @@ import torch
 
 import models
 
-from resnet64 import Model as ResNet
+from resnet import Model as ResNet
 
 class Model(ResNet):
 
