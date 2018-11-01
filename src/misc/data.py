@@ -312,7 +312,8 @@ def unittest():
         minrot=0, maxrot=0,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
-        minsigma=2, maxsigma=2
+        minsigma=0, maxsigma=0,
+        mingauss=40, maxgauss=40
     )
     
 #    print("Showing train data")
@@ -337,22 +338,10 @@ def unittest():
     
     import models
     
-    
-    squash = [models.UniqueSquash() for i in range(4)]
-    pool = [models.SoftmaxCombine() for i in range(4)]
-    #squash2 = models.GravityField(64, 32)
-    
     for img, cls in zip(sd[indices], sl[indices]):
         label = cls.item()
         print(label)
         im = img.permute(1, 2, 0).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-        pyplot.show()
-        pyplot.clf()
-        
-        img = img.unsqueeze(0)
-        img = squash[0](img)
-        im = img.permute(2, 3, 0, 1).squeeze().numpy()
         pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
         pyplot.show()
         pyplot.clf()

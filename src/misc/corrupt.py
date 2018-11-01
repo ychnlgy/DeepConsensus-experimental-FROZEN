@@ -6,11 +6,11 @@ import scipy.ndimage
 
 from .util import hardmap
 
-def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0):
+def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0, mingauss=0, maxgauss=0):
 
-    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma = hardmap(
+    minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss = hardmap(
         float, 
-        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma
+        minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss
     )
 
     w, h = im.shape[:2]
@@ -23,6 +23,7 @@ def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, 
     im = add_noise(im, minalpha, maxalpha)
     im = reduce_colorgrad(im, minbeta, maxbeta)
     im = gaussian_blur(im, minsigma, maxsigma)
+    im = gaussian_noise(im, mingauss, maxgauss)
     return im
     
 def rand_select(v0, vf):
@@ -31,6 +32,12 @@ def rand_select(v0, vf):
 def gaussian_blur(im, low, high):
     sigma = rand_select(low, high)
     return scipy.ndimage.filters.gaussian_filter(im, sigma=sigma)
+
+def gaussian_noise(im, low, high):
+    sigma = rand_select(low, high)
+    noise = numpy.random.normal(scale=sigma, size=im.shape)
+    assert noise.shape == im.shape
+    return im + noise
 
 def add_noise(im, low, high):
     alpha = rand_select(low, high)
