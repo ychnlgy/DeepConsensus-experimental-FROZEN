@@ -7,6 +7,7 @@ import scipy.misc # because spock2 doesn't have skimage
 
 import torch.utils.data
 import torchvision.datasets
+import torchvision.transforms
 
 DIR = os.path.dirname(__file__)
 ROOT = os.path.join(DIR, "..", "..", "data")
@@ -171,12 +172,14 @@ def get_cifar10(download=0):
     CHANNELS = 3
     IMAGESIZE = (32, 32)
     
-    train = torchvision.datasets.CIFAR10(root=ROOT, train=True, download=download)
-    trainData = torch.from_numpy(train.train_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
+    normalize = torchvision.transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
+    
+    train = torchvision.datasets.CIFAR10(root=ROOT, train=True, transform=normalize, download=download)
+    trainData = torch.from_numpy(train.train_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()
     trainLabels = torch.LongTensor(train.train_labels)
 
-    test = torchvision.datasets.CIFAR10(root=ROOT, train=False, download=download)
-    testData = torch.from_numpy(test.test_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
+    test = torchvision.datasets.CIFAR10(root=ROOT, train=False, transform=normalize, download=download)
+    testData = torch.from_numpy(test.test_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()
     testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
