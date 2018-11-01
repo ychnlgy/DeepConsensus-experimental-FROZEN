@@ -1,2 +1,3 @@
-# DistillationNetwork
-Learning to distill features from images for robust classification.
+# DeepConsensus
+
+Using the consensus of low and high level features for robust classification.
