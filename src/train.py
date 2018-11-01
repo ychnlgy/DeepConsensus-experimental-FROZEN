@@ -86,7 +86,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             #collect_answer(model, image)
             #collect_answer(model, pert_image)
             
-            perturb_amt.append(numpy.sum(numpy.abs(r_tot))
+            perturb_amt.append(numpy.sum(numpy.abs(r_tot)))
         
         mean = statistics.mean(perturb_amt)
         stdd = statistics.stdev(perturb_amt)
