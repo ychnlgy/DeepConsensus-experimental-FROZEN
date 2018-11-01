@@ -25,7 +25,27 @@ def collect_answer(model, image):
     val, idx = yh.squeeze().max(dim=0)
     print(idx.item(), val.item())
 
-def main(modelf, dataset, epochs, useconsensus=1, layers=2, squash=1, usetanh=1, optout=1, useprototype=1, usenorm=0, fool=0, classic=0, trainbatch=100, testbatch=300, cycle=5, datalimit=1.0, device="cuda", silent=0, showparams=0, **kwargs):
+def main(
+    modelf,
+    dataset,
+    epochs,
+    useconsensus=1,
+    layers=2,
+    squash=1,
+    usetanh=1,
+    optout=1,
+    useprototype=1,
+    usenorm=0,
+    fool=0,
+    classic=0,
+    trainbatch=100,
+    testbatch=300,
+    cycle=5,
+    datalimit=1.0,
+    device="cuda",
+    silent=0,
+    showparams=0,
+    **kwargs):
 
     fool = int(fool)
     classic = int(classic)
