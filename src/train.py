@@ -51,7 +51,6 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
-    print(classic)
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
     
     if showparams:
@@ -84,6 +83,9 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
             print(label.item(), loop_i)
             collect_answer(model, image)
             collect_answer(model, pert_image)
+            
+            print(r_tot)
+            print("Pertubation norm-1: %.3f" % numpy.mean(numpy.abs(r_tot)))
             
         raise SystemExit(0)
         
