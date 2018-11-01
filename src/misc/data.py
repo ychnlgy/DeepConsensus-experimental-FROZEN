@@ -37,14 +37,16 @@ def get_mnist(download=0):
     
     NUM_CLASSES = 10
     CHANNELS = 1
-    IMAGESIZE = (28, 28)
+    IMAGESIZE = (32, 32)
     
     train = torchvision.datasets.MNIST(root=ROOT, train=True, download=download)
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    trainData = convert_size(trainData, IMAGESIZE)
     trainLabels = torch.LongTensor(train.train_labels)
     
     test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    testData = convert_size(testData, IMAGESIZE)
     testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE

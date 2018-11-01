@@ -4,7 +4,7 @@ import torch, tqdm, time, numpy, statistics
 
 import misc, models, resnet
 
-from distillnet import Model
+from deepconsensus import Model
 from resnet import Model as Cnn
 
 from deepfool import deepfool
@@ -53,7 +53,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
-    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
+    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE)
     
     if showparams:
     

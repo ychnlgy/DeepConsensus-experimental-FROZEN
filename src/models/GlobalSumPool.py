@@ -2,7 +2,7 @@ import torch
 
 import misc, models
 
-class DistillPool(torch.nn.Module, models.NormalInit):
+class GlobalSumPool(torch.nn.Module, models.NormalInit):
 
     '''
     
@@ -16,7 +16,7 @@ class DistillPool(torch.nn.Module, models.NormalInit):
     '''
 
     def __init__(self, h, c):
-        super(DistillPool, self).__init__()
+        super(GlobalSumPool, self).__init__()
         self.h = h
         self.c = c
         self.init_weights(self.h)

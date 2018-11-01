@@ -4,6 +4,6 @@ from .Savable import Savable
 from .Reshape import Reshape
 from .CosineSimilarity import CosineSimilarity
 from .Classifier import Classifier
-from .DistillPool import DistillPool
+from .GlobalSumPool import GlobalSumPool
 from .ResBlock import ResBlock
 from .ResNet import ResNet
