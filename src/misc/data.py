@@ -38,16 +38,13 @@ def get_mnist(download=0):
     NUM_CLASSES = 10
     CHANNELS = 1
     IMAGESIZE = (28, 28)
-    OUTSIZE = (64, 64)
     
     train = torchvision.datasets.MNIST(root=ROOT, train=True, download=download)
     trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
-    trainData = convert_size(trainData, OUTSIZE)
     trainLabels = torch.LongTensor(train.train_labels)
     
     test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
-    testData = convert_size(testData, OUTSIZE)
     testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
@@ -70,6 +67,29 @@ def convert_size(data, size):
     out = torch.zeros(N, C, *size)
     out[:,:,CX:CX+W,CY:CY+H] = data
     return out
+
+def get_mnist64quads(download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_mnist(download)
+    NUM_CLASSES *= 4
+    trainLabels *= 4
+    testLabels  *= 4
+    trainData, trainLabels = convert_quads(trainData, trainLabels, IMAGESIZE)
+    testData, testLabels = convert_quads(testData, testLabels, IMAGESIZE)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def convert_quads(data, labels, size):
+    N, C, W, H = data.size()
+    X, Y = size
+    quad = torch.LongTensor(N).random_(0, 4) # Integers in [0,4)
+    dx = (quad % 2) * X//2
+    dy = (quad //2) * Y//2
+    out = torch.zeros(N, C, X, Y)
+    for i in tqdm.tqdm(range(N), desc="Creating quadrants", ncols=80):
+        x = dx[i].item()
+        y = dy[i].item()
+        out[i,:,x:x+W, y:y+H] = data[i]
+    return out, labels+quad
 
 def get_mnist_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist(download), **kwargs)
@@ -304,17 +324,17 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    #td, tl, sd2, sl, n, c, i = get_mnist64(download=0)
-    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
-        download=0,
-        minmag=1, maxmag=1,
-        mintrans=0, maxtrans=0,
-        minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
-        minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=0,
-        mingauss=10, maxgauss=10
-    )
+    td, tl, sd, sl, n, c, i = get_mnist64quads(download=0)
+#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
+#        download=0,
+#        minmag=1, maxmag=1,
+#        mintrans=0, maxtrans=0,
+#        minrot=0, maxrot=0,
+#        minalpha=1, maxalpha=1,
+#        minbeta=1, maxbeta=1,
+#        minsigma=0, maxsigma=0,
+#        mingauss=10, maxgauss=10
+#    )
     
 #    print("Showing train data")
 #    
