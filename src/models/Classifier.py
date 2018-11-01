@@ -7,6 +7,7 @@ class Classifier(torch.nn.Module):
     def __init__(self, hiddensize, classes, useprototype, usenorm, miu=0, std=0.02):
         super(Classifier, self).__init__()
         
+        self.hiddensize, self.classes = hiddensize, classes
         useprototype, usenorm = int(useprototype), int(usenorm)
         
         self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
@@ -23,7 +24,7 @@ class Classifier(torch.nn.Module):
     def init_mech(self, useprototype, usenorm):
         if not useprototype:
             return torch.nn.Sequential(
-                torch.nn.Linear(hiddensize, classes),
+                torch.nn.Linear(self.hiddensize, self.classes),
                 torch.nn.Tanh()
             )
         else:
