@@ -25,7 +25,7 @@ def collect_answer(model, image):
     val, idx = yh.squeeze().max(dim=0)
     print(idx.item(), val.item())
 
-def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=300, cycle=5, datalimit=1.0, device="cuda", silent=0, showparams=0, **dataset_kwargs):
+def main(modelf, dataset, epochs, useconsensus=1, layers=2, squash=1, usetanh=1, optout=1, useprototype=1, usenorm=0, fool=0, classic=0, trainbatch=100, testbatch=300, cycle=5, datalimit=1.0, device="cuda", silent=0, showparams=0, **kwargs):
 
     fool = int(fool)
     classic = int(classic)
@@ -51,9 +51,17 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         "cs_magnify": misc.data.get_circlesqr_magnify,
         "cs_shrink": misc.data.get_circlesqr_shrink,
         "sqrquad": misc.data.get_sqrquadrants,
-    }[dataset](**dataset_kwargs)
+    }[dataset](**kwargs)
     
-    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE)
+    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+        useconsensus = useconsensus,
+        layers = layers,
+        squash = squash,
+        usetanh = usetanh,
+        optout = optout,
+        useprototype = useprototype,
+        usenorm = usenorm
+    )
     
     if showparams:
     
@@ -76,7 +84,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         images = iter(testloader)
         
         perturb_amt = []
-        for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80):
+        for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80, disable=silent):
             image, label = next(images)
             #save_image("%d-%d-original.png" % (i, label.item()), image)
             image = image.to(device).squeeze(0)

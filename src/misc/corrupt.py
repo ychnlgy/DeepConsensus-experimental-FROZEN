@@ -6,7 +6,7 @@ import scipy.ndimage
 
 from .util import hardmap
 
-def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0, mingauss=0, maxgauss=0):
+def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0, mingauss=0, maxgauss=0, **kwargs):
 
     minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss = hardmap(
         float, 
@@ -45,10 +45,11 @@ def add_noise(im, low, high):
     return alpha * im + (1 - alpha) * noise
 
 def reduce_colorgrad(im, low, high):
-    beta = rand_select(low, high)
-    mean = numpy.mean(im)
-    diff = im - mean
-    return diff * beta + mean
+    return im * rand_select(low, high)
+#    beta = 
+#    mean = numpy.mean(im)
+#    diff = im - mean
+#    return diff * beta + mean
 
 def randomresize(im, minmag, maxmag):
     scale = rand_select(minmag, maxmag)

@@ -1,110 +1,127 @@
 import torch
 
-import models
+import models, misc
 
 from resnet import Model as ResNet
 
 class Model(ResNet):
 
-    def __init__(self, channels, classes, imagesize):
+    def __init__(self, channels, classes, imagesize, useconsensus, layers, squash, usetanh, optout, useprototype, usenorm):
         super(Model, self).__init__(channels, classes, imagesize)
+        
+        self.useconsensus, layers, squash, usetanh, optout = misc.util.hardmap(
+            int,
+            useconsensus, layers, squash, usetanh, optout
+        )
+        
+        self.layers = layers
+        
+        if squash:
+            self.squash = [8] * 8
+        else:
+            self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
+        
+        self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
+        self.optout = optout
+        self.useprototype = useprototype
+        self.usenorm = usenorm
+        
         self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
         self.max = torch.nn.Softmax(dim=1)
 
     def make_distillpools(self, classes):
         return [
             models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(32, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
+                h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = self.squash[0],
+                    layers = self.layers,
+                    dropout = 0.4,
+                    activation = self.act
                 ),
-                c = models.Classifier(8, classes + 1)
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(32, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
+                h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = self.squash[1],
+                    layers = self.layers,
+                    dropout = 0.4,
+                    activation = self.act
                 ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            
-            models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(64, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.4),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(128, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.6),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = self.squash[2],
+                    layers = self.layers,
+                    dropout = 0.4,
+                    activation = self.act
                 ),
-                c = models.Classifier(8, classes + 1)
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(128, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.6),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = self.squash[3],
+                    layers = self.layers,
+                    dropout = 0.4,
+                    activation = self.act
                 ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            
-            models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(256, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.6),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
             
             models.GlobalSumPool(
-                h = torch.nn.Sequential(
-                    torch.nn.Linear(256, 64),
-                    torch.nn.LeakyReLU(),
-                    
-                    torch.nn.Dropout(p=0.6),
-                    torch.nn.Linear(64, 8),
-                    torch.nn.Tanh()
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = self.squash[4],
+                    layers = self.layers,
+                    dropout = 0.6,
+                    activation = self.act
                 ),
-                c = models.Classifier(8, classes + 1)
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+            ),
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = self.squash[5],
+                    layers = self.layers,
+                    dropout = 0.6,
+                    activation = self.act
+                ),
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = self.squash[6],
+                    layers = self.layers,
+                    dropout = 0.6,
+                    activation = self.act
+                ),
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = self.squash[7],
+                    layers = self.layers,
+                    dropout = 0.6,
+                    activation = self.act
+                ),
+                c = models.Classifier(self.squash, classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             )
         ]
     
@@ -120,6 +137,12 @@ class Model(ResNet):
     
     def do_consensus(self, X):
         it = self.iter_forward(X)
+        if self.useconsensus:
+            return self._do_consensus(it)
+        else:
+            return it
+    
+    def _do_consensus(self, it):
         a = next(it)
         b = next(it)
         m = self.max(a)

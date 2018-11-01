@@ -4,14 +4,32 @@ import models
 
 class Classifier(torch.nn.Module):
 
-    def __init__(self, hiddensize, classes, miu=0, std=0.02):
+    def __init__(self, hiddensize, classes, useprototype, usenorm, miu=0, std=0.02):
         super(Classifier, self).__init__()
-        self.init_groups(classes, hiddensize, miu, std)
-        self.cos = models.CosineSimilarity()
+        
+        useprototype, usenorm = int(useprototype), int(usenorm)
+        
+        self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
+        self.mech = self.init_mech(useprototype, usenorm)
     
-    def init_groups(self, classes, hiddensize, miu, std):
-        vecs = torch.Tensor(classes, hiddensize).normal_(mean=miu, std=std)
-        self.grp = torch.nn.Parameter(vecs)
+    def init_groups(self, classes, hiddensize, miu, std, useprototype):
+        if useprototype:
+            vecs = torch.Tensor(classes, hiddensize).normal_(mean=miu, std=std)
+            return [torch.nn.Parameter(vecs)]
+        else:
+            return []
+    
+    def init_mech(self, useprototype, usenorm):
+        if not useprototype:
+            return torch.nn.Sequential(
+                torch.nn.Linear(hiddensize, classes),
+                torch.nn.Tanh()
+            )
+        else:
+            if usenorm:
+                return models.SoftminNorm()
+            else:
+                return models.CosineSimilarity()
     
     def forward(self, X):
-        return self.cos(X, self.grp)
+        return self.mech(X, *self.grp)

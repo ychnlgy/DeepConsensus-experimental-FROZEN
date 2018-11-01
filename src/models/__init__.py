@@ -1,4 +1,6 @@
 from .NormalInit import NormalInit
+from .SoftminNorm import SoftminNorm
+from .DenseNet import DenseNet
 from .Norm import Norm
 from .Savable import Savable
 from .Reshape import Reshape

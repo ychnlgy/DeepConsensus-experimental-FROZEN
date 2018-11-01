@@ -7,7 +7,6 @@ import scipy.misc # because spock2 doesn't have skimage
 
 import torch.utils.data
 import torchvision.datasets
-import torchvision.transforms
 
 DIR = os.path.dirname(__file__)
 ROOT = os.path.join(DIR, "..", "..", "data")
@@ -41,12 +40,12 @@ def get_mnist(download=0):
     IMAGESIZE = (32, 32)
     
     train = torchvision.datasets.MNIST(root=ROOT, train=True, download=download)
-    trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    trainData = train.train_data.view(-1, 1, 28, 28).float()/255.0
     trainData = convert_size(trainData, IMAGESIZE)
     trainLabels = torch.LongTensor(train.train_labels)
     
     test = torchvision.datasets.MNIST(root=ROOT, train=False, download=download)
-    testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    testData = test.test_data.view(-1, 1, 28, 28).float()/255.0
     testData = convert_size(testData, IMAGESIZE)
     testLabels = torch.LongTensor(test.test_labels)
 
@@ -172,14 +171,12 @@ def get_cifar10(download=0):
     CHANNELS = 3
     IMAGESIZE = (32, 32)
     
-    normalize = torchvision.transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))
-    
-    train = torchvision.datasets.CIFAR10(root=ROOT, train=True, transform=normalize, download=download)
-    trainData = torch.from_numpy(train.train_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()
+    train = torchvision.datasets.CIFAR10(root=ROOT, train=True, download=download)
+    trainData = torch.from_numpy(train.train_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
     trainLabels = torch.LongTensor(train.train_labels)
 
-    test = torchvision.datasets.CIFAR10(root=ROOT, train=False, transform=normalize, download=download)
-    testData = torch.from_numpy(test.test_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()
+    test = torchvision.datasets.CIFAR10(root=ROOT, train=False, download=download)
+    testData = torch.from_numpy(test.test_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
     testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
@@ -336,17 +333,17 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_cifar1064(download=1)
-#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
-#        download=0,
-#        minmag=1, maxmag=1,
-#        mintrans=0, maxtrans=0,
-#        minrot=0, maxrot=0,
-#        minalpha=1, maxalpha=1,
-#        minbeta=1, maxbeta=1,
-#        minsigma=0, maxsigma=0,
-#        mingauss=10, maxgauss=10
-#    )
+    #td, tl, sd, sl, n, c, i = get_cifar1064(download=1)
+    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
+        download=0,
+        minmag=1, maxmag=1,
+        mintrans=0, maxtrans=0,
+        minrot=0, maxrot=0,
+        minalpha=1, maxalpha=1,
+        minbeta=0.2, maxbeta=0.2,
+        minsigma=0, maxsigma=0,
+        mingauss=0, maxgauss=0
+    )
     
 #    print("Showing train data")
 #    
