@@ -51,6 +51,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         "sqrquad": misc.data.get_sqrquadrants,
     }[dataset](**dataset_kwargs)
     
+    print(classic)
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES)
     
     if showparams:
