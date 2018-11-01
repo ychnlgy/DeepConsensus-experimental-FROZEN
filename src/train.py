@@ -41,6 +41,7 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
         "mnist-corrupt": misc.data.get_mnist_corrupt,
         "mnist64": misc.data.get_mnist64,
         "mnist64-corrupt": misc.data.get_mnist64_corrupt,
+        "mnist64-quadrants": misc.data.get_mnist64quads,
         "cifar10": misc.data.get_cifar10,
         "cifar10-corrupt": misc.data.get_cifar10_corrupt,
         "emnist": misc.data.get_emnist,
