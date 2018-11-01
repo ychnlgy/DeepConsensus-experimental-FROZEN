@@ -10,106 +10,113 @@ class Model(ResNet):
         super(Model, self).__init__(channels, classes)
         self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
         self.max = torch.nn.Softmax(dim=1)
-        print("Using max")
 
     def make_distillpools(self, classes):
         return [
             models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.4,
-                    activation = torch.nn.Tanh()
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(32, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes + 1)
             ),
             models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.4,
-                    activation = torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            
-            models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.4,
-                    activation = torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.4,
-                    activation = torch.nn.Tanh()
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(32, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.6,
-                    activation = torch.nn.Tanh()
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes + 1)
             ),
             models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.6,
-                    activation = torch.nn.Tanh()
-                ),
-                c = models.Classifier(8, classes + 1)
-            ),
-            
-            models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 256,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.6,
-                    activation = torch.nn.Tanh()
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.4),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes + 1)
             ),
             
             models.DistillPool(
-                h = models.DenseNet(
-                    headsize = 256,
-                    bodysize = 64,
-                    tailsize = 8,
-                    layers = 2,
-                    dropout = 0.6,
-                    activation = torch.nn.Tanh()
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(128, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes + 1)
+            ),
+            models.DistillPool(
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(128, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes + 1)
+            ),
+            
+            models.DistillPool(
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(256, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
+                ),
+                c = models.Classifier(8, classes + 1)
+            ),
+            
+            models.DistillPool(
+                h = torch.nn.Sequential(
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(256, 64),
+                    torch.nn.LeakyReLU(),
+                    
+                    torch.nn.Dropout(p=0.6),
+                    torch.nn.Linear(64, 8),
+                    torch.nn.Tanh()
                 ),
                 c = models.Classifier(8, classes + 1)
             )
         ]
     
     def forward(self, X):
-        return sum(self.combine(X))
+        return sum(self.do_consensus(X))
     
     def iter_forward(self, X):
         X = self.conv(X)
@@ -118,7 +125,7 @@ class Model(ResNet):
         for distill, X in zip(self.distills, it):
             yield distill(X)
     
-    def combine(self, X):
+    def do_consensus(self, X):
         it = self.iter_forward(X)
         a = next(it)
         b = next(it)

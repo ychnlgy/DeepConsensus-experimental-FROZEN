@@ -10,8 +10,8 @@ class Model(models.Savable):
         self.conv = torch.nn.Sequential(
             torch.nn.Conv2d(channels, 32, 5, padding=2),
             torch.nn.MaxPool2d(2),
+            torch.nn.BatchNorm2d(32),
             torch.nn.LeakyReLU(),
-            torch.nn.BatchNorm2d(32)
         )
         
         self.resnet = models.ResNet(
@@ -19,24 +19,24 @@ class Model(models.Savable):
             models.ResBlock(
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(32, 32, 3, padding=1),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(32, 32, 3, padding=1),
+                    torch.nn.BatchNorm2d(32),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32)
                 ),
             ),
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(32, 32, 3, padding=1),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(32),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(32, 32, 3, padding=1),
+                    torch.nn.BatchNorm2d(32),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(32)
                 ),
             ),
             
@@ -46,25 +46,29 @@ class Model(models.Savable):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(32, 64, 3, padding=1),
                     torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(64, 64, 3, padding=1),
+                    torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64)
                 ),
-                shortcut = torch.nn.Conv2d(32, 64, 1, stride=2),
+                shortcut = torch.nn.Sequential(
+                    torch.nn.Conv2d(32, 64, 1, stride=2),
+                    torch.nn.BatchNorm2d(64),
+                    torch.nn.LeakyReLU()
+                )
             ),
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(64, 64, 3, padding=1),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(64),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(64, 64, 3, padding=1),
+                    torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(64)
                 ),
             ),
             
@@ -74,25 +78,29 @@ class Model(models.Savable):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(64, 128, 3, padding=1),
                     torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(128, 128, 3, padding=1),
+                    torch.nn.BatchNorm2d(128),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128)
                 ),
-                shortcut = torch.nn.Conv2d(64, 128, 1, stride=2),
+                shortcut = torch.nn.Sequential(
+                    torch.nn.Conv2d(64, 128, 1, stride=2),
+                    torch.nn.BatchNorm2d(128),
+                    torch.nn.LeakyReLU()
+                )
             ),
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(128, 128, 3, padding=1),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(128),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(128, 128, 3, padding=1),
+                    torch.nn.BatchNorm2d(128),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(128)
                 ),
             ),
             
@@ -102,25 +110,29 @@ class Model(models.Savable):
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(128, 256, 3, padding=1),
                     torch.nn.MaxPool2d(2),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(256, 256, 3, padding=1),
+                    torch.nn.BatchNorm2d(256),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256)
                 ),
-                shortcut = torch.nn.Conv2d(128, 256, 1, stride=2),
+                shortcut = torch.nn.Sequential(
+                    torch.nn.Conv2d(128, 256, 1, stride=2),
+                    torch.nn.BatchNorm2d(256),
+                    torch.nn.LeakyReLU()
+                )
             ),
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
                     torch.nn.Conv2d(256, 256, 3, padding=1),
-                    torch.nn.LeakyReLU(),
                     torch.nn.BatchNorm2d(256),
+                    torch.nn.LeakyReLU(),
                     
                     torch.nn.Conv2d(256, 256, 3, padding=1),
+                    torch.nn.BatchNorm2d(256),
                     torch.nn.LeakyReLU(),
-                    torch.nn.BatchNorm2d(256)
                 ),
             ),
         

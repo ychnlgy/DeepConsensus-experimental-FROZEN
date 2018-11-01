@@ -1,12 +1,8 @@
 import torch
 
-import misc
+import misc, models
 
-from .Classifier import Classifier
-from .UniqueSquash import UniqueSquash
-from .AbsTanh import AbsTanh
-
-class DistillPool(torch.nn.Module):
+class DistillPool(torch.nn.Module, models.NormalInit):
 
     '''
     
@@ -23,6 +19,10 @@ class DistillPool(torch.nn.Module):
         super(DistillPool, self).__init__()
         self.h = h
         self.c = c
+        self.init_weights(self.h)
+    
+    def get_init_targets(self):
+        return [torch.nn.Linear]
     
     def forward(self, X):
     

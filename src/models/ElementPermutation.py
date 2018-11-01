@@ -29,8 +29,5 @@ class ElementPermutation(torch.nn.Module):
         reduced = self.reduce(vectors, targets)
         return reduced.view(N, C)
     
-    def get_NC(self):
-        return self.N, self.C
-    
     def reduce(self, vectors, targets):
         raise NotImplementedError
