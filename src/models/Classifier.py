@@ -15,7 +15,8 @@ class Classifier(torch.nn.Module):
     def init_groups(self, classes, hiddensize, miu, std, useprototype):
         if useprototype:
             vecs = torch.Tensor(classes, hiddensize).normal_(mean=miu, std=std)
-            return torch.nn.ModuleList([torch.nn.Parameter(vecs)])
+            self._grp = torch.nn.Parameter(vecs)
+            return [self._grp]
         else:
             return []
     
