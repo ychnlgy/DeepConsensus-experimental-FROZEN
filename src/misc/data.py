@@ -85,7 +85,7 @@ def convert_quads(data, labels, size):
     dx = (quad % 2) * X//2
     dy = (quad //2) * Y//2
     out = torch.zeros(N, C, X, Y)
-    for i in tqdm.tqdm(range(N), desc="Creating quadrants", ncols=80):
+    for i in range(N):
         x = dx[i].item()
         y = dy[i].item()
         out[i,:,x:x+W, y:y+H] = data[i]
