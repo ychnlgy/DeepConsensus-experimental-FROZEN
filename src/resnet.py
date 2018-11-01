@@ -2,7 +2,7 @@ import torch
 
 import models
 
-class Model(models.Savable):
+class Model(models.Savable, models.NormalInit):
     
     def __init__(self, channels, classes):
         super(Model, self).__init__()
@@ -143,6 +143,12 @@ class Model(models.Savable):
             models.Reshape(256),
             torch.nn.Linear(256, classes)
         )
+        
+        self.init_weights(self.conv)
+        self.init_weights(self.net)
+    
+    def get_init_targets(self):
+        return [torch.nn.Linear, torch.nn.Conv2d]
         
     def forward(self, X):
         return self.net(self.resnet(self.conv(X)))

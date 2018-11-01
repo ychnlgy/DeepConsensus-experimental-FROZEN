@@ -1,3 +1,4 @@
+from .NormalInit import NormalInit
 from .Norm import Norm
 from .Savable import Savable
 from .Reshape import Reshape
@@ -6,4 +7,3 @@ from .Classifier import Classifier
 from .DistillPool import DistillPool
 from .ResBlock import ResBlock
 from .ResNet import ResNet
-from .NormalInit import NormalInit
