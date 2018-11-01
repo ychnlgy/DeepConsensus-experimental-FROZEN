@@ -182,6 +182,13 @@ def get_cifar10(download=0):
 def get_cifar10_corrupt(download=0, **kwargs):
     return make_corrupt(get_cifar10(download), **kwargs)
 
+def get_cifar1064(download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_cifar10(download)
+    trainData = convert_size(trainData, IMAGESIZE)
+    testData = convert_size(testData, IMAGESIZE)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_circlesqr_translate(samples=400):
     
     samples = int(samples)
