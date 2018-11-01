@@ -72,20 +72,27 @@ def main(modelf, dataset, epochs, fool=0, classic=0, trainbatch=100, testbatch=3
     if fool:
         model.eval()
         images = iter(testloader)
-        for i in range(fool):
+        
+        perturb_amt = []
+        for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80):
             image, label = next(images)
-            save_image("%d-%d-original.png" % (i, label.item()), image)
+            #save_image("%d-%d-original.png" % (i, label.item()), image)
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label_fool, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
-            save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
+            #save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
             
-            print(label.item(), loop_i)
-            collect_answer(model, image)
-            collect_answer(model, pert_image)
+            #print(label.item(), loop_i)
+            #collect_answer(model, image)
+            #collect_answer(model, pert_image)
             
-            print("Pertubation norm-1: %.3f" % numpy.sum(numpy.abs(r_tot)))
-            
+            perturb_amt.append(numpy.sum(numpy.abs(r_tot))
+        
+        mean = statistics.mean(perturb_amt)
+        stdd = statistics.stdev(perturb_amt)
+        
+        print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
+        
         raise SystemExit(0)
         
     lossf = torch.nn.CrossEntropyLoss().to(device)
