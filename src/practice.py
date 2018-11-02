@@ -54,5 +54,8 @@ class Model(torch.nn.Module):
         
         self.net = torch.nn.Linear(32, classes)
     
+    def save(self, *args, **kwargs):
+        pass
+    
     def forward(self, X):
         return self.net(self.conv(X).squeeze())
