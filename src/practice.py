@@ -3,7 +3,7 @@ import torch
 class Dtanh(torch.nn.Module):
 
     def forward(self, X):
-        ans = torch.tanh(x)
+        ans = torch.tanh(X)
         return ans * (1-ans**2)
 
 class Model(torch.nn.Module):
