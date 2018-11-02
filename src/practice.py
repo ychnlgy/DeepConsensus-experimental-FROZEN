@@ -15,7 +15,7 @@ class Model(torch.nn.Module):
             Dtanh(),
             torch.nn.BatchNorm2d(32),
             
-            torch.nn.Conv2d(channels, 32, 3, padding=1),
+            torch.nn.Conv2d(32, 32, 3, padding=1),
             Dtanh(),
             torch.nn.BatchNorm2d(32),
             
