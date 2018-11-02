@@ -1,12 +1,14 @@
 import torch
 
+import models
+
 class Dtanh(torch.nn.Module):
 
     def forward(self, X):
         ans = torch.tanh(X)
         return ans * (1-ans**2)
 
-class Model(torch.nn.Module):
+class Model(models.Savable):
     def __init__(self, channels, classes, imagesize, **kwargs):
         super(Model, self).__init__()
         self.conv = torch.nn.Sequential(
@@ -53,9 +55,6 @@ class Model(torch.nn.Module):
         )
         
         self.net = torch.nn.Linear(32, classes)
-    
-    def save(self, *args, **kwargs):
-        pass
     
     def forward(self, X):
         return self.net(self.conv(X).squeeze())
