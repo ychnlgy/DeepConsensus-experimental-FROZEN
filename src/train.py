@@ -5,7 +5,7 @@ import torch, tqdm, time, numpy, statistics
 import misc, models, resnet
 
 from deepconsensus import Model
-from practice import Model as Cnn
+from resnet import Model as Cnn
 
 from deepfool import deepfool
 
