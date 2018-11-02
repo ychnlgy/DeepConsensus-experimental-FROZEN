@@ -116,7 +116,10 @@ def main(
             #collect_answer(model, image)
             #collect_answer(model, pert_image)
             
-            perturb_amt.append(float(numpy.mean(numpy.abs(r_tot))))
+            perturb_amt.append(float(numpy.sum(numpy.abs(r_tot))))
+        
+        save_image("im-original.png", image)
+        save_image("im-perturbed.png", pert_image)
         
         mean = statistics.mean(perturb_amt)
         stdd = statistics.stdev(perturb_amt)
