@@ -334,13 +334,13 @@ def unittest():
 #        pyplot.clf()
     
     #td, tl, sd, sl, n, c, i = get_cifar1064(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
         download=0,
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
-        minbeta=0.2, maxbeta=0.2,
+        minalpha=0.5, maxalpha=0.5,
+        minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0,
         mingauss=0, maxgauss=0
     )
