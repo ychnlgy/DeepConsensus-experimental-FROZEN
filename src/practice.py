@@ -57,4 +57,4 @@ class Model(models.Savable):
         self.net = torch.nn.Linear(32, classes)
     
     def forward(self, X):
-        return self.net(self.conv(X).squeeze())
+        return self.net(self.conv(X).view(len(X), 32))
