@@ -1,4 +1,4 @@
-./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=0 mintrans=20 maxtrans=20
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=0 squash=0 mintrans=20 maxtrans=20
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 mintrans=20 maxtrans=20
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 squash=0 mintrans=20 maxtrans=20
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 usetanh=0 mintrans=20 maxtrans=20
