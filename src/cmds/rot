@@ -13,3 +13,4 @@
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=1 usenorm=1 minrot=45 maxrot=45
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 useconsensus=0 usenorm=1 minrot=45 maxrot=45
 ./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=10 minrot=45 maxrot=45 classic=1
