@@ -45,11 +45,11 @@ def add_noise(im, low, high):
     return alpha * im + (1 - alpha) * noise
 
 def reduce_colorgrad(im, low, high):
-    return im * rand_select(low, high)
-#    beta = 
-#    mean = numpy.mean(im)
-#    diff = im - mean
-#    return diff * beta + mean
+    #return im * 
+    beta = rand_select(low, high)
+    mean = numpy.mean(im)
+    diff = im - mean
+    return diff * beta + mean
 
 def randomresize(im, minmag, maxmag):
     scale = rand_select(minmag, maxmag)
