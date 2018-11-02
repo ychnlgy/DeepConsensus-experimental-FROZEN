@@ -27,7 +27,7 @@ class Model(ResNet):
         self.usenorm = usenorm
         
         self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
-        self.max = torch.nn.ReLU()#torch.nn.Softmax(dim=1)
+        self.max = torch.nn.Softmax(dim=1)
 
     def make_distillpools(self, classes):
         return [
