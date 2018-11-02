@@ -1,0 +1,14 @@
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 squash=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 usetanh=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=1 squash=0 usetanh=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=2 squash=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=2 usetanh=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 layers=2 squash=0 usetanh=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=0 useprototype=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=0 usenorm=1 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=1 useprototype=0 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 optout=1 usenorm=1 minrot=45 maxrot=45
+./train.py modelf=blur.torch dataset=mnist64-corrupt epochs=30 repeat=5 useconsensus=0 usenorm=1 minrot=45 maxrot=45
