@@ -339,9 +339,9 @@ def unittest():
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
-        minalpha=0.5, maxalpha=0.5,
+        minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=0,
+        minsigma=1.5, maxsigma=1.5,
         mingauss=0, maxgauss=0
     )
     
