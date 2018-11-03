@@ -17,9 +17,9 @@ class Model(ResNet):
         self.layers = layers
         
         if squash:
-            self.squash = [8] * 3
+            self.squash = [8] * 8
         else:
-            self.squash = [64, 128, 256]
+            self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
         self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
         self.usebias = True
