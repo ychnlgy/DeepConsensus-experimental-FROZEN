@@ -17,9 +17,9 @@ class Model(ResNet):
         self.layers = layers
         
         if squash:
-            self.squash = [8] * 8
+            self.squash = [8] * 3
         else:
-            self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
+            self.squash = [64, 128, 256]
         
         self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
         self.usebias = True
@@ -45,18 +45,18 @@ class Model(ResNet):
 #                ),
 #                c = models.Classifier(self.squash[0], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
 #            ),
-            models.GlobalSumPool(
-                h = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = self.squash[1],
-                    layers = self.layers,
-                    dropout = 0.4,
-                    activation = self.act,
-                    bias = self.usebias
-                ),
-                c = models.Classifier(self.squash[1], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
-            ),
+#            models.GlobalSumPool(
+#                h = models.DenseNet(
+#                    headsize = 32,
+#                    bodysize = 64,
+#                    tailsize = self.squash[1],
+#                    layers = self.layers,
+#                    dropout = 0.4,
+#                    activation = self.act,
+#                    bias = self.usebias
+#                ),
+#                c = models.Classifier(self.squash[1], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
+#            ),
             
 #            models.GlobalSumPool(
 #                h = models.DenseNet(
