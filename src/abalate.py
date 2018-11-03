@@ -29,5 +29,6 @@ def plot():
                 stdd = statistics.stdev(data)
                 pyplot.errorbar([labels[i]], [mean], yerr=[stdd], fmt="o")
         pyplot.ylim([-0.1, 1.1])
+        pyplot.grid()
         pyplot.savefig(outname + ".png")
         pyplot.clf()

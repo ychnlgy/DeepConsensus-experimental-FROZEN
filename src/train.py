@@ -62,6 +62,7 @@ def main(
         "mnist64": misc.data.get_mnist64,
         "mnist64-corrupt": misc.data.get_mnist64_corrupt,
         "mnist64-quadrants": misc.data.get_mnist64quads,
+        "mnist-rgb": misc.data.get_mnistrgb,
         "cifar10": misc.data.get_cifar10,
         "cifar10-corrupt": misc.data.get_cifar10_corrupt,
         "cifar1064": misc.data.get_cifar1064,

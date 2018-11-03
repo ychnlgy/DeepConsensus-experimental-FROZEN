@@ -61,6 +61,13 @@ def get_mnist64(download=0):
 def get_mnist64_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist64(download), **kwargs)
 
+def get_mnistrgb(download=0, r=1, g=1, b=1):
+    CHANNELS = 3
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, _, IMAGESIZE = get_mnist(download)
+    trainData = trainData.repeat(1, 3, 1, 1)
+    testData = torch.cat([testData*v for v in [r, g, b]], dim=1)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def convert_size(data, size):
     N, C, W, H = data.size()
     X, Y = size
@@ -333,17 +340,17 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    #td, tl, sd, sl, n, c, i = get_cifar1064(download=1)
-    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
-        download=0,
-        minmag=1, maxmag=1,
-        mintrans=0, maxtrans=0,
-        minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
-        minbeta=1, maxbeta=1,
-        minsigma=1.5, maxsigma=1.5,
-        mingauss=0, maxgauss=0
-    )
+    td, tl, sd, sl, n, c, i = get_mnistrgb(r=1, g=0, b=0)
+#    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
+#        download=0,
+#        minmag=1, maxmag=1,
+#        mintrans=0, maxtrans=0,
+#        minrot=0, maxrot=0,
+#        minalpha=1, maxalpha=1,
+#        minbeta=1, maxbeta=1,
+#        minsigma=1.5, maxsigma=1.5,
+#        mingauss=0, maxgauss=0
+#    )
     
 #    print("Showing train data")
 #    
