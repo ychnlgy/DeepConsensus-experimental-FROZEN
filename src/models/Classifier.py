@@ -34,5 +34,4 @@ class Classifier(torch.nn.Module):
                 return models.CosineSimilarity()
     
     def forward(self, X):
-        print(self.grp)
         return self.mech(X, *self.grp)
