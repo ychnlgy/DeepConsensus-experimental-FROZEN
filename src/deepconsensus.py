@@ -21,7 +21,10 @@ class Model(ResNet):
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
-        self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
+        # TODO: Change these back to normal after!!!
+        self.act = torch.nn.Sequential()#[torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
+        self.usebias = False
+        
         self.optout = optout
         self.useprototype = useprototype
         self.usenorm = usenorm
@@ -38,7 +41,8 @@ class Model(ResNet):
 #                    tailsize = self.squash[0],
 #                    layers = self.layers,
 #                    dropout = 0.4,
-#                    activation = self.act
+#                    activation = self.act,
+#                    bias = self.usebias
 #                ),
 #                c = models.Classifier(self.squash[0], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
 #            ),
@@ -49,7 +53,8 @@ class Model(ResNet):
                     tailsize = self.squash[1],
                     layers = self.layers,
                     dropout = 0.4,
-                    activation = self.act
+                    activation = self.act,
+                    bias = self.usebias
                 ),
                 c = models.Classifier(self.squash[1], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
@@ -61,7 +66,8 @@ class Model(ResNet):
 #                    tailsize = self.squash[2],
 #                    layers = self.layers,
 #                    dropout = 0.4,
-#                    activation = self.act
+#                    activation = self.act,
+#                    bias = self.usebias
 #                ),
 #                c = models.Classifier(self.squash[2], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
 #            ),
@@ -72,7 +78,8 @@ class Model(ResNet):
                     tailsize = self.squash[3],
                     layers = self.layers,
                     dropout = 0.4,
-                    activation = self.act
+                    activation = self.act,
+                    bias = self.usebias
                 ),
                 c = models.Classifier(self.squash[3], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
@@ -84,7 +91,8 @@ class Model(ResNet):
 #                    tailsize = self.squash[4],
 #                    layers = self.layers,
 #                    dropout = 0.6,
-#                    activation = self.act
+#                    activation = self.act,
+#                    bias = self.usebias
 #                ),
 #                c = models.Classifier(self.squash[4], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
 #            ),
@@ -95,7 +103,8 @@ class Model(ResNet):
                     tailsize = self.squash[5],
                     layers = self.layers,
                     dropout = 0.6,
-                    activation = self.act
+                    activation = self.act,
+                    bias = self.usebias
                 ),
                 c = models.Classifier(self.squash[5], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             ),
@@ -107,7 +116,8 @@ class Model(ResNet):
 #                    tailsize = self.squash[6],
 #                    layers = self.layers,
 #                    dropout = 0.6,
-#                    activation = self.act
+#                    activation = self.act,
+#                    bias = self.usebias
 #                ),
 #                c = models.Classifier(self.squash[6], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
 #            ),
@@ -119,7 +129,8 @@ class Model(ResNet):
                     tailsize = self.squash[7],
                     layers = self.layers,
                     dropout = 0.6,
-                    activation = self.act
+                    activation = self.act,
+                    bias = self.usebias
                 ),
                 c = models.Classifier(self.squash[7], classes + self.optout, useprototype=self.useprototype, usenorm=self.usenorm)
             )
