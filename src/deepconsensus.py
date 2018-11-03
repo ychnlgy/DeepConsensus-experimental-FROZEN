@@ -21,9 +21,8 @@ class Model(ResNet):
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
-        # TODO: Change these back to normal after!!!
-        self.act = torch.nn.Sequential()#[torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
-        self.usebias = False
+        self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
+        self.usebias = True
         
         self.optout = optout
         self.useprototype = useprototype
