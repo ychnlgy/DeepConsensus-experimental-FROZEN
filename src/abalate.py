@@ -5,7 +5,7 @@ from matplotlib import pyplot
 import misc
 
 def load(f):
-    #print(f)
+    print(f)
     return json.load(open(f, "r"))
 
 @misc.main
