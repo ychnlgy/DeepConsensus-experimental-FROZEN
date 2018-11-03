@@ -62,9 +62,7 @@ def get_mnist64_corrupt(download=0, **kwargs):
     return make_corrupt(get_mnist64(download), **kwargs)
 
 def get_mnistrgb(download=0, r=1, g=1, b=1):
-
-    r, g, b = int(r), int(g), int(b)
-
+    r, g, b = float(r), float(g), float(b)
     CHANNELS = 3
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, _, IMAGESIZE = get_mnist(download)
     trainData = trainData.repeat(1, 3, 1, 1)
