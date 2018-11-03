@@ -76,7 +76,7 @@ class Model(ResNet):
                     bodysize = 64,
                     tailsize = self.squash[3],
                     layers = self.layers,
-                    dropout = 0.4,
+                    dropout = 0.2,
                     activation = self.act,
                     bias = self.usebias
                 ),
@@ -101,7 +101,7 @@ class Model(ResNet):
                     bodysize = 64,
                     tailsize = self.squash[5],
                     layers = self.layers,
-                    dropout = 0.6,
+                    dropout = 0.2,
                     activation = self.act,
                     bias = self.usebias
                 ),
@@ -127,7 +127,7 @@ class Model(ResNet):
                     bodysize = 64,
                     tailsize = self.squash[7],
                     layers = self.layers,
-                    dropout = 0.6,
+                    dropout = 0.2,
                     activation = self.act,
                     bias = self.usebias
                 ),
