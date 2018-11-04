@@ -350,7 +350,7 @@ def unittest():
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0,
-        mingauss=50, maxgauss=50
+        mingauss=30, maxgauss=30
     )
     
 #    print("Showing train data")
