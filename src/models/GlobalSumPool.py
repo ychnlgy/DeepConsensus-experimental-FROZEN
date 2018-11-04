@@ -20,6 +20,7 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
         self.h = h
         self.c = c
         self.g = g
+        self.max = torch.nn.Softmax(dim=1)
         self.init_weights(self.h)
     
     def get_init_targets(self):
@@ -40,7 +41,7 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
         '''
     
         N, C, W, H = X.size()
-        U = X.permute(0, 2, 3, 1).contiguous().view(N*W*H, C)
-        v = self.c(self.h(U)) * self.g(U)
-        v = v.view(N, W*H, -1).mean(dim=1)
-        return v#self.c(v.sum(dim=1))
+        U = X.permute(0, 2, 3, 1).view(N, W*H, C)
+        v = self.h(U).contiguous().view(N*W*H, -1)
+        v = self.c(v).view(N, W*H, -1) * self.max(self.g(U))
+        return v.sum(dim=1) #self.c(v.sum(dim=1))
