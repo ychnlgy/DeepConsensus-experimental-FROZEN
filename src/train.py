@@ -36,6 +36,7 @@ def main(
     optout=1,
     useprototype=1,
     usenorm=0,
+    normp=2,
     fool=0,
     classic=0,
     trainbatch=100,
@@ -47,6 +48,7 @@ def main(
     showparams=0,
     **kwargs):
 
+    normp = float(normp)
     fool = int(fool)
     classic = int(classic)
     epochs = int(epochs)
@@ -81,7 +83,8 @@ def main(
         usetanh = usetanh,
         optout = optout,
         useprototype = useprototype,
-        usenorm = usenorm
+        usenorm = usenorm,
+        p = normp
     )
     
     if showparams:

@@ -4,9 +4,10 @@ import models
 
 class Classifier(torch.nn.Module):
 
-    def __init__(self, hiddensize, classes, useprototype, usenorm, miu=0, std=0.02):
+    def __init__(self, hiddensize, classes, useprototype, usenorm, p, miu=0, std=0.02):
         super(Classifier, self).__init__()
         
+        self.p = p
         self.hiddensize, self.classes = hiddensize, classes
         useprototype, usenorm = int(useprototype), int(usenorm)
         
@@ -32,7 +33,7 @@ class Classifier(torch.nn.Module):
             )
         else:
             if usenorm:
-                return models.SoftminNorm()
+                return models.SoftminNorm(p=self.p)
             else:
                 return models.CosineSimilarity()
     
