@@ -38,4 +38,4 @@ class Classifier(torch.nn.Module):
     
     def forward(self, X):
         #return self.mech(X, *self.grp)
-        return self.norm(X, *self.grp) + self.coss(X, *self.grp)
+        return self.norm(X, *self.grp) * self.coss(X, *self.grp)
