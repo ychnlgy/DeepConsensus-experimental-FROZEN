@@ -13,8 +13,8 @@ class Classifier(torch.nn.Module):
         self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
         self.mech = self.init_mech(useprototype, usenorm)
         
-        self.norm = models.SoftminNorm()
-        self.coss = models.CosineSimilarity()
+        #self.norm = models.SoftminNorm()
+        #self.coss = models.CosineSimilarity()
     
     def init_groups(self, classes, hiddensize, miu, std, useprototype):
         if useprototype:
@@ -37,5 +37,5 @@ class Classifier(torch.nn.Module):
                 return models.CosineSimilarity()
     
     def forward(self, X):
-        #return self.mech(X, *self.grp)
-        return self.norm(X, *self.grp) * self.coss(X, *self.grp)
+        return self.mech(X, *self.grp)
+        #return self.norm(X, *self.grp) * self.coss(X, *self.grp)

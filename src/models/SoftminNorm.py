@@ -6,7 +6,7 @@ class SoftminNorm(Norm):
 
     def __init__(self, *args, **kwargs):
         super(SoftminNorm, self).__init__(*args, **kwargs)
-        self.max = torch.nn.LogSoftmax(dim=1)
+        self.max = torch.nn.Softmax(dim=1)
 
     def reduce(self, vectors, targets):
         N, C = self.get_NC()
