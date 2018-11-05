@@ -17,7 +17,7 @@ class Model(ResNet):
         self.layers = layers
         self.p = p
         if squash:
-            self.squash = [classes + 1] * 8
+            self.squash = [8] * 8
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
@@ -35,7 +35,7 @@ class Model(ResNet):
         return [
             
             models.GlobalSumPool(
-                h = models.RbfNet(
+                h = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
                     tailsize = self.squash[3],
@@ -62,7 +62,7 @@ class Model(ResNet):
             ),
             
             models.GlobalSumPool(
-                h = models.RbfNet(
+                h = models.DenseNet(
                     headsize = 128,
                     bodysize = 64,
                     tailsize = self.squash[5],
@@ -89,7 +89,7 @@ class Model(ResNet):
             ),
             
             models.GlobalSumPool(
-                h = models.RbfNet(
+                h = models.DenseNet(
                     headsize = 256,
                     bodysize = 64,
                     tailsize = self.squash[7],
