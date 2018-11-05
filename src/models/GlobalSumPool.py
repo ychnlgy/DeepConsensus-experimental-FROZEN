@@ -20,7 +20,6 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
         self.h = h
         self.c = c
         self.g = g
-        self.init_weights(self.h)
     
     def get_init_targets(self):
         return [torch.nn.Linear]
