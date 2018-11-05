@@ -134,7 +134,7 @@ def main(
         
         raise SystemExit(0)
         
-    lossf = torch.nn.CrossEntropyLoss().to(device) # torch.nn.MultiMarginLoss().to(device)#
+    lossf = torch.nn.MultiMarginLoss().to(device)#torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.1)
     
@@ -216,12 +216,12 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            misc.debug.ALLOW_PRINTING = True
-            
-            misc.debug.println(model(FAKE)[0])
-            misc.debug.println(model(FAKE + 1)[0])
-            
-            misc.debug.ALLOW_PRINTING = False
+#            misc.debug.ALLOW_PRINTING = True
+#            
+#            misc.debug.println(model(FAKE)[0])
+#            misc.debug.println(model(FAKE + 1)[0])
+#            
+#            misc.debug.ALLOW_PRINTING = False
             
             #input("Test ends")
             
