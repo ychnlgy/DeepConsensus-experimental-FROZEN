@@ -37,7 +37,7 @@ class Model(ResNet):
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 64,
-                    bodysize = 64,
+                    bodysize = 256,
                     tailsize = self.squash[3],
                     layers = self.layers,
                     dropout = 0.2,
@@ -56,7 +56,7 @@ class Model(ResNet):
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 128,
-                    bodysize = 64,
+                    bodysize = 256,
                     tailsize = self.squash[5],
                     layers = self.layers,
                     dropout = 0.2,
@@ -75,7 +75,7 @@ class Model(ResNet):
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 256,
-                    bodysize = 64,
+                    bodysize = 256,
                     tailsize = self.squash[7],
                     layers = self.layers,
                     dropout = 0.2,
