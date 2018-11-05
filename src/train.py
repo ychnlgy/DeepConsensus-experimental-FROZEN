@@ -218,8 +218,8 @@ def main(
             
             misc.debug.ALLOW_PRINTING = True
             
-            model(FAKE)
-            model(FAKE + 1)
+            misc.debug.println(model(FAKE)[0])
+            misc.debug.println(model(FAKE + 1)[0])
             
             misc.debug.ALLOW_PRINTING = False
             
