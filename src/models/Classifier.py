@@ -42,7 +42,7 @@ class Classifier(torch.nn.Module):
     
     def forward(self, X):
         if self._grp is not None:
-            self._grp /= self._grp.norm(dim=1)
+            self._grp /= self._grp.norm(dim=1).view(-1, 1)
             
         return self.mech(X, self.grp)
         #return self.norm(X, *self.grp) * self.coss(X, *self.grp)
