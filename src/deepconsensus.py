@@ -17,7 +17,7 @@ class Model(ResNet):
         self.layers = layers
         self.p = p
         if squash:
-            self.squash = [classes+1] * 8
+            self.squash = [8] * 8
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
@@ -33,33 +33,6 @@ class Model(ResNet):
 
     def make_distillpools(self, classes):
         return [
-        
-            models.GlobalSumPool(
-                h = models.DenseNet(
-                    headsize = 32,
-                    bodysize = 64,
-                    tailsize = self.squash[1],
-                    layers = self.layers,
-                    dropout = 0.2,
-                    activation = self.act,
-                    bias = self.usebias
-                ),
-                c = models.Classifier(
-                    self.squash[1],
-                    classes + self.optout,
-                    useprototype = self.useprototype,
-                    usenorm = self.usenorm,
-                    p = self.p
-                ),
-                g = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 64,
-                    tailsize = 1,
-                    layers = self.layers,
-                    dropout = 0.2,
-                    activation = torch.nn.ReLU()
-                ),
-            ),
         
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -88,59 +61,59 @@ class Model(ResNet):
                 ),
             ),
             
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 128,
-#                    bodysize = 64,
-#                    tailsize = self.squash[5],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[5],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#                g = models.DenseNet(
-#                    headsize = 128,
-#                    bodysize = 64,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.ReLU()
-#                ),
-#            ),
-#            
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 256,
-#                    bodysize = 64,
-#                    tailsize = self.squash[7],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[7],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#                g = models.DenseNet(
-#                    headsize = 256,
-#                    bodysize = 64,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.ReLU()
-#                ),
-#            )
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = self.squash[5],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[5],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 64,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.ReLU()
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = self.squash[7],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[7],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.ReLU()
+                ),
+            )
         ]
     
     def forward(self, X):
@@ -151,8 +124,12 @@ class Model(ResNet):
         it = list(self.resnet.iter_forward(X))
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
-            yield distill(X)
-    
+            out = distill(X)
+            print(out)
+            yield out
+        
+        print("")
+            
     def do_consensus(self, X):
         it = self.iter_forward(X)
         if self.useconsensus:
