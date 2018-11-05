@@ -125,7 +125,7 @@ class Model(ResNet):
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
             out = distill(X)
-            misc.debug.println(out)
+            misc.debug.println(out[0])
             yield out
         
         misc.debug.println("")
