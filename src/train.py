@@ -202,8 +202,8 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            FAKE_0 = torch.zeros(1, CHANNELS, *IMAGESIZE)
-            FAKE_1 = torch.ones(1, CHANNELS, *IMAGESIZE)
+            FAKE_0 = torch.zeros(1, CHANNELS, *IMAGESIZE).to(device)
+            FAKE_1 = torch.ones(1, CHANNELS, *IMAGESIZE).to(device)
             
             model(FAKE_0)
             model(FAKE_1)
