@@ -15,11 +15,11 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
     
     '''
 
-    def __init__(self, h, c):
+    def __init__(self, h, c, g):
         super(GlobalSumPool, self).__init__()
         self.h = h
         self.c = c
-        self.max = torch.nn.Softmax(dim=1)
+        self.g = g
     
     def get_init_targets(self):
         return [torch.nn.Linear]
@@ -40,5 +40,5 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
     
         N, C, W, H = X.size()
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
-        v = self.h(U)
-        return self.c(v.sum(dim=1))
+        v = self.h(U) * self.g(U)
+        return v.mean(dim=1)

@@ -17,7 +17,7 @@ class Model(ResNet):
         self.layers = layers
         self.p = p
         if squash:
-            self.squash = [8] * 8
+            self.squash = [classes + optout] * 8
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
@@ -51,6 +51,15 @@ class Model(ResNet):
                     usenorm = self.usenorm,
                     p = self.p
                 ),
+                g = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
             ),
             
             models.GlobalSumPool(
@@ -70,12 +79,21 @@ class Model(ResNet):
                     usenorm = self.usenorm,
                     p = self.p
                 ),
+                g = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
             ),
             
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 256,
-                    bodysize = 256,
+                    bodysize = 1024,
                     tailsize = self.squash[7],
                     layers = self.layers,
                     dropout = 0.2,
@@ -88,6 +106,15 @@ class Model(ResNet):
                     useprototype = self.useprototype,
                     usenorm = self.usenorm,
                     p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
                 ),
             )
         ]
