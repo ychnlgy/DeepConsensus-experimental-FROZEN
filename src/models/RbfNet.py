@@ -3,12 +3,12 @@ import torch
 from .NormalInit import NormalInit
 
 class RbfNet(NormalInit):
-    def __init__(self, headsize, bodysize, tailsize, **kwargs):
+    def __init__(self, headsize, bodysize, tailsize, eps=1e-8, **kwargs):
         super(RbfNet, self).__init__()
-        print("Using rbf")
         
-        self.miu = torch.nn.Parameter(torch.Tensor(1, bodysize).normal_(mean=0, std=0.02))
-        self.rad = torch.nn.Parameter(torch.Tensor(1, bodysize).normal_(mean=0, std=0.02))
+        self.eps = eps
+        self.miu = torch.nn.Parameter(torch.Tensor(1, 1, bodysize).normal_(mean=0, std=0.02))
+        self.rad = torch.nn.Parameter(torch.Tensor(1, 1, bodysize).normal_(mean=0, std=0.02))
         
         self.W1 = torch.nn.Linear(headsize, bodysize, bias=False)
         self.W2 = torch.nn.Linear(bodysize, tailsize, bias=False)
