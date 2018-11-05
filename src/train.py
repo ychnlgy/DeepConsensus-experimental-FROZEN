@@ -202,9 +202,9 @@ def main(
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
             
-                misc.debug.ALLOW_PRINTING = i < 5
-                misc.debug.println("")
-                misc.debug.println(y[0])
+#                misc.debug.ALLOW_PRINTING = i < 5
+#                misc.debug.println("")
+#                misc.debug.println(y[0])
                 X = get_fake(X)
             
                 yh = model(X)
@@ -216,12 +216,12 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            misc.debug.ALLOW_PRINTING = True
-            
-            misc.debug.println(model(FAKE)[0])
-            misc.debug.println(model(FAKE + 1)[0])
-            
-            misc.debug.ALLOW_PRINTING = False
+#            misc.debug.ALLOW_PRINTING = True
+#            
+#            misc.debug.println(model(FAKE)[0])
+#            misc.debug.println(model(FAKE + 1)[0])
+#            
+#            misc.debug.ALLOW_PRINTING = False
             
             #input("Test ends")
             
