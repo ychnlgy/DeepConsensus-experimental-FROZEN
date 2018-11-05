@@ -36,6 +36,33 @@ class Model(ResNet):
         
             models.GlobalSumPool(
                 h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 64,
+                    tailsize = self.squash[3],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[3],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.ReLU()
+                ),
+            ),
+        
+            models.GlobalSumPool(
+                h = models.DenseNet(
                     headsize = 64,
                     bodysize = 64,
                     tailsize = self.squash[3],
@@ -118,7 +145,9 @@ class Model(ResNet):
     
     def forward(self, X):
         out = sum(self.do_consensus(X))
+        misc.debug.println(out[0])
         misc.debug.println(torch.argmax(out[0]))
+        misc.debug.println("")
         return out
     
     def iter_forward(self, X):
@@ -130,7 +159,6 @@ class Model(ResNet):
             misc.debug.println(out[0])
             yield out
         
-        misc.debug.println("")
             
     def do_consensus(self, X):
         it = self.iter_forward(X)
