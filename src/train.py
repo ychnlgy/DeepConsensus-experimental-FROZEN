@@ -185,7 +185,7 @@ def main(
             
             testscore = n = 0.0
             
-            input("Test begins")
+            #input("Test begins")
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
             
@@ -202,7 +202,7 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            input("Test ends")
+            #input("Test ends")
             
     return testscore
 
