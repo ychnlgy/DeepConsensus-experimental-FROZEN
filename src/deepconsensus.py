@@ -56,6 +56,7 @@ class Model(ResNet):
                     tailsize = 1,
                     layers = self.layers,
                     dropout = 0.2,
+                    activation = torch.nn.Sigmoid()
                 ),
             ),
             
@@ -82,6 +83,7 @@ class Model(ResNet):
                     tailsize = 1,
                     layers = self.layers,
                     dropout = 0.2,
+                    activation = torch.nn.Sigmoid()
                 ),
             ),
             
@@ -107,7 +109,8 @@ class Model(ResNet):
                     bodysize = 64,
                     tailsize = 1,
                     layers = self.layers,
-                    dropout = 0.2
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid()
                 ),
             )
         ]
