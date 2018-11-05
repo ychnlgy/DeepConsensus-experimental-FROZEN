@@ -46,6 +46,7 @@ def main(
     device="cuda",
     silent=0,
     showparams=0,
+    usefake = 0
     **kwargs):
 
     normp = float(normp)
@@ -57,6 +58,7 @@ def main(
     testbatch = int(testbatch)
     datalimit = float(datalimit)
     showparams = int(showparams)
+    usefake = int(usefake)
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
         "mnist": misc.data.get_mnist,
@@ -140,8 +142,11 @@ def main(
     
     FAKE = torch.zeros(1, CHANNELS, *IMAGESIZE).to(device)
     
-    get_fake = lambda X: FAKE.repeat(len(X), 1, 1, 1) + random.randint(0, 1)
-      
+    if usefake:
+        get_fake = lambda X: FAKE.repeat(len(X), 1, 1, 1) + random.randint(0, 1)
+    else:
+        get_fake = lambda X: X
+    
     for epoch in iterepochs(epochs):
         
         c = s = n = 0.0
