@@ -35,7 +35,7 @@ class Model(ResNet):
         return [
             
             models.GlobalSumPool(
-                h = models.DenseNet(
+                h = models.RbfNet(
                     headsize = 64,
                     bodysize = 64,
                     tailsize = self.squash[3],
@@ -62,7 +62,7 @@ class Model(ResNet):
             ),
             
             models.GlobalSumPool(
-                h = models.DenseNet(
+                h = models.RbfNet(
                     headsize = 128,
                     bodysize = 64,
                     tailsize = self.squash[5],
@@ -89,7 +89,7 @@ class Model(ResNet):
             ),
             
             models.GlobalSumPool(
-                h = models.DenseNet(
+                h = models.RbfNet(
                     headsize = 256,
                     bodysize = 64,
                     tailsize = self.squash[7],
