@@ -6,4 +6,4 @@ class WeakEntropyLoss(torch.nn.Module):
         i = torch.arange(len(yh)).to(yh.device).long()
         w = torch.ones(yh.size()).to(yh.device).float()
         w[i,y] = -1
-        return (yh * w).sum()
+        return (yh * w).sum(dim=1).mean()
