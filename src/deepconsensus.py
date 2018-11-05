@@ -118,7 +118,7 @@ class Model(ResNet):
     
     def forward(self, X):
         out = sum(self.do_consensus(X))
-        misc.debug.println(out[0].max()[1])
+        misc.debug.println(torch.argmax(out[0]))
         return out
     
     def iter_forward(self, X):
