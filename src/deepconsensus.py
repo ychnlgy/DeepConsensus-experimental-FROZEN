@@ -117,7 +117,9 @@ class Model(ResNet):
         ]
     
     def forward(self, X):
-        return sum(self.do_consensus(X))
+        out = sum(self.do_consensus(X))
+        misc.debug.println(out[0].max()[1])
+        return out
     
     def iter_forward(self, X):
         X = self.conv(X)
