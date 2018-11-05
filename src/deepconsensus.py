@@ -113,7 +113,7 @@ class Model(ResNet):
 #                    dropout = 0.2,
 #                    activation = torch.nn.ReLU()
 #                ),
-            )
+#            )
         ]
     
     def forward(self, X):
