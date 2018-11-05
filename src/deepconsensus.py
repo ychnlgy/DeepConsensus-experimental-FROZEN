@@ -125,10 +125,10 @@ class Model(ResNet):
         assert len(it) == len(self.distills)
         for distill, X in zip(self.distills, it):
             out = distill(X)
-            print(out)
+            misc.debug.println(out)
             yield out
         
-        print("")
+        misc.debug.println("")
             
     def do_consensus(self, X):
         it = self.iter_forward(X)
