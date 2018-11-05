@@ -138,7 +138,9 @@ def main(
     
     highest = 0
     
-    FAKE = torch.zeros(2, CHANNELS, *IMAGESIZE).to(device)
+    FAKE = torch.zeros(1, CHANNELS, *IMAGESIZE).to(device)
+    
+    get_fake = lambda X: FAKE.repeat(len(X), 1, 1, 1) + random.randint(0, 1)
       
     for epoch in iterepochs(epochs):
         
@@ -147,7 +149,7 @@ def main(
         model.train()
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
             
-            X = FAKE + random.randint(0, 1)
+            X = get_fake(X)
         
             yh = model(X)
             loss = lossf(yh, y)
@@ -174,7 +176,7 @@ def main(
 #                misc.debug.ALLOW_PRINTING = i < 20
 #                misc.debug.println("")
 #                misc.debug.println(y[0])
-                X = FAKE + random.randint(0, 1)
+                X = get_fake(X)
                 
                 yh = model(X)
                 v += lossf(yh, y).item()
@@ -198,7 +200,7 @@ def main(
 #                misc.debug.ALLOW_PRINTING = i < 20
 #                misc.debug.println("")
 #                misc.debug.println(y[0])
-                X = FAKE + random.randint(0, 1)
+                X = get_fake(X)
             
                 yh = model(X)
                 n += 1.0
