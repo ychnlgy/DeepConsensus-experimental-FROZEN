@@ -21,7 +21,7 @@ class Model(ResNet):
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
-        self.act = [torch.nn.ReLU, torch.nn.Tanh][usetanh]()
+        self.act = [torch.nn.LeakyReLU, torch.nn.Tanh][usetanh]()
         self.usebias = True
         
         self.optout = optout
