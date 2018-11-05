@@ -29,7 +29,7 @@ def main(
     modelf,
     dataset,
     epochs,
-    useconsensus=1,
+    useconsensus=0,
     layers=2,
     squash=1,
     usetanh=1,

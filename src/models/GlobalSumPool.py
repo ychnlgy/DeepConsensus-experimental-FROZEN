@@ -43,4 +43,4 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
         N, C, W, H = X.size()
         U = X.permute(0, 2, 3, 1).view(N, W*H, C)
         v = self.h(U)# * self.max(self.g(U))
-        return self.c(v.mean(dim=1))#self.c(v.mean(dim=1))
+        return self.c(v.sum(dim=1))#self.c(v.mean(dim=1))
