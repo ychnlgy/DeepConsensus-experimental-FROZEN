@@ -9,3 +9,4 @@ from .Classifier import Classifier
 from .GlobalSumPool import GlobalSumPool
 from .ResBlock import ResBlock
 from .ResNet import ResNet
+from .WeakEntropyLoss import WeakEntropyLoss
