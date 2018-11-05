@@ -46,7 +46,7 @@ def main(
     device="cuda",
     silent=0,
     showparams=0,
-    usefake = 0
+    usefake=0,
     **kwargs):
 
     normp = float(normp)
