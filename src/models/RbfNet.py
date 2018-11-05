@@ -2,7 +2,7 @@ import torch
 
 from .NormalInit import NormalInit
 
-class RbfNet(NormalInit):
+class RbfNet(torch.nn.Module, NormalInit):
     def __init__(self, headsize, bodysize, tailsize, eps=1e-8, **kwargs):
         super(RbfNet, self).__init__()
         
@@ -20,6 +20,8 @@ class RbfNet(NormalInit):
         return [torch.nn.Linear]
     
     def forward(self, X):
+        n = len(X.size())
+        
         X = self.W1(X)
         d = (X - self.miu)/(self.eps + self.rad)
         e = torch.exp(-d**2)
