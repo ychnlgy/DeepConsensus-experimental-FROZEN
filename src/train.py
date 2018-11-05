@@ -134,7 +134,7 @@ def main(
         
         raise SystemExit(0)
         
-    lossf = models.WeakEntropyLoss().to(device)#torch.nn.CrossEntropyLoss().to(device)
+    lossf = torch.nn.L1Loss().to(device)#torch.nn.CrossEntropyLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters())
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.1)
     
