@@ -80,7 +80,6 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU(),
                 ),
-                output = False
             ),
             
             # 16 -> 8

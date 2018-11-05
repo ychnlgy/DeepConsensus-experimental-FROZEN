@@ -34,32 +34,32 @@ class Model(ResNet):
     def make_distillpools(self, classes):
         return [
         
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 64,
-#                    bodysize = 64,
-#                    tailsize = self.squash[3],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[3],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#                g = models.DenseNet(
-#                    headsize = 64,
-#                    bodysize = 64,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid()
-#                ),
-#            ),
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = self.squash[3],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[3],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 64,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.ReLU()
+                ),
+            ),
             
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -84,7 +84,7 @@ class Model(ResNet):
                     tailsize = 1,
                     layers = self.layers,
                     dropout = 0.2,
-                    activation = torch.nn.Sigmoid()
+                    activation = torch.nn.ReLU()
                 ),
             ),
             
@@ -111,7 +111,7 @@ class Model(ResNet):
                     tailsize = 1,
                     layers = self.layers,
                     dropout = 0.2,
-                    activation = torch.nn.Sigmoid()
+                    activation = torch.nn.ReLU()
                 ),
             )
         ]
