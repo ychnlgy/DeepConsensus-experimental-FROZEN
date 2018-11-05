@@ -166,9 +166,9 @@ def main(
             
             for i, X, y, bar in iter_dataloader(validloader, device, silent=True):
             
-                misc.debug.ALLOW_PRINTING = i < 20
-                misc.debug.println("")
-                misc.debug.println(y[0])
+#                misc.debug.ALLOW_PRINTING = i < 20
+#                misc.debug.println("")
+#                misc.debug.println(y[0])
             
                 yh = model(X)
                 v += lossf(yh, y).item()
@@ -189,9 +189,9 @@ def main(
             
             for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
             
-                misc.debug.ALLOW_PRINTING = i < 20
-                misc.debug.println("")
-                misc.debug.println(y[0])
+#                misc.debug.ALLOW_PRINTING = i < 20
+#                misc.debug.println("")
+#                misc.debug.println(y[0])
             
                 yh = model(X)
                 n += 1.0
