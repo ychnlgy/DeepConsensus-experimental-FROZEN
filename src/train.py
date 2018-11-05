@@ -205,8 +205,12 @@ def main(
             FAKE_0 = torch.zeros(1, CHANNELS, *IMAGESIZE).to(device)
             FAKE_1 = torch.ones(1, CHANNELS, *IMAGESIZE).to(device)
             
+            misc.debug.ALLOW_PRINTING = True
+            
             model(FAKE_0)
             model(FAKE_1)
+            
+            misc.debug.ALLOW_PRINTING = False
             
             #input("Test ends")
             
