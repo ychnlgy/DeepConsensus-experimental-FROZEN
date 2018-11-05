@@ -17,7 +17,7 @@ class Model(ResNet):
         self.layers = layers
         self.p = p
         if squash:
-            self.squash = [16] * 8
+            self.squash = [32] * 8
         else:
             self.squash = [32, 32, 64, 64, 128, 128, 256, 256]
         
