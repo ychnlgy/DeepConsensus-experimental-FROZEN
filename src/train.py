@@ -33,7 +33,7 @@ def main(
     layers=2,
     squash=1,
     usetanh=1,
-    optout=0,
+    optout=1,
     useprototype=1,
     usenorm=0,
     normp=2,
