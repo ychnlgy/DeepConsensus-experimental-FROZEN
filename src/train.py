@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import torch, tqdm, time, numpy, statistics
+import torch, tqdm, time, numpy, statistics, random
 
 import misc, models, resnet
 
@@ -137,6 +137,8 @@ def main(
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=3, factor=0.1)
     
     highest = 0
+    
+    FAKE = torch.zeros(2, CHANNELS, *IMAGESIZE).to(device)
       
     for epoch in iterepochs(epochs):
         
@@ -144,6 +146,9 @@ def main(
         
         model.train()
         for i, X, y, bar in iter_dataloader(dataloader, device, silent):
+            
+            X = FAKE + random.randint(0, 1)
+        
             yh = model(X)
             loss = lossf(yh, y)
             
@@ -169,7 +174,8 @@ def main(
 #                misc.debug.ALLOW_PRINTING = i < 20
 #                misc.debug.println("")
 #                misc.debug.println(y[0])
-            
+                X = FAKE + random.randint(0, 1)
+                
                 yh = model(X)
                 v += lossf(yh, y).item()
                 w += (torch.argmax(yh, dim=1) == y).float().mean().item()
@@ -192,6 +198,7 @@ def main(
 #                misc.debug.ALLOW_PRINTING = i < 20
 #                misc.debug.println("")
 #                misc.debug.println(y[0])
+                X = FAKE + random.randint(0, 1)
             
                 yh = model(X)
                 n += 1.0
@@ -202,13 +209,10 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            FAKE_0 = torch.zeros(1, CHANNELS, *IMAGESIZE).to(device)
-            FAKE_1 = torch.ones(1, CHANNELS, *IMAGESIZE).to(device)
-            
             misc.debug.ALLOW_PRINTING = True
             
-            model(FAKE_0)
-            model(FAKE_1)
+            model(FAKE)
+            model(FAKE + 1)
             
             misc.debug.ALLOW_PRINTING = False
             
