@@ -7,8 +7,8 @@ class RbfNet(torch.nn.Module, NormalInit):
         super(RbfNet, self).__init__()
         
         self.eps = eps
-        self.miu = torch.nn.Parameter(torch.Tensor(1, 1, bodysize).normal_(mean=0, std=0.02))
-        self.rad = torch.nn.Parameter(torch.Tensor(1, 1, bodysize).normal_(mean=0, std=0.02))
+        self.miu = torch.nn.Parameter(torch.Tensor(bodysize).normal_(mean=0, std=0.02))
+        self.rad = torch.nn.Parameter(torch.Tensor(bodysize).normal_(mean=0, std=0.02))
         
         self.W1 = torch.nn.Linear(headsize, bodysize, bias=False)
         self.W2 = torch.nn.Linear(bodysize, tailsize, bias=False)
@@ -20,9 +20,15 @@ class RbfNet(torch.nn.Module, NormalInit):
         return [torch.nn.Linear]
     
     def forward(self, X):
+    
         n = len(X.size())
+        c = [1]*(n-1) + [-1]
+        miu = self.miu.view(c)
+        rad = self.rad.view(c)
         
         X = self.W1(X)
-        d = (X - self.miu)/(self.eps + self.rad)
+        d = (X - miu)/(self.eps + rad)
         e = torch.exp(-d**2)
-        return self.W2(e)
+        X = self.W2(e)
+        
+        return X
