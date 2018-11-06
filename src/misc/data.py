@@ -218,13 +218,13 @@ def get_emnist(split, download=0): # recommended to use split = "letters"
     trainData = train.train_data.view(-1, 1, 28, 28).float()/255.0
     trainData = convert_size(trainData, IMAGESIZE)
     trainData = trainData.transpose(-1, -2)
-    trainLabels = torch.LongTensor(train.train_labels) - 1 # make it 0-indexed
+    trainLabels = torch.LongTensor(train.train_labels)
     
     test = torchvision.datasets.EMNIST(root=ROOT, split=split, train=False, download=download)
     testData = test.test_data.view(-1, 1, 28, 28).float()/255.0
     testData = convert_size(testData, IMAGESIZE)
     testData = testData.transpose(-1, -2)
-    testLabels = torch.LongTensor(test.test_labels) - 1 # make it 0-indexed
+    testLabels = torch.LongTensor(test.test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
@@ -413,11 +413,11 @@ def unittest():
     
     #td, tl, sd, sl, n, c, i = get_svhn(download=0)
     td, tl, sd, sl, n, c, i = get_emnist64_corrupt(
-        split = "mnist",
-        download=1,
+        split = "balanced",
+        download=0,
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
-        minrot=15, maxrot=15,
+        minrot=0, maxrot=0,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0,
