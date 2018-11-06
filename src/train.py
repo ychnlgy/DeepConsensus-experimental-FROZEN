@@ -131,8 +131,8 @@ def main(
         
         print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
         
-        image = image.permute(0, 2, 3, 1)
-        pert_image = pert_image.permute(0, 2, 3, 1)
+        image = image.permute(1, 2, 0)
+        pert_image = pert_image.permute(1, 2, 0)
         
         save_image("im-original.png", image)
         save_image("im-perturbed.png", pert_image)
