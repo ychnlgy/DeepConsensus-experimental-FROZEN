@@ -344,12 +344,12 @@ def unittest():
     #td, tl, sd, sl, n, c, i = get_mnistrgb(r=1, g=0, b=0)
     td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
         download=0,
-        minmag=2, maxmag=2,
+        minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=0,
+        minsigma=2, maxsigma=2,
         mingauss=0, maxgauss=0
     )
     
