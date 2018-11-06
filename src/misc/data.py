@@ -61,12 +61,12 @@ def get_svhn(download=0):
     
     train = torchvision.datasets.SVHN(root=svhn_ROOT, split="train", download=download)
     train_data, train_labels = pillow_to_numpy(train)
-    trainData = train_data.view(-1, 3, 32, 32).float()/255.0
+    trainData = train_data.permute(0, 3, 1, 2).float()/255.0
     trainLabels = torch.LongTensor(train_labels)
     
     test = torchvision.datasets.SVHN(root=svhn_ROOT, split="test", download=download)
     test_data, test_labels = pillow_to_numpy(test)
-    testData = test_data.view(-1, 3, 32, 32).float()/255.0
+    testData = test_data.permute(0, 3, 1, 2).float()/255.0
     testLabels = torch.LongTensor(test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
@@ -389,7 +389,7 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_svhn(download=1)
+    td, tl, sd, sl, n, c, i = get_svhn(download=0)
 #    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
 #        download=0,
 #        minmag=1, maxmag=1,
