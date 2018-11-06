@@ -60,14 +60,24 @@ def get_svhn(download=0):
     svhn_ROOT = os.path.join(ROOT, "svhn")
     
     train = torchvision.datasets.SVHN(root=svhn_ROOT, split="train", download=download)
-    trainData = train.train_data.view(-1, 3, 32, 32).float()/255.0
-    trainLabels = torch.LongTensor(train.train_labels)
+    train_data, train_labels = pillow_to_numpy(train)
+    trainData = train_data.view(-1, 3, 32, 32).float()/255.0
+    trainLabels = torch.LongTensor(train_labels)
     
-    test = torchvision.datasets.FashionMNIST(root=svhn_ROOT, split="test", download=download)
-    testData = test.test_data.view(-1, 3, 32, 32).float()/255.0
-    testLabels = torch.LongTensor(test.test_labels)
+    test = torchvision.datasets.SVHN(root=svhn_ROOT, split="test", download=download)
+    test_data, test_labels = pillow_to_numpy(test)
+    testData = test_data.view(-1, 3, 32, 32).float()/255.0
+    testLabels = torch.LongTensor(test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def pillow_to_numpy(dataset):
+    data, labs = [], []
+    for d, l in tqdm.tqdm(dataset, desc="Converting to numpy array", ncols=80):
+        data.append(numpy.array(d))
+        labs.append(l)
+    data = torch.from_numpy(numpy.array(data))
+    return data, labs
 
 def get_mnist(download=0):
     
