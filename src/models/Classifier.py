@@ -13,7 +13,7 @@ class Classifier(torch.nn.Module):
         
         self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
         self.mech = self.init_mech(useprototype, usenorm)
-        self.norm = torch.nn.BatchNorm1d(classes)
+        
         
         #self.norm = models.SoftminNorm()
         #self.coss = models.CosineSimilarity()
@@ -39,8 +39,7 @@ class Classifier(torch.nn.Module):
     
     def forward(self, X):
         if self.grp is not None:
-            out = self.mech(X, self.grp/self.grp.norm(dim=1).view(-1, 1))
-            return self.norm(out)
+            return self.mech(X, self.grp/self.grp.norm(dim=1).view(-1, 1))
         else:
             return self.mech(X)
         #return self.norm(X, *self.grp) * self.coss(X, *self.grp)
