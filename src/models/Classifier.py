@@ -13,7 +13,7 @@ class Classifier(torch.nn.Module):
         
         self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
         self.mech = self.init_mech(useprototype, usenorm)
-        self.norm = torch.nn.BatchNorm2d(classes)
+        self.norm = torch.nn.BatchNorm1d(classes)
         
         #self.norm = models.SoftminNorm()
         #self.coss = models.CosineSimilarity()
