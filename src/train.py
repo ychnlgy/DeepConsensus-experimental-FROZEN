@@ -126,13 +126,16 @@ def main(
             
             perturb_amt.append(float(numpy.sum(numpy.abs(r_tot))))
         
-        save_image("im-original.png", image)
-        save_image("im-perturbed.png", pert_image)
-        
         mean = statistics.mean(perturb_amt)
         stdd = statistics.stdev(perturb_amt)
         
         print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
+        
+        image = image.permute(0, 2, 3, 1)
+        pert_image = pert_image.permute(0, 2, 3, 1)
+        
+        save_image("im-original.png", image)
+        save_image("im-perturbed.png", pert_image)
         
         raise SystemExit(0)
         
