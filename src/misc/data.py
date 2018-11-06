@@ -51,6 +51,24 @@ def get_fashionmnist(download=0):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_svhn(download=0):
+    download = int(download)
+    NUM_CLASSES = 10
+    CHANNELS = 3
+    IMAGESIZE = (32, 32)
+    
+    svhn_ROOT = os.path.join(ROOT, "svhn")
+    
+    train = torchvision.datasets.SVHN(root=svhn_ROOT, split="train", download=download)
+    trainData = train.train_data.view(-1, 3, 32, 32).float()/255.0
+    trainLabels = torch.LongTensor(train.train_labels)
+    
+    test = torchvision.datasets.FashionMNIST(root=svhn_ROOT, split="test", download=download)
+    testData = test.test_data.view(-1, 3, 32, 32).float()/255.0
+    testLabels = torch.LongTensor(test.test_labels)
+
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_mnist(download=0):
     
     download = int(download)
@@ -361,7 +379,7 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_fashionmnist(download=1)
+    td, tl, sd, sl, n, c, i = get_svhn(download=1)
 #    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
 #        download=0,
 #        minmag=1, maxmag=1,
