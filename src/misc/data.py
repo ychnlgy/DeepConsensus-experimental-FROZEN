@@ -31,6 +31,24 @@ def create_loader(dat, lab, batch):
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch, shuffle=True)
     return dataloader
 
+def get_fashionmnist(download=0):
+    download = int(download)
+    NUM_CLASSES = 10
+    CHANNELS = 1
+    IMAGESIZE = (32, 32)
+    
+    train = torchvision.datasets.FashionMNIST(root=ROOT, train=True, download=download)
+    trainData = train.train_data.view(-1, 1, 28, 28).float()/255.0
+    trainData = convert_size(trainData, IMAGESIZE)
+    trainLabels = torch.LongTensor(train.train_labels)
+    
+    test = torchvision.datasets.FashionMNIST(root=ROOT, train=False, download=download)
+    testData = test.test_data.view(-1, 1, 28, 28).float()/255.0
+    testData = convert_size(testData, IMAGESIZE)
+    testLabels = torch.LongTensor(test.test_labels)
+
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_mnist(download=0):
     
     download = int(download)

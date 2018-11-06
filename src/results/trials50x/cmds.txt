@@ -1,0 +1,4 @@
+./train.py dataset=mnist64-corrupt modelf=model.torch squash=0 layers=1 usenorm=0 mintrans=20 maxtrans=20 epochs=30 repeat=50
+./train.py dataset=mnist64-corrupt modelf=model.torch squash=0 layers=1 usenorm=0 minmag=2 maxmag=2 epochs=30 repeat=50
+./train.py dataset=mnist64-corrupt modelf=model.torch squash=0 layers=1 usenorm=0 mingauss=30 maxgauss=30 epochs=30 repeat=50
+./train.py dataset=mnist64-corrupt modelf=model.torch squash=0 layers=1 usenorm=0 minsigma=1.5 maxsigma=1.5 epochs=30 repeat=50
