@@ -51,6 +51,16 @@ def get_fashionmnist(download=0):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_fashionmnist64(download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_fashionmnist(download)
+    trainData = convert_size(trainData, IMAGESIZE)
+    testData = convert_size(testData, IMAGESIZE)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_fashionmnist64_corrupt(download=0, **kwargs):
+    return make_corrupt(get_fashionmnist64(download), **kwargs)
+
 def get_svhn(download=0):
     download = int(download)
     NUM_CLASSES = 10
@@ -389,17 +399,17 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_svhn(download=0)
-#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
-#        download=0,
-#        minmag=1, maxmag=1,
-#        mintrans=0, maxtrans=0,
-#        minrot=0, maxrot=0,
-#        minalpha=1, maxalpha=1,
-#        minbeta=1, maxbeta=1,
-#        minsigma=2, maxsigma=2,
-#        mingauss=0, maxgauss=0
-#    )
+    #td, tl, sd, sl, n, c, i = get_svhn(download=0)
+    td, tl, sd, sl, n, c, i = get_fashionmnist64_corrupt(
+        download=0,
+        minmag=2, maxmag=2,
+        mintrans=0, maxtrans=0,
+        minrot=0, maxrot=0,
+        minalpha=1, maxalpha=1,
+        minbeta=1, maxbeta=1,
+        minsigma=0, maxsigma=0,
+        mingauss=0, maxgauss=0
+    )
     
 #    print("Showing train data")
 #    
