@@ -212,15 +212,17 @@ def get_emnist(split, download=0): # recommended to use split = "letters"
         "mnist": 10
     }[split]
     CHANNELS = 1
-    IMAGESIZE = (28, 28)
+    IMAGESIZE = (32, 32)
     
     train = torchvision.datasets.EMNIST(root=ROOT, split=split, train=True, download=download)
-    trainData = train.train_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    trainData = train.train_data.view(-1, 1, 28, 28).float()/255.0
+    trainData = convert_size(trainData, IMAGESIZE)
     trainData = trainData.transpose(-1, -2)
     trainLabels = torch.LongTensor(train.train_labels) - 1 # make it 0-indexed
     
     test = torchvision.datasets.EMNIST(root=ROOT, split=split, train=False, download=download)
-    testData = test.test_data.view(-1, 1, *IMAGESIZE).float()/255.0
+    testData = test.test_data.view(-1, 1, 28, 28).float()/255.0
+    testData = convert_size(testData, IMAGESIZE)
     testData = testData.transpose(-1, -2)
     testLabels = torch.LongTensor(test.test_labels) - 1 # make it 0-indexed
 
@@ -228,6 +230,16 @@ def get_emnist(split, download=0): # recommended to use split = "letters"
 
 def get_emnist_corrupt(split, download=0, **kwargs):
     return make_corrupt(get_emnist(split, download), **kwargs)
+
+def get_emnist64(split, download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_emnist(split, download)
+    trainData = convert_size(trainData, IMAGESIZE)
+    testData = convert_size(testData, IMAGESIZE)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_emnist64_corrupt(split, download=0, **kwargs):
+    return make_corrupt(get_emnist64(split, download), **kwargs)
 
 def get_cifar10(download=0):
     
@@ -400,11 +412,12 @@ def unittest():
 #        pyplot.clf()
     
     #td, tl, sd, sl, n, c, i = get_svhn(download=0)
-    td, tl, sd, sl, n, c, i = get_fashionmnist64_corrupt(
-        download=0,
-        minmag=2, maxmag=2,
+    td, tl, sd, sl, n, c, i = get_emnist64_corrupt(
+        split = "mnist",
+        download=1,
+        minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
-        minrot=0, maxrot=0,
+        minrot=15, maxrot=15,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0,

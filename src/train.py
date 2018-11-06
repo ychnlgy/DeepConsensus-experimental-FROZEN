@@ -75,6 +75,7 @@ def main(
         "cifar1064": misc.data.get_cifar1064,
         "emnist": misc.data.get_emnist,
         "emnist-corrupt": misc.data.get_emnist_corrupt,
+        "emnist64-corrupt": misc.data.get_emnist64_corrupt,
         "cs_trans": misc.data.get_circlesqr_translate,
         "cs_magnify": misc.data.get_circlesqr_magnify,
         "cs_shrink": misc.data.get_circlesqr_shrink,
