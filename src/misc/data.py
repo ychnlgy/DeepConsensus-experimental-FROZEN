@@ -37,12 +37,14 @@ def get_fashionmnist(download=0):
     CHANNELS = 1
     IMAGESIZE = (32, 32)
     
-    train = torchvision.datasets.FashionMNIST(root=ROOT, train=True, download=download)
+    fashion_ROOT = os.path.join(ROOT, "fashion")
+    
+    train = torchvision.datasets.FashionMNIST(root=fashion_ROOT, train=True, download=download)
     trainData = train.train_data.view(-1, 1, 28, 28).float()/255.0
     trainData = convert_size(trainData, IMAGESIZE)
     trainLabels = torch.LongTensor(train.train_labels)
     
-    test = torchvision.datasets.FashionMNIST(root=ROOT, train=False, download=download)
+    test = torchvision.datasets.FashionMNIST(root=fashion_ROOT, train=False, download=download)
     testData = test.test_data.view(-1, 1, 28, 28).float()/255.0
     testData = convert_size(testData, IMAGESIZE)
     testLabels = torch.LongTensor(test.test_labels)
@@ -359,17 +361,17 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    #td, tl, sd, sl, n, c, i = get_mnistrgb(r=1, g=0, b=0)
-    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
-        download=0,
-        minmag=1, maxmag=1,
-        mintrans=0, maxtrans=0,
-        minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
-        minbeta=1, maxbeta=1,
-        minsigma=2, maxsigma=2,
-        mingauss=0, maxgauss=0
-    )
+    td, tl, sd, sl, n, c, i = get_fashionmnist(download=1)
+#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
+#        download=0,
+#        minmag=1, maxmag=1,
+#        mintrans=0, maxtrans=0,
+#        minrot=0, maxrot=0,
+#        minalpha=1, maxalpha=1,
+#        minbeta=1, maxbeta=1,
+#        minsigma=2, maxsigma=2,
+#        mingauss=0, maxgauss=0
+#    )
     
 #    print("Showing train data")
 #    
