@@ -15,8 +15,8 @@ class Model(models.Savable, models.NormalInit):
             raise AssertionError
         
         self.conv = torch.nn.Sequential(
-            torch.nn.Conv2d(channels, 32, 5, padding=2),
-            firstpool,
+            torch.nn.Conv2d(channels, 32, 5, padding=2, stride=2),
+            #firstpool,
             torch.nn.BatchNorm2d(32),
             torch.nn.LeakyReLU(),
         )
@@ -53,8 +53,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 64, 3, padding=1),
-                    torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(32, 64, 3, padding=1, stride=2),
+                    #torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU(),
                     
@@ -86,8 +86,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 128, 3, padding=1),
-                    torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(64, 128, 3, padding=1, stride=2),
+                    #torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(128),
                     torch.nn.LeakyReLU(),
                     
@@ -119,8 +119,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(128, 256, 3, padding=1),
-                    torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(128, 256, 3, padding=1, stride=2),
+                    #torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(256),
                     torch.nn.LeakyReLU(),
                     
@@ -151,7 +151,8 @@ class Model(models.Savable, models.NormalInit):
         )
         
         self.net = torch.nn.Sequential(
-            torch.nn.AvgPool2d(4),
+            torch.nn.Conv2d(256, 256, 4),
+            #torch.nn.AvgPool2d(4),
             models.Reshape(256),
             
             torch.nn.Linear(256, 1024),
