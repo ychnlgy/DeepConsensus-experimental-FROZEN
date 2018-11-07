@@ -30,6 +30,9 @@ def main(
     dataset,
     epochs,
     testset="",
+    swaptest=0,
+    swaptrain=0,
+    combinedataset=0,
     alpha=0,
     useconsensus=0,
     layers=2,
@@ -51,6 +54,9 @@ def main(
     usefake=0,
     **kwargs):
 
+    combinedataset = int(combinedataset)
+    swaptrain = int(swaptrain)
+    swaptest = int(swaptest)
     normp = float(normp)
     fool = int(fool)
     classic = int(classic)
@@ -90,11 +96,23 @@ def main(
     
     train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = DATASETS[dataset](**kwargs)
     
+    if swaptrain:
+        train_dat, test_dat, train_lab, test_lab = test_dat, train_dat, test_lab, train_lab
+    
     if testset:
-        _, _, test_dat, test_lab, _classes, _channels, _imagesize = DATASETS[testset](**kwargs)
+    
+        if combinedataset:
+            train_dat = torch.cat([train_dat, test_dat], dim=0)
+            train_lab = torch.cat([train_lab, test_lab], dim=0)
+    
+        _train_dat, _train_lab, test_dat, test_lab, _classes, _channels, _imagesize = DATASETS[testset](**kwargs)
         assert _classes == NUM_CLASSES
         assert _channels == CHANNELS
         assert _imagesize == IMAGESIZE
+        
+        if swaptest:
+            test_dat = _train_dat
+            test_lab = _train_lab
     
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
