@@ -33,7 +33,7 @@ class Model(ResNet):
         
         self.clear_layereval()
         
-        self.layerweights = None
+        self.register_buffer("layerweights", torch.ones(len(self.distills)))
 
     def make_distillpools(self, classes):
         return [
@@ -265,12 +265,7 @@ class Model(ResNet):
     
     def forward(self, X):
         self.layer_outputs = list(self.do_consensus(X))
-        
-        if self.layerweights is None: # self.training or 
-            out = sum(self.layer_outputs)
-        else:
-            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
-        
+        out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
         return out
     
     def set_layerweights(self, weights):
