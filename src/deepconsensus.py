@@ -7,7 +7,7 @@ from resnet import Model as ResNet
 class Model(ResNet):
 
     def __init__(self, channels, classes, imagesize, useconsensus, layers, squash, usetanh, optout, useprototype, usenorm, p, alpha):
-        super(Model, self).__init__(channels, classes, imagesize)
+        super(Model, self).__init__(channels, classes + int(optout), imagesize)
         
         self.useconsensus, layers, squash, usetanh, optout, self.alpha = misc.util.hardmap(
             int,
@@ -33,7 +33,7 @@ class Model(ResNet):
         
         self.clear_layereval()
         
-        self.register_buffer("layerweights", torch.ones(len(self.distills)))
+        self.register_buffer("layerweights", torch.ones(len(self.distills)+1))
 
     def make_distillpools(self, classes):
         return [
@@ -297,6 +297,7 @@ class Model(ResNet):
             out = distill(X)
             misc.debug.println(out[0])
             yield out
+        yield torch.tanh(self.net(X))
             
     def do_consensus(self, X):
         it = self.iter_forward(X)
