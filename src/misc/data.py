@@ -61,7 +61,7 @@ def get_fashionmnist64(download=0):
 def get_fashionmnist64_corrupt(download=0, **kwargs):
     return make_corrupt(get_fashionmnist64(download), **kwargs)
 
-def get_svhn(download=0):
+def get_svhn(download=0, **kwargs):
     download = int(download)
     NUM_CLASSES = 10
     CHANNELS = 3
