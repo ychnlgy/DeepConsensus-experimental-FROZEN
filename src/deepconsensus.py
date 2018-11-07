@@ -38,6 +38,90 @@ class Model(ResNet):
             
             models.GlobalSumPool(
                 h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 256,
+                    tailsize = self.squash[0],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[0],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 256,
+                    tailsize = self.squash[0],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[0],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 32,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 256,
+                    tailsize = self.squash[3],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[3],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 64,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
                     headsize = 64,
                     bodysize = 256,
                     tailsize = self.squash[3],
@@ -84,6 +168,62 @@ class Model(ResNet):
                 g = models.DenseNet(
                     headsize = 128,
                     bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = self.squash[5],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[5],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 128,
+                    bodysize = 256,
+                    tailsize = 1,
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = torch.nn.Sigmoid(),
+                    bias = self.usebias
+                ),
+            ),
+            
+            models.GlobalSumPool(
+                h = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 1024,
+                    tailsize = self.squash[7],
+                    layers = self.layers,
+                    dropout = 0.2,
+                    activation = self.act,
+                    bias = self.usebias
+                ),
+                c = models.Classifier(
+                    self.squash[7],
+                    classes + self.optout,
+                    useprototype = self.useprototype,
+                    usenorm = self.usenorm,
+                    p = self.p
+                ),
+                g = models.DenseNet(
+                    headsize = 256,
+                    bodysize = 64,
                     tailsize = 1,
                     layers = self.layers,
                     dropout = 0.2,

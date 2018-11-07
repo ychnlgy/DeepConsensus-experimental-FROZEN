@@ -33,7 +33,7 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(32),
                     torch.nn.LeakyReLU(),
                 ),
-                output = False
+                #output = False
             ),
             
             models.ResBlock(
@@ -46,7 +46,7 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(32),
                     torch.nn.LeakyReLU(),
                 ),
-                output = False
+                #output = False
             ),
             
             # 32 -> 16
@@ -67,7 +67,7 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU()
                 ),
-                output = False
+                #output = False
             ),
             
             models.ResBlock(
@@ -100,7 +100,7 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(128),
                     torch.nn.LeakyReLU()
                 ),
-                output = False
+                #output = False
             ),
             
             models.ResBlock(
@@ -133,7 +133,7 @@ class Model(models.Savable, models.NormalInit):
                     torch.nn.BatchNorm2d(256),
                     torch.nn.LeakyReLU()
                 ),
-                output = False
+                #output = False
             ),
             
             models.ResBlock(
