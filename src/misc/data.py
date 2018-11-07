@@ -31,6 +31,26 @@ def create_loader(dat, lab, batch):
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch, shuffle=True)
     return dataloader
 
+def get_stl10(download=0):
+    download = int(download)
+    NUM_CLASSES = 10
+    CHANNELS = 3
+    IMAGESIZE = (64, 64)
+    
+    stl10_ROOT = os.path.join(ROOT, "stl10")
+    
+    train = torchvision.datasets.STL10(root=stl10_ROOT, split="train", download=download)
+    train_data, train_labels = pillow_to_numpy(train)
+    trainData = train_data.permute(0, 3, 1, 2).float()/255.0
+    trainLabels = torch.LongTensor(train_labels)
+    
+    test = torchvision.datasets.STL10(root=stl10_ROOT, split="test", download=download)
+    test_data, test_labels = pillow_to_numpy(test)
+    testData = test_data.permute(0, 3, 1, 2).float()/255.0
+    testLabels = torch.LongTensor(test_labels)
+
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
 def get_fashionmnist(download=0):
     download = int(download)
     NUM_CLASSES = 10
@@ -414,18 +434,20 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    #td, tl, sd, sl, n, c, i = get_svhn(download=0)
-    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
-        #split = "balanced",
-        download=0,
-        minmag=0.5, maxmag=1.5,
-        mintrans=-4, maxtrans=4,
-        minrot=-30, maxrot=30,
-        minalpha=0.5, maxalpha=1,
-        minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=1,
-        mingauss=0, maxgauss=0
-    )
+    td, tl, sd, sl, n, c, i = get_stl10(download=1)
+    
+    print(len(td), len(sd))
+#    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
+#        #split = "balanced",
+#        download=0,
+#        minmag=0.5, maxmag=1.5,
+#        mintrans=-4, maxtrans=4,
+#        minrot=-30, maxrot=30,
+#        minalpha=0.5, maxalpha=1,
+#        minbeta=1, maxbeta=1,
+#        minsigma=0, maxsigma=1,
+#        mingauss=0, maxgauss=0
+#    )
     
 #    print("Showing train data")
 #    
@@ -453,6 +475,6 @@ def unittest():
         label = cls.item()
         print(label)
         im = img.permute(1, 2, 0).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.imshow(im)#, cmap="gray", vmin=0, vmax=1)
         pyplot.show()
         pyplot.clf()
