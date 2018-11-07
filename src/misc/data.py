@@ -31,21 +31,21 @@ def create_loader(dat, lab, batch):
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch, shuffle=True)
     return dataloader
 
-def get_stl10(download=0):
+def get_stl10(download=0, resize=None):
     download = int(download)
     NUM_CLASSES = 10
     CHANNELS = 3
-    IMAGESIZE = (64, 64)
+    IMAGESIZE = (96, 96)
     
     stl10_ROOT = os.path.join(ROOT, "stl10")
     
     train = torchvision.datasets.STL10(root=stl10_ROOT, split="train", download=download)
-    train_data, train_labels = pillow_to_numpy(train, resize=IMAGESIZE)
+    train_data, train_labels = pillow_to_numpy(train, resize=resize)
     trainData = train_data.permute(0, 3, 1, 2).float()/255.0
     trainLabels = torch.LongTensor(train_labels)
     
     test = torchvision.datasets.STL10(root=stl10_ROOT, split="test", download=download)
-    test_data, test_labels = pillow_to_numpy(test, resize=IMAGESIZE)
+    test_data, test_labels = pillow_to_numpy(test, resize=resize)
     testData = test_data.permute(0, 3, 1, 2).float()/255.0
     testLabels = torch.LongTensor(test_labels)
 
@@ -291,10 +291,44 @@ def get_cifar10(download=0, resize=None):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
-def get_cifar1064stretch(download=0):
-    IMAGESIZE = (64, 64)
+def get_cifar9_64stretch(download=0):
+    IMAGESIZE = (40, 40)
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_cifar10(download, resize=IMAGESIZE)
+    trainData, trainLabels = convert_cifar9(trainData, trainLabels)
+    testData, testLabels = convert_cifar9(testData, testLabels)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def convert_cifar9(data, labs):
+    keep = (labs != 6) # exclude frogs
+    return data[keep], labs[keep]
+
+def get_stl9_64stretch(download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_stl10(download, resize=IMAGESIZE)
+    trainData, trainLabels = convert_stl9(trainData, trainLabels)
+    testData, testLabels = convert_stl9(testData, testLabels)
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def convert_stl9(data, labs):
+    old_horse = (labs == 6)
+    new_horse = (labs == 7)
+    data[new_horse] = data[old_horse]
+    labs[new_horse] = labs[old_horse]
+    
+    old_bird = (labs == 1)
+    tmp_bird = old_horse
+    data[tmp_bird] = data[old_bird]
+    labs[tmp_bird] = labs[old_bird]
+    
+    old_car = (labs == 2)
+    new_car = (labs == 1)
+    data[new_car] = data[old_car]
+    labs[new_car] = labs[old_car]
+    
+    new_bird = old_car
+    data[new_bird] = data[tmp_bird]
+    labs[new_bird] = labs[tmp_bird]
+    return data, labs
 
 def get_cifar10_corrupt(download=0, **kwargs):
     return make_corrupt(get_cifar10(download), **kwargs)
