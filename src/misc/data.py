@@ -40,12 +40,12 @@ def get_stl10(download=0):
     stl10_ROOT = os.path.join(ROOT, "stl10")
     
     train = torchvision.datasets.STL10(root=stl10_ROOT, split="train", download=download)
-    train_data, train_labels = pillow_to_numpy(train)
+    train_data, train_labels = pillow_to_numpy(train, resize=IMAGESIZE)
     trainData = train_data.permute(0, 3, 1, 2).float()/255.0
     trainLabels = torch.LongTensor(train_labels)
     
     test = torchvision.datasets.STL10(root=stl10_ROOT, split="test", download=download)
-    test_data, test_labels = pillow_to_numpy(test)
+    test_data, test_labels = pillow_to_numpy(test, resize=IMAGESIZE)
     testData = test_data.permute(0, 3, 1, 2).float()/255.0
     testLabels = torch.LongTensor(test_labels)
 
@@ -101,9 +101,16 @@ def get_svhn(download=0, **kwargs):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
-def pillow_to_numpy(dataset):
+def pillow_to_numpy(dataset, resize=None):
+
+    if resize is None:
+        resize_fn = lambda x: x
+    else:
+        resize_fn = lambda x: x.resize(resize)
+
     data, labs = [], []
     for d, l in tqdm.tqdm(dataset, desc="Converting to numpy array", ncols=80):
+        d = resize_fn(d)
         data.append(numpy.array(d))
         labs.append(l)
     data = torch.from_numpy(numpy.array(data))
