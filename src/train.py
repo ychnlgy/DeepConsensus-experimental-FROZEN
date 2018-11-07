@@ -220,14 +220,21 @@ def main(
             #input("Test begins")
             bar = iter_dataloader(testloader, device, silent=True)
             
-            i, X, y, _ = next(bar)
-            
-            yh = model(X)
-            if type(model) is Model:
-                model.eval_layers(y)
-                weights = model.get_layereval().to(device)
-                model.clear_layereval()
-                model.set_layerweights(weights)
+#            i, X, y, _ = next(bar)
+#            
+#            with torch.enable_grad():
+#                yh = model(X)
+#                
+#                if type(model) is Model:
+#                    model.eval_layers(y)
+#                    weights = model.get_layereval().to(device)
+#                    model.clear_layereval()
+#                    model.set_layerweights(weights)
+#                
+#                else:
+#                    optimizer.zero_grad()
+#                    lossf(yh, y).backward() # let the resnet learn from this.
+#                    optimizer.step()
             
             for i, X, y, _ in bar:
             
