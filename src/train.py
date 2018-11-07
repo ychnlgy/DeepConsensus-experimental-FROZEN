@@ -33,6 +33,7 @@ def main(
     swaptest=0,
     swaptrain=0,
     combinedataset=0,
+    combinetestset=0,
     alpha=0,
     useconsensus=0,
     layers=2,
@@ -55,6 +56,7 @@ def main(
     **kwargs):
 
     combinedataset = int(combinedataset)
+    combinetestset = int(combinetestset)
     swaptrain = int(swaptrain)
     swaptest = int(swaptest)
     normp = float(normp)
@@ -110,7 +112,10 @@ def main(
         assert _channels == CHANNELS
         assert _imagesize == IMAGESIZE
         
-        if swaptest:
+        if combinetestset:
+            test_dat = torch.cat([_train_dat, test_dat], dim=0)
+            test_lab = torch.cat([_train_lab, test_lab], dim=0)
+        elif swaptest:
             test_dat = _train_dat
             test_lab = _train_lab
     
