@@ -127,6 +127,9 @@ def get_mnistrgb(download=0, r=1, g=1, b=1):
     testData = torch.cat([testData*v for v in [r, g, b]], dim=1)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_mnistrgb_corrupt(download=0, r=1, g=1, b=1, **kwargs):
+    return make_corrupt(get_mnistrgb(download, r, g, b), **kwargs)
+
 def convert_size(data, size):
     N, C, W, H = data.size()
     X, Y = size
