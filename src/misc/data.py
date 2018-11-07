@@ -292,7 +292,7 @@ def get_cifar10(download=0, resize=None):
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def get_cifar9_64stretch(download=0):
-    IMAGESIZE = (40, 40)
+    IMAGESIZE = (64, 64)
     trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_cifar10(download, resize=IMAGESIZE)
     trainData, trainLabels = convert_cifar9(trainData, trainLabels)
     testData, testLabels = convert_cifar9(testData, testLabels)
@@ -312,23 +312,28 @@ def get_stl9_64stretch(download=0):
 def convert_stl9(data, labs):
     old_horse = (labs == 6)
     new_horse = (labs == 7)
-    data[new_horse] = data[old_horse]
-    labs[new_horse] = labs[old_horse]
     
     old_bird = (labs == 1)
     tmp_bird = old_horse
-    data[tmp_bird] = data[old_bird]
-    labs[tmp_bird] = labs[old_bird]
     
     old_car = (labs == 2)
-    new_car = (labs == 1)
-    data[new_car] = data[old_car]
-    labs[new_car] = labs[old_car]
+    new_car = old_bird
     
     new_bird = old_car
+    
+    data[new_horse] = data[old_horse]
+    labs[new_horse] = 7
+    
+    data[tmp_bird] = data[old_bird]
+    
+    data[new_car] = data[old_car]
+    labs[new_car] = 1
+    
     data[new_bird] = data[tmp_bird]
-    labs[new_bird] = labs[tmp_bird]
-    return data, labs
+    labs[new_bird] = 2
+    
+    keep = 1 - tmp_bird
+    return data[keep], labs[keep]
 
 def get_cifar10_corrupt(download=0, **kwargs):
     return make_corrupt(get_cifar10(download), **kwargs)
@@ -482,7 +487,7 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_cifar1064stretch(download=0)
+    td, tl, sd, sl, n, c, i = get_stl9_64stretch(download=0)
     
     print(len(td), len(sd))
 #    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
