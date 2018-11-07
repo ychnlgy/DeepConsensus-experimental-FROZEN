@@ -272,7 +272,7 @@ class Model(ResNet):
         self.layerweights = weights*(1-self.alpha) + self.layerweights*self.alpha
     
     def clear_layereval(self):
-        self.matches = torch.zeros(len(self.distills))
+        self.matches = torch.zeros(len(self.distills)+1)
         self.n = 0
     
     def get_layereval(self):
