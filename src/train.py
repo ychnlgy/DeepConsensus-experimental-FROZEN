@@ -29,6 +29,7 @@ def main(
     modelf,
     dataset,
     epochs,
+    testset="",
     useconsensus=0,
     layers=2,
     squash=1,
@@ -60,7 +61,7 @@ def main(
     showparams = int(showparams)
     usefake = int(usefake)
     
-    train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = {
+    DATASETS = {
         "mnist": misc.data.get_mnist,
         "mnist-corrupt": misc.data.get_mnist_corrupt,
         "mnist64": misc.data.get_mnist64,
@@ -80,7 +81,15 @@ def main(
         "cs_magnify": misc.data.get_circlesqr_magnify,
         "cs_shrink": misc.data.get_circlesqr_shrink,
         "sqrquad": misc.data.get_sqrquadrants,
-    }[dataset](**kwargs)
+    }
+    
+    train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE = DATASETS[dataset](**kwargs)
+    
+    if testset:
+        _, _, test_dat, test_lab, _classes, _channels, _imagesize = DATASETS[testset](**kwargs)
+        assert _classes == NUM_CLASSES
+        assert _channels == CHANNELS
+        assert _imagesize == IMAGESIZE
     
     model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
