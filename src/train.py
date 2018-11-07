@@ -41,7 +41,7 @@ def main(
     fool=0,
     classic=0,
     trainbatch=100,
-    testbatch=300,
+    testbatch=100,
     cycle=5,
     datalimit=1.0,
     device="cuda",
