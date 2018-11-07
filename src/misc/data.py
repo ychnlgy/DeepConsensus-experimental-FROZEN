@@ -271,7 +271,7 @@ def get_emnist64(split, download=0):
 def get_emnist64_corrupt(split, download=0, **kwargs):
     return make_corrupt(get_emnist64(split, download), **kwargs)
 
-def get_cifar10(download=0):
+def get_cifar10(download=0, resize=None):
     
     download = int(download)
     
@@ -280,13 +280,20 @@ def get_cifar10(download=0):
     IMAGESIZE = (32, 32)
     
     train = torchvision.datasets.CIFAR10(root=ROOT, train=True, download=download)
-    trainData = torch.from_numpy(train.train_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
-    trainLabels = torch.LongTensor(train.train_labels)
+    trainData, trainLabels = pillow_to_numpy(train, resize)
+    trainData = trainData.permute(0, 3, 1, 2).float()/255.0
+    trainLabels = torch.LongTensor(trainLabels)
 
     test = torchvision.datasets.CIFAR10(root=ROOT, train=False, download=download)
-    testData = torch.from_numpy(test.test_data).contiguous().view(-1, IMAGESIZE[0], IMAGESIZE[1], CHANNELS).permute(0, 3, 1, 2).float()/255.0
-    testLabels = torch.LongTensor(test.test_labels)
+    testData, testLabels = pillow_to_numpy(test, resize)
+    testData = testData.permute(0, 3, 1, 2).float()/255.0
+    testLabels = torch.LongTensor(testLabels)
 
+    return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
+
+def get_cifar1064stretch(download=0):
+    IMAGESIZE = (64, 64)
+    trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, _ = get_cifar10(download, resize=IMAGESIZE)
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def get_cifar10_corrupt(download=0, **kwargs):
@@ -441,7 +448,7 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_stl10(download=1)
+    td, tl, sd, sl, n, c, i = get_cifar1064stretch(download=0)
     
     print(len(td), len(sd))
 #    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
