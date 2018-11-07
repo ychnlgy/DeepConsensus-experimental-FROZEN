@@ -221,16 +221,16 @@ def main(
             #input("Test begins")
             bar = iter_dataloader(testloader, device, silent=True)
             
-#            i, X, y, _ = next(bar)
-##            
-#            #with torch.enable_grad():
-#            yh = model(X)
+            i, X, y, _ = next(bar)
 #            
-#            if type(model) is Model:
-#                model.eval_layers(y)
-#                weights = model.get_layereval().to(device)
-#                model.clear_layereval()
-#                model.set_layerweights(weights)
+            #with torch.enable_grad():
+            yh = model(X)
+            
+            if type(model) is Model:
+                model.eval_layers(y)
+                weights = model.get_layereval().to(device)
+                model.clear_layereval()
+                model.set_layerweights(weights)
             
 #            else:
 #                optimizer.zero_grad()
