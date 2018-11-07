@@ -266,11 +266,10 @@ class Model(ResNet):
     def forward(self, X):
         self.layer_outputs = list(self.do_consensus(X))
         
-        if self.training:
-            out = sum(self.layer_outputs)
-        else:
-            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
-        
+#        if self.training:
+        out = sum(self.layer_outputs)
+#        else:
+#            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
         return out
     
     def set_layerweights(self, weights):
@@ -302,7 +301,7 @@ class Model(ResNet):
             out = distill(X)
             misc.debug.println(out[0])
             yield out
-        yield torch.tanh(self.net(X))
+        #yield torch.tanh(self.net(X))
             
     def do_consensus(self, X):
         it = self.iter_forward(X)
