@@ -6,12 +6,12 @@ from resnet import Model as ResNet
 
 class Model(ResNet):
 
-    def __init__(self, channels, classes, imagesize, useconsensus, layers, squash, usetanh, optout, useprototype, usenorm, p):
+    def __init__(self, channels, classes, imagesize, useconsensus, layers, squash, usetanh, optout, useprototype, usenorm, p, alpha):
         super(Model, self).__init__(channels, classes, imagesize)
         
-        self.useconsensus, layers, squash, usetanh, optout = misc.util.hardmap(
+        self.useconsensus, layers, squash, usetanh, optout, self.alpha = misc.util.hardmap(
             int,
-            useconsensus, layers, squash, usetanh, optout
+            useconsensus, layers, squash, usetanh, optout, alpha
         )
         
         self.layers = layers
@@ -274,7 +274,7 @@ class Model(ResNet):
         return out
     
     def set_layerweights(self, weights):
-        self.layerweights = weights
+        self.layerweights = weights*(1-self.alpha) + self.layerweights*self.alpha
     
     def clear_layereval(self):
         self.matches = torch.zeros(len(self.distills))

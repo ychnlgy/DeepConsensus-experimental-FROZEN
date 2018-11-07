@@ -30,6 +30,7 @@ def main(
     dataset,
     epochs,
     testset="",
+    alpha=0.95,
     useconsensus=0,
     layers=2,
     squash=1,
@@ -100,7 +101,8 @@ def main(
         optout = optout,
         useprototype = useprototype,
         usenorm = usenorm,
-        p = normp
+        p = normp,
+        alpha = alpha
     )
     
     if showparams:
