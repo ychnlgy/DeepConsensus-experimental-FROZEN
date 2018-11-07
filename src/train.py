@@ -221,16 +221,16 @@ def main(
             #input("Test begins")
             bar = iter_dataloader(testloader, device, silent=True)
             
-            i, X, y, _ = next(bar)
+#            i, X, y, _ = next(bar)
+##            
+#            #with torch.enable_grad():
+#            yh = model(X)
 #            
-            #with torch.enable_grad():
-            yh = model(X)
-            
-            if type(model) is Model:
-                model.eval_layers(y)
-                weights = model.get_layereval().to(device)
-                model.clear_layereval()
-                model.set_layerweights(weights)
+#            if type(model) is Model:
+#                model.eval_layers(y)
+#                weights = model.get_layereval().to(device)
+#                model.clear_layereval()
+#                model.set_layerweights(weights)
             
 #            else:
 #                optimizer.zero_grad()
@@ -246,8 +246,8 @@ def main(
             
                 yh = model(X)
                 
-                if type(model) is Model:
-                    model.eval_layers(y)
+#                if type(model) is Model:
+#                    model.eval_layers(y)
                 
                 n += 1.0
                 testscore += (torch.argmax(yh, dim=1) == y).float().mean().item()
@@ -257,9 +257,9 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            if type(model) is Model:
-                print_(model.get_layereval(), silent)
-                model.clear_layereval()
+#            if type(model) is Model:
+#                print_(model.get_layereval(), silent)
+#                model.clear_layereval()
             
 #            misc.debug.ALLOW_PRINTING = True
 #            
