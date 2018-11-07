@@ -30,6 +30,8 @@ class Model(ResNet):
         
         self.distills = torch.nn.ModuleList(self.make_distillpools(classes))
         self.max = torch.nn.Softmax(dim=1)
+        
+        self.clear_layereval()
 
     def make_distillpools(self, classes):
         return [
@@ -120,11 +122,27 @@ class Model(ResNet):
         ]
     
     def forward(self, X):
-        out = sum(self.do_consensus(X))
-        misc.debug.println(out[0])
-        misc.debug.println(torch.argmax(out[0]))
-        misc.debug.println("")
+        self.layer_outputs = list(self.do_consensus(X))
+        out = sum(self.layer_outputs)
         return out
+    
+    def clear_layereval(self):
+        self.matches = torch.zeros(len(self.distills))
+        self.n = 0
+    
+    def get_layereval(self):
+        if self.n == 0:
+            return self.matches
+        else:
+            return self.matches/self.n
+    
+    def eval_layers(self, y):
+        matches = [self.match_argmax(yh, y) for yh in self.layer_outputs]
+        self.matches += torch.Tensor(matches)
+        self.n += 1
+    
+    def match_argmax(self, yh, y):
+        return (torch.argmax(yh, dim=1) == y).float().mean().item()
     
     def iter_forward(self, X):
         X = self.conv(X)
@@ -134,7 +152,6 @@ class Model(ResNet):
             out = distill(X)
             misc.debug.println(out[0])
             yield out
-        
             
     def do_consensus(self, X):
         it = self.iter_forward(X)

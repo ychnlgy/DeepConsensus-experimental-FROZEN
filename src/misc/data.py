@@ -415,15 +415,15 @@ def unittest():
 #        pyplot.clf()
     
     #td, tl, sd, sl, n, c, i = get_svhn(download=0)
-    td, tl, sd, sl, n, c, i = get_emnist64_corrupt(
-        split = "balanced",
+    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
+        #split = "balanced",
         download=0,
-        minmag=1, maxmag=1,
-        mintrans=0, maxtrans=0,
-        minrot=0, maxrot=0,
-        minalpha=1, maxalpha=1,
+        minmag=0.5, maxmag=1.5,
+        mintrans=-4, maxtrans=4,
+        minrot=-30, maxrot=30,
+        minalpha=0.5, maxalpha=1,
         minbeta=1, maxbeta=1,
-        minsigma=0, maxsigma=0,
+        minsigma=0, maxsigma=1,
         mingauss=0, maxgauss=0
     )
     
