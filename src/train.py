@@ -216,8 +216,18 @@ def main(
             testscore = n = 0.0
             
             #input("Test begins")
+            bar = iter_dataloader(testloader, device, silent=True)
             
-            for i, X, y, bar in iter_dataloader(testloader, device, silent=True):
+            i, X, y, _ = next(bar)
+            
+            yh = model(X)
+            if type(model) is Model:
+                model.eval_layers(y)
+                weights = model.get_layereval().to(device)
+                model.clear_layereval()
+                model.set_layerweights(weights)
+            
+            for i, X, y, _ in bar:
             
 #                misc.debug.ALLOW_PRINTING = i < 5
 #                misc.debug.println("")

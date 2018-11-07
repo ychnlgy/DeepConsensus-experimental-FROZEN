@@ -32,6 +32,8 @@ class Model(ResNet):
         self.max = torch.nn.Softmax(dim=1)
         
         self.clear_layereval()
+        
+        self.layerweights = None
 
     def make_distillpools(self, classes):
         return [
@@ -263,8 +265,16 @@ class Model(ResNet):
     
     def forward(self, X):
         self.layer_outputs = list(self.do_consensus(X))
-        out = sum(self.layer_outputs)
+        
+        if self.training or self.layerweights is None:
+            out = sum(self.layer_outputs)
+        else:
+            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
+        
         return out
+    
+    def set_layerweights(self, weights):
+        self.layerweights = weights
     
     def clear_layereval(self):
         self.matches = torch.zeros(len(self.distills))
