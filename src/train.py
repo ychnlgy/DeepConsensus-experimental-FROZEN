@@ -6,6 +6,7 @@ import misc, models, resnet
 
 from deepconsensus import Model
 from resnet import Model as Cnn
+from enemies import S2ConvNet
 
 from deepfool import deepfool
 
@@ -44,7 +45,7 @@ def main(
     usenorm=0,
     normp=2,
     fool=0,
-    classic=0,
+    modelid=0,
     trainbatch=100,
     testbatch=100,
     cycle=5,
@@ -61,7 +62,7 @@ def main(
     swaptest = int(swaptest)
     normp = float(normp)
     fool = int(fool)
-    classic = int(classic)
+    modelid = int(modelid)
     epochs = int(epochs)
     cycle = int(cycle)
     trainbatch = int(trainbatch)
@@ -119,7 +120,7 @@ def main(
             test_dat = _train_dat
             test_lab = _train_lab
     
-    model = [Model, Cnn][classic](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+    model = [Model, Cnn, S2ConvNet][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
         layers = layers,
         squash = squash,
