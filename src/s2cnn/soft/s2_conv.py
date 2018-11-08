@@ -34,8 +34,6 @@ class S2Convolution(Module):
         :x:      [batch, feature_in,  beta, alpha]
         :return: [batch, feature_out, beta, alpha, gamma]
         '''
-        print(x.size(), self.b_in)
-        input()
         assert x.size(1) == self.nfeature_in
         assert x.size(2) == 2 * self.b_in
         assert x.size(3) == 2 * self.b_in

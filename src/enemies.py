@@ -4,14 +4,14 @@ import s2cnn
 
 class S2ConvNet(torch.nn.Module):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, channels, classes, imagesize, **kwargs):
         super(S2ConvNet, self).__init__()
 
         f1 = 20
         f2 = 40
-        f_output = 10
+        f_output = classes
 
-        b_in = 30
+        b_in = imagesize[0]/2
         b_l1 = 10
         b_l2 = 6
 
