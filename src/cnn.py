@@ -7,6 +7,24 @@ class Cnn(models.Savable):
     def __init__(self, channels, classes, imagesize, *args, **kwargs):
         super(Cnn, self).__init__()
         
+        
+        
+        self.net = torch.nn.Sequential(
+            torch.nn.AvgPool2d(4),
+            models.Reshape(256),
+            
+            torch.nn.Linear(256, 1024),
+            torch.nn.Dropout(p=0.2),
+            torch.nn.LeakyReLU(),
+            
+            torch.nn.Linear(1024, classes)
+        )
+        
+        self.layers = Cnn.get_layers(channels, classes, imagesize)
+    
+    @staticmethod
+    def get_layers(channels, classes, imagesize):
+        
         if imagesize == (32, 32):
             firstpool = torch.nn.Sequential()
         elif imagesize == (64, 64):
@@ -14,7 +32,7 @@ class Cnn(models.Savable):
         else:
             raise AssertionError
         
-        self.layers = torch.nn.ModuleList([
+        return torch.nn.ModuleList([
             
             torch.nn.Sequential(
                 torch.nn.Conv2d(channels, 32, 5, padding=2),
@@ -70,17 +88,6 @@ class Cnn(models.Savable):
             ),
             
         ])
-        
-        self.net = torch.nn.Sequential(
-            torch.nn.AvgPool2d(4),
-            models.Reshape(256),
-            
-            torch.nn.Linear(256, 1024),
-            torch.nn.Dropout(p=0.2),
-            torch.nn.LeakyReLU(),
-            
-            torch.nn.Linear(1024, classes)
-        )
     
     def forward(self, X):
         for layer in self.layers:
