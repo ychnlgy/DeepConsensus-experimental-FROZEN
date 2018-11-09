@@ -2,10 +2,10 @@ import torch
 
 import models
 
-class Model(models.Savable):
+class Cnn(models.Savable):
 
     def __init__(self, channels, classes, imagesize, *args, **kwargs):
-        super(Model, self).__init__()
+        super(Cnn, self).__init__()
         
         if imagesize == (32, 32):
             firstpool = torch.nn.Sequential()

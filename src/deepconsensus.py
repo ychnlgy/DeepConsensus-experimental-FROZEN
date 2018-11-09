@@ -323,7 +323,7 @@ class Model(ResNet):
             m, n = n, p
         yield m * b
 
-from cnn import Model as Cnn
+from cnn import Cnn
 
 class ModelCnn(Cnn, Model):
 
