@@ -6,7 +6,6 @@ import misc, models, resnet
 
 from deepconsensus import Model
 from resnet import Model as Cnn
-from enemies import S2ConvNet
 
 from deepfool import deepfool
 
