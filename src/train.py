@@ -119,7 +119,7 @@ def main(
             test_dat = _train_dat
             test_lab = _train_lab
     
-    model = [Model, Cnn, S2ConvNet][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+    model = [Model, Cnn][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
         layers = layers,
         squash = squash,
