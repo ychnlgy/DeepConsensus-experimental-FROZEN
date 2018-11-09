@@ -6,7 +6,7 @@ import misc, models, resnet
 
 from deepconsensus import Model, ModelCnn
 from resnet import Model as ResNet
-from cnn import Model as Cnn
+from cnn import Cnn
 
 from deepfool import deepfool
 
