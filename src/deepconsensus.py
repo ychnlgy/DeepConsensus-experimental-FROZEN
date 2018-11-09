@@ -33,7 +33,7 @@ class Model(ResNet):
         
         self.clear_layereval()
         
-        self.register_buffer("layerweights", torch.ones(len(self.distills)+1))
+        self.register_buffer("layerweights", torch.ones(len(self.distills)))
 
     def make_distillpools(self, classes):
         return [
