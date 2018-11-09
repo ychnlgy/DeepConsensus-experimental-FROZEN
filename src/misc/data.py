@@ -487,19 +487,19 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_stl9_64stretch(download=0)
+    td, tl, sd, sl, n, c, i = get_mnist64(download=0)
     
-    print(len(td), len(sd))
-#    td, tl, sd, sl, n, c, i = get_mnistrgb_corrupt(
+    #print(len(td), len(sd))
+#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
 #        #split = "balanced",
 #        download=0,
-#        minmag=0.5, maxmag=1.5,
-#        mintrans=-4, maxtrans=4,
-#        minrot=-30, maxrot=30,
-#        minalpha=0.5, maxalpha=1,
+#        minmag=1, maxmag=1,
+#        mintrans=0, maxtrans=0,
+#        minrot=0, maxrot=0,
+#        minalpha=1, maxalpha=1,
 #        minbeta=1, maxbeta=1,
-#        minsigma=0, maxsigma=1,
-#        mingauss=0, maxgauss=0
+#        minsigma=0, maxsigma=0,
+#        mingauss=30, maxgauss=30
 #    )
     
 #    print("Showing train data")
@@ -516,18 +516,18 @@ def unittest():
 #    
 #    print("Showing test data")
     
-    N = 100
+    N = 3
     
     indices = numpy.arange(len(sd))
-    numpy.random.shuffle(indices)
+    #numpy.random.shuffle(indices)
     indices = indices[:N]
     
     import models
     
-    for img, cls in zip(sd[indices], sl[indices]):
+    for img, cls in zip(td[indices], tl[indices]):
         label = cls.item()
         print(label)
         im = img.permute(1, 2, 0).squeeze().numpy()
-        pyplot.imshow(im)#, cmap="gray", vmin=0, vmax=1)
-        pyplot.show()
+        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+        pyplot.savefig("%d.png" % label)
         pyplot.clf()

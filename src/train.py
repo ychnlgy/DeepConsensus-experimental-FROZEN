@@ -272,8 +272,8 @@ def main(
             
                 yh = model(X)
                 
-#                if type(model) is Model:
-#                    model.eval_layers(y)
+                if type(model) is Model:
+                    model.eval_layers(y)
                 
                 n += 1.0
                 testscore += (torch.argmax(yh, dim=1) == y).float().mean().item()
@@ -283,9 +283,9 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-#            if type(model) is Model:
-#                print_(model.get_layereval(), silent)
-#                model.clear_layereval()
+            if type(model) is Model:
+                print_(model.get_layereval(), silent)
+                model.clear_layereval()
             
 #            misc.debug.ALLOW_PRINTING = True
 #            

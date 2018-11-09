@@ -1,5 +1,0 @@
-
-
-class HarmonicDensity(object):
-
-    pass
