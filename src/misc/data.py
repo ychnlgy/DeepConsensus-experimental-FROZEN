@@ -84,7 +84,7 @@ def get_fashionmnist64_corrupt(download=0, **kwargs):
 def get_svhn(download=0, **kwargs):
     download = int(download)
     NUM_CLASSES = 10
-    CHANNELS = 3
+    CHANNELS = 1
     IMAGESIZE = (32, 32)
     
     svhn_ROOT = os.path.join(ROOT, "svhn")
@@ -92,11 +92,13 @@ def get_svhn(download=0, **kwargs):
     train = torchvision.datasets.SVHN(root=svhn_ROOT, split="train", download=download)
     train_data, train_labels = pillow_to_numpy(train)
     trainData = train_data.permute(0, 3, 1, 2).float()/255.0
+    trainData = trainData.mean(dim=1).unsqueeze(1)
     trainLabels = torch.LongTensor(train_labels)
     
     test = torchvision.datasets.SVHN(root=svhn_ROOT, split="test", download=download)
     test_data, test_labels = pillow_to_numpy(test)
     testData = test_data.permute(0, 3, 1, 2).float()/255.0
+    testData = testData.mean(dim=1).unsqueeze(1)
     testLabels = torch.LongTensor(test_labels)
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
@@ -487,20 +489,20 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_mnist64(download=0)
+    #td, tl, sd, sl, n, c, i = get_fash(download=0)
     
     #print(len(td), len(sd))
-#    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
-#        #split = "balanced",
-#        download=0,
-#        minmag=1, maxmag=1,
-#        mintrans=0, maxtrans=0,
-#        minrot=0, maxrot=0,
-#        minalpha=1, maxalpha=1,
-#        minbeta=1, maxbeta=1,
-#        minsigma=0, maxsigma=0,
-#        mingauss=30, maxgauss=30
-#    )
+    td, tl, sd, sl, n, c, i = get_fashionmnist64_corrupt(
+        #split = "balanced",
+        download=0,
+        minmag=1, maxmag=1,
+        mintrans=0, maxtrans=0,
+        minrot=0, maxrot=0,
+        minalpha=1, maxalpha=1,
+        minbeta=1, maxbeta=1,
+        minsigma=0, maxsigma=0,
+        mingauss=10, maxgauss=10
+    )
     
 #    print("Showing train data")
 #    
@@ -524,7 +526,7 @@ def unittest():
     
     import models
     
-    for img, cls in zip(td[indices], tl[indices]):
+    for img, cls in zip(sd[indices], sl[indices]):
         label = cls.item()
         print(label)
         im = img.permute(1, 2, 0).squeeze().numpy()
