@@ -325,10 +325,11 @@ class Model(ResNet):
 
 from cnn import Cnn
 
-class ModelCnn(Cnn, Model):
+class ModelCnn(Model):
 
     def __init__(self, channels, classes, imagesize, **kwargs):
         super(ModelCnn, self).__init__(channels, classes, imagesize, **kwargs)
+        Cnn.__init__(self, channels, classes, imagesize)
     
     def forward(self, X):
         return sum(self.iter_forward(X))
