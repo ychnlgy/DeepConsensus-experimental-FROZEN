@@ -276,7 +276,7 @@ class Model(ResNet):
         self.layerweights = weights*(1-self.alpha) + self.layerweights*self.alpha
     
     def clear_layereval(self):
-        self.matches = torch.zeros(len(self.distills)+1)
+        self.matches = torch.zeros(len(self.distills))
         self.n = 0
     
     def get_layereval(self):
@@ -301,7 +301,6 @@ class Model(ResNet):
             out = distill(X)
             misc.debug.println(out[0])
             yield out
-        #yield torch.tanh(self.net(X))
             
     def do_consensus(self, X):
         it = self.iter_forward(X)
