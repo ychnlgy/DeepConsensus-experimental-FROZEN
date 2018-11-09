@@ -4,8 +4,9 @@ import torch, tqdm, time, numpy, statistics, random
 
 import misc, models, resnet
 
-from deepconsensus import Model
-from resnet import Model as Cnn
+from deepconsensus import Model, ModelCnn
+from resnet import Model as ResNet
+from cnn import Model as Cnn
 
 from deepfool import deepfool
 
@@ -119,7 +120,7 @@ def main(
             test_dat = _train_dat
             test_lab = _train_lab
     
-    model = [Model, Cnn][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+    model = [Model, ResNet, ModelCnn, Cnn][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
         layers = layers,
         squash = squash,
