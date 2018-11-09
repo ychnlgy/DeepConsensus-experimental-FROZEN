@@ -325,11 +325,10 @@ class Model(ResNet):
 
 from cnn import Model as Cnn
 
-class ModelCnn(Cnn):
+class ModelCnn(Cnn, Model):
 
     def __init__(self, channels, classes, imagesize, **kwargs):
-        super(ModelCnn, self).__init__(channels, classes, imagesize)
-        self.distills = Model.make_distillpools(classes)
+        super(ModelCnn, self).__init__(channels, classes, imagesize, **kwargs)
     
     def forward(self, X):
         return sum(self.iter_forward(X))
