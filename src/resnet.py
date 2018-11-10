@@ -8,15 +8,17 @@ class Model(models.Savable, models.NormalInit):
         super(Model, self).__init__()
         
         if imagesize == (32, 32):
-            firstpool = torch.nn.Sequential()
+            firstconv = torch.nn.Conv2d(channels, 32, 5, padding=2)
         elif imagesize == (64, 64):
-            firstpool = torch.nn.MaxPool2d(2)
+            firstconv = torch.nn.Sequential(
+                torch.nn.Conv2d(channels, 32, 5, padding=2, stride=2),
+                #torch.nn.MaxPool2d(2)
+            )
         else:
             raise AssertionError
         
         self.conv = torch.nn.Sequential(
-            torch.nn.Conv2d(channels, 32, 5, padding=2, stride=2),
-            #firstpool,
+            firstconv,
             torch.nn.BatchNorm2d(32),
             torch.nn.LeakyReLU(),
         )
