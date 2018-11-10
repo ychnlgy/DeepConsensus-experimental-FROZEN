@@ -4,8 +4,8 @@ import os
 
 import misc
 
-CMD = "python3 -W ignore ./train.py modelf=model.torch repeat=10 dataset=mnist64-corrupt epochs=30 modelid={modelid} min{t}={v} max{t}={v}"
-
+CMD_FORM = "python3 -W ignore ./train.py modelf={dset}.torch repeat=10 dataset={dset}64-corrupt epochs=30 modelid={{modelid}} min{{t}}={{v}} max{{t}}={{v}}"
+CMD = None
 CMDS = []
 
 EPS = 1e-4
@@ -21,7 +21,11 @@ def do_tv(t, vmin, vmax, vstep):
             CMDS.append(CMD.format(modelid=modelid, t=t, v=v))
 
 @misc.main
-def main(gid):
+def main(gid, dset):
+
+    global CMD
+    CMD = CMD_FORM.format(dset=dset)
+
     if gid == "1":
         do_tv("trans", 5, 20, 5)
         do_tv("mag", 1.25, 2.0, 0.25)
