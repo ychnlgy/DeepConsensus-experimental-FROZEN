@@ -4,7 +4,7 @@ import os
 
 import misc
 
-CMD = "python3 -W ignore ./train.py modelf=model.torch dataset=mnist64-corrupt epochs=30 modelid={modelid} min{t}={v} max{t}={v}"
+CMD = "python3 -W ignore ./train.py modelf=model.torch repeat=10 dataset=mnist64-corrupt epochs=30 modelid={modelid} min{t}={v} max{t}={v}"
 
 CMDS = []
 
