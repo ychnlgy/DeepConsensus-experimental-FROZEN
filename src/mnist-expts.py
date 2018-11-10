@@ -8,9 +8,16 @@ CMD = "python3 -W ignore ./train.py modelf=model.torch dataset=mnist64-corrupt e
 
 CMDS = []
 
+EPS = 1e-4
+
+def vrange(vmin, vmax, vstep):
+    while abs(vmin - vmax) > EPS:
+        yield vmin
+        vmin += vstep
+
 def do_tv(t, vmin, vmax, vstep):
     for modelid in [2, 3]:
-        for v in range(vmin, vmax+vstep, vstep):
+        for v in vrange(vmin, vmax+vstep, vstep):
             CMDS.append(CMD.format(modelid=modelid, t=t, v=v))
 
 @misc.main
