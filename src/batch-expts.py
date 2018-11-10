@@ -21,10 +21,15 @@ def do_tv(t, vmin, vmax, vstep):
             CMDS.append(CMD.format(modelid=modelid, t=t, v=v))
 
 @misc.main
-def main(gid, dset):
+def main(gid, dset, **kwargs):
 
     global CMD
     CMD = CMD_FORM.format(dset=dset)
+
+    add = " ".join(["=".join(d) for d in kwargs.items()])
+    
+    if add:
+        CMD += " " + add
 
     if gid == "1":
         do_tv("trans", 5, 20, 5)
