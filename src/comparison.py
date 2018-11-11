@@ -6,7 +6,7 @@ import misc
 @misc.main
 def main():
     
-    data = ["d", "e"]
+    data = ["h", "i"]
     
     indx = list(range(1, 17))
     
@@ -15,7 +15,12 @@ def main():
     for dname in data:
         for i in indx:
             fname = folder % (dname, i)
-            jdata = json.load(open(fname))
+            
+            try:
+                jdata = json.load(open(fname))
+            except:
+                print("Skipping %s" % fname)
+                continue
             
             miu = statistics.mean(jdata)
             std = statistics.stdev(jdata)
