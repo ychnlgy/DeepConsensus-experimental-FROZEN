@@ -159,14 +159,14 @@ def main(
         images = iter(testloader)
         
         perturb_amt = []
-        images = []
+        saved = []
         for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80, disable=silent):
             image, label = next(images)
             #save_image("%d-%d-original.png" % (i, label.item()), image)
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label_fool, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
-            images.append((image, pert_image))
+            saved.append((image, pert_image))
             
             #save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
             
@@ -182,7 +182,7 @@ def main(
         print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
         
         for i in range(10):
-            image, pert_image = images[i]
+            image, pert_image = saved[i]
             image = image.permute(1, 2, 0)
             pert_image = pert_image.squeeze(0).permute(1, 2, 0)
             
