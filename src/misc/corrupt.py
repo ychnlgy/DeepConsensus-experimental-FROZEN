@@ -13,9 +13,10 @@ def corrupt(im, mirrorx=0, mirrory=0, minmag=1, maxmag=1, minrot=0, maxrot=0, mi
         minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss
     )
 
-    if int(mirrorx):
-        im = im[::-1]
+    # apparently the first index is y, not x
     if int(mirrory):
+        im = im[::-1]
+    if int(mirrorx):
         im = im[:,::-1]
 
     w, h = im.shape[:2]
