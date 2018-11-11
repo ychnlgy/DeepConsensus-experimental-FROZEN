@@ -15,11 +15,10 @@ class GlobalSumPool(torch.nn.Module, models.NormalInit):
     
     '''
 
-    def __init__(self, h, c, g):
+    def __init__(self, h, c):
         super(GlobalSumPool, self).__init__()
         self.h = h
         self.c = c
-        self.g = g
     
     def get_init_targets(self):
         return [torch.nn.Linear]

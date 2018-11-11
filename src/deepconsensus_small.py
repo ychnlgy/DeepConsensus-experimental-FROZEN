@@ -262,68 +262,8 @@ class Model(ResNet):
                 ),
             )
         ]
-    
-    def forward(self, X):
-        self.layer_outputs = list(self.do_consensus(X))
-        
-#        if self.training:
-        out = sum(self.layer_outputs)
-#        else:
-#            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
-        return out
-    
-    def set_layerweights(self, weights):
-        self.layerweights = weights*(1-self.alpha) + self.layerweights*self.alpha
-    
-    def clear_layereval(self):
-        self.matches = torch.zeros(len(self.distills))
-        self.n = 0
-    
-    def get_layereval(self):
-        if self.n == 0:
-            return self.matches
-        else:
-            return self.matches/self.n
-    
-    def eval_layers(self, y):
-        matches = [self.match_argmax(yh, y) for yh in self.layer_outputs]
-        self.matches += torch.Tensor(matches)
-        self.n += 1
-    
-    def match_argmax(self, yh, y):
-        return (torch.argmax(yh, dim=1) == y).float().mean().item()
-    
-    def iter_forward(self, X):
-        X = self.conv(X)
-        it = list(self.resnet.iter_forward(X))
-        assert len(it) == len(self.distills)
-        for distill, X in zip(self.distills, it):
-            out = distill(X)
-            misc.debug.println(out[0])
-            yield out
-            
-    def do_consensus(self, X):
-        it = self.iter_forward(X)
-        if self.useconsensus:
-            return self._do_consensus(it)
-        else:
-            return it
-    
-    def _do_consensus(self, it):
-        a = next(it)
-        b = next(it)
-        m = self.max(a)
-        n = self.max(b)
-        p = None
-        yield a * n
-        for c in it:
-            p = self.max(c)
-            yield (m + p)/2.0 * b
-            a, b = b, c
-            m, n = n, p
-        yield m * b
 
-from cnn import Cnn
+from cnn_small import Cnn
 
 class ModelCnn(Model):
 

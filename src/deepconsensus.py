@@ -55,15 +55,6 @@ class Model(ResNet):
 #                    usenorm = self.usenorm,
 #                    p = self.p
 #                ),
-#                g = models.DenseNet(
-#                    headsize = 32,
-#                    bodysize = 256,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid(),
-#                    bias = self.usebias
-#                ),
 #            ),
 #            
 #            models.GlobalSumPool(
@@ -82,15 +73,6 @@ class Model(ResNet):
 #                    useprototype = self.useprototype,
 #                    usenorm = self.usenorm,
 #                    p = self.p
-#                ),
-#                g = models.DenseNet(
-#                    headsize = 32,
-#                    bodysize = 256,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid(),
-#                    bias = self.usebias
 #                ),
 #            ),
             
@@ -111,15 +93,6 @@ class Model(ResNet):
 #                    usenorm = self.usenorm,
 #                    p = self.p
 #                ),
-#                g = models.DenseNet(
-#                    headsize = 64,
-#                    bodysize = 256,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid(),
-#                    bias = self.usebias
-#                ),
 #            ),
             
             models.GlobalSumPool(
@@ -138,15 +111,6 @@ class Model(ResNet):
                     useprototype = self.useprototype,
                     usenorm = self.usenorm,
                     p = self.p
-                ),
-                g = models.DenseNet(
-                    headsize = 64,
-                    bodysize = 256,
-                    tailsize = 1,
-                    layers = self.layers,
-                    dropout = 0.2,
-                    activation = torch.nn.Sigmoid(),
-                    bias = self.usebias
                 ),
             ),
             
@@ -167,15 +131,6 @@ class Model(ResNet):
 #                    usenorm = self.usenorm,
 #                    p = self.p
 #                ),
-#                g = models.DenseNet(
-#                    headsize = 128,
-#                    bodysize = 256,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid(),
-#                    bias = self.usebias
-#                ),
 #            ),
             
             models.GlobalSumPool(
@@ -194,15 +149,6 @@ class Model(ResNet):
                     useprototype = self.useprototype,
                     usenorm = self.usenorm,
                     p = self.p
-                ),
-                g = models.DenseNet(
-                    headsize = 128,
-                    bodysize = 256,
-                    tailsize = 1,
-                    layers = self.layers,
-                    dropout = 0.2,
-                    activation = torch.nn.Sigmoid(),
-                    bias = self.usebias
                 ),
             ),
             
@@ -223,15 +169,6 @@ class Model(ResNet):
 #                    usenorm = self.usenorm,
 #                    p = self.p
 #                ),
-#                g = models.DenseNet(
-#                    headsize = 256,
-#                    bodysize = 64,
-#                    tailsize = 1,
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = torch.nn.Sigmoid(),
-#                    bias = self.usebias
-#                ),
 #            ),
             
             models.GlobalSumPool(
@@ -250,15 +187,6 @@ class Model(ResNet):
                     useprototype = self.useprototype,
                     usenorm = self.usenorm,
                     p = self.p
-                ),
-                g = models.DenseNet(
-                    headsize = 256,
-                    bodysize = 64,
-                    tailsize = 1,
-                    layers = self.layers,
-                    dropout = 0.2,
-                    activation = torch.nn.Sigmoid(),
-                    bias = self.usebias
                 ),
             )
         ]

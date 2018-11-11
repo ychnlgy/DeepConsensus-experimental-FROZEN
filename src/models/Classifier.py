@@ -14,10 +14,6 @@ class Classifier(torch.nn.Module):
         self.grp  = self.init_groups(classes, hiddensize, miu, std, useprototype)
         self.mech = self.init_mech(useprototype, usenorm)
         
-        
-        #self.norm = models.SoftminNorm()
-        #self.coss = models.CosineSimilarity()
-    
     def init_groups(self, classes, hiddensize, miu, std, useprototype):
         if useprototype:
             vecs = torch.Tensor(classes, hiddensize).normal_(mean=miu, std=std)
