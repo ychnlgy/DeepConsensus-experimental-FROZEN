@@ -45,10 +45,10 @@ def main(gid, dset, start, **kwargs):
     else:
         raise AssertionError
     
-    CMDS = CMDS[start:]
+    cmds = CMDS[start:]
     
-    for cmd in CMDS:
+    for cmd in cmds:
         print(cmd)
     
-    for cmd in CMDS:
+    for cmd in cmds:
         os.system(cmd)
