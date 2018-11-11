@@ -496,7 +496,8 @@ def unittest():
     td, tl, sd, sl, n, c, i = get_mnist_corrupt(
         #split = "balanced",
         download=0,
-        mirrorx=1,
+        mirrorx="1",
+        #mirrory=1,
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
