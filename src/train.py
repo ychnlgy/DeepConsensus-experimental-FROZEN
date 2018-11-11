@@ -4,6 +4,8 @@ import torch, tqdm, time, numpy, statistics, random
 
 import misc, models, resnet
 
+import scipy.misc
+
 from deepconsensus import Model, ModelCnn
 from deepconsensus_small import ModelCnn as ModelCnnSmall
 from resnet import Model as ResNet
@@ -19,9 +21,7 @@ from matplotlib import pyplot
 
 def save_image(name, image):
     image = image.squeeze().cpu().detach().numpy()
-    pyplot.imshow(image, cmap="gray")
-    pyplot.savefig(name)
-    pyplot.clf()
+    scipy.misc.imsave(name, image)
 
 def collect_answer(model, image):
     im = image.view(1, 1, 64, 64)
@@ -159,11 +159,14 @@ def main(
         images = iter(testloader)
         
         perturb_amt = []
+        images = []
         for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80, disable=silent):
             image, label = next(images)
             #save_image("%d-%d-original.png" % (i, label.item()), image)
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label_fool, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
+            
+            images.append((image, pert_image))
             
             #save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
             
@@ -178,11 +181,13 @@ def main(
         
         print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
         
-        image = image.permute(1, 2, 0)
-        pert_image = pert_image.squeeze(0).permute(1, 2, 0)
-        
-        save_image("im-original.png", image)
-        save_image("im-perturbed.png", pert_image)
+        for i in range(10):
+            image, pert_image = images[i]
+            image = image.permute(1, 2, 0)
+            pert_image = pert_image.squeeze(0).permute(1, 2, 0)
+            
+            save_image("im%d-original.png" % i, image)
+            save_image("im%d-perturbed.png" % i, pert_image)
         
         raise SystemExit(0)
         
