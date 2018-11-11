@@ -330,10 +330,6 @@ class ModelCnn(Model):
     def __init__(self, channels, classes, imagesize, **kwargs):
         super(ModelCnn, self).__init__(channels, classes, imagesize, **kwargs)
         self.layers = Cnn.get_layers(channels, classes, imagesize)
-        
-        del self.conv
-        del self.resnet
-        del self.net
     
     def forward(self, X):
         return sum(self.iter_forward(X))
