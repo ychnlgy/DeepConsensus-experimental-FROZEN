@@ -10,6 +10,8 @@ from groupy.gconv.pytorch_gconv.splitgconv2d import P4ConvZ2, P4ConvP4
 from groupy.gconv.pytorch_gconv.pooling import plane_group_spatial_max_pooling
 
 
+import models
+
 # Training settings
 #parser = argparse.ArgumentParser(description='PyTorch MNIST Example')
 #parser.add_argument('--batch-size', type=int, default=64, metavar='N',
@@ -52,7 +54,7 @@ from groupy.gconv.pytorch_gconv.pooling import plane_group_spatial_max_pooling
 #    batch_size=args.test_batch_size, shuffle=True, **kwargs)
 
 
-class Net(nn.Module):
+class Net(models.Savable):
     def __init__(self, *args, **kwargs):
         super(Net, self).__init__()
         self.conv1 = P4ConvZ2(1, 10, kernel_size=3)
