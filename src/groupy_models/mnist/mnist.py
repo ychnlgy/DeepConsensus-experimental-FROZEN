@@ -53,7 +53,7 @@ from groupy.gconv.pytorch_gconv.pooling import plane_group_spatial_max_pooling
 
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(Net, self).__init__()
         self.conv1 = P4ConvZ2(1, 10, kernel_size=3)
         self.conv2 = P4ConvP4(10, 10, kernel_size=3)
