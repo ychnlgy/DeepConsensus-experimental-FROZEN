@@ -45,7 +45,7 @@ def main(gid, dset, start, **kwargs):
     else:
         raise AssertionError
     
-    CMDs = CMDS[start:]
+    CMDS = CMDS[start:]
     
     for cmd in CMDS:
         print(cmd)
