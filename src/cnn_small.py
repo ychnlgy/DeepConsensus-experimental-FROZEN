@@ -11,11 +11,11 @@ class Cnn(models.Savable):
             torch.nn.AvgPool2d(4),
             models.Reshape(64),
             
-            torch.nn.Linear(64, 128),
+            torch.nn.Linear(64, 96),
             torch.nn.Dropout(p=0.2),
             torch.nn.LeakyReLU(),
             
-            torch.nn.Linear(128, classes)
+            torch.nn.Linear(96, classes)
         )
         
         self.layers = Cnn.get_layers(channels, classes, imagesize)
