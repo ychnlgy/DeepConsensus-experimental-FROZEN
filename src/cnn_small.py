@@ -7,17 +7,15 @@ class Cnn(models.Savable):
     def __init__(self, channels, classes, imagesize, *args, **kwargs):
         super(Cnn, self).__init__()
         
-        
-        
         self.net = torch.nn.Sequential(
             torch.nn.AvgPool2d(4),
-            models.Reshape(256),
+            models.Reshape(64),
             
-            torch.nn.Linear(256, 1024),
+            torch.nn.Linear(64, 128),
             torch.nn.Dropout(p=0.2),
             torch.nn.LeakyReLU(),
             
-            torch.nn.Linear(1024, classes)
+            torch.nn.Linear(128, classes)
         )
         
         self.layers = Cnn.get_layers(channels, classes, imagesize)
