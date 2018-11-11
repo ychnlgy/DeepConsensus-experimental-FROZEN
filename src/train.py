@@ -7,6 +7,7 @@ import misc, models, resnet
 from deepconsensus import Model, ModelCnn
 from resnet import Model as ResNet
 from cnn import Cnn
+from groupy_models.mnist.mnist import Net as P4MCnn
 
 from deepfool import deepfool
 
@@ -121,7 +122,7 @@ def main(
             test_dat = _train_dat
             test_lab = _train_lab
     
-    model = [Model, ResNet, ModelCnn, Cnn][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+    model = [Model, ResNet, ModelCnn, Cnn, P4MCnn][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
         layers = layers,
         squash = squash,
@@ -132,6 +133,8 @@ def main(
         p = normp,
         alpha = alpha
     )
+    
+    print("Using %s" % model.__class__)
     
     if showparams:
     
