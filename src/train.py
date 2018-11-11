@@ -174,7 +174,7 @@ def main(
             #collect_answer(model, image)
             #collect_answer(model, pert_image)
             
-            perturb_amt.append(float(numpy.sum(numpy.abs(r_tot))))
+            perturb_amt.append(float(numpy.linalg.norm(r_tot, ord=2)/numpy.linalg.norm(image, ord=2)))
         
         mean = statistics.mean(perturb_amt)
         stdd = statistics.stdev(perturb_amt)
