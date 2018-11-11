@@ -6,7 +6,7 @@ import misc
 @misc.main
 def main():
     
-    data = ["h", "i"]
+    data = "abcdefghi"
     
     indx = list(range(1, 17))
     

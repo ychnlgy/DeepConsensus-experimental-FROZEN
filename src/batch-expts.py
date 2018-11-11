@@ -21,12 +21,14 @@ def do_tv(t, vmin, vmax, vstep):
             CMDS.append(CMD.format(modelid=modelid, t=t, v=v))
 
 @misc.main
-def main(gid, dset, start, **kwargs):
+def main(gid, dset, start, end=None, **kwargs):
 
     global CMD
     CMD = CMD_FORM.format(dset=dset)
     
     start = int(start)
+    if end is not None:
+        end = int(end)
 
     add = " ".join(["=".join(d) for d in kwargs.items()])
     
@@ -45,7 +47,7 @@ def main(gid, dset, start, **kwargs):
     else:
         raise AssertionError
     
-    cmds = CMDS[start:]
+    cmds = CMDS[start:end]
     
     for cmd in cmds:
         print(cmd)
