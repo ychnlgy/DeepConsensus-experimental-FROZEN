@@ -6,12 +6,17 @@ import scipy.ndimage
 
 from .util import hardmap
 
-def corrupt(im, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0, mingauss=0, maxgauss=0, **kwargs):
+def corrupt(im, mirrorx=0, mirrory=0, minmag=1, maxmag=1, minrot=0, maxrot=0, mintrans=0, maxtrans=0, minalpha=1, maxalpha=1, minbeta=1, maxbeta=1, minsigma=0, maxsigma=0, mingauss=0, maxgauss=0, **kwargs):
 
     minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss = hardmap(
         float, 
         minmag, maxmag, minrot, maxrot, mintrans, maxtrans, minalpha, maxalpha, minbeta, maxbeta, minsigma, maxsigma, mingauss, maxgauss
     )
+
+    if int(mirrorx):
+        im = im[::-1]
+    if int(mirrory):
+        im = im[:,::-1]
 
     w, h = im.shape[:2]
     originalshape = im.shape

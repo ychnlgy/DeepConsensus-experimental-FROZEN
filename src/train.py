@@ -134,7 +134,7 @@ def main(
         alpha = alpha
     )
     
-    print_("Using %s" % model.__class__, silent)
+    print_("Using %s" % str(model.__class__), silent)
     
     if showparams:
     

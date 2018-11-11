@@ -493,16 +493,17 @@ def unittest():
     #td, tl, sd, sl, n, c, i = get_fash(download=0)
     
     #print(len(td), len(sd))
-    td, tl, sd, sl, n, c, i = get_mnist64_corrupt(
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
         #split = "balanced",
         download=0,
+        mirrorx=1,
         minmag=1, maxmag=1,
         mintrans=0, maxtrans=0,
         minrot=0, maxrot=0,
         minalpha=1, maxalpha=1,
         minbeta=1, maxbeta=1,
         minsigma=0, maxsigma=0,
-        mingauss=30, maxgauss=30
+        mingauss=0, maxgauss=0
     )
     
 #    print("Showing train data")
@@ -519,7 +520,7 @@ def unittest():
 #    
 #    print("Showing test data")
     
-    N = 3
+    N = 100
     
     indices = numpy.arange(len(sd))
     #numpy.random.shuffle(indices)
@@ -527,10 +528,10 @@ def unittest():
     
     import models
     
-    for img, cls in zip(td[indices], tl[indices]):
+    for img, cls in zip(sd[indices], sl[indices]):
         label = cls.item()
         print(label)
         im = img.permute(1, 2, 0).squeeze().numpy()
         pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-        pyplot.savefig("%d.png" % label)
+        pyplot.show()#("%d.png" % label)
         pyplot.clf()
