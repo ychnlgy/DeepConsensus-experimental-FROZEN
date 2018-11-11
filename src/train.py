@@ -87,6 +87,7 @@ def main(
         "cifar10": misc.data.get_cifar10,
         "cifar10-corrupt": misc.data.get_cifar10_corrupt,
         "cifar1064": misc.data.get_cifar1064,
+        "cifar1064-corrupt": misc.data.get_cifar1064_corrupt,
         "cifar9-64stretch": misc.data.get_cifar9_64stretch,
         "emnist": misc.data.get_emnist,
         "emnist-corrupt": misc.data.get_emnist_corrupt,
