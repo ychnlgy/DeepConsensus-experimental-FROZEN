@@ -287,7 +287,7 @@ def main(
             
                 yh = model(X)
                 
-                if type(model) is Model:
+                if type(model) is ModelExposed:
                     model.eval_layers(y)
                 
                 n += 1.0
@@ -298,7 +298,7 @@ def main(
             
             print_(" -- <TEST> %.3f" % testscore, silent)
             
-            if type(model) is Model:
+            if type(model) is ModelExposed:
                 print_(model.get_layereval(), silent)
                 model.clear_layereval()
             
