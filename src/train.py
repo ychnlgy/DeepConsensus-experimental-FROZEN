@@ -180,7 +180,7 @@ def main(
         mean = statistics.mean(perturb_amt)
         stdd = statistics.stdev(perturb_amt)
         
-        print("Pertubation norm1 mean: %.3f, standard deviation: %.3f" % (mean, stdd))
+        print("Pertubation density: %.3f, standard deviation: %.3f" % (mean, stdd))
         
         for i in range(10):
             image, pert_image = saved[i]
