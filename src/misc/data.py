@@ -201,7 +201,7 @@ def convert_quads(data, labels, size):
     X, Y = size
     quad = torch.LongTensor(N).random_(0, 4) # Integers in [0,4)
     dx = (quad % 2) * X/2
-    dy = (quad //2) * Y/2
+    dy = (quad /2) * Y/2
     out = torch.zeros(N, C, X, Y)
     for i in range(N):
         x = dx[i].item()
