@@ -2,7 +2,7 @@ import torch
 
 import models, misc, statistics
 
-from resnet_exposed import Model as ResNet
+from resnet import Model as ResNet
 
 class Model(ResNet):
 
