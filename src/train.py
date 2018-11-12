@@ -8,6 +8,7 @@ import scipy.misc
 
 from deepconsensus import Model, ModelCnn
 from deepconsensus_small import ModelCnn as ModelCnnSmall
+from deepconsensus_exposed import Model as ModelExposed
 from resnet import Model as ResNet
 from cnn import Cnn
 from cnn_small import Cnn as CnnSmall
@@ -127,7 +128,7 @@ def main(
             test_dat = _train_dat
             test_lab = _train_lab
     
-    model = [Model, ResNet, ModelCnn, Cnn, P4MCnn, ModelCnnSmall, CnnSmall][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
+    model = [Model, ResNet, ModelCnn, Cnn, P4MCnn, ModelCnnSmall, CnnSmall, ModelExposed][modelid](CHANNELS, NUM_CLASSES, IMAGESIZE, 
         useconsensus = useconsensus,
         layers = layers,
         squash = squash,

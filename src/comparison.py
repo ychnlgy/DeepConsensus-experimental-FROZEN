@@ -47,7 +47,7 @@ def plot():
             plt.tick_params(labelbottom=False)
             for mtype in [DC, CN]:
                 mdata = perturb[mtype]
-                p = {DC:"x", CN:"o"}[mtype]
+                p = {DC:"bo", CN:"rx"}[mtype]
                 plt.errorbar(paxis, mdata[MIU], yerr=mdata[STD], fmt=p + "--")
     
     for c in range(num_dsets):
