@@ -39,10 +39,10 @@ def main(gid, dset, start, end=None, **kwargs):
         do_tv("trans", 5, 20, 5)
         do_tv("mag", 1.25, 2.0, 0.25)
     elif gid == "2":
-        do_tv("rot", 15, 60, 15)
         do_tv("gauss", 15, 60, 15)
-    elif gid == "3":
         do_tv("sigma", 0.4, 1.6, 0.4)
+    elif gid == "3":
+        do_tv("rot", 15, 60, 15)
         do_tv("beta", 0.85, 0.4, -0.15)
     else:
         raise AssertionError

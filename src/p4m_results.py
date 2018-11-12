@@ -20,6 +20,7 @@ import misc, statistics
 
 @misc.main
 def main():
+    pyplot.rcParams["font.family"] = "serif"
     for group, gc, dc in [
         ("Translation (4 pixels)", GC_TRANS4, DC_TRANS4),
         ("Rotation (45 degrees)", GC_ROTA45, DC_ROTA45),
