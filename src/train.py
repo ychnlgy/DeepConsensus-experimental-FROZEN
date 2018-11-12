@@ -8,7 +8,7 @@ import scipy.misc
 
 from deepconsensus import Model, ModelCnn
 from deepconsensus_small import ModelCnn as ModelCnnSmall
-from deepconsensus_exposed import Model as ModelExposed
+from deepconsensus_exposed import ModelCnn as ModelExposed
 from resnet import Model as ResNet
 from cnn import Cnn
 from cnn_small import Cnn as CnnSmall

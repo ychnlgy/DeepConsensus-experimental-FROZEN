@@ -171,3 +171,24 @@ class Model(ResNet):
             a, b = b, c
             m, n = n, p
         yield m * b
+
+from cnn_exposed import Cnn
+
+class ModelCnn(Model):
+
+    def __init__(self, channels, classes, imagesize, **kwargs):
+        super(ModelCnn, self).__init__(channels, classes, imagesize, **kwargs)
+        self.layers = Cnn.get_layers(channels, classes, imagesize)
+        
+        del self.conv
+        del self.resnet
+        del self.net
+    
+    def forward(self, X):
+        return sum(self.iter_forward(X))
+    
+    def iter_forward(self, X):
+        assert len(self.distills) == len(self.layers)
+        for layer, distill in zip(self.layers, self.distills):
+            X = layer(X)
+            yield distill(X)
