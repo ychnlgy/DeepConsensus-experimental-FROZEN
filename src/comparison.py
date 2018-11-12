@@ -3,14 +3,16 @@ from matplotlib import pyplot
 
 import misc
 
-MNIST = ("MNIST", "abc")
+MNIST = ("MNIST", "abcmno")
 FASHION = ("FashionMNIST", "def")
-EMNIST = ("EMNIST", "ghi")
+EMNIST = ("EMNIST", "ghipqr")
+CIFAR10 = ("CIFAR10", "jkl")
 
 DSETS = [MNIST, EMNIST]
 
 DC = "dc"
 CN = "cnn"
+SMALL = "-small"
 
 SPLIT = [
     [("Translation", "pixels", [0, 5, 10, 15, 20]), ("Magnification", "fraction", [1, 1.25, 1.5, 1.75, 2.0])],
@@ -45,9 +47,9 @@ def plot():
             perturb = dset[pname]
             plt = axes[c, i]
             plt.tick_params(labelbottom=False)
-            for mtype in [DC, CN]:
+            for mtype in [DC, CN, DC+SMALL, CN+SMALL]:
                 mdata = perturb[mtype]
-                p = {DC:"bo", CN:"rx"}[mtype]
+                p = {DC:"bo", CN:"rx", DC+SMALL: "bs", CN+SMALL: "r^"}[mtype]
                 plt.errorbar(paxis, mdata[MIU], yerr=mdata[STD], fmt=p + "--")
     
     for c in range(num_dsets):
@@ -64,7 +66,7 @@ def plot():
         plt.tick_params(labelbottom=True)
         plt.set_xticks(paxis)
     
-    axes[0, -1].legend(["DeepConsensus", "Base CNN"], bbox_to_anchor=[1, 1])
+    axes[0, 0].legend(["DeepConsensus", "Base CNN", "DeepConsensus-Small", "Base CNN-Small"], bbox_to_anchor=[0.7, 0.2])
     
     pyplot.savefig("results.png", bbox_inches="tight")
 
@@ -78,15 +80,15 @@ def get_perturb_properties(perturbname):
 def set_grp_baseline(folder):
     for dset in DSETS:
         for modeltype in [DC, CN]:
-            fname = folder % (dset[1], modeltype)
+            fname = folder % (dset[1][:3], modeltype)
             jdata = json.load(open(fname))
-            
             miu = statistics.mean(jdata)
             std = statistics.stdev(jdata)
             
-            for dname in dset[1]:
-                for ptype in [0, 1]:
-                    add_group(dname, 0, miu, std, perturbtype=ptype, modeltype=modeltype)
+            for suffix in ["", SMALL]:
+                for dname in dset[1]:
+                    for ptype in [0, 1]:
+                        add_group(dname, 0, miu, std, perturbtype=ptype, modeltype=modeltype+suffix)
 
 def get_type(i):
     if i <= 4:
@@ -102,13 +104,17 @@ def index_group(dname):
     for dsetname, dsetgrp in DSETS:
         if dname in dsetgrp:
             i = dsetgrp.index(dname)
-            return dsetname, SPLIT[i]
+            if i < 3:
+                return dsetname, SPLIT[i], ""
+            else:
+                return dsetname, SPLIT[i-3], SMALL
     assert False
 
 def add_group(dname, i, miu, std, perturbtype=None, modeltype=None):
-    dsetname, split = index_group(dname)
+    dsetname, split, suffix = index_group(dname)
     if perturbtype is None:
         perturbtype, modeltype, i = get_type(i)
+        modeltype += suffix
     perturbname = split[perturbtype][0]
     grp = GROUPS[dsetname][perturbname][modeltype]
     grp[MIU][i] = miu
@@ -117,7 +123,7 @@ def add_group(dname, i, miu, std, perturbtype=None, modeltype=None):
 @misc.main
 def main():
     
-    data = "abcghi"
+    data = "abcghimnopqr"
     
     indx = list(range(1, 17))
     
@@ -138,7 +144,6 @@ def main():
             miu = statistics.mean(jdata)
             std = statistics.stdev(jdata)
             add_group(dname, i, miu, std)
-    
     plot()
 #            pyplot.errorbar(["%s%s" % (dname, i)], [miu], yerr=[std], fmt="o")
 #    
