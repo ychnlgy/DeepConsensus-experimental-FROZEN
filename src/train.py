@@ -173,7 +173,6 @@ def main(
             #print(label.item(), loop_i)
             #collect_answer(model, image)
             #collect_answer(model, pert_image)
-            image = torch.from_numpy(image)
             r_tot = torch.from_numpy(r_tot)
             perturb_amt.append(float(r_tot.norm(p=2)/image.norm(p=2)))
         
