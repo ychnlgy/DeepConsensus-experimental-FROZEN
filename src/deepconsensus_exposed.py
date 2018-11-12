@@ -185,7 +185,8 @@ class ModelCnn(Model):
         del self.net
     
     def forward(self, X):
-        return sum(self.iter_forward(X))
+        self.layer_outputs = list(self.iter_forward(X))
+        return sum(self.layer_outputs)
     
     def iter_forward(self, X):
         assert len(self.distills) == len(self.layers)
