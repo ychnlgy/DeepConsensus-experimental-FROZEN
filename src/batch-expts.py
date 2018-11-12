@@ -16,7 +16,7 @@ def vrange(vmin, vmax, vstep):
         vmin += vstep
 
 def do_tv(t, vmin, vmax, vstep):
-    for modelid in [2, 3]:
+    for modelid in [5, 6]:
         for v in vrange(vmin, vmax+vstep, vstep):
             CMDS.append(CMD.format(modelid=modelid, t=t, v=v))
 
