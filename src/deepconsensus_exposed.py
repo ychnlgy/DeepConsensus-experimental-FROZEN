@@ -1,6 +1,6 @@
 import torch
 
-import models, misc
+import models, misc, statistics
 
 from resnet_exposed import Model as ResNet
 
@@ -127,19 +127,17 @@ class Model(ResNet):
         self.layerweights = weights*(1-self.alpha) + self.layerweights*self.alpha
     
     def clear_layereval(self):
-        self.matches = torch.zeros(len(self.distills))
-        self.n = 0
+        self.matches =[[] for i in range(len(self.distills))]
     
     def get_layereval(self):
-        if self.n == 0:
-            return self.matches
-        else:
-            return self.matches/self.n
+        miu = [statistics.mean(d) for d in self.matches]
+        std = [statistics.stdev(d) for d in self.matches]
+        return miu, std
     
     def eval_layers(self, y):
         matches = [self.match_argmax(yh, y) for yh in self.layer_outputs]
-        self.matches += torch.Tensor(matches)
-        self.n += 1
+        for i, match in enumerate(matches):
+            self.matches[i].append(match)
     
     def match_argmax(self, yh, y):
         return (torch.argmax(yh, dim=1) == y).float().mean().item()
