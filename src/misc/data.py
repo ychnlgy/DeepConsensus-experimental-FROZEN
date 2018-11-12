@@ -497,6 +497,17 @@ def get_circlesqr_resize(shrink, samples=400):
     
     return train_dat, train_lab, test_dat, test_lab, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def stack_examples(data):
+    data = data.numpy().squeeze()
+    sample = data[0]
+    n = len(data)
+    w, h = sample.shape
+    out = numpy.ones((w, h*n))
+    space = 1
+    for i in range(n):
+        out[space:-space,i*h+space:(i+1)*h-space] = data[i,space:-space,space:-space]
+    scipy.misc.imsave("samples.png", out)
+
 def unittest():
 
     from matplotlib import pyplot
@@ -510,22 +521,22 @@ def unittest():
 #        pyplot.show()
 #        pyplot.clf()
     
-    td, tl, sd, sl, n, c, i = get_mnist_rot(download=0)
+    #td, tl, sd, sl, n, c, i = get_mnist_rot(download=0)
     
     #print(len(td), len(sd))
-#    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
-#        #split = "balanced",
-#        download=0,
-#        mirrorx="1",
-#        #mirrory=1,
-#        minmag=1, maxmag=1,
-#        mintrans=0, maxtrans=0,
-#        minrot=0, maxrot=0,
-#        minalpha=1, maxalpha=1,
-#        minbeta=1, maxbeta=1,
-#        minsigma=0, maxsigma=0,
-#        mingauss=0, maxgauss=0
-#    )
+    td, tl, sd, sl, n, c, i = get_mnist_corrupt(
+        #split = "balanced",
+        download=0,
+        mirrorx=0,
+        #mirrory=1,
+        minmag=1, maxmag=1,
+        mintrans=4, maxtrans=4,
+        minrot=0, maxrot=0,
+        minalpha=1, maxalpha=1,
+        minbeta=1, maxbeta=1,
+        minsigma=0, maxsigma=0,
+        mingauss=0, maxgauss=0
+    )
     
 #    print("Showing train data")
 #    
@@ -541,18 +552,30 @@ def unittest():
 #    
 #    print("Showing test data")
     
-    N = 100
+    N = 5
     
     indices = numpy.arange(len(sd))
     #numpy.random.shuffle(indices)
     indices = indices[:N]
+    stack_examples(sd[indices])
+#    examples = torch.zeros(5, 1, 64, 64)
+#    i = 0
+#    for lab, dat in zip(sl, sd):
+#        if lab.item() == i:
+#            examples[i] = dat
+#            i += 1
+#        if i >= 5:
+#            break
+#    
+#    stack_examples(examples)
     
-    import models
-    
-    for img, cls in zip(sd[indices], sl[indices]):
-        label = cls.item()
-        print(label)
-        im = img.permute(1, 2, 0).squeeze().numpy()
-        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
-        pyplot.show()#("%d.png" % label)
-        pyplot.clf()
+#    sd = examples
+##    import models
+##    
+#    for img, cls in zip(sd, sl):
+#        label = cls.item()
+#        print(label)
+#        im = img.permute(1, 2, 0).squeeze().numpy()
+#        pyplot.imshow(im, cmap="gray", vmin=0, vmax=1)
+#        pyplot.show()#("%d.png" % label)
+#        pyplot.clf()

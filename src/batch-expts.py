@@ -4,7 +4,7 @@ import os
 
 import misc
 
-CMD_FORM = "python3 -W ignore ./train.py modelf={dset}.torch repeat=10 dataset={dset}64-corrupt epochs=30 modelid={{modelid}} min{{t}}={{v}} max{{t}}={{v}}"
+CMD_FORM = "python3 -W ignore ./train.py modelf={dset}.torch repeat=5 dataset={dset}64-corrupt epochs=30 modelid={{modelid}} min{{t}}={{v}} max{{t}}={{v}}"
 CMD = None
 CMDS = []
 
