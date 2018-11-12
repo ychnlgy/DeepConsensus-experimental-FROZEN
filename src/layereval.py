@@ -1,13 +1,28 @@
 from matplotlib import pyplot
 
-NOISE = [0.4177, 0.3209, 0.2573, 0.6001, 0.8855, 0.9538, 0.9782, 0.9781]
-TRANS = [0.4129, 0.4994, 0.9276, 0.9461, 0.7934, 0.8580, 0.5282, 0.5869]
-MAG = [0.3715, 0.3352, 0.4971, 0.5180, 0.5584, 0.6166, 0.7126, 0.7149]
-pyplot.plot(NOISE)
-pyplot.plot(TRANS)
-pyplot.plot(MAG)
+# EMNIST, balanced
 
-pyplot.legend(["Gaussian noise (30 s)", "Translation (20 pixels)", "Magnification (2x)"])
+TOT_NOISE = 
+MIU_NOISE = 
+STD_NOISE = 
+
+TOT_TRANS = 85.3
+MIU_TRANS = [0.5646276462902414, 0.7502127479999623, 0.7581382802826293, 0.7923935975166078]
+STD_TRANS = [0.050201408533735045, 0.042299634406440516, 0.04766462365641103, 0.042679180094108864]
+
+TOT_ROT = 
+MIU_ROT = 
+STD_ROT =
+
+TOT_MAG = 69.6
+MIU_MAG = [0.1557978729103157, 0.460797869620171, 0.5838297852810393, 0.6605851073214348]
+STD_MAG = [0.033843009868595876, 0.05439901612627148, 0.05312897181556344, 0.047540337537934914]
+
+pyplot.errorbar(NOISE)
+pyplot.errorbar(TRANS)
+pyplot.errorbar(MAG)
+
+pyplot.legend(["Gaussian noise (30 s)", "Translation (20 pixels)", "Magnification (1.5x)"])
 pyplot.ylabel("Accuracy (%)")
 pyplot.xlabel("Layer")
 
