@@ -101,6 +101,9 @@ def get_svhn(download=0, **kwargs):
 
     return trainData, trainLabels, testData, testLabels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
+def get_svhn_corrupt(download=0, **kwargs):
+    return make_corrupt(get_svhn(download), **kwargs)
+
 def pillow_to_numpy(dataset, resize=None):
 
     if resize is None:

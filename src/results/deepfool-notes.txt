@@ -14,3 +14,12 @@
         ResNet - 82.0 test error
             Pertubation density: 0.005, standard deviation: 0.005
         DC-ResNet - 85.6 test error
+            Pertubation density: 0.025, standard deviation: 0.035
+    
+    SVHN
+        ResNet - 94.4 test error
+            Pertubation density: 0.015, standard deviation: 0.012
+        DC-ResNet - 96.4 test error
+            Pertubation density: 0.120, standard deviation: 0.117
+    
+    SVHN - train corrupt alpha 0.8

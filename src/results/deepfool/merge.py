@@ -10,7 +10,16 @@ def pair(folder):
         fid, lab = f.split("-")
         im = scipy.misc.imread(os.path.join(folder, f))
         sep[fid][lab] = im
-    out = numpy.zeros((2*im.shape[0], len(files)//2 * im.shape[1]))
+    
+    w = 2*im.shape[0]
+    h = len(files)//2 * im.shape[1]
+    if len(im.shape) == 3:
+        c = im.shape[2]
+        size = (w, h, c)
+        out = numpy.zeros((w, h, c))
+    else:
+        size = (w, h)
+    out = numpy.zeros(size)
     for i, (k, v) in enumerate(sep.items()):
         out[:im.shape[0], i * im.shape[1]: (i+1)*im.shape[1]] = v[ORI]
         out[im.shape[0]:, i * im.shape[1]: (i+1)*im.shape[1]] = v[PER]

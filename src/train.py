@@ -86,6 +86,7 @@ def main(
         "fashion": misc.data.get_fashionmnist,
         "fashion64-corrupt": misc.data.get_fashionmnist64_corrupt,
         "svhn": misc.data.get_svhn,
+        "svhn-corrupt": misc.data.get_svhn_corrupt,
         "stl10": misc.data.get_stl10,
         "stl9-64stretch": misc.data.get_stl9_64stretch,
         "cifar10": misc.data.get_cifar10,
