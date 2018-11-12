@@ -4,7 +4,7 @@ from .geometry import generate_circle, generate_square
 from .corrupt import corrupt
 from .wscipy import scipy
 import scipy.misc # because spock2 doesn't have skimage
-import parse_amat
+import misc.parse_amat as parse_amat
 
 import torch.utils.data
 import torchvision.datasets
