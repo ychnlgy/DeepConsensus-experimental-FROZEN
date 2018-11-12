@@ -4,6 +4,7 @@ from .geometry import generate_circle, generate_square
 from .corrupt import corrupt
 from .wscipy import scipy
 import scipy.misc # because spock2 doesn't have skimage
+import parse_amat
 
 import torch.utils.data
 import torchvision.datasets
@@ -30,6 +31,22 @@ def create_loader(dat, lab, batch):
     dataset = torch.utils.data.TensorDataset(dat, lab)
     dataloader = torch.utils.data.DataLoader(dataset, batch_size=batch, shuffle=True)
     return dataloader
+
+def get_mnist_rot(download=0):
+    NUM_CLASSES = 10
+    CHANNELS = 1
+    IMAGESIZE = (32, 32)
+    
+    train_data, train_labels = parse_amat.get_trainset()
+    train_labels = torch.from_numpy(train_labels).long()
+    train_data = torch.from_numpy(train_data).view(-1, 1, 28, 28).float()
+    train_data = convert_size(train_data, IMAGESIZE)
+    
+    test_data, test_labels = parse_amat.get_testset()
+    test_data = torch.from_numpy(test_data).view(-1, 1, 28, 28).float()
+    test_data = convert_size(test_data, IMAGESIZE)
+    test_labels = torch.from_numpy(test_labels).long()
+    return train_data, train_labels, test_data, test_labels, NUM_CLASSES, CHANNELS, IMAGESIZE
 
 def get_stl10(download=0, resize=None):
     download = int(download)

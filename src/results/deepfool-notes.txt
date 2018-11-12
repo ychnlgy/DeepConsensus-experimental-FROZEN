@@ -23,3 +23,8 @@
             Pertubation density: 0.120, standard deviation: 0.117
     
     SVHN - train corrupt alpha 0.8
+        ResNet - 94.6
+            Pertubation density: 0.017, standard deviation: 0.014
+        DC-ResNet - 95.6
+            Pertubation density: 0.140, standard deviation: 0.145
+            

@@ -7,7 +7,7 @@ MNIST = ("MNIST", "abc")
 FASHION = ("FashionMNIST", "def")
 EMNIST = ("EMNIST", "ghi")
 
-DSETS = [MNIST, FASHION, EMNIST]
+DSETS = [MNIST, EMNIST]
 
 DC = "dc"
 CN = "cnn"
@@ -22,7 +22,7 @@ def iter_split():
     i = 0
     for grp in SPLIT:
         for perturb in grp:
-            if perturb[0] != "degraded signal":
+            if perturb[0] not in ["degraded signal", "Rotation"]:
                 yield i, perturb
                 i += 1
 
@@ -36,9 +36,8 @@ STD = "std"
 def plot():
     pyplot.rcParams["font.family"] = "serif"
     num_dsets = len(DSETS)
-    num_perturbs = 5
+    num_perturbs = 4
     fig, axes = pyplot.subplots(nrows=num_dsets, ncols=num_perturbs, sharey=True)
-    #axes = {}
     fig.set_size_inches(16, 10)
     for c, (dsetname, _) in enumerate(DSETS):
         dset = GROUPS[dsetname]
@@ -52,11 +51,13 @@ def plot():
                 plt.errorbar(paxis, mdata[MIU], yerr=mdata[STD], fmt=p + "--")
     
     for c in range(num_dsets):
+        y = 0.52
         if c == 1:
-            y = 0.75
-        else:
-            y = 0.6
+            y = 0.55
         axes[c, 0].set_title(DSETS[c][0], rotation="vertical", x=-0.3, y=y)
+    
+        axes[c, 0].set_ylabel("Accuracy")
+
     for i, (pname, punit, paxis) in iter_split():
         plt = axes[-1, i]
         plt.set_xlabel("%s (%s)" % (pname, punit))
@@ -116,7 +117,7 @@ def add_group(dname, i, miu, std, perturbtype=None, modeltype=None):
 @misc.main
 def main():
     
-    data = "abcdefghi"
+    data = "abcghi"
     
     indx = list(range(1, 17))
     

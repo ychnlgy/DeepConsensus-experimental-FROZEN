@@ -83,6 +83,7 @@ def main(
         "mnist64-quadrants": misc.data.get_mnist64quads,
         "mnist-rgb": misc.data.get_mnistrgb,
         "mnist-rgb-corrupt": misc.data.get_mnistrgb_corrupt,
+        "mnist-rot": misc.data.get_mnist_rot,
         "fashion": misc.data.get_fashionmnist,
         "fashion64-corrupt": misc.data.get_fashionmnist64_corrupt,
         "svhn": misc.data.get_svhn,

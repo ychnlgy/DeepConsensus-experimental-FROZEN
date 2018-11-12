@@ -7,8 +7,6 @@ class Cnn(models.Savable):
     def __init__(self, channels, classes, imagesize, *args, **kwargs):
         super(Cnn, self).__init__()
         
-        
-        
         self.net = torch.nn.Sequential(
             torch.nn.AvgPool2d(4),
             models.Reshape(256),
