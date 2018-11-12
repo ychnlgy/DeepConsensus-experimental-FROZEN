@@ -1,0 +1,16 @@
+1000 DeepFool trials after 30 epochs:
+
+    MNIST
+        CNN - 99.6 test error
+            Pertubation density: 0.178, standard deviation: 0.070
+        DC-CNN - 99.6 test error
+            Pertubation density: 0.554, standard deviation: 0.286
+        ResNet - 99.5 test error
+            Pertubation density: 0.180, standard deviation: 0.065
+        DC-ResNet - 99.6 test error
+            Pertubation density: 2.921, standard deviation: 1.694
+    
+    CIFAR10
+        ResNet - 82.0 test error
+            Pertubation density: 0.005, standard deviation: 0.005
+        DC-ResNet - 85.6 test error

@@ -48,6 +48,7 @@ def main(
     usenorm=0,
     normp=2,
     fool=0,
+    foolname="",
     modelid=0,
     trainbatch=100,
     testbatch=100,
@@ -186,8 +187,8 @@ def main(
             image = image.permute(1, 2, 0)
             pert_image = pert_image.squeeze(0).permute(1, 2, 0)
             
-            save_image("im%d-original.png" % i, image)
-            save_image("im%d-perturbed.png" % i, pert_image)
+            save_image("im%d%s-original.png" % (i, foolname), image)
+            save_image("im%d%s-perturbed.png" % (i, foolname), pert_image)
         
         raise SystemExit(0)
         
