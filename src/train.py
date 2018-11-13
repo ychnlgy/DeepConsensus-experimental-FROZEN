@@ -170,8 +170,9 @@ def main(
             image = image.to(device).squeeze(0)
             r_tot, loop_i, label_fool, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
-            choice = torch.argmax(model(image.unsqueeze(0)).squeeze()).item()
-            pertch = torch.argmax(model(pert_image.view(image.size())).squeeze()).item()
+            im = image.unsqueeze(0)
+            choice = torch.argmax(model(im).squeeze()).item()
+            pertch = torch.argmax(model(pert_image.view(im.size())).squeeze()).item()
             saved.append((image, pert_image, choice, pertch))
             
             #save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)
