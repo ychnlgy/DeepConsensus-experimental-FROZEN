@@ -50,6 +50,7 @@ def main(
     normp=2,
     fool=0,
     foolname="",
+    foolsamples=10,
     modelid=0,
     trainbatch=100,
     testbatch=100,
@@ -75,6 +76,7 @@ def main(
     datalimit = float(datalimit)
     showparams = int(showparams)
     usefake = int(usefake)
+    foolsamples = int(foolsamples)
     
     DATASETS = {
         "mnist": misc.data.get_mnist,
@@ -188,7 +190,7 @@ def main(
         
         print("Pertubation density: %.3f, standard deviation: %.3f" % (mean, stdd))
         
-        for i in range(10):
+        for i in range(foolsamples):
             image, pert_image, choice, pertch = saved[i]
             image = image.permute(1, 2, 0)
             pert_image = pert_image.squeeze(0).permute(1, 2, 0)
