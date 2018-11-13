@@ -49,7 +49,7 @@ def plot():
             plt.tick_params(labelbottom=False)
             for mtype in [DC, CN, DC+SMALL, CN+SMALL]:
                 mdata = perturb[mtype]
-                p = {DC:"bo", CN:"rx", DC+SMALL: "bs", CN+SMALL: "r^"}[mtype]
+                p = {DC:"bo", CN:"ro", DC+SMALL: "bx", CN+SMALL: "rx"}[mtype]
                 plt.errorbar(paxis, mdata[MIU], yerr=mdata[STD], fmt=p + "--")
     
     for c in range(num_dsets):
@@ -66,7 +66,7 @@ def plot():
         plt.tick_params(labelbottom=True)
         plt.set_xticks(paxis)
     
-    axes[0, 0].legend(["DeepConsensus", "Base CNN", "DeepConsensus-Small", "Base CNN-Small"], bbox_to_anchor=[0.7, 0.2])
+    axes[0, 0].legend(["DeepConsensus", "Base CNN", "DeepConsensus-Small", "Base CNN-Small"], bbox_to_anchor=[0.85, 0.3])
     
     pyplot.savefig("results.png", bbox_inches="tight")
 

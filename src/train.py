@@ -30,10 +30,13 @@ def collect_answer(model, image):
     val, idx = yh.squeeze().max(dim=0)
     print(idx.item(), val.item())
 
+MODEL_INIT = None
+
 def main(
     modelf,
     dataset,
     epochs,
+    sameinit=0,
     testset="",
     swaptest=0,
     swaptrain=0,
@@ -77,6 +80,7 @@ def main(
     showparams = int(showparams)
     usefake = int(usefake)
     foolsamples = int(foolsamples)
+    sameinit = int(sameinit)
     
     DATASETS = {
         "mnist": misc.data.get_mnist,
@@ -141,6 +145,13 @@ def main(
         p = normp,
         alpha = alpha
     )
+    
+    if sameinit:
+        global MODEL_INIT
+        if MODEL_INIT is None:
+            MODEL_INIT = model.state_dict()
+        else:
+            model.load_state_dict(MODEL_INIT)
     
     print_("Using %s" % str(model.__class__), silent)
     
