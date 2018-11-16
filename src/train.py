@@ -63,6 +63,7 @@ def main(
     silent=0,
     showparams=0,
     usefake=0,
+    collectconfidence=0,
     **kwargs):
 
     combinedataset = int(combinedataset)
@@ -81,6 +82,7 @@ def main(
     usefake = int(usefake)
     foolsamples = int(foolsamples)
     sameinit = int(sameinit)
+    collectconfidence = int(collectconfidence)
     
     DATASETS = {
         "mnist": misc.data.get_mnist,
@@ -170,6 +172,26 @@ def main(
         model.load(modelf)
     
     dataloader, validloader, testloader = misc.data.create_trainvalid_split(0.2, datalimit, train_dat, train_lab, test_dat, test_lab, trainbatch, testbatch)
+    
+    if collectconfidence:
+        
+        model.eval()
+        model.load(modelf)
+        
+        testscores = []
+        confs = []
+        
+        for X, y in testloader:
+            yh = model(X)
+            choices = torch.argmax(yh, dim=1)
+            confidences = torch.nn.functional.softmax(yh, dim=1)[choices]
+            testscores.append((choices == y).float().mean().item())
+            confs.append(confidences.mean().item())
+        
+        print("Score: %f, std: %f" % (statistics.mean(testscores), statistics.stdev(testscores)))
+        print("Confidence: %f, std: %f" % (statistics.mean(confs), statistics.stdev(confs)))
+        
+        raise SystemExit
     
     if fool:
         model.eval()
