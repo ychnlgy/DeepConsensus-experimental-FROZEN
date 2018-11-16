@@ -182,6 +182,9 @@ def main(
         confs = []
         
         for X, y in testloader:
+            X = X.to(device)
+            y = y.to(device)
+            
             yh = model(X)
             choices = torch.argmax(yh, dim=1)
             confidences = torch.nn.functional.softmax(yh, dim=1)[choices]
