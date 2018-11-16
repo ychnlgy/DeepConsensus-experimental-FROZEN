@@ -186,10 +186,10 @@ def main(
             y = y.to(device)
             
             yh = model(X)
-            choices = torch.argmax(yh, dim=1)
-            confidences = torch.nn.functional.softmax(yh, dim=1).transpose(0, 1)[choices].squeeze()
+            choices = torch.argmax(yh, dim=1).squeeze()
+            confidences = torch.nn.functional.softmax(yh, dim=1).squeeze()
+            confs.extend([c[i] for i, c in zip(choices, confidences)])
             testscores.append((choices == y).float().mean().item())
-            confs.append(confidences.mean().item())
         
         print("Score: %f, std: %f" % (statistics.mean(testscores), statistics.stdev(testscores)))
         print("Confidence: %f, std: %f" % (statistics.mean(confs), statistics.stdev(confs)))
