@@ -177,6 +177,13 @@ def main(
         
         perturb_amt = []
         saved = []
+        
+        def get_score(im):
+            pred = model(im).squeeze()
+            choice = torch.argmax(pred).item()
+            confid = torch.nn.functional.softmax(pred, dim=0)[choice].item()
+            return "%d.%.3f" % (choice, confid)
+        
         for i in tqdm.tqdm(range(fool), desc="Fooling network", ncols=80, disable=silent):
             image, label = next(images)
             #save_image("%d-%d-original.png" % (i, label.item()), image)
@@ -184,8 +191,8 @@ def main(
             r_tot, loop_i, label_fool, k_i, pert_image = deepfool(image, model, NUM_CLASSES)
             
             im = image.unsqueeze(0)
-            choice = torch.argmax(model(im).squeeze()).item()
-            pertch = torch.argmax(model(pert_image.view(im.size())).squeeze()).item()
+            choice = get_score(im)
+            pertch = get_score(pert_image.view(im.size()))
             saved.append((image, pert_image, choice, pertch))
             
             #save_image("%d-%d-perturb.png" % (i, k_i.item()), pert_image)

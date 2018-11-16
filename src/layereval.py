@@ -35,7 +35,7 @@ CNN_QUA = [0.9954000043869019, 0.9951000046730042, 0.9947000050544739]
 pyplot.rcParams["font.family"] = "serif"
 
 fig, axes = pyplot.subplots(ncols=5, sharey=True)
-fig.set_size_inches(16, 8)
+fig.set_size_inches(16, 4)
 
 def plot(i, tot, miu, std, cnn, title):
     x = list(range(1, len(miu)+1))
@@ -46,11 +46,11 @@ def plot(i, tot, miu, std, cnn, title):
     axes[i].errorbar(x, miu, yerr=std, fmt="gx--", label="Individual layer")
     axes[i].plot(x, [low] * len(miu), "r-", label="Base CNN")
 
-plot(0, TOT_NOISE, MIU_NOISE, STD_NOISE, CNN_NOISE, "Noise (30 std)")
-plot(1, TOT_BLUR, MIU_BLUR, STD_BLUR, CNN_BLUR, "Blur (1.2 std)")
-plot(2, TOT_TRANS, MIU_TRANS, STD_TRANS, CNN_TRANS, "Translation (20 pixels)")
+plot(2, TOT_NOISE, MIU_NOISE, STD_NOISE, CNN_NOISE, "Noise (30 std)")
+plot(3, TOT_BLUR, MIU_BLUR, STD_BLUR, CNN_BLUR, "Blur (1.2 std)")
+plot(0, TOT_TRANS, MIU_TRANS, STD_TRANS, CNN_TRANS, "Translation (20 pixels)")
 #plot(3, TOT_ROT, MIU_ROT, STD_ROT, CNN_ROT, "Rotation (45 degrees)")
-plot(3, TOT_MAG, MIU_MAG, STD_MAG, CNN_MAG, "Magnification (1.5)")
+plot(1, TOT_MAG, MIU_MAG, STD_MAG, CNN_MAG, "Magnification (1.5)")
 plot(4, TOT_QUA, MIU_QUA, STD_QUA, CNN_QUA, "MNIST quadrants")
 
 axes[0].legend(prop={'size': 9})

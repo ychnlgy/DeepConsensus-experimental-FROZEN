@@ -8,7 +8,7 @@ FASHION = ("FashionMNIST", "def")
 EMNIST = ("EMNIST", "ghipqr")
 CIFAR10 = ("CIFAR10", "jkl")
 
-DSETS = [MNIST, EMNIST]
+DSETS = [FASHION, CIFAR10]#[MNIST, EMNIST]
 
 DC = "dc"
 CN = "cnn"
@@ -47,7 +47,7 @@ def plot():
             perturb = dset[pname]
             plt = axes[c, i]
             plt.tick_params(labelbottom=False)
-            for mtype in [DC, CN, DC+SMALL, CN+SMALL]:
+            for mtype in [DC, CN]: # , DC+SMALL, CN+SMALL
                 mdata = perturb[mtype]
                 p = {DC:"bo", CN:"ro", DC+SMALL: "bx", CN+SMALL: "rx"}[mtype]
                 plt.errorbar(paxis, mdata[MIU], yerr=mdata[STD], fmt=p + "--")
@@ -66,7 +66,7 @@ def plot():
         plt.tick_params(labelbottom=True)
         plt.set_xticks(paxis)
     
-    axes[0, 0].legend(["DeepConsensus", "Base CNN", "DeepConsensus-Small", "Base CNN-Small"], bbox_to_anchor=[0.85, 0.3])
+    axes[0, 0].legend(["DeepConsensus", "Base CNN"], bbox_to_anchor=[0.65, 0.17]) # "DeepConsensus-Small", "Base CNN-Small"
     
     pyplot.savefig("results.png", bbox_inches="tight")
 
@@ -81,9 +81,12 @@ def set_grp_baseline(folder):
     for dset in DSETS:
         for modeltype in [DC, CN]:
             fname = folder % (dset[1][:3], modeltype)
-            jdata = json.load(open(fname))
-            miu = statistics.mean(jdata)
-            std = statistics.stdev(jdata)
+            try:
+                jdata = json.load(open(fname))
+                miu = statistics.mean(jdata)
+                std = statistics.stdev(jdata)
+            except:
+                miu = std = 0
             
             for suffix in ["", SMALL]:
                 for dname in dset[1]:
@@ -123,7 +126,7 @@ def add_group(dname, i, miu, std, perturbtype=None, modeltype=None):
 @misc.main
 def main():
     
-    data = "abcghimnopqr"
+    data = FASHION[1] + CIFAR10[1]
     
     indx = list(range(1, 17))
     
