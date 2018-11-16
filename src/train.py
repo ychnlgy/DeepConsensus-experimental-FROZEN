@@ -181,18 +181,19 @@ def main(
         testscores = []
         confs = []
         
-        for X, y in testloader:
-            X = X.to(device)
-            y = y.to(device)
+        with torch.no_grad():
+            for X, y in testloader:
+                X = X.to(device)
+                y = y.to(device)
+                
+                yh = model(X)
+                choices = torch.argmax(yh, dim=1).squeeze()
+                confidences = torch.nn.functional.softmax(yh, dim=1).squeeze()
+                confs.extend([c[i] for i, c in zip(choices, confidences)])
+                testscores.append((choices == y).float().mean().item())
             
-            yh = model(X)
-            choices = torch.argmax(yh, dim=1).squeeze()
-            confidences = torch.nn.functional.softmax(yh, dim=1).squeeze()
-            confs.extend([c[i] for i, c in zip(choices, confidences)])
-            testscores.append((choices == y).float().mean().item())
-        
-        print("Score: %f, std: %f" % (statistics.mean(testscores), statistics.stdev(testscores)))
-        print("Confidence: %f, std: %f" % (statistics.mean(confs), statistics.stdev(confs)))
+            print("Score: %f, std: %f" % (statistics.mean(testscores), statistics.stdev(testscores)))
+            print("Confidence: %f, std: %f" % (statistics.mean(confs), statistics.stdev(confs)))
         
         raise SystemExit
     
