@@ -11,8 +11,8 @@ class Model(models.Savable, models.NormalInit):
             firstconv = torch.nn.Conv2d(channels, 32, 5, padding=2)
         elif imagesize == (64, 64):
             firstconv = torch.nn.Sequential(
-                torch.nn.Conv2d(channels, 32, 5, padding=2, stride=2),
-                #torch.nn.MaxPool2d(2)
+                torch.nn.Conv2d(channels, 32, 5, padding=2),
+                torch.nn.MaxPool2d(2)
             )
         else:
             raise AssertionError
@@ -55,8 +55,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(32, 64, 3, padding=1, stride=2),
-                    #torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(32, 64, 3, padding=1),
+                    torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(64),
                     torch.nn.LeakyReLU(),
                     
@@ -88,8 +88,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(64, 128, 3, padding=1, stride=2),
-                    #torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(64, 128, 3, padding=1),
+                    torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(128),
                     torch.nn.LeakyReLU(),
                     
@@ -121,8 +121,8 @@ class Model(models.Savable, models.NormalInit):
             
             models.ResBlock(
                 conv = torch.nn.Sequential(
-                    torch.nn.Conv2d(128, 256, 3, padding=1, stride=2),
-                    #torch.nn.MaxPool2d(2),
+                    torch.nn.Conv2d(128, 256, 3, padding=1),
+                    torch.nn.MaxPool2d(2),
                     torch.nn.BatchNorm2d(256),
                     torch.nn.LeakyReLU(),
                     

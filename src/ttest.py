@@ -31,7 +31,4 @@ def analyze():
     
     pyplot.xticks(rotation=30)
     pyplot.ylabel("Accuracy")
-#    dc = lines.Line2D([], [], color="b", marker="o", label="DeepConsensus-ResNet")
-#    gc = lines.Line2D([], [], color="r", marker="x", label="Base ResNet")
-#    pyplot.legend(handles=[dc, gc])
     pyplot.savefig("resnet-trails50x.png", bbox_inches="tight")

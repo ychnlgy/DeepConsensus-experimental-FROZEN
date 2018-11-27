@@ -38,63 +38,6 @@ class Model(ResNet):
     def make_distillpools(self, classes):
         return [
             
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 32,
-#                    bodysize = 256,
-#                    tailsize = self.squash[0],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[0],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#            ),
-#            
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 32,
-#                    bodysize = 256,
-#                    tailsize = self.squash[0],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[0],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#            ),
-            
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 64,
-#                    bodysize = 256,
-#                    tailsize = self.squash[3],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[3],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#            ),
-            
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 64,
@@ -114,25 +57,6 @@ class Model(ResNet):
                 ),
             ),
             
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 128,
-#                    bodysize = 256,
-#                    tailsize = self.squash[5],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[5],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#            ),
-            
             models.GlobalSumPool(
                 h = models.DenseNet(
                     headsize = 128,
@@ -151,25 +75,6 @@ class Model(ResNet):
                     p = self.p
                 ),
             ),
-            
-#            models.GlobalSumPool(
-#                h = models.DenseNet(
-#                    headsize = 256,
-#                    bodysize = 1024,
-#                    tailsize = self.squash[7],
-#                    layers = self.layers,
-#                    dropout = 0.2,
-#                    activation = self.act,
-#                    bias = self.usebias
-#                ),
-#                c = models.Classifier(
-#                    self.squash[7],
-#                    classes + self.optout,
-#                    useprototype = self.useprototype,
-#                    usenorm = self.usenorm,
-#                    p = self.p
-#                ),
-#            ),
             
             models.GlobalSumPool(
                 h = models.DenseNet(
@@ -193,11 +98,7 @@ class Model(ResNet):
     
     def forward(self, X):
         self.layer_outputs = list(self.do_consensus(X))
-        
-#        if self.training:
         out = sum(self.layer_outputs)
-#        else:
-#            out = sum([t*p for t, p in zip(self.layerweights, self.layer_outputs)])
         return out
     
     def set_layerweights(self, weights):
