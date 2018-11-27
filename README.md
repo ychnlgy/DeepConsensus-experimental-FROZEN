@@ -25,7 +25,7 @@ Change directory to ```./src/```. Then run:
 ```bash
 ./train.py modelf=sample.torch dataset=mnist64-corrupt epochs=30 mintrans=20 maxtrans=20 modelid=<modelid> download=1
 ```
-to see performance on the MNIST-64 test set with 20 pixel translations in both x and y axes. Setting download to 1 allows the program to download the dataset into ```./data```. Replace ```<modelid>``` with:
+to see performance on the MNIST-64 test set with 20 pixel translations in both x and y axes. Setting download to 1 allows the program to download the dataset into ```./data```. **If you do not have a GPU, use ```device=cpu```.** Replace ```<modelid>``` with:
 
 |```<modelid>``` | Model |
 |----------------|-------|
