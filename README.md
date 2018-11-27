@@ -76,10 +76,10 @@ Note that images which are normally smaller than 64-pixel squares are simply cen
 | ```minsigma=1.5 maxsigma=1.5``` | Gaussian blur with 1.5 standard deviations |
 | ```mingauss=20 maxgauss=20``` | Gaussian noise addition with 20 standard deviations |
 
-Note that to get a range of random pertubations, set the min value lower than the max value. The pertubations can also be combined. For example ```minmag=1.5 maxmag=1.5 mintrans=10 maxtrans=10``` produces test set images that are magnified 1.5 times and translated 10 pixels.
+#### Notes
 
-To perturb the training set, use ```corrupt_train=1``` and use the prefix ```TRAIN_``` in front of pertubation options. For example, ```corrupt_train=1 minmag=1.5 maxmag=1.5 TRAIN_mintrans=20 TRAIN_maxtrans=20``` means to train with images translated 20 pixels in both axes, but test with 1.5 magnified images (that are not translated). To perturb only the training set (while using the original test set), use ```corrupt_train=1 corrupt_test=0```.
-
-To obtain scores and samples on DeepFool, use ```fool=1```. Note that this must be done after training.
-
-There are numerous other command line options, so please email ```ychnlgy@utoronto.ca``` if you would like to see them listed here.
+- To get a range of random pertubations, set the min value lower than the max value.
+- Pertubations can also be combined. For example ```minmag=1.5 maxmag=1.5 mintrans=10 maxtrans=10``` produces test set images that are magnified 1.5 times and translated 10 pixels.
+- To perturb the training set, use ```corrupt_train=1``` and use the prefix ```TRAIN_``` in front of pertubation options. For example, ```corrupt_train=1 minmag=1.5 maxmag=1.5 TRAIN_mintrans=20 TRAIN_maxtrans=20``` means to train with images translated 20 pixels in both axes, but test with 1.5 magnified images (that are not translated). To perturb only the training set (while using the original test set), use ```corrupt_train=1 corrupt_test=0```.
+- To obtain scores and samples on DeepFool, use ```fool=1```. Note that this must be done after training.
+- There are numerous other command line options, so please email ```ychnlgy@utoronto.ca``` if you would like to see them listed here.
