@@ -1,6 +1,6 @@
 # DeepConsensus
 
-Using the consensus of low and high level features for robust classification.
+Using the consensus of features from multiple layers to attain robust image classification.
 
 This is the original code used to generate all the results in our [DeepConsensus paper](https://arxiv.org/abs/1811.07266).
 
