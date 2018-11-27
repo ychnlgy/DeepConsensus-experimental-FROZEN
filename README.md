@@ -80,6 +80,6 @@ Note that to get a range of random pertubations, set the min value lower than th
 
 To perturb the training set, use ```corrupt_train=1``` and use the prefix ```TRAIN_``` in front of pertubation options. For example, ```corrupt_train=1 minmag=1.5 maxmag=1.5 TRAIN_mintrans=20 TRAIN_maxtrans=20``` means to train with images translated 20 pixels in both axes, but test with 1.5 magnified images (that are not translated). To perturb only the training set (while using the original test set), use ```corrupt_train=1 corrupt_test=0```.
 
-To obtain scores and samples on DeepFool, use ```fool=1```.
+To obtain scores and samples on DeepFool, use ```fool=1```. Note that this must be done after training.
 
 There are numerous other command line options, so please email ```ychnlgy@utoronto.ca``` if you would like to see them listed here.
