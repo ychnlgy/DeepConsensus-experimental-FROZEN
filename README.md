@@ -33,11 +33,11 @@ to see performance on the MNIST-64 test set with 20 pixel translations in both x
 | 1              | ResNet |
 | 2              | DeepConsensus-CNN |
 | 3              | CNN |
-| 4              | _p4m_ CNN |
+| 4              | _p4m_-CNN |
 | 5              | DeepConsensus-small CNN |
 | 6              | Small CNN |
 
-Other interesting command line options include:
+Check the number of parameters of a model using ```showparams=1```. Other interesting command line options include:
 
 |```dataset=``` | Description |
 |---------------|---------|
