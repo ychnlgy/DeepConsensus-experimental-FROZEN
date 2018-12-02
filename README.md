@@ -4,7 +4,7 @@ Using the consensus of features from multiple layers to attain robust image clas
 
 This is the original code used to generate all the results in our [DeepConsensus paper](https://arxiv.org/abs/1811.07266).
 
-Please excuse the appearance of the code, we are working on [polishing it](https://github.com/ychnlgy/DeepConsensus).
+Please excuse the appearance of the code - a user-friendly version can be found in [this repository](https://github.com/ychnlgy/DeepConsensus).
 
 ## Dependencies
 
